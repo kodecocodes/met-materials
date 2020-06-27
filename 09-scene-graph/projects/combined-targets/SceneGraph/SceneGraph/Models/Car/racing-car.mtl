@@ -1,0 +1,15 @@
+# Blender MTL File: 'racing-car.blend'
+# Material Count: 1
+
+newmtl Opaque
+Ns 9.803922
+Ka 0.588000 0.588000 0.588000
+Kd 0.588000 0.588000 0.588000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd racing-car-color
+map_bump racing-car-normal
+map_roughness racing-car-roughness

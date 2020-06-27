@@ -1,0 +1,41 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl bark
+Ns 174.509804
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.025249 0.025249 0.025249
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+roughness 1.0 1.0 1.0
+metallic 0.0 0.0 0.0
+map_Kd tree-color
+
+newmtl green-leaves
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+roughness 1.0 1.0 1.0
+metallic 0.0 0.0 0.0
+map_Kd tree-color
+
+newmtl yellow-leaves
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+roughness 1.0 1.0 1.0
+metallic 0.0 0.0 0.0
+map_Kd tree-color

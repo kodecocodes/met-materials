@@ -1,0 +1,15 @@
+{
+  "properties" : {
+    "interpretation" : "data"
+  },
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "textures" : [
+    {
+      "idiom" : "universal",
+      "filename" : "Universal.mipmapset"
+    }
+  ]
+}

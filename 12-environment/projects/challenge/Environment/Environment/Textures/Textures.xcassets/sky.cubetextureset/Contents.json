@@ -1,0 +1,42 @@
+{
+  "properties" : {
+    "origin" : "bottom-left",
+    "interpretation" : "data"
+  },
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "textures" : [
+    {
+      "idiom" : "universal",
+      "filename" : "Universal -X.mipmapset",
+      "cube-face" : "x-"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Universal -Y.mipmapset",
+      "cube-face" : "y-"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Universal -Z.mipmapset",
+      "cube-face" : "z-"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Universal +X.mipmapset",
+      "cube-face" : "x+"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Universal +Y.mipmapset",
+      "cube-face" : "y+"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Universal +Z.mipmapset",
+      "cube-face" : "z+"
+    }
+  ]
+}

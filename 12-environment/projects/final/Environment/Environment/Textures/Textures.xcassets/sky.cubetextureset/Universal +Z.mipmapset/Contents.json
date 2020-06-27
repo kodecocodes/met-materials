@@ -1,0 +1,47 @@
+{
+  "properties" : {
+    "level-mode" : "fixed"
+  },
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "levels" : [
+    {
+      "filename" : "0001.png",
+      "mipmap-level" : "base"
+    },
+    {
+      "filename" : "specular-1.png-posZ.png",
+      "mipmap-level" : "mipmap-level-1"
+    },
+    {
+      "filename" : "specular-2.png-posZ.png",
+      "mipmap-level" : "mipmap-level-2"
+    },
+    {
+      "filename" : "specular-3.png-posZ.png",
+      "mipmap-level" : "mipmap-level-3"
+    },
+    {
+      "filename" : "specular-4.png-posZ.png",
+      "mipmap-level" : "mipmap-level-4"
+    },
+    {
+      "filename" : "specular-5.png-posZ.png",
+      "mipmap-level" : "mipmap-level-5"
+    },
+    {
+      "filename" : "specular-6.png-posZ.png",
+      "mipmap-level" : "mipmap-level-6"
+    },
+    {
+      "filename" : "specular-7.png-posZ.png",
+      "mipmap-level" : "mipmap-level-7"
+    },
+    {
+      "filename" : "specular-8.png-posZ.png",
+      "mipmap-level" : "mipmap-level-8"
+    }
+  ]
+}
