@@ -89,7 +89,7 @@ class Renderer: NSObject {
                          offset: 0, bufferIndex: 0)
     vertexDescriptor.attributes[1] =
       MDLVertexAttribute(name: MDLVertexAttributeNormal,
-                         format: .float2,
+                         format: .float3,
                          offset: 0, bufferIndex: 1)
     vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: MemoryLayout<float3>.stride)
     vertexDescriptor.layouts[1] = MDLVertexBufferLayout(stride: MemoryLayout<float3>.stride)

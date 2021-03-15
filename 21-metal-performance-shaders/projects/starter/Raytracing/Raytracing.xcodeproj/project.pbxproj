@@ -31,6 +31,7 @@
 		299402A320F1703F00AF5474 /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 2994027C20F1703D00AF5474 /* ShaderTypes.h */; };
 		29A4F82121109E2E00BB1385 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 29A4F82021109E2E00BB1385 /* LICENSE.txt */; };
 		29A4F82221109E2E00BB1385 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 29A4F82021109E2E00BB1385 /* LICENSE.txt */; };
+		82E3F3BD260023130060FAC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82E3F3BB260023130060FAC9 /* Main.storyboard */; };
 		CD06833A20F86B8C00FB836B /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD06833820F86B8C00FB836B /* train.obj */; };
 		CD06833B20F86B8C00FB836B /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD06833820F86B8C00FB836B /* train.obj */; };
 		CD06833C20F86B8C00FB836B /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD06833920F86B8C00FB836B /* train.mtl */; };
@@ -43,7 +44,6 @@
 		CDA3AD5320F86398008B2CE7 /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5020F86398008B2CE7 /* treefir.mtl */; };
 		CDA3AD5420F86398008B2CE7 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5120F86398008B2CE7 /* treefir.obj */; };
 		CDA3AD5520F86398008B2CE7 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5120F86398008B2CE7 /* treefir.obj */; };
-		CDF4886B211FFFE20041E8FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDF48869211FFFE20041E8FD /* Main.storyboard */; };
 		CDF6AAFC2121530000DDD273 /* RendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD152DF921204CFE002EE81B /* RendererExtension.swift */; };
 		CDF6AAFD2121531000DDD273 /* Raytracing.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD35F7ED2121030800A788FE /* Raytracing.metal */; };
 /* End PBXBuildFile section */
@@ -67,6 +67,7 @@
 		2994029620F1703F00AF5474 /* LocalClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalClasses.swift; sourceTree = "<group>"; };
 		2994029D20F1703F00AF5474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29A4F82021109E2E00BB1385 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		82E3F3BC260023130060FAC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD06833820F86B8C00FB836B /* train.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.obj; sourceTree = "<group>"; };
 		CD06833920F86B8C00FB836B /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
 		CD152DF921204CFE002EE81B /* RendererExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererExtension.swift; sourceTree = "<group>"; };
@@ -74,7 +75,6 @@
 		CD35F7ED2121030800A788FE /* Raytracing.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Raytracing.metal; sourceTree = "<group>"; };
 		CDA3AD5020F86398008B2CE7 /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
 		CDA3AD5120F86398008B2CE7 /* treefir.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.obj; sourceTree = "<group>"; };
-		CDF4886A211FFFE20041E8FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../Bloom/Bloom-macOS/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,7 +143,7 @@
 		2994029520F1703F00AF5474 /* Raytracing macOS */ = {
 			isa = PBXGroup;
 			children = (
-				CDF48869211FFFE20041E8FD /* Main.storyboard */,
+				82E3F3BB260023130060FAC9 /* Main.storyboard */,
 				2994029D20F1703F00AF5474 /* Info.plist */,
 				2994029620F1703F00AF5474 /* LocalClasses.swift */,
 			);
@@ -275,7 +275,7 @@
 				CD06833D20F86B8C00FB836B /* train.mtl in Resources */,
 				CDA3AD5320F86398008B2CE7 /* treefir.mtl in Resources */,
 				29171E972112B267003AC21D /* sphere.mtl in Resources */,
-				CDF4886B211FFFE20041E8FD /* Main.storyboard in Resources */,
+				82E3F3BD260023130060FAC9 /* Main.storyboard in Resources */,
 				29171E992112B267003AC21D /* plane.obj in Resources */,
 				CDA3AD5520F86398008B2CE7 /* treefir.obj in Resources */,
 				29171E9D2112B267003AC21D /* sphere.obj in Resources */,
@@ -332,10 +332,10 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		CDF48869211FFFE20041E8FD /* Main.storyboard */ = {
+		82E3F3BB260023130060FAC9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CDF4886A211FFFE20041E8FD /* Base */,
+				82E3F3BC260023130060FAC9 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
