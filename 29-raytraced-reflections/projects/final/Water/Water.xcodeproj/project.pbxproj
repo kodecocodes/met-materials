@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CD26401620CB8C7900FAAADC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26401520CB8C7900FAAADC /* ViewController.swift */; };
+		CD26402420CB8C9300FAAADC /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26402320CB8C9300FAAADC /* Renderer.swift */; };
+		CD26402620CB8C9800FAAADC /* RendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26402520CB8C9800FAAADC /* RendererExtension.swift */; };
+		CD26403420CB8CC900FAAADC /* LocalClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26403120CB8CA700FAAADC /* LocalClasses.swift */; };
+		CD26403520CB8CD600FAAADC /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26402C20CB8CA700FAAADC /* ViewControllerExtension.swift */; };
+		CD26403620CB8CD900FAAADC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD26402F20CB8CA700FAAADC /* Main.storyboard */; };
+		CD3D6F3920D0AEB300EE2D77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3D6F3820D0AEB300EE2D77 /* Assets.xcassets */; };
+		CD3D6F3C20D0AEB300EE2D77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD3D6F3A20D0AEB300EE2D77 /* LaunchScreen.storyboard */; };
+		CD3D6F4220D0B17B00EE2D77 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3D6F4120D0B17B00EE2D77 /* ViewControllerExtension.swift */; };
+		CD3D6F4420D0B19300EE2D77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD3D6F4320D0B19300EE2D77 /* Main.storyboard */; };
+		CD3D6F4620D0B19900EE2D77 /* LocalClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3D6F4520D0B19900EE2D77 /* LocalClasses.swift */; };
+		CD3D6F4720D0B1A600EE2D77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26401520CB8C7900FAAADC /* ViewController.swift */; };
+		CD3D6F4820D0B1A600EE2D77 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26402320CB8C9300FAAADC /* Renderer.swift */; };
+		CD3D6F4A20D0B1A600EE2D77 /* RendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26402520CB8C9800FAAADC /* RendererExtension.swift */; };
+		CD501BDB2147FB3400B9CC99 /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD501BDA2147FB3400B9CC99 /* Water.metal */; };
+		CD501BDC2147FB3400B9CC99 /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD501BDA2147FB3400B9CC99 /* Water.metal */; };
+		CD6FC1A521469B8E00D51F69 /* RendererDraws.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A421469B8E00D51F69 /* RendererDraws.swift */; };
+		CD6FC1A621469B8E00D51F69 /* RendererDraws.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A421469B8E00D51F69 /* RendererDraws.swift */; };
+		CD6FC1AA21469BB600D51F69 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A721469BB600D51F69 /* Shaders.metal */; };
+		CD6FC1AB21469BB600D51F69 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A721469BB600D51F69 /* Shaders.metal */; };
+		CD6FC1AC21469BB600D51F69 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A921469BB600D51F69 /* Skybox.metal */; };
+		CD6FC1AD21469BB600D51F69 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1A921469BB600D51F69 /* Skybox.metal */; };
+		CD6FC1C621469C8200D51F69 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1C521469C8200D51F69 /* Types.swift */; };
+		CD6FC1C721469C8200D51F69 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1C521469C8200D51F69 /* Types.swift */; };
+		CD6FC1CA21469CC000D51F69 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1C921469CC000D51F69 /* Camera.swift */; };
+		CD6FC1CB21469CC000D51F69 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1C921469CC000D51F69 /* Camera.swift */; };
+		CD6FC1CD21469CC400D51F69 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1CC21469CC400D51F69 /* MathLibrary.swift */; };
+		CD6FC1CE21469CC400D51F69 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1CC21469CC400D51F69 /* MathLibrary.swift */; };
+		CD6FC1D021469CCD00D51F69 /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1CF21469CCD00D51F69 /* Primitive.swift */; };
+		CD6FC1D121469CCD00D51F69 /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FC1CF21469CCD00D51F69 /* Primitive.swift */; };
+		CD6FC1D321469EC300D51F69 /* normal-water.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B921469C0B00D51F69 /* normal-water.png */; };
+		CD6FC1D521469EC400D51F69 /* normal-water.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B921469C0B00D51F69 /* normal-water.png */; };
+		CD6FC1D621469ECE00D51F69 /* Terrain.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C121469C3C00D51F69 /* Terrain.mtl */; };
+		CD6FC1D721469ECE00D51F69 /* Terrain.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C021469C3C00D51F69 /* Terrain.obj */; };
+		CD6FC1D821469ECE00D51F69 /* ground.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C321469C3C00D51F69 /* ground.png */; };
+		CD6FC1D921469ECE00D51F69 /* underwater.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C221469C3C00D51F69 /* underwater.png */; };
+		CD6FC1DA21469ECF00D51F69 /* Terrain.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C121469C3C00D51F69 /* Terrain.mtl */; };
+		CD6FC1DB21469ECF00D51F69 /* Terrain.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C021469C3C00D51F69 /* Terrain.obj */; };
+		CD6FC1DC21469ECF00D51F69 /* ground.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C321469C3C00D51F69 /* ground.png */; };
+		CD6FC1DD21469ECF00D51F69 /* underwater.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1C221469C3C00D51F69 /* underwater.png */; };
+		CD6FC1DE21469ED400D51F69 /* house-color.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BE21469C1D00D51F69 /* house-color.png */; };
+		CD6FC1DF21469ED400D51F69 /* house.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BB21469C1D00D51F69 /* house.mtl */; };
+		CD6FC1E021469ED400D51F69 /* house.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BC21469C1D00D51F69 /* house.obj */; };
+		CD6FC1E121469ED400D51F69 /* house-color.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BE21469C1D00D51F69 /* house-color.png */; };
+		CD6FC1E221469ED400D51F69 /* house.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BB21469C1D00D51F69 /* house.mtl */; };
+		CD6FC1E321469ED400D51F69 /* house.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1BC21469C1D00D51F69 /* house.obj */; };
+		CD6FC1E421469ED900D51F69 /* negx.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1AF21469BEB00D51F69 /* negx.png */; };
+		CD6FC1E521469ED900D51F69 /* negy.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B021469BEB00D51F69 /* negy.png */; };
+		CD6FC1E621469ED900D51F69 /* negz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B521469BEB00D51F69 /* negz.png */; };
+		CD6FC1E721469ED900D51F69 /* posx.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B121469BEB00D51F69 /* posx.png */; };
+		CD6FC1E821469ED900D51F69 /* posy.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B221469BEB00D51F69 /* posy.png */; };
+		CD6FC1E921469ED900D51F69 /* posz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B421469BEB00D51F69 /* posz.png */; };
+		CD6FC1EA21469ED900D51F69 /* negx.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1AF21469BEB00D51F69 /* negx.png */; };
+		CD6FC1EB21469ED900D51F69 /* negy.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B021469BEB00D51F69 /* negy.png */; };
+		CD6FC1EC21469ED900D51F69 /* negz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B521469BEB00D51F69 /* negz.png */; };
+		CD6FC1ED21469ED900D51F69 /* posx.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B121469BEB00D51F69 /* posx.png */; };
+		CD6FC1EE21469ED900D51F69 /* posy.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B221469BEB00D51F69 /* posy.png */; };
+		CD6FC1EF21469ED900D51F69 /* posz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6FC1B421469BEB00D51F69 /* posz.png */; };
+		CDAF208C2147EB9D00009ABF /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAF208B2147EB9D00009ABF /* RenderPass.swift */; };
+		CDAF208D2147EB9D00009ABF /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAF208B2147EB9D00009ABF /* RenderPass.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CD26401020CB8C7900FAAADC /* Water-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Water-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD26401520CB8C7900FAAADC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CD26401C20CB8C7A00FAAADC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD26401D20CB8C7A00FAAADC /* Water.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Water.entitlements; sourceTree = "<group>"; };
+		CD26402320CB8C9300FAAADC /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		CD26402520CB8C9800FAAADC /* RendererExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererExtension.swift; sourceTree = "<group>"; };
+		CD26402C20CB8CA700FAAADC /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		CD26403020CB8CA700FAAADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CD26403120CB8CA700FAAADC /* LocalClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalClasses.swift; sourceTree = "<group>"; };
+		CD3D6F2F20D0AEB200EE2D77 /* Water-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Water-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD3D6F3820D0AEB300EE2D77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CD3D6F3B20D0AEB300EE2D77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CD3D6F3D20D0AEB300EE2D77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD3D6F4120D0B17B00EE2D77 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		CD3D6F4320D0B19300EE2D77 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		CD3D6F4520D0B19900EE2D77 /* LocalClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalClasses.swift; sourceTree = "<group>"; };
+		CD501BDA2147FB3400B9CC99 /* Water.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Water.metal; sourceTree = "<group>"; };
+		CD6FC1A421469B8E00D51F69 /* RendererDraws.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererDraws.swift; sourceTree = "<group>"; };
+		CD6FC1A721469BB600D51F69 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		CD6FC1A821469BB600D51F69 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		CD6FC1A921469BB600D51F69 /* Skybox.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Skybox.metal; sourceTree = "<group>"; };
+		CD6FC1AF21469BEB00D51F69 /* negx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = negx.png; sourceTree = "<group>"; };
+		CD6FC1B021469BEB00D51F69 /* negy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = negy.png; sourceTree = "<group>"; };
+		CD6FC1B121469BEB00D51F69 /* posx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = posx.png; sourceTree = "<group>"; };
+		CD6FC1B221469BEB00D51F69 /* posy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = posy.png; sourceTree = "<group>"; };
+		CD6FC1B321469BEB00D51F69 /* license.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = license.rtf; sourceTree = "<group>"; };
+		CD6FC1B421469BEB00D51F69 /* posz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = posz.png; sourceTree = "<group>"; };
+		CD6FC1B521469BEB00D51F69 /* negz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = negz.png; sourceTree = "<group>"; };
+		CD6FC1B921469C0B00D51F69 /* normal-water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "normal-water.png"; sourceTree = "<group>"; };
+		CD6FC1BB21469C1D00D51F69 /* house.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = house.mtl; sourceTree = "<group>"; };
+		CD6FC1BC21469C1D00D51F69 /* house.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = house.obj; sourceTree = "<group>"; };
+		CD6FC1BD21469C1D00D51F69 /* license.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = license.rtf; sourceTree = "<group>"; };
+		CD6FC1BE21469C1D00D51F69 /* house-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "house-color.png"; sourceTree = "<group>"; };
+		CD6FC1C021469C3C00D51F69 /* Terrain.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Terrain.obj; sourceTree = "<group>"; };
+		CD6FC1C121469C3C00D51F69 /* Terrain.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Terrain.mtl; sourceTree = "<group>"; };
+		CD6FC1C221469C3C00D51F69 /* underwater.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underwater.png; sourceTree = "<group>"; };
+		CD6FC1C321469C3C00D51F69 /* ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ground.png; sourceTree = "<group>"; };
+		CD6FC1C521469C8200D51F69 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		CD6FC1C921469CC000D51F69 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		CD6FC1CC21469CC400D51F69 /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
+		CD6FC1CF21469CCD00D51F69 /* Primitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
+		CDAF208B2147EB9D00009ABF /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CD26400D20CB8C7900FAAADC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD3D6F2C20D0AEB200EE2D77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CD26400720CB8C7900FAAADC = {
+			isa = PBXGroup;
+			children = (
+				CD26401220CB8C7900FAAADC /* Water */,
+				CD26402B20CB8CA700FAAADC /* Water-macOS */,
+				CD3D6F3020D0AEB200EE2D77 /* Water-iOS */,
+				CD26401120CB8C7900FAAADC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CD26401120CB8C7900FAAADC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD26401020CB8C7900FAAADC /* Water-macOS.app */,
+				CD3D6F2F20D0AEB200EE2D77 /* Water-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CD26401220CB8C7900FAAADC /* Water */ = {
+			isa = PBXGroup;
+			children = (
+				CD26401520CB8C7900FAAADC /* ViewController.swift */,
+				CD26402320CB8C9300FAAADC /* Renderer.swift */,
+				CDAF208B2147EB9D00009ABF /* RenderPass.swift */,
+				CD6FC1A421469B8E00D51F69 /* RendererDraws.swift */,
+				CD26402520CB8C9800FAAADC /* RendererExtension.swift */,
+				CD6FC1AE21469BBC00D51F69 /* Shaders */,
+				CD6FC1B721469C0100D51F69 /* Models */,
+				CD6FC1C821469C8500D51F69 /* Supporting files */,
+			);
+			path = Water;
+			sourceTree = "<group>";
+		};
+		CD26402B20CB8CA700FAAADC /* Water-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				CD26402C20CB8CA700FAAADC /* ViewControllerExtension.swift */,
+				CD26402F20CB8CA700FAAADC /* Main.storyboard */,
+				CD26403120CB8CA700FAAADC /* LocalClasses.swift */,
+				CD26401C20CB8C7A00FAAADC /* Info.plist */,
+				CD26401D20CB8C7A00FAAADC /* Water.entitlements */,
+			);
+			path = "Water-macOS";
+			sourceTree = "<group>";
+		};
+		CD3D6F3020D0AEB200EE2D77 /* Water-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CD3D6F4120D0B17B00EE2D77 /* ViewControllerExtension.swift */,
+				CD3D6F4320D0B19300EE2D77 /* Main.storyboard */,
+				CD3D6F3820D0AEB300EE2D77 /* Assets.xcassets */,
+				CD3D6F3A20D0AEB300EE2D77 /* LaunchScreen.storyboard */,
+				CD3D6F3D20D0AEB300EE2D77 /* Info.plist */,
+				CD3D6F4520D0B19900EE2D77 /* LocalClasses.swift */,
+			);
+			path = "Water-iOS";
+			sourceTree = "<group>";
+		};
+		CD6FC1AE21469BBC00D51F69 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				CD501BDA2147FB3400B9CC99 /* Water.metal */,
+				CD6FC1A721469BB600D51F69 /* Shaders.metal */,
+				CD6FC1A921469BB600D51F69 /* Skybox.metal */,
+				CD6FC1A821469BB600D51F69 /* Common.h */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		CD6FC1B621469BF000D51F69 /* Skybox */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FC1B321469BEB00D51F69 /* license.rtf */,
+				CD6FC1AF21469BEB00D51F69 /* negx.png */,
+				CD6FC1B021469BEB00D51F69 /* negy.png */,
+				CD6FC1B521469BEB00D51F69 /* negz.png */,
+				CD6FC1B121469BEB00D51F69 /* posx.png */,
+				CD6FC1B221469BEB00D51F69 /* posy.png */,
+				CD6FC1B421469BEB00D51F69 /* posz.png */,
+			);
+			path = Skybox;
+			sourceTree = "<group>";
+		};
+		CD6FC1B721469C0100D51F69 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FC1B921469C0B00D51F69 /* normal-water.png */,
+				CD6FC1C421469C5B00D51F69 /* Terrain */,
+				CD6FC1BF21469C2300D51F69 /* House */,
+				CD6FC1B621469BF000D51F69 /* Skybox */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CD6FC1BF21469C2300D51F69 /* House */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FC1BE21469C1D00D51F69 /* house-color.png */,
+				CD6FC1BB21469C1D00D51F69 /* house.mtl */,
+				CD6FC1BC21469C1D00D51F69 /* house.obj */,
+				CD6FC1BD21469C1D00D51F69 /* license.rtf */,
+			);
+			path = House;
+			sourceTree = "<group>";
+		};
+		CD6FC1C421469C5B00D51F69 /* Terrain */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FC1C121469C3C00D51F69 /* Terrain.mtl */,
+				CD6FC1C021469C3C00D51F69 /* Terrain.obj */,
+				CD6FC1C321469C3C00D51F69 /* ground.png */,
+				CD6FC1C221469C3C00D51F69 /* underwater.png */,
+			);
+			path = Terrain;
+			sourceTree = "<group>";
+		};
+		CD6FC1C821469C8500D51F69 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FC1CF21469CCD00D51F69 /* Primitive.swift */,
+				CD6FC1CC21469CC400D51F69 /* MathLibrary.swift */,
+				CD6FC1C921469CC000D51F69 /* Camera.swift */,
+				CD6FC1C521469C8200D51F69 /* Types.swift */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CD26400F20CB8C7900FAAADC /* Water-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD26402020CB8C7A00FAAADC /* Build configuration list for PBXNativeTarget "Water-macOS" */;
+			buildPhases = (
+				CD26400C20CB8C7900FAAADC /* Sources */,
+				CD26400D20CB8C7900FAAADC /* Frameworks */,
+				CD26400E20CB8C7900FAAADC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Water-macOS";
+			productName = Tessellation;
+			productReference = CD26401020CB8C7900FAAADC /* Water-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CD3D6F2E20D0AEB200EE2D77 /* Water-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD3D6F4020D0AEB300EE2D77 /* Build configuration list for PBXNativeTarget "Water-iOS" */;
+			buildPhases = (
+				CD3D6F2B20D0AEB200EE2D77 /* Sources */,
+				CD3D6F2C20D0AEB200EE2D77 /* Frameworks */,
+				CD3D6F2D20D0AEB200EE2D77 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Water-iOS";
+			productName = "Tessellation-iOS";
+			productReference = CD3D6F2F20D0AEB200EE2D77 /* Water-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CD26400820CB8C7900FAAADC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = Razeware;
+				TargetAttributes = {
+					CD26400F20CB8C7900FAAADC = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1100;
+					};
+					CD3D6F2E20D0AEB200EE2D77 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1100;
+					};
+				};
+			};
+			buildConfigurationList = CD26400B20CB8C7900FAAADC /* Build configuration list for PBXProject "Water" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CD26400720CB8C7900FAAADC;
+			productRefGroup = CD26401120CB8C7900FAAADC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CD26400F20CB8C7900FAAADC /* Water-macOS */,
+				CD3D6F2E20D0AEB200EE2D77 /* Water-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD26400E20CB8C7900FAAADC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6FC1DC21469ECF00D51F69 /* ground.png in Resources */,
+				CD6FC1E221469ED400D51F69 /* house.mtl in Resources */,
+				CD6FC1E521469ED900D51F69 /* negy.png in Resources */,
+				CD6FC1E321469ED400D51F69 /* house.obj in Resources */,
+				CD6FC1D521469EC400D51F69 /* normal-water.png in Resources */,
+				CD6FC1E721469ED900D51F69 /* posx.png in Resources */,
+				CD6FC1E121469ED400D51F69 /* house-color.png in Resources */,
+				CD6FC1E921469ED900D51F69 /* posz.png in Resources */,
+				CD6FC1E421469ED900D51F69 /* negx.png in Resources */,
+				CD6FC1DD21469ECF00D51F69 /* underwater.png in Resources */,
+				CD6FC1DB21469ECF00D51F69 /* Terrain.obj in Resources */,
+				CD6FC1E821469ED900D51F69 /* posy.png in Resources */,
+				CD26403620CB8CD900FAAADC /* Main.storyboard in Resources */,
+				CD6FC1E621469ED900D51F69 /* negz.png in Resources */,
+				CD6FC1DA21469ECF00D51F69 /* Terrain.mtl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD3D6F2D20D0AEB200EE2D77 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6FC1DE21469ED400D51F69 /* house-color.png in Resources */,
+				CD6FC1EA21469ED900D51F69 /* negx.png in Resources */,
+				CD6FC1EB21469ED900D51F69 /* negy.png in Resources */,
+				CD6FC1D721469ECE00D51F69 /* Terrain.obj in Resources */,
+				CD3D6F4420D0B19300EE2D77 /* Main.storyboard in Resources */,
+				CD6FC1ED21469ED900D51F69 /* posx.png in Resources */,
+				CD6FC1D321469EC300D51F69 /* normal-water.png in Resources */,
+				CD3D6F3C20D0AEB300EE2D77 /* LaunchScreen.storyboard in Resources */,
+				CD6FC1D821469ECE00D51F69 /* ground.png in Resources */,
+				CD6FC1D921469ECE00D51F69 /* underwater.png in Resources */,
+				CD6FC1EF21469ED900D51F69 /* posz.png in Resources */,
+				CD3D6F3920D0AEB300EE2D77 /* Assets.xcassets in Resources */,
+				CD6FC1EC21469ED900D51F69 /* negz.png in Resources */,
+				CD6FC1EE21469ED900D51F69 /* posy.png in Resources */,
+				CD6FC1D621469ECE00D51F69 /* Terrain.mtl in Resources */,
+				CD6FC1E021469ED400D51F69 /* house.obj in Resources */,
+				CD6FC1DF21469ED400D51F69 /* house.mtl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CD26400C20CB8C7900FAAADC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6FC1CA21469CC000D51F69 /* Camera.swift in Sources */,
+				CDAF208D2147EB9D00009ABF /* RenderPass.swift in Sources */,
+				CD6FC1AA21469BB600D51F69 /* Shaders.metal in Sources */,
+				CD26402420CB8C9300FAAADC /* Renderer.swift in Sources */,
+				CD26403520CB8CD600FAAADC /* ViewControllerExtension.swift in Sources */,
+				CD6FC1C621469C8200D51F69 /* Types.swift in Sources */,
+				CD26401620CB8C7900FAAADC /* ViewController.swift in Sources */,
+				CD26402620CB8C9800FAAADC /* RendererExtension.swift in Sources */,
+				CD6FC1D021469CCD00D51F69 /* Primitive.swift in Sources */,
+				CD501BDB2147FB3400B9CC99 /* Water.metal in Sources */,
+				CD26403420CB8CC900FAAADC /* LocalClasses.swift in Sources */,
+				CD6FC1A521469B8E00D51F69 /* RendererDraws.swift in Sources */,
+				CD6FC1AC21469BB600D51F69 /* Skybox.metal in Sources */,
+				CD6FC1CD21469CC400D51F69 /* MathLibrary.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD3D6F2B20D0AEB200EE2D77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6FC1CB21469CC000D51F69 /* Camera.swift in Sources */,
+				CDAF208C2147EB9D00009ABF /* RenderPass.swift in Sources */,
+				CD6FC1AB21469BB600D51F69 /* Shaders.metal in Sources */,
+				CD3D6F4820D0B1A600EE2D77 /* Renderer.swift in Sources */,
+				CD6FC1C721469C8200D51F69 /* Types.swift in Sources */,
+				CD3D6F4A20D0B1A600EE2D77 /* RendererExtension.swift in Sources */,
+				CD3D6F4720D0B1A600EE2D77 /* ViewController.swift in Sources */,
+				CD3D6F4620D0B19900EE2D77 /* LocalClasses.swift in Sources */,
+				CD6FC1D121469CCD00D51F69 /* Primitive.swift in Sources */,
+				CD501BDC2147FB3400B9CC99 /* Water.metal in Sources */,
+				CD6FC1A621469B8E00D51F69 /* RendererDraws.swift in Sources */,
+				CD3D6F4220D0B17B00EE2D77 /* ViewControllerExtension.swift in Sources */,
+				CD6FC1AD21469BB600D51F69 /* Skybox.metal in Sources */,
+				CD6FC1CE21469CC400D51F69 /* MathLibrary.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CD26402F20CB8CA700FAAADC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD26403020CB8CA700FAAADC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CD3D6F3A20D0AEB300EE2D77 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD3D6F3B20D0AEB300EE2D77 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CD26401E20CB8C7A00FAAADC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = Water/Shaders/Common.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CD26401F20CB8C7A00FAAADC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = Water/Shaders/Common.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CD26402120CB8C7A00FAAADC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Water-macOS/Water.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Water-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.Water-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Water/Shaders/Common.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CD26402220CB8C7A00FAAADC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Water-macOS/Water.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Water-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.Water-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Water/Shaders/Common.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CD3D6F3E20D0AEB300EE2D77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Water-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.Water-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD3D6F3F20D0AEB300EE2D77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Water-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.Water-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CD26400B20CB8C7900FAAADC /* Build configuration list for PBXProject "Water" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD26401E20CB8C7A00FAAADC /* Debug */,
+				CD26401F20CB8C7A00FAAADC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD26402020CB8C7A00FAAADC /* Build configuration list for PBXNativeTarget "Water-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD26402120CB8C7A00FAAADC /* Debug */,
+				CD26402220CB8C7A00FAAADC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD3D6F4020D0AEB300EE2D77 /* Build configuration list for PBXNativeTarget "Water-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD3D6F3E20D0AEB300EE2D77 /* Debug */,
+				CD3D6F3F20D0AEB300EE2D77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CD26400820CB8C7900FAAADC /* Project object */;
+}

@@ -1,0 +1,576 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		29171E962112B267003AC21D /* sphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171E922112B266003AC21D /* sphere.mtl */; };
+		29171E972112B267003AC21D /* sphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171E922112B266003AC21D /* sphere.mtl */; };
+		29171E982112B267003AC21D /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171E932112B266003AC21D /* plane.obj */; };
+		29171E992112B267003AC21D /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171E932112B266003AC21D /* plane.obj */; };
+		29171E9A2112B267003AC21D /* plane.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171E942112B266003AC21D /* plane.mtl */; };
+		29171E9B2112B267003AC21D /* plane.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171E942112B266003AC21D /* plane.mtl */; };
+		29171E9C2112B267003AC21D /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171E952112B267003AC21D /* sphere.obj */; };
+		29171E9D2112B267003AC21D /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171E952112B267003AC21D /* sphere.obj */; };
+		29171EBB2113D54A003AC21D /* plane-back.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171EB92113D549003AC21D /* plane-back.mtl */; };
+		29171EBC2113D54A003AC21D /* plane-back.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 29171EB92113D549003AC21D /* plane-back.mtl */; };
+		29171EBD2113D54A003AC21D /* plane-back.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171EBA2113D54A003AC21D /* plane-back.obj */; };
+		29171EBE2113D54A003AC21D /* plane-back.obj in Resources */ = {isa = PBXBuildFile; fileRef = 29171EBA2113D54A003AC21D /* plane-back.obj */; };
+		2994028620F1703F00AF5474 /* LocalClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994028520F1703F00AF5474 /* LocalClasses.swift */; };
+		2994028B20F1703F00AF5474 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2994028920F1703F00AF5474 /* Main.storyboard */; };
+		2994028E20F1703F00AF5474 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2994028C20F1703F00AF5474 /* LaunchScreen.storyboard */; };
+		2994029720F1703F00AF5474 /* LocalClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994029620F1703F00AF5474 /* LocalClasses.swift */; };
+		2994029E20F1703F00AF5474 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2994027A20F1703D00AF5474 /* Shaders.metal */; };
+		2994029F20F1703F00AF5474 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2994027A20F1703D00AF5474 /* Shaders.metal */; };
+		299402A020F1703F00AF5474 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994027B20F1703D00AF5474 /* Renderer.swift */; };
+		299402A120F1703F00AF5474 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994027B20F1703D00AF5474 /* Renderer.swift */; };
+		299402A220F1703F00AF5474 /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 2994027C20F1703D00AF5474 /* ShaderTypes.h */; };
+		299402A320F1703F00AF5474 /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 2994027C20F1703D00AF5474 /* ShaderTypes.h */; };
+		29A4F82121109E2E00BB1385 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 29A4F82021109E2E00BB1385 /* LICENSE.txt */; };
+		29A4F82221109E2E00BB1385 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 29A4F82021109E2E00BB1385 /* LICENSE.txt */; };
+		CD06833A20F86B8C00FB836B /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD06833820F86B8C00FB836B /* train.obj */; };
+		CD06833B20F86B8C00FB836B /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD06833820F86B8C00FB836B /* train.obj */; };
+		CD06833C20F86B8C00FB836B /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD06833920F86B8C00FB836B /* train.mtl */; };
+		CD06833D20F86B8C00FB836B /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CD06833920F86B8C00FB836B /* train.mtl */; };
+		CD152DFA21204CFE002EE81B /* RendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD152DF921204CFE002EE81B /* RendererExtension.swift */; };
+		CD15947621215CAA00807D2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15947521215CAA00807D2A /* ViewController.swift */; };
+		CD15947721215CAA00807D2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15947521215CAA00807D2A /* ViewController.swift */; };
+		CD35F7EE2121030800A788FE /* Raytracing.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD35F7ED2121030800A788FE /* Raytracing.metal */; };
+		CDA3AD5220F86398008B2CE7 /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5020F86398008B2CE7 /* treefir.mtl */; };
+		CDA3AD5320F86398008B2CE7 /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5020F86398008B2CE7 /* treefir.mtl */; };
+		CDA3AD5420F86398008B2CE7 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5120F86398008B2CE7 /* treefir.obj */; };
+		CDA3AD5520F86398008B2CE7 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = CDA3AD5120F86398008B2CE7 /* treefir.obj */; };
+		CDF4886B211FFFE20041E8FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDF48869211FFFE20041E8FD /* Main.storyboard */; };
+		CDF6AAFC2121530000DDD273 /* RendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD152DF921204CFE002EE81B /* RendererExtension.swift */; };
+		CDF6AAFD2121531000DDD273 /* Raytracing.metal in Sources */ = {isa = PBXBuildFile; fileRef = CD35F7ED2121030800A788FE /* Raytracing.metal */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		29171E922112B266003AC21D /* sphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.mtl; sourceTree = "<group>"; };
+		29171E932112B266003AC21D /* plane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.obj; sourceTree = "<group>"; };
+		29171E942112B266003AC21D /* plane.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.mtl; sourceTree = "<group>"; };
+		29171E952112B267003AC21D /* sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
+		29171EB92113D549003AC21D /* plane-back.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "plane-back.mtl"; sourceTree = "<group>"; };
+		29171EBA2113D54A003AC21D /* plane-back.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "plane-back.obj"; sourceTree = "<group>"; };
+		2994027A20F1703D00AF5474 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		2994027B20F1703D00AF5474 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		2994027C20F1703D00AF5474 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		2994028220F1703F00AF5474 /* Raytracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raytracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2994028520F1703F00AF5474 /* LocalClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalClasses.swift; sourceTree = "<group>"; };
+		2994028A20F1703F00AF5474 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2994028D20F1703F00AF5474 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2994028F20F1703F00AF5474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2994029420F1703F00AF5474 /* Raytracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raytracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2994029620F1703F00AF5474 /* LocalClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalClasses.swift; sourceTree = "<group>"; };
+		2994029D20F1703F00AF5474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29A4F82021109E2E00BB1385 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		CD06833820F86B8C00FB836B /* train.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.obj; sourceTree = "<group>"; };
+		CD06833920F86B8C00FB836B /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
+		CD152DF921204CFE002EE81B /* RendererExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererExtension.swift; sourceTree = "<group>"; };
+		CD15947521215CAA00807D2A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CD35F7ED2121030800A788FE /* Raytracing.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Raytracing.metal; sourceTree = "<group>"; };
+		CDA3AD5020F86398008B2CE7 /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
+		CDA3AD5120F86398008B2CE7 /* treefir.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.obj; sourceTree = "<group>"; };
+		CDF4886A211FFFE20041E8FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../Bloom/Bloom-macOS/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2994027F20F1703F00AF5474 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2994029120F1703F00AF5474 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2994027420F1703D00AF5474 = {
+			isa = PBXGroup;
+			children = (
+				2994027920F1703D00AF5474 /* Raytracing Shared */,
+				2994029520F1703F00AF5474 /* Raytracing macOS */,
+				2994028420F1703F00AF5474 /* Raytracing iOS */,
+				2994028320F1703F00AF5474 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2994027920F1703D00AF5474 /* Raytracing Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2994027B20F1703D00AF5474 /* Renderer.swift */,
+				CD152DF921204CFE002EE81B /* RendererExtension.swift */,
+				2994027A20F1703D00AF5474 /* Shaders.metal */,
+				CD35F7ED2121030800A788FE /* Raytracing.metal */,
+				2994027C20F1703D00AF5474 /* ShaderTypes.h */,
+				CD15947521215CAA00807D2A /* ViewController.swift */,
+				CD06833E20F86BA400FB836B /* Models */,
+				29A4F82021109E2E00BB1385 /* LICENSE.txt */,
+			);
+			path = "Raytracing Shared";
+			sourceTree = "<group>";
+		};
+		2994028320F1703F00AF5474 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2994028220F1703F00AF5474 /* Raytracing.app */,
+				2994029420F1703F00AF5474 /* Raytracing.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2994028420F1703F00AF5474 /* Raytracing iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2994028920F1703F00AF5474 /* Main.storyboard */,
+				2994028C20F1703F00AF5474 /* LaunchScreen.storyboard */,
+				2994028F20F1703F00AF5474 /* Info.plist */,
+				2994028520F1703F00AF5474 /* LocalClasses.swift */,
+			);
+			path = "Raytracing iOS";
+			sourceTree = "<group>";
+		};
+		2994029520F1703F00AF5474 /* Raytracing macOS */ = {
+			isa = PBXGroup;
+			children = (
+				CDF48869211FFFE20041E8FD /* Main.storyboard */,
+				2994029D20F1703F00AF5474 /* Info.plist */,
+				2994029620F1703F00AF5474 /* LocalClasses.swift */,
+			);
+			path = "Raytracing macOS";
+			sourceTree = "<group>";
+		};
+		CD06833E20F86BA400FB836B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				29171E942112B266003AC21D /* plane.mtl */,
+				29171E932112B266003AC21D /* plane.obj */,
+				29171EB92113D549003AC21D /* plane-back.mtl */,
+				29171EBA2113D54A003AC21D /* plane-back.obj */,
+				29171E922112B266003AC21D /* sphere.mtl */,
+				29171E952112B267003AC21D /* sphere.obj */,
+				CDA3AD5020F86398008B2CE7 /* treefir.mtl */,
+				CDA3AD5120F86398008B2CE7 /* treefir.obj */,
+				CD06833920F86B8C00FB836B /* train.mtl */,
+				CD06833820F86B8C00FB836B /* train.obj */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2994028120F1703F00AF5474 /* Raytracing iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 299402A820F1703F00AF5474 /* Build configuration list for PBXNativeTarget "Raytracing iOS" */;
+			buildPhases = (
+				2994027E20F1703F00AF5474 /* Sources */,
+				2994027F20F1703F00AF5474 /* Frameworks */,
+				2994028020F1703F00AF5474 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Raytracing iOS";
+			productName = "MPS iOS";
+			productReference = 2994028220F1703F00AF5474 /* Raytracing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2994029320F1703F00AF5474 /* Raytracing macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 299402AB20F1703F00AF5474 /* Build configuration list for PBXNativeTarget "Raytracing macOS" */;
+			buildPhases = (
+				2994029020F1703F00AF5474 /* Sources */,
+				2994029120F1703F00AF5474 /* Frameworks */,
+				2994029220F1703F00AF5474 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Raytracing macOS";
+			productName = "MPS macOS";
+			productReference = 2994029420F1703F00AF5474 /* Raytracing.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2994027520F1703D00AF5474 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				TargetAttributes = {
+					2994028120F1703F00AF5474 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1100;
+					};
+					2994029320F1703F00AF5474 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1100;
+					};
+				};
+			};
+			buildConfigurationList = 2994027820F1703D00AF5474 /* Build configuration list for PBXProject "Raytracing" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2994027420F1703D00AF5474;
+			productRefGroup = 2994028320F1703F00AF5474 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2994029320F1703F00AF5474 /* Raytracing macOS */,
+				2994028120F1703F00AF5474 /* Raytracing iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2994028020F1703F00AF5474 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA3AD5420F86398008B2CE7 /* treefir.obj in Resources */,
+				CD06833C20F86B8C00FB836B /* train.mtl in Resources */,
+				29171E982112B267003AC21D /* plane.obj in Resources */,
+				299402A220F1703F00AF5474 /* ShaderTypes.h in Resources */,
+				CD06833A20F86B8C00FB836B /* train.obj in Resources */,
+				29171EBB2113D54A003AC21D /* plane-back.mtl in Resources */,
+				29A4F82121109E2E00BB1385 /* LICENSE.txt in Resources */,
+				CDA3AD5220F86398008B2CE7 /* treefir.mtl in Resources */,
+				29171E9A2112B267003AC21D /* plane.mtl in Resources */,
+				2994028B20F1703F00AF5474 /* Main.storyboard in Resources */,
+				29171E962112B267003AC21D /* sphere.mtl in Resources */,
+				29171E9C2112B267003AC21D /* sphere.obj in Resources */,
+				29171EBD2113D54A003AC21D /* plane-back.obj in Resources */,
+				2994028E20F1703F00AF5474 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2994029220F1703F00AF5474 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29171EBC2113D54A003AC21D /* plane-back.mtl in Resources */,
+				CD06833B20F86B8C00FB836B /* train.obj in Resources */,
+				29171E9B2112B267003AC21D /* plane.mtl in Resources */,
+				29171EBE2113D54A003AC21D /* plane-back.obj in Resources */,
+				CD06833D20F86B8C00FB836B /* train.mtl in Resources */,
+				CDA3AD5320F86398008B2CE7 /* treefir.mtl in Resources */,
+				29171E972112B267003AC21D /* sphere.mtl in Resources */,
+				CDF4886B211FFFE20041E8FD /* Main.storyboard in Resources */,
+				29171E992112B267003AC21D /* plane.obj in Resources */,
+				CDA3AD5520F86398008B2CE7 /* treefir.obj in Resources */,
+				29171E9D2112B267003AC21D /* sphere.obj in Resources */,
+				299402A320F1703F00AF5474 /* ShaderTypes.h in Resources */,
+				29A4F82221109E2E00BB1385 /* LICENSE.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2994027E20F1703F00AF5474 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD15947721215CAA00807D2A /* ViewController.swift in Sources */,
+				299402A020F1703F00AF5474 /* Renderer.swift in Sources */,
+				2994029E20F1703F00AF5474 /* Shaders.metal in Sources */,
+				CDF6AAFD2121531000DDD273 /* Raytracing.metal in Sources */,
+				CDF6AAFC2121530000DDD273 /* RendererExtension.swift in Sources */,
+				2994028620F1703F00AF5474 /* LocalClasses.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2994029020F1703F00AF5474 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD15947621215CAA00807D2A /* ViewController.swift in Sources */,
+				299402A120F1703F00AF5474 /* Renderer.swift in Sources */,
+				2994029F20F1703F00AF5474 /* Shaders.metal in Sources */,
+				CD35F7EE2121030800A788FE /* Raytracing.metal in Sources */,
+				CD152DFA21204CFE002EE81B /* RendererExtension.swift in Sources */,
+				2994029720F1703F00AF5474 /* LocalClasses.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2994028920F1703F00AF5474 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2994028A20F1703F00AF5474 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2994028C20F1703F00AF5474 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2994028D20F1703F00AF5474 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CDF48869211FFFE20041E8FD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CDF4886A211FFFE20041E8FD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		299402A620F1703F00AF5474 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		299402A720F1703F00AF5474 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		299402A920F1703F00AF5474 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Raytracing iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Raytracing;
+				PRODUCT_NAME = Raytracing;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Raytracing Shared/ShaderTypes.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		299402AA20F1703F00AF5474 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Raytracing iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Raytracing;
+				PRODUCT_NAME = Raytracing;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Raytracing Shared/ShaderTypes.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		299402AC20F1703F00AF5474 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Raytracing macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Raytracing;
+				PRODUCT_NAME = Raytracing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Raytracing Shared/ShaderTypes.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		299402AD20F1703F00AF5474 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Raytracing macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Raytracing;
+				PRODUCT_NAME = Raytracing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Raytracing Shared/ShaderTypes.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2994027820F1703D00AF5474 /* Build configuration list for PBXProject "Raytracing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				299402A620F1703F00AF5474 /* Debug */,
+				299402A720F1703F00AF5474 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		299402A820F1703F00AF5474 /* Build configuration list for PBXNativeTarget "Raytracing iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				299402A920F1703F00AF5474 /* Debug */,
+				299402AA20F1703F00AF5474 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		299402AB20F1703F00AF5474 /* Build configuration list for PBXNativeTarget "Raytracing macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				299402AC20F1703F00AF5474 /* Debug */,
+				299402AD20F1703F00AF5474 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2994027520F1703D00AF5474 /* Project object */;
+}
