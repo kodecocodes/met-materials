@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		820EACE5267C1D8600570060 /* VertexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD7267C1D8500570060 /* VertexApp.swift */; };
+		820EACE6267C1D8600570060 /* VertexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD7267C1D8500570060 /* VertexApp.swift */; };
+		820EACE7267C1D8600570060 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD8267C1D8500570060 /* ContentView.swift */; };
+		820EACE8267C1D8600570060 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD8267C1D8500570060 /* ContentView.swift */; };
+		820EACE9267C1D8600570060 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820EACD9267C1D8600570060 /* Assets.xcassets */; };
+		820EACEA267C1D8600570060 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820EACD9267C1D8600570060 /* Assets.xcassets */; };
+		820EACF7267C262F00570060 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACF6267C262F00570060 /* Renderer.swift */; };
+		820EACF8267C262F00570060 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACF6267C262F00570060 /* Renderer.swift */; };
+		8289B17B267C690B0062BFCD /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8289B17A267C690B0062BFCD /* Shaders.metal */; };
+		8289B17C267C690B0062BFCD /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8289B17A267C690B0062BFCD /* Shaders.metal */; };
+		82D99CA0267C79C000505CDB /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D99C9F267C79C000505CDB /* MetalView.swift */; };
+		82D99CA1267C79C000505CDB /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D99C9F267C79C000505CDB /* MetalView.swift */; };
+		82F5DB51274C6A3400E2E0F6 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F5DB50274C6A3400E2E0F6 /* Quad.swift */; };
+		82F5DB52274C6A3400E2E0F6 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F5DB50274C6A3400E2E0F6 /* Quad.swift */; };
+		82F5DB54274C8BEA00E2E0F6 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F5DB53274C8BEA00E2E0F6 /* VertexDescriptor.swift */; };
+		82F5DB55274C8BEA00E2E0F6 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F5DB53274C8BEA00E2E0F6 /* VertexDescriptor.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		820EACD7267C1D8500570060 /* VertexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexApp.swift; sourceTree = "<group>"; };
+		820EACD8267C1D8500570060 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		820EACD9267C1D8600570060 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		820EACDE267C1D8600570060 /* Vertex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vertex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		820EACE4267C1D8600570060 /* Vertex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vertex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		820EACF6267C262F00570060 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		8289B17A267C690B0062BFCD /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		82D99C9F267C79C000505CDB /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		82F5DB50274C6A3400E2E0F6 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
+		82F5DB53274C8BEA00E2E0F6 /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		820EACDB267C1D8600570060 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE1267C1D8600570060 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		820EACD1267C1D8500570060 = {
+			isa = PBXGroup;
+			children = (
+				820EACD6267C1D8500570060 /* Shared */,
+				820EACDF267C1D8600570060 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		820EACD6267C1D8500570060 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				820EACD7267C1D8500570060 /* VertexApp.swift */,
+				820EACD8267C1D8500570060 /* ContentView.swift */,
+				820EACF6267C262F00570060 /* Renderer.swift */,
+				82D99C9F267C79C000505CDB /* MetalView.swift */,
+				82F5DB50274C6A3400E2E0F6 /* Quad.swift */,
+				8289B17A267C690B0062BFCD /* Shaders.metal */,
+				82F5DB53274C8BEA00E2E0F6 /* VertexDescriptor.swift */,
+				820EACD9267C1D8600570060 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		820EACDF267C1D8600570060 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				820EACDE267C1D8600570060 /* Vertex.app */,
+				820EACE4267C1D8600570060 /* Vertex.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		820EACDD267C1D8600570060 /* Vertex (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820EACED267C1D8600570060 /* Build configuration list for PBXNativeTarget "Vertex (iOS)" */;
+			buildPhases = (
+				820EACDA267C1D8600570060 /* Sources */,
+				820EACDB267C1D8600570060 /* Frameworks */,
+				820EACDC267C1D8600570060 /* Resources */,
+				820EACF9267C298800570060 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Vertex (iOS)";
+			productName = "Pipeline (iOS)";
+			productReference = 820EACDE267C1D8600570060 /* Vertex.app */;
+			productType = "com.apple.product-type.application";
+		};
+		820EACE3267C1D8600570060 /* Vertex (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820EACF0267C1D8600570060 /* Build configuration list for PBXNativeTarget "Vertex (macOS)" */;
+			buildPhases = (
+				820EACE0267C1D8600570060 /* Sources */,
+				820EACE1267C1D8600570060 /* Frameworks */,
+				820EACE2267C1D8600570060 /* Resources */,
+				820EACFA267C29AD00570060 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Vertex (macOS)";
+			productName = "Pipeline (macOS)";
+			productReference = 820EACE4267C1D8600570060 /* Vertex.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		820EACD2267C1D8500570060 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					820EACDD267C1D8600570060 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					820EACE3267C1D8600570060 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = 820EACD5267C1D8500570060 /* Build configuration list for PBXProject "Vertex" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 820EACD1267C1D8500570060;
+			productRefGroup = 820EACDF267C1D8600570060 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				820EACDD267C1D8600570060 /* Vertex (iOS) */,
+				820EACE3267C1D8600570060 /* Vertex (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		820EACDC267C1D8600570060 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820EACE9267C1D8600570060 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE2267C1D8600570060 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820EACEA267C1D8600570060 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		820EACF9267C298800570060 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+		820EACFA267C29AD00570060 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		820EACDA267C1D8600570060 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82F5DB54274C8BEA00E2E0F6 /* VertexDescriptor.swift in Sources */,
+				82F5DB51274C6A3400E2E0F6 /* Quad.swift in Sources */,
+				8289B17B267C690B0062BFCD /* Shaders.metal in Sources */,
+				820EACF7267C262F00570060 /* Renderer.swift in Sources */,
+				82D99CA0267C79C000505CDB /* MetalView.swift in Sources */,
+				820EACE7267C1D8600570060 /* ContentView.swift in Sources */,
+				820EACE5267C1D8600570060 /* VertexApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE0267C1D8600570060 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82F5DB55274C8BEA00E2E0F6 /* VertexDescriptor.swift in Sources */,
+				82F5DB52274C6A3400E2E0F6 /* Quad.swift in Sources */,
+				8289B17C267C690B0062BFCD /* Shaders.metal in Sources */,
+				820EACF8267C262F00570060 /* Renderer.swift in Sources */,
+				82D99CA1267C79C000505CDB /* MetalView.swift in Sources */,
+				820EACE8267C1D8600570060 /* ContentView.swift in Sources */,
+				820EACE6267C1D8600570060 /* VertexApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		820EACEB267C1D8600570060 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		820EACEC267C1D8600570060 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		820EACEE267C1D8600570060 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INFOPLIST_KEY_CFBundleExecutable = Vertex;
+				INFOPLIST_KEY_CFBundleName = Vertex;
+				INFOPLIST_KEY_CFBundleVersion = 1;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Vertex;
+				PRODUCT_NAME = Vertex;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		820EACEF267C1D8600570060 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INFOPLIST_KEY_CFBundleExecutable = Vertex;
+				INFOPLIST_KEY_CFBundleName = Vertex;
+				INFOPLIST_KEY_CFBundleVersion = 1;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Vertex;
+				PRODUCT_NAME = Vertex;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		820EACF1267C1D8600570060 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleExecutable = Vertex;
+				INFOPLIST_KEY_CFBundleName = Vertex;
+				INFOPLIST_KEY_CFBundleVersion = 1;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Vertex;
+				PRODUCT_NAME = Vertex;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		820EACF2267C1D8600570060 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleExecutable = Vertex;
+				INFOPLIST_KEY_CFBundleName = Vertex;
+				INFOPLIST_KEY_CFBundleVersion = 1;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Vertex;
+				PRODUCT_NAME = Vertex;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		820EACD5267C1D8500570060 /* Build configuration list for PBXProject "Vertex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820EACEB267C1D8600570060 /* Debug */,
+				820EACEC267C1D8600570060 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820EACED267C1D8600570060 /* Build configuration list for PBXNativeTarget "Vertex (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820EACEE267C1D8600570060 /* Debug */,
+				820EACEF267C1D8600570060 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820EACF0267C1D8600570060 /* Build configuration list for PBXNativeTarget "Vertex (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820EACF1267C1D8600570060 /* Debug */,
+				820EACF2267C1D8600570060 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 820EACD2267C1D8500570060 /* Project object */;
+}
