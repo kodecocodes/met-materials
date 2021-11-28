@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,59 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+enum TextureController {
+  static var textures: [String: MTLTexture] = [:]
+
+  static func texture(filename: String) -> MTLTexture? {
+    if let texture = textures[filename] {
+      return texture
+    }
+    let texture = try? loadTexture(filename: filename)
+    if texture != nil {
+      textures[filename] = texture
+    }
+    return texture
+  }
+
+  static func loadTexture(filename: String) throws -> MTLTexture? {
+    // 1
+    let textureLoader = MTKTextureLoader(device: Renderer.device)
+
+    if let texture = try? textureLoader.newTexture(
+      name: filename,
+      scaleFactor: 1.0,
+      bundle: Bundle.main,
+      options: nil) {
+      print("loaded texture: \(filename)")
+      return texture
+    }
+
+    // 2
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .SRGB: false,
+      .generateMipmaps: NSNumber(value: true)
+    ]
+    // 3
+    let fileExtension =
+      URL(fileURLWithPath: filename).pathExtension.isEmpty ?
+        "png" : nil
+    // 4
+    guard let url = Bundle.main.url(
+      forResource: filename,
+      withExtension: fileExtension)
+      else {
+        print("Failed to load \(filename)")
+        return nil
+    }
+    let texture = try textureLoader.newTexture(
+      URL: url,
+      options: textureLoaderOptions)
+    print("loaded texture: \(url.lastPathComponent)")
+    return texture
+  }
+}

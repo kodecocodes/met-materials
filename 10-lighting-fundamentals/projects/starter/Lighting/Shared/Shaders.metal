@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,58 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+  float3 color [[attribute(Color)]];
+};
+
+struct VertexOut {
+  float4 position [[position]];
+  float2 uv;
+  float3 color;
+};
+
+vertex VertexOut vertex_main(
+  const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  VertexOut out {
+    .position = position,
+    .uv = in.uv,
+    .color = in.color,
+  };
+  return out;
+}
+
+fragment float4 fragment_main(
+  constant Params &params [[buffer(ParamsBuffer)]],
+  VertexOut in [[stage_in]],
+  texture2d<float> baseColorTexture [[texture(BaseColor)]])
+{
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear,
+    max_anisotropy(8));
+
+  float3 baseColor;
+  if (is_null_texture(baseColorTexture)) {
+    baseColor = in.color;
+  } else {
+    baseColor = baseColorTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
+  }
+  return float4(baseColor, 1);
+}

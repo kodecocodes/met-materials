@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,63 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import Foundation
+
+struct SceneLighting {
+  lazy var sunlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [1, 2, -2]
+    return light
+  }()
+
+  lazy var ambientLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.color = [0.5, 1, 0]
+    light.intensity = 0.1
+    light.type = Ambient
+    return light
+  }()
+
+  lazy var redLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [-0.8, 0.76, -0.18]
+    light.color = [1, 0, 0]
+    light.attenuation = float3(0.5, 2, 1)
+    light.type = Point
+    return light
+  }()
+
+  lazy var spotlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [-0.64, 0.64, -1.07]
+    light.color = [1, 0, 1]
+    light.attenuation = float3(1, 0.5, 0)
+    light.type = Spot
+    light.coneAngle = Float(40).degreesToRadians
+    light.coneDirection = [0.5, -0.7, 1]
+    light.coneAttenuation = 8
+    return light
+  }()
+
+  var lights: [Light] = []
+
+  init() {
+    lights.append(sunlight)
+    lights.append(ambientLight)
+    lights.append(redLight)
+    lights.append(spotlight)
+  }
+
+  static func buildDefaultLight() -> Light {
+    var light = Light()
+    light.position = [0, 0, 0]
+    light.color = [1, 1, 1]
+    light.specularColor = [0.6, 0.6, 0.6]
+    light.intensity = 1
+    light.attenuation = float3(1, 0, 0)
+    light.type = Sun
+    return light
+  }
+}
