@@ -84,14 +84,14 @@ struct Quad {
       bytes: &indices,
       length: MemoryLayout<UInt16>.stride * indices.count,
       options: []) else {
-      fatalError("Unable to create quad vertex buffer")
+      fatalError("Unable to create quad index buffer")
     }
     self.indexBuffer = indexBuffer
     guard let colorBuffer = device.makeBuffer(
       bytes: &colors,
       length: MemoryLayout<simd_float3>.stride * indices.count,
       options: []) else {
-        fatalError("Unable to create quad vertex buffer")
+        fatalError("Unable to create quad color buffer")
       }
     self.colorBuffer = colorBuffer
   }
