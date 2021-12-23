@@ -30,63 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
+enum TextureController {
+  static var textures: [String: MTLTexture] = [:]
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  static func texture(filename: String) -> MTLTexture? {
+    if let texture = textures[filename] {
+      return texture
+    }
+    let texture = try? loadTexture(filename: filename)
+    if texture != nil {
+      textures[filename] = texture
+    }
+    return texture
+  }
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-} Params;
+  static func loadTexture(filename: String) throws -> MTLTexture? {
+    let textureLoader = MTKTextureLoader(device: Renderer.device)
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3
-} Attributes;
+    if let texture = try? textureLoader.newTexture(
+      name: filename,
+      scaleFactor: 1.0,
+      bundle: Bundle.main,
+      options: nil) {
+      print("loaded texture: \(filename)")
+      return texture
+    }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-} BufferIndices;
-
-typedef enum {
-  BaseColor = 0
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  float intensity;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-#endif /* Common_h */
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .SRGB: false,
+      .generateMipmaps: NSNumber(value: true)
+    ]
+    let fileExtension =
+      URL(fileURLWithPath: filename).pathExtension.isEmpty ?
+        "png" : nil
+    guard let url = Bundle.main.url(
+      forResource: filename,
+      withExtension: fileExtension)
+      else {
+        print("Failed to load \(filename)")
+        return nil
+    }
+    let texture = try textureLoader.newTexture(
+      URL: url,
+      options: textureLoaderOptions)
+    print("loaded texture: \(url.lastPathComponent)")
+    return texture
+  }
+}

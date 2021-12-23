@@ -30,69 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Common.h"
-#import "Lighting.h"
+import MetalKit
 
-struct VertexIn {
-  float4 position [[attribute(Position)]];
-  float3 normal [[attribute(Normal)]];
-  float2 uv [[attribute(UV)]];
-  float3 color [[attribute(Color)]];
-};
+enum TextureController {
+  static var textures: [String: MTLTexture] = [:]
 
-struct VertexOut {
-  float4 position [[position]];
-  float2 uv;
-  float3 color;
-  float3 worldPosition;
-  float3 worldNormal;
-};
-
-vertex VertexOut vertex_main(
-  const VertexIn in [[stage_in]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
-{
-  float4 position =
-    uniforms.projectionMatrix * uniforms.viewMatrix
-    * uniforms.modelMatrix * in.position;
-  VertexOut out {
-    .position = position,
-    .uv = in.uv,
-    .color = in.color,
-    .worldPosition = (uniforms.modelMatrix * in.position).xyz,
-    .worldNormal = uniforms.normalMatrix * in.normal
-  };
-  return out;
-}
-
-fragment float4 fragment_main(
-  constant Params &params [[buffer(ParamsBuffer)]],
-  VertexOut in [[stage_in]],
-  constant Light *lights [[buffer(2)]],
-  texture2d<float> baseColorTexture [[texture(BaseColor)]])
-{
-  constexpr sampler textureSampler(
-    filter::linear,
-    address::repeat,
-    mip_filter::linear,
-    max_anisotropy(8));
-
-  float3 baseColor;
-  if (is_null_texture(baseColorTexture)) {
-    baseColor = in.color;
-  } else {
-    baseColor = baseColorTexture.sample(
-    textureSampler,
-    in.uv * params.tiling).rgb;
+  static func texture(filename: String) -> MTLTexture? {
+    if let texture = textures[filename] {
+      return texture
+    }
+    let texture = try? loadTexture(filename: filename)
+    if texture != nil {
+      textures[filename] = texture
+    }
+    return texture
   }
-  float3 color = phongLighting(
-    in.worldNormal,
-    in.worldPosition,
-    params,
-    lights,
-    baseColor
-  );
-  return float4(color, 1);
+
+  static func loadTexture(filename: String) throws -> MTLTexture? {
+    let textureLoader = MTKTextureLoader(device: Renderer.device)
+
+    if let texture = try? textureLoader.newTexture(
+      name: filename,
+      scaleFactor: 1.0,
+      bundle: Bundle.main,
+      options: nil) {
+      print("loaded texture: \(filename)")
+      return texture
+    }
+
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .SRGB: false,
+      .generateMipmaps: NSNumber(value: true)
+    ]
+    let fileExtension =
+      URL(fileURLWithPath: filename).pathExtension.isEmpty ?
+        "png" : nil
+    guard let url = Bundle.main.url(
+      forResource: filename,
+      withExtension: fileExtension)
+      else {
+        print("Failed to load \(filename)")
+        return nil
+    }
+    let texture = try textureLoader.newTexture(
+      URL: url,
+      options: textureLoaderOptions)
+    print("loaded texture: \(url.lastPathComponent)")
+    return texture
+  }
 }

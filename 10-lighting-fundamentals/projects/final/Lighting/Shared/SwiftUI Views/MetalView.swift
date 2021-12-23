@@ -55,10 +55,8 @@ struct MetalView: View {
 
 #if os(macOS)
 typealias ViewRepresentable = NSViewRepresentable
-typealias MyMetalView = NSView
 #elseif os(iOS)
 typealias ViewRepresentable = UIViewRepresentable
-typealias MyMetalView = UIView
 #endif
 
 struct MetalViewRepresentable: ViewRepresentable {

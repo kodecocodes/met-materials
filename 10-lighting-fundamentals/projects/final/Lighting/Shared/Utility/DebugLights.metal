@@ -33,7 +33,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-#import "../Common.h"
+#import "../Shaders/Common.h"
 
 struct VertexOut {
   float4 position [[position]];

@@ -111,6 +111,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		82073CD72774136F006060C4 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				82F19C5C273DEE8B001C5657 /* GameController.swift */,
+				820B882626B8E50F0070A134 /* Renderer.swift */,
+				827DDAED2738DE15000E88B4 /* GameScene.swift */,
+				82D9AD802738F23E003E025A /* Camera.swift */,
+				82D9AD8927390D8C003E025A /* PlayerCamera.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		82073CD827741376006060C4 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				82D9AD86273902D9003E025A /* Movement.swift */,
+				82D9AD832738F54B003E025A /* InputController.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		82073CD927741383006060C4 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				820B882C26B8E5290070A134 /* VertexDescriptor.swift */,
+				820B882926B8E51B0070A134 /* Model.swift */,
+				822D02AD2736537E00296BE0 /* Transform.swift */,
+				8224335326CB7C6A00F627C5 /* Mesh.swift */,
+				8224335626CB7C7100F627C5 /* Submesh.swift */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
+		82073CDA2774138E006060C4 /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				82EDE5E526CCC4BB00DE47E4 /* TextureController.swift */,
+				82EDE5E826CCD32600DE47E4 /* Textures.xcassets */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
+		82073CDB27741397006060C4 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				820B884026B90B770070A134 /* Common.h */,
+				820B883D26B90B530070A134 /* Shaders.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		820B87FF26B8E47D0070A134 = {
 			isa = PBXGroup;
 			children = (
@@ -123,22 +174,11 @@
 			isa = PBXGroup;
 			children = (
 				820B880526B8E47D0070A134 /* LightingApp.swift */,
-				82F19C5C273DEE8B001C5657 /* GameController.swift */,
-				820B882626B8E50F0070A134 /* Renderer.swift */,
-				827DDAED2738DE15000E88B4 /* GameScene.swift */,
-				82D9AD802738F23E003E025A /* Camera.swift */,
-				82D9AD8927390D8C003E025A /* PlayerCamera.swift */,
-				82D9AD86273902D9003E025A /* Movement.swift */,
-				82D9AD832738F54B003E025A /* InputController.swift */,
-				820B882C26B8E5290070A134 /* VertexDescriptor.swift */,
-				820B882926B8E51B0070A134 /* Model.swift */,
-				822D02AD2736537E00296BE0 /* Transform.swift */,
-				8224335326CB7C6A00F627C5 /* Mesh.swift */,
-				8224335626CB7C7100F627C5 /* Submesh.swift */,
-				82EDE5E526CCC4BB00DE47E4 /* TextureController.swift */,
-				82EDE5E826CCD32600DE47E4 /* Textures.xcassets */,
-				820B884026B90B770070A134 /* Common.h */,
-				820B883D26B90B530070A134 /* Shaders.metal */,
+				82073CD72774136F006060C4 /* Game */,
+				82073CD827741376006060C4 /* Input */,
+				82073CD927741383006060C4 /* Geometry */,
+				82073CDA2774138E006060C4 /* Textures */,
+				82073CDB27741397006060C4 /* Shaders */,
 				820B883626B8E5570070A134 /* Models */,
 				820B883226B8E53C0070A134 /* Utility */,
 				820B882226B8E4EF0070A134 /* SwiftUI Views */,
@@ -459,7 +499,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = Shared/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Shared/Shaders/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -512,7 +552,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = Shared/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Shared/Shaders/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -524,6 +564,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -553,6 +594,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

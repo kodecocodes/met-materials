@@ -30,57 +30,59 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
 
-enum TextureController {
-  static var textures: [String: MTLTexture] = [:]
-
-  static func texture(filename: String) -> MTLTexture? {
-    if let texture = textures[filename] {
-      return texture
-    }
-    let texture = try? loadTexture(filename: filename)
-    if texture != nil {
-      textures[filename] = texture
-    }
-    return texture
+struct SceneLighting {
+  static func buildDefaultLight() -> Light {
+    var light = Light()
+    light.position = [0, 0, 0]
+    light.color = [1, 1, 1]
+    light.specularColor = [0.6, 0.6, 0.6]
+    light.attenuation = [1, 0, 0]
+    light.type = Sun
+    return light
   }
 
-  static func loadTexture(filename: String) throws -> MTLTexture? {
-    // 1
-    let textureLoader = MTKTextureLoader(device: Renderer.device)
+  let sunlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [1, 2, -2]
+    return light
+  }()
 
-    if let texture = try? textureLoader.newTexture(
-      name: filename,
-      scaleFactor: 1.0,
-      bundle: Bundle.main,
-      options: nil) {
-      print("loaded texture: \(filename)")
-      return texture
-    }
+  let ambientLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.color = [0.05, 0.1, 0]
+    light.type = Ambient
+    return light
+  }()
 
-    // 2
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
-      .origin: MTKTextureLoader.Origin.bottomLeft,
-      .SRGB: false,
-      .generateMipmaps: NSNumber(value: true)
-    ]
-    // 3
-    let fileExtension =
-      URL(fileURLWithPath: filename).pathExtension.isEmpty ?
-        "png" : nil
-    // 4
-    guard let url = Bundle.main.url(
-      forResource: filename,
-      withExtension: fileExtension)
-      else {
-        print("Failed to load \(filename)")
-        return nil
-    }
-    let texture = try textureLoader.newTexture(
-      URL: url,
-      options: textureLoaderOptions)
-    print("loaded texture: \(url.lastPathComponent)")
-    return texture
+  let redLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Point
+    light.position = [-0.8, 0.76, -0.18]
+    light.color = [1, 0, 0]
+    light.attenuation = [0.5, 2, 1]
+    return light
+  }()
+
+  lazy var spotlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Spot
+    light.position = [-0.64, 0.64, -1.07]
+    light.color = [1, 0, 1]
+    light.attenuation = [1, 0.5, 0]
+    light.coneAngle = Float(40).degreesToRadians
+    light.coneDirection = [0.5, -0.7, 1]
+    light.coneAttenuation = 8
+    return light
+  }()
+
+  var lights: [Light] = []
+
+  init() {
+    lights.append(sunlight)
+    lights.append(ambientLight)
+    lights.append(redLight)
+    lights.append(spotlight)
   }
 }

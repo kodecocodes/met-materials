@@ -84,7 +84,7 @@ extension Model {
 
     encoder.setFragmentBytes(
       &params,
-      length: MemoryLayout<Uniforms>.stride,
+      length: MemoryLayout<Params>.stride,
       index: ParamsBuffer.index)
 
     for mesh in meshes {

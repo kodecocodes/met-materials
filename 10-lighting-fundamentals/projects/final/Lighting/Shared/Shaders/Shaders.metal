@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-///
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,67 +30,69 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-extension MTLVertexDescriptor {
-  static var defaultLayout: MTLVertexDescriptor? {
-    MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
-  }
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+  float3 color [[attribute(Color)]];
+};
+
+struct VertexOut {
+  float4 position [[position]];
+  float2 uv;
+  float3 color;
+  float3 worldPosition;
+  float3 worldNormal;
+};
+
+vertex VertexOut vertex_main(
+  const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  VertexOut out {
+    .position = position,
+    .uv = in.uv,
+    .color = in.color,
+    .worldPosition = (uniforms.modelMatrix * in.position).xyz,
+    .worldNormal = uniforms.normalMatrix * in.normal
+  };
+  return out;
 }
 
-extension MDLVertexDescriptor {
-  static var defaultLayout: MDLVertexDescriptor {
-    let vertexDescriptor = MDLVertexDescriptor()
-    var offset = 0
-    vertexDescriptor.attributes[Position.index] = MDLVertexAttribute(
-      name: MDLVertexAttributePosition,
-      format: .float3,
-      offset: 0,
-      bufferIndex: VertexBuffer.index)
-    offset += MemoryLayout<float3>.stride
-    vertexDescriptor.attributes[Normal.index] = MDLVertexAttribute(
-      name: MDLVertexAttributeNormal,
-      format: .float3,
-      offset: offset,
-      bufferIndex: VertexBuffer.index)
-    offset += MemoryLayout<float3>.stride
-    vertexDescriptor.layouts[VertexBuffer.index]
-      = MDLVertexBufferLayout(stride: offset)
+fragment float4 fragment_main(
+  constant Params &params [[buffer(ParamsBuffer)]],
+  constant Light *lights [[buffer(LightBuffer)]],
+  VertexOut in [[stage_in]],
+  texture2d<float> baseColorTexture [[texture(BaseColor)]])
+{
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear,
+    max_anisotropy(8));
 
-    vertexDescriptor.attributes[UV.index] = MDLVertexAttribute(
-      name: MDLVertexAttributeTextureCoordinate,
-      format: .float2,
-      offset: 0,
-      bufferIndex: UVBuffer.index)
-    vertexDescriptor.layouts[UVBuffer.index]
-      = MDLVertexBufferLayout(stride: MemoryLayout<float2>.stride)
-
-    vertexDescriptor.attributes[Color.index] = MDLVertexAttribute(
-      name: MDLVertexAttributeColor,
-      format: .float3,
-      offset: 0,
-      bufferIndex: ColorBuffer.index)
-    vertexDescriptor.layouts[ColorBuffer.index]
-      = MDLVertexBufferLayout(stride: MemoryLayout<float2>.stride)
-
-    return vertexDescriptor
+  float3 baseColor;
+  if (is_null_texture(baseColorTexture)) {
+    baseColor = in.color;
+  } else {
+    baseColor = baseColorTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
   }
-}
-
-extension Attributes {
-  var index: Int {
-    return Int(self.rawValue)
-  }
-}
-
-extension BufferIndices {
-  var index: Int {
-    return Int(self.rawValue)
-  }
-}
-
-extension TextureIndices {
-  var index: Int {
-    return Int(self.rawValue)
-  }
+  float3 normalDirection = normalize(in.worldNormal);
+  float3 color = phongLighting(
+    normalDirection,
+    in.worldPosition,
+    params,
+    lights,
+    baseColor
+  );
+  return float4(color, 1);
 }

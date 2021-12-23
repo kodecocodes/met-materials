@@ -133,7 +133,7 @@ extension Renderer {
     renderEncoder.setFragmentBytes(
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
-      index: 2)
+      index: LightBuffer.index)
 
     for model in scene.models {
       model.render(
@@ -141,12 +141,10 @@ extension Renderer {
         uniforms: uniforms,
         params: params)
     }
-
     DebugLights.draw(
       lights: scene.lighting.lights,
       encoder: renderEncoder,
       uniforms: uniforms)
-
     renderEncoder.endEncoding()
     guard let drawable = view.currentDrawable else {
       return

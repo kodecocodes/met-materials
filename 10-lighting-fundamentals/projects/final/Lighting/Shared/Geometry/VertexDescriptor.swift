@@ -32,36 +32,65 @@
 
 import MetalKit
 
-class GameController: NSObject {
-  var scene: GameScene
-  var renderer: Renderer
-  var options = Options()
-  var fps: Double = 0
-  var deltaTime: Double = 0
-  var lastTime: Double = CFAbsoluteTimeGetCurrent()
-
-  init(metalView: MTKView, options: Options) {
-    renderer = Renderer(metalView: metalView, options: options)
-    scene = GameScene()
-    super.init()
-    self.options = options
-    metalView.delegate = self
-    fps = Double(metalView.preferredFramesPerSecond)
-    mtkView(metalView, drawableSizeWillChange: metalView.drawableSize)
+extension MTLVertexDescriptor {
+  static var defaultLayout: MTLVertexDescriptor? {
+    MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
   }
 }
 
-extension GameController: MTKViewDelegate {
-  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-    scene.update(size: size)
-    renderer.mtkView(view, drawableSizeWillChange: size)
-  }
+extension MDLVertexDescriptor {
+  static var defaultLayout: MDLVertexDescriptor {
+    let vertexDescriptor = MDLVertexDescriptor()
+    var offset = 0
+    vertexDescriptor.attributes[Position.index] = MDLVertexAttribute(
+      name: MDLVertexAttributePosition,
+      format: .float3,
+      offset: 0,
+      bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
+    vertexDescriptor.attributes[Normal.index] = MDLVertexAttribute(
+      name: MDLVertexAttributeNormal,
+      format: .float3,
+      offset: offset,
+      bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
+    vertexDescriptor.layouts[VertexBuffer.index]
+      = MDLVertexBufferLayout(stride: offset)
 
-  func draw(in view: MTKView) {
-    let currentTime = CFAbsoluteTimeGetCurrent()
-    let deltaTime = (currentTime - lastTime)
-    lastTime = currentTime
-    scene.update(deltaTime: Float(deltaTime))
-    renderer.draw(scene: scene, in: view)
+    vertexDescriptor.attributes[UV.index] = MDLVertexAttribute(
+      name: MDLVertexAttributeTextureCoordinate,
+      format: .float2,
+      offset: 0,
+      bufferIndex: UVBuffer.index)
+    vertexDescriptor.layouts[UVBuffer.index]
+      = MDLVertexBufferLayout(stride: MemoryLayout<float2>.stride)
+
+    vertexDescriptor.attributes[Color.index] = MDLVertexAttribute(
+      name: MDLVertexAttributeColor,
+      format: .float3,
+      offset: 0,
+      bufferIndex: ColorBuffer.index)
+    vertexDescriptor.layouts[ColorBuffer.index]
+      = MDLVertexBufferLayout(stride: MemoryLayout<float3>.stride)
+
+    return vertexDescriptor
+  }
+}
+
+extension Attributes {
+  var index: Int {
+    return Int(rawValue)
+  }
+}
+
+extension BufferIndices {
+  var index: Int {
+    return Int(rawValue)
+  }
+}
+
+extension TextureIndices {
+  var index: Int {
+    return Int(rawValue)
   }
 }

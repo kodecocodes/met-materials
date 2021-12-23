@@ -30,61 +30,64 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+#ifndef Common_h
+#define Common_h
 
-struct SceneLighting {
-  lazy var sunlight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [1, 2, -2]
-    return light
-  }()
+#import <simd/simd.h>
 
-  lazy var ambientLight: Light = {
-    var light = Self.buildDefaultLight()
-    light.color = [0.5, 1, 0]
-    light.intensity = 0.1
-    light.type = Ambient
-    return light
-  }()
+typedef struct {
+  matrix_float4x4 modelMatrix;
+  matrix_float4x4 viewMatrix;
+  matrix_float4x4 projectionMatrix;
+  matrix_float3x3 normalMatrix;
+} Uniforms;
 
-  lazy var redLight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [-0.8, 0.76, -0.18]
-    light.color = [1, 0, 0]
-    light.attenuation = float3(0.5, 2, 1)
-    light.type = Point
-    return light
-  }()
+typedef struct {
+  uint width;
+  uint height;
+  uint tiling;
+  uint lightCount;
+  vector_float3 cameraPosition;
+} Params;
 
-  lazy var spotlight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [-0.64, 0.64, -1.07]
-    light.color = [1, 0, 1]
-    light.attenuation = float3(1, 0.5, 0)
-    light.type = Spot
-    light.coneAngle = Float(40).degreesToRadians
-    light.coneDirection = [0.5, -0.7, 1]
-    light.coneAttenuation = 8
-    return light
-  }()
+typedef enum {
+  Position = 0,
+  Normal = 1,
+  UV = 2,
+  Color = 3
+} Attributes;
 
-  var lights: [Light] = []
+typedef enum {
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  ColorBuffer = 2,
+  UniformsBuffer = 11,
+  ParamsBuffer = 12,
+  LightBuffer = 13
+} BufferIndices;
 
-  init() {
-    lights.append(sunlight)
-    lights.append(ambientLight)
-    lights.append(redLight)
-    lights.append(spotlight)
-  }
+typedef enum {
+  BaseColor = 0
+} TextureIndices;
 
-  static func buildDefaultLight() -> Light {
-    var light = Light()
-    light.position = [0, 0, 0]
-    light.color = [1, 1, 1]
-    light.specularColor = [0.6, 0.6, 0.6]
-    light.intensity = 1
-    light.attenuation = float3(1, 0, 0)
-    light.type = Sun
-    return light
-  }
-}
+typedef enum {
+  unused = 0,
+  Sun = 1,
+  Spot = 2,
+  Point = 3,
+  Ambient = 4
+} LightType;
+
+typedef struct {
+  vector_float3 position;
+  vector_float3 color;
+  vector_float3 specularColor;
+  float radius;
+  vector_float3 attenuation;
+  LightType type;
+  float coneAngle;
+  vector_float3 coneDirection;
+  float coneAttenuation;
+} Light;
+
+#endif /* Common_h */
