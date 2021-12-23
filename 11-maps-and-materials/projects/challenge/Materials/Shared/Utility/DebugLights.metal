@@ -33,7 +33,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-#import "../Common.h"
+#import "../Shaders/Common.h"
 
 struct VertexOut {
   float4 position [[position]];
@@ -42,7 +42,7 @@ struct VertexOut {
 
 vertex VertexOut vertex_debug(
   constant float3 *vertices [[buffer(0)]],
-  constant Uniforms &uniforms [[buffer(BufferIndexUniforms)]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
   uint id [[vertex_id]])
 {
   matrix_float4x4 mvp = uniforms.projectionMatrix

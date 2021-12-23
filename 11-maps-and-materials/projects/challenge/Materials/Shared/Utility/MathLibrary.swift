@@ -32,11 +32,6 @@
 
 // Math Library v3.02
 
-// 3.01 Added import CoreGraphics
-// 3.01 Added init(orthographic:near:far)
-// 3.01 Removed init(orthoLeft:right:left:top:bottom)
-// 3.02 identity is now a static var
-
 // swiftlint:disable type_name
 // swiftlint:disable identifier_name
 // swiftlint:disable comma

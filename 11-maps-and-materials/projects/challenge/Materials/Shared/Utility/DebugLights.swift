@@ -75,13 +75,13 @@ enum DebugLights {
     encoder.label = "Debug lights"
     for light in lights {
       switch light.type {
-      case Pointlight:
+      case Point:
         debugDrawPoint(
           encoder: encoder,
           uniforms: uniforms,
           position: light.position,
           color: light.color)
-      case Spotlight:
+      case Spot:
         debugDrawPoint(
           encoder: encoder,
           uniforms: uniforms,
@@ -93,7 +93,7 @@ enum DebugLights {
           position: light.position,
           direction: light.coneDirection,
           color: light.color)
-      case Sunlight:
+      case Sun:
         debugDrawDirection(
           renderEncoder: encoder,
           uniforms: uniforms,
@@ -119,7 +119,7 @@ enum DebugLights {
     encoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
-      index: BufferIndexUniforms.value)
+      index: UniformsBuffer.index)
     var lightColor = color
     encoder.setFragmentBytes(
       &lightColor,
@@ -158,7 +158,7 @@ enum DebugLights {
     renderEncoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
-      index: BufferIndexUniforms.value)
+      index: UniformsBuffer.index)
     var lightColor = color
     renderEncoder.setFragmentBytes(&lightColor, length: MemoryLayout<float3>.stride, index: 1)
     renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -191,7 +191,7 @@ enum DebugLights {
     renderEncoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
-      index: BufferIndexUniforms.value)
+      index: UniformsBuffer.index)
     var lightColor = color
     renderEncoder.setFragmentBytes(&lightColor, length: MemoryLayout<float3>.stride, index: 1)
     renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
