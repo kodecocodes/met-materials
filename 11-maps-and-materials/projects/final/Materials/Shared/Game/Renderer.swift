@@ -133,7 +133,7 @@ extension Renderer {
     renderEncoder.setFragmentBytes(
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
-      index: 2)
+      index: LightBuffer.index)
 
     for model in scene.models {
       model.render(

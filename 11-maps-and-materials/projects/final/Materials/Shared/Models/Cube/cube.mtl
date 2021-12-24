@@ -11,5 +11,5 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd cube-color
- map_roughness cube-roughness
+map_roughness cube-roughness
 map_tangentSpaceNormal cube-normal

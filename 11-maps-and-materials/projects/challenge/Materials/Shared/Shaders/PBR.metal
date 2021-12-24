@@ -63,7 +63,7 @@ float3 computeDiffuse(
 fragment float4 fragment_PBR(
   VertexOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
-  constant Light *lights [[buffer(2)]],
+  constant Light *lights [[buffer(LightBuffer)]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
   texture2d<float> normalTexture [[texture(NormalTexture)]],
