@@ -67,9 +67,9 @@ vertex VertexOut vertex_main(
 }
 
 fragment float4 fragment_main(
+  VertexOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
-  VertexOut in [[stage_in]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]])
 {
   constexpr sampler textureSampler(
