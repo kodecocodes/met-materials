@@ -32,12 +32,13 @@
 
 import MetalKit
 
-struct ForwardRenderPass {
+struct ForwardRenderPass: RenderPass {
   let label = "Forward Render Pass"
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
+  var idTexture: MTLTexture?
 
   init(view: MTKView) {
     // create the pipeline state
@@ -54,14 +55,6 @@ struct ForwardRenderPass {
 
     // create the depth stencil state
     depthStencilState = Self.buildDepthStencilState()
-  }
-
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
@@ -88,7 +81,7 @@ struct ForwardRenderPass {
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
-
+    renderEncoder.setFragmentTexture(idTexture, index: 11)
     for model in scene.models {
       model.render(
         encoder: renderEncoder,

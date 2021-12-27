@@ -30,84 +30,58 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
+struct ObjectIdRenderPass: RenderPass {
+  let label = "Object ID Render Pass"
+  var descriptor: MTLRenderPassDescriptor?
+  var pipelineState: MTLRenderPipelineState
+  var idTexture: MTLTexture?
+  var depthTexture: MTLTexture?
+  var depthStencilState: MTLDepthStencilState?
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  init(view: MTKView) {
+    pipelineState = PipelineStates.buildObjectIdPSO()
+    descriptor = MTLRenderPassDescriptor()
+    depthStencilState = Self.buildDepthStencilState()
+  }
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
+  mutating func resize(view: MTKView, size: CGSize) {
+    idTexture = Self.makeTexture(
+      size: size,
+      pixelFormat: .r32Uint,
+      label: "ID Texture")
+    depthTexture = Self.makeTexture(
+      size: size,
+      pixelFormat: .depth32Float,
+      label: "ID Depth Texture")
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  ) {
+    guard let descriptor = descriptor else {
+      return
+    }
+    descriptor.colorAttachments[0].texture = idTexture
+    descriptor.colorAttachments[0].loadAction = .clear
+    descriptor.colorAttachments[0].storeAction = .store
+    descriptor.depthAttachment.texture = depthTexture
+    guard let renderEncoder =
+      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+    else { return }
+    renderEncoder.label = label
+    renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setDepthStencilState(depthStencilState)
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.endEncoding()
+  }
+}

@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,84 +30,65 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
+struct GameScene {
+  static var objectId: UInt32 = 1
+  lazy var train: Model = {
+    createModel(name: "train.obj")
+  }()
+  lazy var treefir1: Model = {
+    createModel(name: "treefir.obj")
+  }()
+  lazy var treefir2: Model = {
+    createModel(name: "treefir.obj")
+  }()
+  lazy var treefir3: Model = {
+    createModel(name: "treefir.obj")
+  }()
+  lazy var ground: Model = {
+    Model(name: "large_plane.obj", objectId: 0)
+  }()
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  var models: [Model] = []
+  var camera = ArcballCamera()
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
+  var defaultView: Transform {
+    Transform(
+      position: [3.2, 3.1, 1.0],
+      rotation: [-0.6, 10.7, 0.0])
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
+  var lighting = SceneLighting()
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
+  init() {
+    camera.transform = defaultView
+    camera.target = [0, 1, 0]
+    camera.distance = 4
+    treefir1.position = [-1, 0, 2.5]
+    treefir2.position = [-3, 0, -2]
+    treefir3.position = [1.5, 0, -0.5]
+    models = [treefir1, treefir2, treefir3, train, ground]
+  }
 
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
+  func createModel(name: String) -> Model {
+    let model = Model(name: name, objectId: Self.objectId)
+    Self.objectId += 1
+    return model
+  }
 
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
+  mutating func update(size: CGSize) {
+    camera.update(size: size)
+  }
 
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+  mutating func update(deltaTime: Float) {
+    let input = InputController.shared
+    if input.keysPressed.contains(.one) {
+      camera.transform = Transform()
+    }
+    if input.keysPressed.contains(.two) {
+      camera.transform = defaultView
+    }
+    camera.update(deltaTime: deltaTime)
+  }
+}

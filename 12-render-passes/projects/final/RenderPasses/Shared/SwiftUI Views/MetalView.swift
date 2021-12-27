@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,84 +30,76 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import SwiftUI
+import MetalKit
 
-#import <simd/simd.h>
+struct MetalView: View {
+  let options: Options
+  @State private var metalView = MTKView()
+  @State private var gameController: GameController?
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  var body: some View {
+    VStack {
+      MetalViewRepresentable(
+        gameController: gameController,
+        metalView: $metalView,
+        options: options)
+        .onAppear {
+          gameController = GameController(
+            metalView: metalView,
+            options: options)
+        }
+        .gesture(DragGesture(minimumDistance: 0)
+          .onChanged { value in
+            InputController.shared.touchLocation = value.location
+            // if the user drags, cancel the tap touch
+            if abs(value.translation.width) > 1 ||
+              abs(value.translation.height) > 1 {
+              InputController.shared.touchLocation = nil
+            }
+          })
+    }
+  }
+}
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
+struct MetalViewRepresentable: ViewRepresentable {
+  let gameController: GameController?
+  @Binding var metalView: MTKView
+  let options: Options
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
+  #if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    return metalView
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+  #elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    metalView
+  }
 
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+  #endif
 
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
+  func updateMetalView() {
+    gameController?.options = options
+  }
+}
 
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+struct MetalView_Previews: PreviewProvider {
+  static var previews: some View {
+    VStack {
+      MetalView(options: Options())
+      Text("Metal View")
+    }
+  }
+}

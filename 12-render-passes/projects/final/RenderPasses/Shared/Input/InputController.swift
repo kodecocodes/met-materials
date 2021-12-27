@@ -30,84 +30,60 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import GameController
 
-#import <simd/simd.h>
+class InputController {
+  struct Point {
+    var x: Float
+    var y: Float
+    static let zero = Point(x: 0, y: 0)
+  }
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  static let shared = InputController()
+  var keysPressed: Set<GCKeyCode> = []
+  var leftMouseDown = false
+  var mouseDelta = Point.zero
+  var mouseScroll = Point.zero
+  var touchLocation: CGPoint?
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+  private init() {
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: .GCKeyboardDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let keyboard = notification.object as? GCKeyboard
+          keyboard?.keyboardInput?.keyChangedHandler
+            = { _, _, keyCode, pressed in
+          if pressed {
+            self.keysPressed.insert(keyCode)
+          } else {
+            self.keysPressed.remove(keyCode)
+          }
+        }
+    }
+    center.addObserver(
+      forName: .GCMouseDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let mouse = notification.object as? GCMouse
+        // 1
+        mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
+          self.leftMouseDown = pressed
+        }
+        // 2
+        mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
+          self.mouseDelta = Point(x: deltaX, y: deltaY)
+        }
+        // 3
+        mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
+          self.mouseScroll.x = xValue
+          self.mouseScroll.y = yValue
+        }
+    }
+#if os(macOS)
+  NSEvent.addLocalMonitorForEvents(
+    matching: [.keyUp, .keyDown]) { _ in nil }
+#endif
+  }
+}

@@ -30,84 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import Foundation
 
-#import <simd/simd.h>
+enum Settings {
+  static var rotationSpeed: Float { 2.0 }
+  static var translationSpeed: Float { 3.0 }
+  static var mouseScrollSensitivity: Float { 0.1 }
+  static var mousePanSensitivity: Float { 0.008 }
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+protocol Movement where Self: Transformable {
+}
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
+extension Movement {
+  var forwardVector: float3 {
+    normalize([sin(rotation.y), 0, cos(rotation.y)])
+  }
+  var rightVector: float3 {
+    [forwardVector.z, forwardVector.y, -forwardVector.x]
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+  func updateInput(deltaTime: Float) -> Transform {
+    let input = InputController.shared
+    var transform = Transform()
+    let rotationAmount = deltaTime * Settings.rotationSpeed
+    if input.keysPressed.contains(.leftArrow) {
+      transform.rotation.y -= rotationAmount
+    }
+    if input.keysPressed.contains(.rightArrow) {
+      transform.rotation.y += rotationAmount
+    }
+    var direction: float3 = .zero
+    if input.keysPressed.contains(.keyW) {
+      direction.z += 1
+    }
+    if input.keysPressed.contains(.keyS) {
+      direction.z -= 1
+    }
+    if input.keysPressed.contains(.keyA) {
+      direction.x -= 1
+    }
+    if input.keysPressed.contains(.keyD) {
+      direction.x += 1
+    }
+    let translationAmount = deltaTime * Settings.translationSpeed
+    if direction != .zero {
+      direction = normalize(direction)
+      transform.position += (direction.z * forwardVector
+        + direction.x * rightVector) * translationAmount
+    }
+    return transform
+  }
+}

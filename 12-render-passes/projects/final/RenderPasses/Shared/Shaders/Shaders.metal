@@ -30,84 +30,72 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+#import "Lighting.h"
+#import "Vertex.h"
 
-#import <simd/simd.h>
+vertex VertexOut vertex_main(
+  const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  VertexOut out {
+    .position = position,
+    .uv = in.uv,
+    .color = in.color,
+    .worldPosition = (uniforms.modelMatrix * in.position).xyz,
+    .worldNormal = uniforms.normalMatrix * in.normal,
+    .worldTangent = uniforms.normalMatrix * in.tangent,
+    .worldBitangent = uniforms.normalMatrix * in.bitangent
+  };
+  return out;
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+fragment float4 fragment_main(
+  constant Params &params [[buffer(ParamsBuffer)]],
+  constant Light *lights [[buffer(LightBuffer)]],
+  VertexOut in [[stage_in]],
+  constant Material &_material [[buffer(MaterialBuffer)]],
+  texture2d<float> baseColorTexture [[texture(BaseColor)]],
+  texture2d<float> normalTexture [[texture(NormalTexture)]])
+{
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear,
+    max_anisotropy(8));
 
-typedef struct {
-  uint width;
-  uint height;
-  uint tiling;
-  uint lightCount;
-  vector_float3 cameraPosition;
-  uint objectId;
-  uint touchX;
-  uint touchY;
-} Params;
+  Material material = _material;
+  if (!is_null_texture(baseColorTexture)) {
+    material.baseColor = baseColorTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
+  }
+  float3 normal;
+  if (is_null_texture(normalTexture)) {
+    normal = in.worldNormal;
+  } else {
+    normal = normalTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
+    normal = normal * 2 - 1;
+    normal = float3x3(
+      in.worldTangent,
+      in.worldBitangent,
+      in.worldNormal) * normal;
+  }
+  normal = normalize(normal);
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Color = 3,
-  Tangent = 4,
-  Bitangent = 5
-} Attributes;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  ColorBuffer = 2,
-  TangentBuffer = 3,
-  BitangentBuffer = 4,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14
-} BufferIndices;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  LightType type;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  vector_float3 specularColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float shininess;
-} Material;
-
-#endif /* Common_h */
+  float3 color = phongLighting(
+    normal,
+    in.worldPosition,
+    params,
+    lights,
+    material
+  );
+  return float4(color, 1);
+}
