@@ -52,13 +52,15 @@ struct ShadowRenderPass: RenderPass {
     pipelineDescriptor.vertexDescriptor = .defaultLayout
     pipelineState =
       PipelineStates.createPSO(descriptor: pipelineDescriptor)
+    shadowTexture = Self.makeTexture(
+      size: CGSize(
+        width: 2048,
+        height: 2048),
+      pixelFormat: .depth32Float,
+      label: "Shadow Depth Texture")
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
-    shadowTexture = Self.makeTexture(
-      size: size,
-      pixelFormat: .depth32Float,
-      label: "Depth Texture")
   }
 
   func draw(
@@ -80,10 +82,12 @@ struct ShadowRenderPass: RenderPass {
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
     for model in scene.models {
+      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
+      renderEncoder.popDebugGroup()
     }
     renderEncoder.endEncoding()
   }

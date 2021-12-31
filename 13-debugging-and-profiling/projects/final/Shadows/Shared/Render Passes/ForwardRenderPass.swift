@@ -83,10 +83,12 @@ struct ForwardRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: 15)
     for model in scene.models {
+      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
+      renderEncoder.popDebugGroup()
     }
     // Debugging sun position
     var scene = scene
@@ -95,6 +97,10 @@ struct ForwardRenderPass: RenderPass {
       uniforms: uniforms,
       model: scene.sun,
       color: [0.9, 0.8, 0.2])
+    DebugCameraFrustum.draw(
+      encoder: renderEncoder,
+      scene: scene,
+      uniforms: uniforms)
     // End Debugging
     renderEncoder.endEncoding()
   }

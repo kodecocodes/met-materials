@@ -133,6 +133,11 @@ fragment float4 fragment_PBR(
   float2 xy = shadowPosition.xy;
   xy = xy * 0.5 + 0.5;
   xy.y = 1 - xy.y;
+  if (xy.x > 1.0 || xy.y > 1.0 || xy.x < 0 || xy.y < 0) {
+    return float4(1, 0, 0, 1);
+  }
+  xy = saturate(xy);
+  
   // 3
   constexpr sampler s(
     coord::normalized, filter::linear,
@@ -140,7 +145,7 @@ fragment float4 fragment_PBR(
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
   // 4
-  if (shadowPosition.z > shadow_sample + 0.01) {
+  if (shadowPosition.z > shadow_sample + 0.0001) {
     diffuseColor *= 0.5;
   }
   return float4(diffuseColor + specularColor, 1);

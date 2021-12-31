@@ -50,13 +50,6 @@ struct SceneLighting {
     return light
   }()
 
-  let fillLight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [-5, 1, 3]
-    light.color = float3(repeating: 0.5)
-    return light
-  }()
-
   var lights: [Light] = []
 
   init() {

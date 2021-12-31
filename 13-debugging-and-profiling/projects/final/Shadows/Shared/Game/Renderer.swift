@@ -45,6 +45,7 @@ class Renderer: NSObject {
 
   var forwardRenderPass: ForwardRenderPass
   var shadowRenderPass: ShadowRenderPass
+  var shadowCamera = OrthographicCamera()
 
   init(metalView: MTKView, options: Options) {
     guard
@@ -87,12 +88,14 @@ extension Renderer {
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
     params.cameraPosition = scene.camera.position
-    let rect = CGRect(x: -8, y: 8, width: 16, height: 16)
-    uniforms.shadowProjectionMatrix
-      = float4x4(orthographic: rect, near: 0.1, far: 16)
+    let sun = scene.lighting.lights[0]
+    shadowCamera = OrthographicCamera.createShadowCamera(
+      using: scene.camera,
+      lightPosition: sun.position)
+    uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
     uniforms.shadowViewMatrix = float4x4(
-      eye: scene.lighting.lights[0].position,
-      center: .zero,
+      eye: shadowCamera.position,
+      center: shadowCamera.center,
       up: [0, 1, 0])
   }
 

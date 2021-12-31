@@ -30,29 +30,48 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+#include <metal_stdlib>
+using namespace metal;
 
-struct SceneLighting {
-  static func buildDefaultLight() -> Light {
-    var light = Light()
-    light.position = [0, 0, 0]
-    light.color = float3(repeating: 1.0)
-    light.specularColor = float3(repeating: 0.6)
-    light.attenuation = [1, 0, 0]
-    light.type = Sun
-    return light
-  }
+#import "../Shaders/Common.h"
 
-  let sunlight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [3, 3, -2]
-    light.color = float3(repeating: 1)
-    return light
-  }()
+struct VertexOut {
+  float4 position [[position]];
+  float point_size [[point_size]];
+};
 
-  var lights: [Light] = []
+vertex VertexOut vertex_frustum(
+  constant float3 *vertices [[buffer(0)]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  uint id [[vertex_id]])
+{
+  float4 position = float4(vertices[id], 1);
+  position = uniforms.projectionMatrix * uniforms.viewMatrix * position;
+  VertexOut out {
+    .position = position,
+    .point_size = 25.0
+  };
+  return out;
+}
 
-  init() {
-    lights = [sunlight]
-  }
+fragment float4 fragment_frustum(
+  float2 point [[point_coord]],
+  constant float3 &color [[buffer(ColorBuffer)]])
+{
+  return float4(color ,1);
+}
+
+
+struct SphereIn {
+  float4 position [[attribute(Position)]];
+};
+
+vertex float4 vertex_debug_cameraSphere(
+  const SphereIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  return position;
 }

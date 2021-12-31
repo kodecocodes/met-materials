@@ -81,10 +81,12 @@ struct ForwardRenderPass: RenderPass {
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
     for model in scene.models {
+      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
+      renderEncoder.popDebugGroup()
     }
     // Debugging sun position
     var scene = scene

@@ -88,7 +88,7 @@ struct ArcballCamera: Camera {
   }
 
   let minDistance: Float = 0.0
-  let maxDistance: Float = 20
+  let maxDistance: Float = 40
   var target: float3 = [0, 0, 0]
   var distance: Float = 2.5
 
@@ -135,6 +135,7 @@ struct OrthographicCamera: Camera, Movement {
   var viewSize: CGFloat = 10
   var near: Float = 0.1
   var far: Float = 100
+  var center = float3.zero
 
   var viewMatrix: float4x4 {
     (float4x4(translation: position) *
