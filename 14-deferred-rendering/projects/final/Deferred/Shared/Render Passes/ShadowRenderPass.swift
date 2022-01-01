@@ -73,12 +73,10 @@ struct ShadowRenderPass: RenderPass {
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
     for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
-      renderEncoder.popDebugGroup()
     }
     renderEncoder.endEncoding()
   }

@@ -75,7 +75,6 @@ class Renderer: NSObject {
       alpha: 1.0)
     metalView.depthStencilPixelFormat = .depth32Float
     mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
-    metalView.framebufferOnly = false
   }
 }
 
@@ -152,33 +151,5 @@ extension Renderer {
     }
     commandBuffer.present(drawable)
     commandBuffer.commit()
-  }
-
-  func blit(
-    commandBuffer: MTLCommandBuffer,
-    texture: MTLTexture?,
-    to view: MTKView
-  ) {
-    guard let blitEncoder =
-      commandBuffer.makeBlitCommandEncoder(),
-      let texture = texture,
-      let drawable = view.currentDrawable else { return }
-    blitEncoder.label = "Blit encoder"
-    let origin = MTLOrigin(x: 0, y: 0, z: 0)
-    let size = MTLSize(
-      width: texture.width,
-      height: texture.height,
-      depth: 1)
-    blitEncoder.copy(
-      from: texture,
-      sourceSlice: 0,
-      sourceLevel: 0,
-      sourceOrigin: origin,
-      sourceSize: size,
-      to: drawable.texture,
-      destinationSlice: 0,
-      destinationLevel: 0,
-      destinationOrigin: origin)
-    blitEncoder.endEncoding()
   }
 }

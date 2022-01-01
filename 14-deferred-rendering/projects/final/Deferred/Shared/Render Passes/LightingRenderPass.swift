@@ -60,26 +60,13 @@ struct LightingRenderPass: RenderPass {
 
   func resize(view: MTKView, size: CGSize) {}
 
-  func draw(
-    commandBuffer: MTLCommandBuffer,
+  func drawSunLight(
+    renderEncoder: MTLRenderCommandEncoder,
     scene: GameScene,
-    uniforms: Uniforms,
     params: Params
   ) {
-    guard let descriptor = descriptor,
-      let renderEncoder =
-        commandBuffer.makeRenderCommandEncoder(
-        descriptor: descriptor) else {
-          return
-    }
-    renderEncoder.label = label
-    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.pushDebugGroup("Sun Light")
     renderEncoder.setRenderPipelineState(sunPipelineState)
-    var uniforms = uniforms
-    renderEncoder.setVertexBytes(
-      &uniforms,
-      length: MemoryLayout<Uniforms>.stride,
-      index: UniformsBuffer.index)
     var params = params
     params.lightCount = UInt32(scene.lighting.sunlights.count)
     renderEncoder.setFragmentBytes(
@@ -90,21 +77,18 @@ struct LightingRenderPass: RenderPass {
       scene.lighting.sunBuffer,
       offset: 0,
       index: LightBuffer.index)
-    renderEncoder.setFragmentTexture(
-      albedoTexture,
-      index: BaseColor.index)
-    renderEncoder.setFragmentTexture(
-      normalTexture,
-      index: NormalTexture.index)
-    renderEncoder.setFragmentTexture(
-      positionTexture, index:
-      NormalTexture.index + 1)
     renderEncoder.drawPrimitives(
       type: .triangle,
       vertexStart: 0,
       vertexCount: 6)
+    renderEncoder.popDebugGroup()
+  }
 
-    // Point light volume rendering
+  func drawPointLight(
+    renderEncoder: MTLRenderCommandEncoder,
+    scene: GameScene,
+    params: Params
+  ) {
     renderEncoder.pushDebugGroup("Point lights")
     renderEncoder.setRenderPipelineState(pointLightPSO)
     renderEncoder.setVertexBuffer(
@@ -131,7 +115,44 @@ struct LightingRenderPass: RenderPass {
       indexBufferOffset: submesh.indexBufferOffset,
       instanceCount: scene.lighting.pointLights.count)
     renderEncoder.popDebugGroup()
+  }
 
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  ) {
+    guard let descriptor = descriptor,
+      let renderEncoder =
+        commandBuffer.makeRenderCommandEncoder(
+        descriptor: descriptor) else {
+          return
+    }
+    renderEncoder.label = label
+    renderEncoder.setDepthStencilState(depthStencilState)
+    var uniforms = uniforms
+    renderEncoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
+    renderEncoder.setFragmentTexture(
+      albedoTexture,
+      index: BaseColor.index)
+    renderEncoder.setFragmentTexture(
+      normalTexture,
+      index: NormalTexture.index)
+    renderEncoder.setFragmentTexture(
+      positionTexture, index:
+      NormalTexture.index + 1)
+    drawSunLight(
+      renderEncoder: renderEncoder,
+      scene: scene,
+      params: params)
+    drawPointLight(
+      renderEncoder: renderEncoder,
+      scene: scene,
+      params: params)
     renderEncoder.endEncoding()
   }
 }

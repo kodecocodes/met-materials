@@ -67,15 +67,12 @@ class InputController {
       object: nil,
       queue: nil) { notification in
         let mouse = notification.object as? GCMouse
-        // 1
         mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
           self.leftMouseDown = pressed
         }
-        // 2
         mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
           self.mouseDelta = Point(x: deltaX, y: deltaY)
         }
-        // 3
         mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
           self.mouseScroll.x = xValue
           self.mouseScroll.y = yValue

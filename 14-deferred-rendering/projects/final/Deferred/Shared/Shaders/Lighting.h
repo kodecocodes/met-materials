@@ -64,4 +64,8 @@ float3 calculateSpot(
   float3 normal,
   Material material);
 
+float calculateShadow(
+  float4 shadowPosition,
+  depth2d<float> shadowTexture);
+
 #endif /* Lighting_h */

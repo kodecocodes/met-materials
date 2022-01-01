@@ -71,7 +71,7 @@ struct SceneLighting {
     sunBuffer = Self.createBuffer(lights: sunlights)
     lights = sunlights
     pointLights = Self.createPointLights(
-      count: 200,
+      count: 40,
       min: [-6, 0.1, -6],
       max: [6, 0.3, 6])
     pointBuffer = Self.createBuffer(lights: pointLights)

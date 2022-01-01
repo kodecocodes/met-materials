@@ -38,7 +38,7 @@ struct GBufferRenderPass: RenderPass {
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-  var shadowTexture: MTLTexture?
+  weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createGBufferPSO(

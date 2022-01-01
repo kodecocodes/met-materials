@@ -38,7 +38,7 @@ struct ForwardRenderPass: RenderPass {
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-  var shadowTexture: MTLTexture?
+  weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createForwardPSO(
@@ -71,16 +71,11 @@ struct ForwardRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
     for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
-      renderEncoder.popDebugGroup()
     }
-    // debug point light positions
-    DebugLights.draw(lights: scene.lighting.pointLights, encoder: renderEncoder, uniforms: uniforms)
-    // end debugging
     renderEncoder.endEncoding()
   }
 }

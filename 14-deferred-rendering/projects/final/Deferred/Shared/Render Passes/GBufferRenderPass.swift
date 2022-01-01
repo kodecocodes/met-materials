@@ -38,7 +38,7 @@ struct GBufferRenderPass: RenderPass {
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-  var shadowTexture: MTLTexture?
+  weak var shadowTexture: MTLTexture?
   var albedoTexture: MTLTexture?
   var normalTexture: MTLTexture?
   var positionTexture: MTLTexture?
@@ -91,6 +91,7 @@ struct GBufferRenderPass: RenderPass {
     }
     descriptor?.depthAttachment.texture = depthTexture
     descriptor?.depthAttachment.storeAction = .dontCare
+
     guard let descriptor = descriptor,
     let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(
@@ -107,12 +108,10 @@ struct GBufferRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
     for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
-      renderEncoder.popDebugGroup()
     }
     renderEncoder.endEncoding()
   }

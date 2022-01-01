@@ -82,6 +82,7 @@ extension Model {
     uniforms vertex: Uniforms,
     params fragment: Params
   ) {
+    encoder.pushDebugGroup(name)
     var uniforms = vertex
     uniforms.modelMatrix = transform.modelMatrix
     uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
@@ -138,5 +139,6 @@ extension Model {
         )
       }
     }
+    encoder.popDebugGroup()
   }
 }

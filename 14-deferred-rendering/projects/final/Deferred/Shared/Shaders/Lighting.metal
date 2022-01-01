@@ -36,10 +36,10 @@ using namespace metal;
 #import "Lighting.h"
 
 float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material)
+                    Light light,
+                    float3 normal,
+                    Params params,
+                    Material material)
 {
   float3 diffuseColor = 0;
   float3 specularColor = 0;
@@ -72,6 +72,7 @@ float3 calculatePoint(
   float3 lightDirection = normalize(light.position - position);
   float attenuation = 1.0 / (light.attenuation.x +
       light.attenuation.y * d + light.attenuation.z * d * d);
+
   float diffuseIntensity =
       saturate(dot(lightDirection, normal));
   float3 color = light.color * material.baseColor * diffuseIntensity;
@@ -155,6 +156,6 @@ float calculateShadow(
     address::clamp_to_edge,
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.01) ? 0.5 : 1;
+  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
 }
 
