@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -137,7 +137,6 @@ fragment float4 fragment_PBR(
     return float4(1, 0, 0, 1);
   }
   xy = saturate(xy);
-  
   // 3
   constexpr sampler s(
     coord::normalized, filter::linear,

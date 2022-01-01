@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -42,22 +42,14 @@ struct ShadowRenderPass: RenderPass {
   var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
-    // create the pipeline state
-    let vertexFunction =
-      Renderer.library?.makeFunction(name: "vertex_depth")
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    pipelineDescriptor.vertexDescriptor = .defaultLayout
     pipelineState =
-      PipelineStates.createPSO(descriptor: pipelineDescriptor)
+      PipelineStates.createShadowPSO()
     shadowTexture = Self.makeTexture(
       size: CGSize(
-        width: 2048,
-        height: 2048),
-      pixelFormat: .depth32Float,
-      label: "Shadow Depth Texture")
+      width: 2048,
+      height: 2048),
+    pixelFormat: .depth32Float,
+    label: "Shadow Depth Texture")
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
