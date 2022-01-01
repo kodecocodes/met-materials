@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "820B880B26B8E47E0070A134"
-               BuildableName = "Shadows.app"
+               BuildableName = "Deferred.app"
                BlueprintName = "Deferred (iOS)"
                ReferencedContainer = "container:Deferred.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "820B880B26B8E47E0070A134"
-            BuildableName = "Shadows.app"
+            BuildableName = "Deferred.app"
             BlueprintName = "Deferred (iOS)"
             ReferencedContainer = "container:Deferred.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "820B880B26B8E47E0070A134"
-            BuildableName = "Shadows.app"
+            BuildableName = "Deferred.app"
             BlueprintName = "Deferred (iOS)"
             ReferencedContainer = "container:Deferred.xcodeproj">
          </BuildableReference>

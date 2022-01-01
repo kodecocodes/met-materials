@@ -42,16 +42,7 @@ struct ShadowRenderPass: RenderPass {
   var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
-    // create the pipeline state
-    let vertexFunction =
-      Renderer.library?.makeFunction(name: "vertex_depth")
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    pipelineDescriptor.vertexDescriptor = .defaultLayout
-    pipelineState =
-      PipelineStates.createPSO(descriptor: pipelineDescriptor)
+    pipelineState = PipelineStates.createShadowPSO()
     shadowTexture = Self.makeTexture(
       size: CGSize(
         width: 2048,
