@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -36,12 +36,12 @@ struct ObjectIdRenderPass: RenderPass {
   let label = "Object ID Render Pass"
   var descriptor: MTLRenderPassDescriptor?
   var pipelineState: MTLRenderPipelineState
+  var depthStencilState: MTLDepthStencilState?
   var idTexture: MTLTexture?
   var depthTexture: MTLTexture?
-  var depthStencilState: MTLDepthStencilState?
 
   init(view: MTKView) {
-    pipelineState = PipelineStates.buildObjectIdPSO()
+    pipelineState = PipelineStates.createObjectIdPSO()
     descriptor = MTLRenderPassDescriptor()
     depthStencilState = Self.buildDepthStencilState()
   }

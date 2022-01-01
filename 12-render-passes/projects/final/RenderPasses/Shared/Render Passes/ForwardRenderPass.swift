@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -38,22 +38,11 @@ struct ForwardRenderPass: RenderPass {
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-  var idTexture: MTLTexture?
+  weak var idTexture: MTLTexture?
 
   init(view: MTKView) {
-    // create the pipeline state
-    let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    pipelineDescriptor.vertexDescriptor =
-      MTLVertexDescriptor.defaultLayout
-    pipelineState = PipelineStates.createPSO(descriptor: pipelineDescriptor)
-
-    // create the depth stencil state
+    pipelineState = PipelineStates.createForwardPSO(
+      colorPixelFormat: view.colorPixelFormat)
     depthStencilState = Self.buildDepthStencilState()
   }
 
@@ -82,6 +71,11 @@ struct ForwardRenderPass: RenderPass {
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(idTexture, index: 11)
+    let input = InputController.shared
+    var params = params
+    params.touchX = UInt32(input.touchLocation?.x ?? 0)
+    params.touchY = UInt32(input.touchLocation?.y ?? 0)
+
     for model in scene.models {
       model.render(
         encoder: renderEncoder,

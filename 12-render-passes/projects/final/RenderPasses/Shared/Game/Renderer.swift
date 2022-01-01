@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -103,11 +103,8 @@ extension Renderer {
       scene: scene,
       uniforms: uniforms,
       params: params)
+
     forwardRenderPass.idTexture = objectIdRenderPass.idTexture
-    let input = InputController.shared
-    var params = params
-    params.touchX = UInt32(input.touchLocation?.x ?? 0)
-    params.touchY = UInt32(input.touchLocation?.y ?? 0)
     forwardRenderPass.descriptor = descriptor
     forwardRenderPass.draw(
       commandBuffer: commandBuffer,

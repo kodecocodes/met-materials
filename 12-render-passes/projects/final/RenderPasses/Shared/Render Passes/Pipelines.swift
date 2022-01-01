@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,20 @@ enum PipelineStates {
     return pipelineState
   }
 
-  static func buildObjectIdPSO() -> MTLRenderPipelineState {
+  static func createForwardPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor =
+      MTLVertexDescriptor.defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createObjectIdPSO() -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     // 1
     let vertexFunction =

@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -35,13 +35,16 @@ using namespace metal;
 
 #import "Common.h"
 
+// 1
 struct FragmentOut {
   uint objectId [[color(0)]];
 };
 
+// 2
 fragment FragmentOut fragment_objectId(
   constant Params &params [[buffer(ParamsBuffer)]])
 {
+  // 3
   FragmentOut out {
     .objectId = params.objectId
   };
