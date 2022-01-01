@@ -40,19 +40,8 @@ struct ForwardRenderPass {
   let depthStencilState: MTLDepthStencilState?
 
   init(view: MTKView) {
-    // create the pipeline state
-    let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    pipelineDescriptor.vertexDescriptor =
-      MTLVertexDescriptor.defaultLayout
-    pipelineState = PipelineStates.createPSO(descriptor: pipelineDescriptor)
-
-    // create the depth stencil state
+    pipelineState = PipelineStates.createForwardPSO(
+      colorPixelFormat: view.colorPixelFormat)
     depthStencilState = Self.buildDepthStencilState()
   }
 
