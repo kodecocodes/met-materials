@@ -30,38 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import Foundation
 
-#import "Common.h"
+enum Settings {
+  static var rotationSpeed: Float { 2.0 }
+  static var translationSpeed: Float { 3.0 }
+  static var mouseScrollSensitivity: Float { 0.1 }
+  static var mousePanSensitivity: Float { 0.008 }
+}
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+protocol Movement where Self: Transformable {
+}
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+extension Movement {
+  var forwardVector: float3 {
+    normalize([sin(rotation.y), 0, cos(rotation.y)])
+  }
+  var rightVector: float3 {
+    [forwardVector.z, forwardVector.y, -forwardVector.x]
+  }
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+  func updateInput(deltaTime: Float) -> Transform {
+    let input = InputController.shared
+    var transform = Transform()
+    let rotationAmount = deltaTime * Settings.rotationSpeed
+    if input.keysPressed.contains(.leftArrow) {
+      transform.rotation.y -= rotationAmount
+    }
+    if input.keysPressed.contains(.rightArrow) {
+      transform.rotation.y += rotationAmount
+    }
+    var direction: float3 = .zero
+    if input.keysPressed.contains(.keyW) {
+      direction.z += 1
+    }
+    if input.keysPressed.contains(.keyS) {
+      direction.z -= 1
+    }
+    if input.keysPressed.contains(.keyA) {
+      direction.x -= 1
+    }
+    if input.keysPressed.contains(.keyD) {
+      direction.x += 1
+    }
+    let translationAmount = deltaTime * Settings.translationSpeed
+    if direction != .zero {
+      direction = normalize(direction)
+      transform.position += (direction.z * forwardVector
+        + direction.x * rightVector) * translationAmount
+    }
+    return transform
+  }
+}

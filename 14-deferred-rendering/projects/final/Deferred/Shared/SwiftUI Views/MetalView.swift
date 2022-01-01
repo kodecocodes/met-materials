@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,38 +30,76 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import SwiftUI
+import MetalKit
 
-#import "Common.h"
+struct MetalView: View {
+  let options: Options
+  @State private var metalView = MTKView()
+  @State private var gameController: GameController?
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+  var body: some View {
+    VStack {
+      MetalViewRepresentable(
+        gameController: gameController,
+        metalView: $metalView,
+        options: options)
+        .onAppear {
+          gameController = GameController(
+            metalView: metalView,
+            options: options)
+        }
+        .gesture(DragGesture(minimumDistance: 0)
+          .onChanged { value in
+            InputController.shared.touchLocation = value.location
+            // if the user drags, cancel the tap touch
+            if abs(value.translation.width) > 1 ||
+              abs(value.translation.height) > 1 {
+              InputController.shared.touchLocation = nil
+            }
+          })
+    }
+  }
+}
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
+struct MetalViewRepresentable: ViewRepresentable {
+  let gameController: GameController?
+  @Binding var metalView: MTKView
+  let options: Options
 
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+  #if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    return metalView
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+  #elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    metalView
+  }
 
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+  #endif
 
-#endif /* Lighting_h */
+  func updateMetalView() {
+    gameController?.options = options
+  }
+}
+
+struct MetalView_Previews: PreviewProvider {
+  static var previews: some View {
+    VStack {
+      MetalView(options: Options())
+      Text("Metal View")
+    }
+  }
+}

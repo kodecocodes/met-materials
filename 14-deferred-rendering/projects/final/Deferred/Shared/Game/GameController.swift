@@ -30,38 +30,37 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import MetalKit
 
-#import "Common.h"
+class GameController: NSObject {
+  var scene: GameScene
+  var renderer: Renderer
+  var options = Options()
+  var fps: Double = 0
+  var deltaTime: Double = 0
+  var lastTime: Double = CFAbsoluteTimeGetCurrent()
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+  init(metalView: MTKView, options: Options) {
+    renderer = Renderer(metalView: metalView, options: options)
+    scene = GameScene()
+    super.init()
+    self.options = options
+    metalView.delegate = self
+    fps = Double(metalView.preferredFramesPerSecond)
+  }
+}
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+extension GameController: MTKViewDelegate {
+  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    scene.update(size: size)
+    renderer.mtkView(view, drawableSizeWillChange: size)
+  }
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+  func draw(in view: MTKView) {
+    let currentTime = CFAbsoluteTimeGetCurrent()
+    let deltaTime = (currentTime - lastTime)
+    lastTime = currentTime
+    scene.update(deltaTime: Float(deltaTime))
+    renderer.draw(scene: scene, in: view)
+  }
+}

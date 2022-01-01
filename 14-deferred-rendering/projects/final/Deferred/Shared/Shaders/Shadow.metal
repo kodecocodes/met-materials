@@ -30,38 +30,21 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+#include <metal_stdlib>
+using namespace metal;
 
 #import "Common.h"
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+struct VertexIn {
+  float4 position [[attribute(0)]];
+};
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+vertex float4
+  vertex_depth(const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  matrix_float4x4 mvp =
+    uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
+    * uniforms.modelMatrix;
+  return mvp * in.position;
+}

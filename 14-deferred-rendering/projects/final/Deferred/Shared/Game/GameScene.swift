@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,38 +30,61 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import MetalKit
 
-#import "Common.h"
+struct GameScene {
+  static var objectId: UInt32 = 1
+  lazy var train: Model = {
+    Model(name: "train.obj")
+  }()
+  lazy var treefir1: Model = {
+    Model(name: "treefir.obj")
+  }()
+  lazy var treefir2: Model = {
+    Model(name: "treefir.obj")
+  }()
+  lazy var treefir3: Model = {
+    Model(name: "treefir.obj")
+  }()
+  lazy var ground: Model = {
+    Model(name: "large_plane.obj")
+  }()
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+  var models: [Model] = []
+  var camera = ArcballCamera()
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+  var defaultView: Transform {
+    Transform(
+      position: [3.2, 3.1, 1.0],
+      rotation: [-0.6, 10.7, 0.0])
+  }
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
+  var lighting = SceneLighting()
 
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+  init() {
+    camera.transform = defaultView
+    camera.target = [0, 1, 0]
+    camera.distance = 4
+    camera.far = 20
+    treefir1.position = [-1, 0, 2.5]
+    treefir2.position = [-3, 0, -2]
+    treefir3.position = [1.5, 0, -0.5]
+    models = [treefir1, treefir2, treefir3, train, ground]
+  }
 
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+  mutating func update(size: CGSize) {
+    camera.update(size: size)
+  }
 
-#endif /* Lighting_h */
+  mutating func update(deltaTime: Float) {
+    let input = InputController.shared
+    if input.keysPressed.contains(.one) {
+      camera.transform = Transform()
+    }
+    if input.keysPressed.contains(.two) {
+      camera.transform = defaultView
+    }
+    input.keysPressed.removeAll()
+    camera.update(deltaTime: deltaTime)
+  }
+}

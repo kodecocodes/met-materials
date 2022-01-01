@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-///
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,52 +32,59 @@
 
 import MetalKit
 
-struct GBufferRenderPass: RenderPass {
-  let label = "G-Buffer Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
+enum DebugModel {
+  static let modelPipelineState: MTLRenderPipelineState = {
+    let library = Renderer.library
+    let vertexFunction = library?.makeFunction(name: "vertex_main")
+    let fragmentFunction = library?.makeFunction(name: "fragment_debug_line")
+    let psoDescriptor = MTLRenderPipelineDescriptor()
+    psoDescriptor.vertexFunction = vertexFunction
+    psoDescriptor.fragmentFunction = fragmentFunction
+    psoDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+    psoDescriptor.depthAttachmentPixelFormat = .depth32Float
+    psoDescriptor.vertexDescriptor = .defaultLayout
+    let pipelineState: MTLRenderPipelineState
+    do {
+      pipelineState = try Renderer.device.makeRenderPipelineState(descriptor: psoDescriptor)
+    } catch let error {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
+  }()
 
-  var pipelineState: MTLRenderPipelineState
-  let depthStencilState: MTLDepthStencilState?
-  var shadowTexture: MTLTexture?
-
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createGBufferPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    depthStencilState = Self.buildDepthStencilState()
-  }
-
-  mutating func resize(view: MTKView, size: CGSize) {
-  }
-
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
+  static func debugDrawModel(
+    renderEncoder: MTLRenderCommandEncoder,
     uniforms: Uniforms,
-    params: Params
+    model: Model,
+    color: float3
   ) {
-    guard let descriptor = descriptor,
-    let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(
-        descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = label
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
+    var uniforms = uniforms
+    uniforms.modelMatrix = model.transform.modelMatrix
+    renderEncoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
+    var lightColor = color
+    renderEncoder.setFragmentBytes(&lightColor, length: MemoryLayout<float3>.stride, index: 1)
+    renderEncoder.setRenderPipelineState(modelPipelineState)
 
-    renderEncoder.setFragmentBuffer(
-      scene.lighting.lightsBuffer,
-      offset: 0,
-      index: LightBuffer.index)
-    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
+    for mesh in model.meshes {
+      for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
+        renderEncoder.setVertexBuffer(
+          vertexBuffer,
+          offset: 0,
+          index: index)
+      }
+
+      for submesh in mesh.submeshes {
+        renderEncoder.drawIndexedPrimitives(
+          type: .triangle,
+          indexCount: submesh.indexCount,
+          indexType: submesh.indexType,
+          indexBuffer: submesh.indexBuffer,
+          indexBufferOffset: submesh.indexBufferOffset
+        )
+      }
     }
-    renderEncoder.endEncoding()
   }
 }

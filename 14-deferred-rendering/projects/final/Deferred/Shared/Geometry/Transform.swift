@@ -1,15 +1,15 @@
 /// Copyright (c) 2021 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,38 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import Foundation
 
-#import "Common.h"
+struct Transform {
+  var position: float3 = [0, 0, 0]
+  var rotation: float3 = [0, 0, 0]
+  var scale: Float = 1
+}
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+extension Transform {
+  var modelMatrix: matrix_float4x4 {
+    let translation = float4x4(translation: position)
+    let rotation = float4x4(rotation: rotation)
+    let scale = float4x4(scaling: scale)
+    let modelMatrix = translation * rotation * scale
+    return modelMatrix
+  }
+}
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+protocol Transformable {
+  var transform: Transform { get set }
+}
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+extension Transformable {
+  var position: float3 {
+    get { transform.position }
+    set { transform.position = newValue }
+  }
+  var rotation: float3 {
+    get { transform.rotation }
+    set { transform.rotation = newValue }
+  }
+  var scale: Float {
+    get { transform.scale }
+    set { transform.scale = newValue }
+  }
+}

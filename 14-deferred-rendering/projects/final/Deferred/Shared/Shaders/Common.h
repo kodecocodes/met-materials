@@ -30,38 +30,84 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+#ifndef Common_h
+#define Common_h
 
-#import "Common.h"
+#import <simd/simd.h>
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+typedef struct {
+  matrix_float4x4 modelMatrix;
+  matrix_float4x4 viewMatrix;
+  matrix_float4x4 projectionMatrix;
+  matrix_float3x3 normalMatrix;
+  matrix_float4x4 shadowProjectionMatrix;
+  matrix_float4x4 shadowViewMatrix;
+} Uniforms;
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
+typedef struct {
+  uint width;
+  uint height;
+  uint tiling;
+  uint lightCount;
+  vector_float3 cameraPosition;
+} Params;
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
+typedef enum {
+  Position = 0,
+  Normal = 1,
+  UV = 2,
+  Color = 3,
+  Tangent = 4,
+  Bitangent = 5
+} Attributes;
 
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+typedef enum {
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  ColorBuffer = 2,
+  TangentBuffer = 3,
+  BitangentBuffer = 4,
+  UniformsBuffer = 11,
+  ParamsBuffer = 12,
+  LightBuffer = 13,
+  MaterialBuffer = 14
+} BufferIndices;
 
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
+typedef enum {
+  BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  ShadowTexture = 5
+} TextureIndices;
 
-#endif /* Lighting_h */
+typedef enum {
+  unused = 0,
+  Sun = 1,
+  Spot = 2,
+  Point = 3,
+  Ambient = 4
+} LightType;
+
+typedef struct {
+  vector_float3 position;
+  vector_float3 color;
+  vector_float3 specularColor;
+  vector_float3 attenuation;
+  LightType type;
+  float coneAngle;
+  vector_float3 coneDirection;
+  float coneAttenuation;
+} Light;
+
+typedef struct {
+  vector_float3 baseColor;
+  vector_float3 specularColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+  float shininess;
+} Material;
+
+#endif /* Common_h */

@@ -30,38 +30,52 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import MetalKit
 
-#import "Common.h"
+protocol RenderPass {
+  var label: String { get }
+  var descriptor: MTLRenderPassDescriptor? { get set }
+  mutating func resize(view: MTKView, size: CGSize)
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  )
+}
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+extension RenderPass {
+  static func buildDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .less
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(
+      descriptor: descriptor)
+  }
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc =
+      MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat: pixelFormat,
+        width: width,
+        height: height,
+        mipmapped: false)
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture =
+      Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
+  }
+}

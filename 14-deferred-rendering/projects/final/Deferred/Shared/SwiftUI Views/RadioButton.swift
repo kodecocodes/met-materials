@@ -30,38 +30,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import SwiftUI
 
-#import "Common.h"
+struct RadioButton: View {
+  let label: String
+  let options: [String]
+  let action: (_ checked: Int) -> Void
+  @State var checked: Int = 0
+  var body: some View {
+    VStack(alignment: .trailing) {
+      ForEach(0..<options.count) { index in
+        HStack {
+          Text(options[index])
+        index == checked ?
+          Image(systemName: "smallcircle.filled.circle")
+            .font(Font.system(.title).bold())
+            .onTapGesture {
+              checked = index
+              action(index)
+            }
+        :
+          Image(systemName: "circle")
+            .font(Font.system(.title).bold())
+            .onTapGesture {
+              checked = index
+              action(index)
+            }
+        }
+      }
+    }
+  }
+}
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
-
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+struct RadioButton_Previews: PreviewProvider {
+  static var previews: some View {
+    RadioButton(
+      label: "Options:",
+      options: ["on", "off"]) { _ in }
+  }
+}

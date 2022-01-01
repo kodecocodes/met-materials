@@ -30,38 +30,60 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Lighting_h
-#define Lighting_h
+import GameController
 
-#import "Common.h"
+class InputController {
+  struct Point {
+    var x: Float
+    var y: Float
+    static let zero = Point(x: 0, y: 0)
+  }
 
-float3 phongLighting(
-  float3 normal,
-  float3 position,
-  constant Params &params,
-  constant Light *lights,
-  Material material);
+  static let shared = InputController()
+  var keysPressed: Set<GCKeyCode> = []
+  var leftMouseDown = false
+  var mouseDelta = Point.zero
+  var mouseScroll = Point.zero
+  var touchLocation: CGPoint?
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material);
-
-float3 calculatePoint(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-float3 calculateSpot(
-  Light light,
-  float3 position,
-  float3 normal,
-  Material material);
-
-#endif /* Lighting_h */
+  private init() {
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: .GCKeyboardDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let keyboard = notification.object as? GCKeyboard
+          keyboard?.keyboardInput?.keyChangedHandler
+            = { _, _, keyCode, pressed in
+          if pressed {
+            self.keysPressed.insert(keyCode)
+          } else {
+            self.keysPressed.remove(keyCode)
+          }
+        }
+    }
+    center.addObserver(
+      forName: .GCMouseDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let mouse = notification.object as? GCMouse
+        // 1
+        mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
+          self.leftMouseDown = pressed
+        }
+        // 2
+        mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
+          self.mouseDelta = Point(x: deltaX, y: deltaY)
+        }
+        // 3
+        mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
+          self.mouseScroll.x = xValue
+          self.mouseScroll.y = yValue
+        }
+    }
+#if os(macOS)
+  NSEvent.addLocalMonitorForEvents(
+    matching: [.keyUp, .keyDown]) { _ in nil }
+#endif
+  }
+}
