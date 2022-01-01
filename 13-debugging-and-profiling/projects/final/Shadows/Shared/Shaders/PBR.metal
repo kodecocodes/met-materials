@@ -144,7 +144,7 @@ fragment float4 fragment_PBR(
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
   // 4
-  if (shadowPosition.z > shadow_sample + 0.0001) {
+  if (shadowPosition.z > shadow_sample + 0.001) {
     diffuseColor *= 0.5;
   }
   return float4(diffuseColor + specularColor, 1);
