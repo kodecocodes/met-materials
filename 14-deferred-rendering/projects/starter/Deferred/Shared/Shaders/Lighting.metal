@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -156,6 +156,6 @@ float calculateShadow(
     address::clamp_to_edge,
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.01) ? 0.5 : 1;
+  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
 }
 

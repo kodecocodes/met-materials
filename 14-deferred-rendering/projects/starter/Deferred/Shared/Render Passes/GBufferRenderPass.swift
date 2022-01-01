@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -71,12 +71,10 @@ struct GBufferRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
     for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
-      renderEncoder.popDebugGroup()
     }
     renderEncoder.endEncoding()
   }
