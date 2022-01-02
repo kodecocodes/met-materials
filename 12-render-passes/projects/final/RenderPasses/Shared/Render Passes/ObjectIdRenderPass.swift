@@ -40,7 +40,7 @@ struct ObjectIdRenderPass: RenderPass {
   var idTexture: MTLTexture?
   var depthTexture: MTLTexture?
 
-  init(view: MTKView) {
+  init() {
     pipelineState = PipelineStates.createObjectIdPSO()
     descriptor = MTLRenderPassDescriptor()
     depthStencilState = Self.buildDepthStencilState()

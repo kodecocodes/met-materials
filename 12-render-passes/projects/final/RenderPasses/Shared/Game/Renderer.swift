@@ -61,7 +61,7 @@ class Renderer: NSObject {
     Self.library = library
     self.options = options
     forwardRenderPass = ForwardRenderPass(view: metalView)
-    objectIdRenderPass = ObjectIdRenderPass(view: metalView)
+    objectIdRenderPass = ObjectIdRenderPass()
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 0.93,
@@ -103,7 +103,6 @@ extension Renderer {
       scene: scene,
       uniforms: uniforms,
       params: params)
-
     forwardRenderPass.idTexture = objectIdRenderPass.idTexture
     forwardRenderPass.descriptor = descriptor
     forwardRenderPass.draw(

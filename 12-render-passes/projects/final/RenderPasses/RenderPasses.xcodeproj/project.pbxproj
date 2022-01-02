@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		820123DE278028D400435C83 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820123DD278028D400435C83 /* RenderPass.swift */; };
-		820123DF278028D400435C83 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820123DD278028D400435C83 /* RenderPass.swift */; };
-		820123E1278029AC00435C83 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820123E0278029AC00435C83 /* ObjectIdRenderPass.swift */; };
-		820123E2278029AC00435C83 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820123E0278029AC00435C83 /* ObjectIdRenderPass.swift */; };
-		820123E727802B5B00435C83 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820123E627802B5B00435C83 /* ObjectId.metal */; };
-		820123E827802B5B00435C83 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820123E627802B5B00435C83 /* ObjectId.metal */; };
 		82044E4726C8BA80008347C1 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82044E4626C8BA80008347C1 /* Options.swift */; };
 		82044E4826C8BA80008347C1 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82044E4626C8BA80008347C1 /* Options.swift */; };
 		820B881326B8E47E0070A134 /* RenderPassesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880526B8E47D0070A134 /* RenderPassesApp.swift */; };
@@ -43,6 +37,12 @@
 		824A97AC2774601B00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		827DDAEE2738DE15000E88B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DDAED2738DE15000E88B4 /* GameScene.swift */; };
 		827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DDAED2738DE15000E88B4 /* GameScene.swift */; };
+		82A1C1CB2781AE1E004B9E77 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1CA2781AE1E004B9E77 /* ObjectIdRenderPass.swift */; };
+		82A1C1CC2781AE1E004B9E77 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1CA2781AE1E004B9E77 /* ObjectIdRenderPass.swift */; };
+		82A1C1CE2781AF50004B9E77 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1CD2781AF50004B9E77 /* ObjectId.metal */; };
+		82A1C1CF2781AF50004B9E77 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1CD2781AF50004B9E77 /* ObjectId.metal */; };
+		82A1C1D12781B2A2004B9E77 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1D02781B2A2004B9E77 /* RenderPass.swift */; };
+		82A1C1D22781B2A2004B9E77 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A1C1D02781B2A2004B9E77 /* RenderPass.swift */; };
 		82B8FAA527797E2F00DDACCC /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */; };
 		82B8FAA627797E2F00DDACCC /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */; };
 		82B8FAAF27797F6000DDACCC /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82B8FAA727797F6000DDACCC /* treefir.mtl */; };
@@ -84,9 +84,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		820123DD278028D400435C83 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
-		820123E0278029AC00435C83 /* ObjectIdRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectIdRenderPass.swift; sourceTree = "<group>"; };
-		820123E627802B5B00435C83 /* ObjectId.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ObjectId.metal; sourceTree = "<group>"; };
 		82044E4626C8BA80008347C1 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		820B880526B8E47D0070A134 /* RenderPassesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPassesApp.swift; sourceTree = "<group>"; };
 		820B880626B8E47D0070A134 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +101,9 @@
 		8224335626CB7C7100F627C5 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		822D02AD2736537E00296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		827DDAED2738DE15000E88B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		82A1C1CA2781AE1E004B9E77 /* ObjectIdRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectIdRenderPass.swift; sourceTree = "<group>"; };
+		82A1C1CD2781AF50004B9E77 /* ObjectId.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ObjectId.metal; sourceTree = "<group>"; };
+		82A1C1D02781B2A2004B9E77 /* RenderPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		82B6707E274771A80085AD26 /* PBR.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
 		82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRenderPass.swift; sourceTree = "<group>"; };
 		82B8FAA727797F6000DDACCC /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
@@ -266,7 +266,7 @@
 				82F19CEB2740C99E001C5657 /* Lighting.metal */,
 				820B883D26B90B530070A134 /* Shaders.metal */,
 				82B6707E274771A80085AD26 /* PBR.metal */,
-				820123E627802B5B00435C83 /* ObjectId.metal */,
+				82A1C1CD2781AF50004B9E77 /* ObjectId.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -274,9 +274,9 @@
 		82B8FAC0277984B200DDACCC /* Render Passes */ = {
 			isa = PBXGroup;
 			children = (
-				820123DD278028D400435C83 /* RenderPass.swift */,
+				82A1C1D02781B2A2004B9E77 /* RenderPass.swift */,
+				82A1C1CA2781AE1E004B9E77 /* ObjectIdRenderPass.swift */,
 				82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */,
-				820123E0278029AC00435C83 /* ObjectIdRenderPass.swift */,
 				82B8FAC1277984D200DDACCC /* Pipelines.swift */,
 			);
 			path = "Render Passes";
@@ -438,6 +438,7 @@
 				8224335726CB7C7100F627C5 /* Submesh.swift in Sources */,
 				82F19C5D273DEE8B001C5657 /* GameController.swift in Sources */,
 				82B8FAA527797E2F00DDACCC /* ForwardRenderPass.swift in Sources */,
+				82A1C1D12781B2A2004B9E77 /* RenderPass.swift in Sources */,
 				820B882D26B8E5290070A134 /* VertexDescriptor.swift in Sources */,
 				820B882A26B8E51B0070A134 /* Model.swift in Sources */,
 				820B883426B8E54A0070A134 /* MathLibrary.swift in Sources */,
@@ -450,7 +451,6 @@
 				820B881526B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4726C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE52740BECA001C5657 /* DebugLights.metal in Sources */,
-				820123DE278028D400435C83 /* RenderPass.swift in Sources */,
 				82B8FAC2277984D200DDACCC /* Pipelines.swift in Sources */,
 				82F19CE82740C59D001C5657 /* SceneLighting.swift in Sources */,
 				82F19CEC2740C99E001C5657 /* Lighting.metal in Sources */,
@@ -458,11 +458,11 @@
 				82F19CE32740BECA001C5657 /* DebugLights.swift in Sources */,
 				82EDE5E626CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEE2738DE15000E88B4 /* GameScene.swift in Sources */,
-				820123E727802B5B00435C83 /* ObjectId.metal in Sources */,
+				82A1C1CE2781AF50004B9E77 /* ObjectId.metal in Sources */,
 				82D9AD87273902D9003E025A /* Movement.swift in Sources */,
 				820B881326B8E47E0070A134 /* RenderPassesApp.swift in Sources */,
 				824A97AC2774601B00DA096F /* PBR.metal in Sources */,
-				820123E1278029AC00435C83 /* ObjectIdRenderPass.swift in Sources */,
+				82A1C1CB2781AE1E004B9E77 /* ObjectIdRenderPass.swift in Sources */,
 				82D9AD8A27390D8C003E025A /* PlayerCamera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,6 +474,7 @@
 				8224335826CB7C7100F627C5 /* Submesh.swift in Sources */,
 				82F19C5E273DEE8B001C5657 /* GameController.swift in Sources */,
 				82B8FAA627797E2F00DDACCC /* ForwardRenderPass.swift in Sources */,
+				82A1C1D22781B2A2004B9E77 /* RenderPass.swift in Sources */,
 				820B882E26B8E5290070A134 /* VertexDescriptor.swift in Sources */,
 				820B882B26B8E51B0070A134 /* Model.swift in Sources */,
 				820B883526B8E54A0070A134 /* MathLibrary.swift in Sources */,
@@ -486,7 +487,6 @@
 				820B881626B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4826C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE62740BECA001C5657 /* DebugLights.metal in Sources */,
-				820123DF278028D400435C83 /* RenderPass.swift in Sources */,
 				82B8FAC3277984D200DDACCC /* Pipelines.swift in Sources */,
 				82F19CE92740C59D001C5657 /* SceneLighting.swift in Sources */,
 				82F19CED2740C99E001C5657 /* Lighting.metal in Sources */,
@@ -494,11 +494,11 @@
 				82F19CE42740BECA001C5657 /* DebugLights.swift in Sources */,
 				82EDE5E726CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */,
-				820123E827802B5B00435C83 /* ObjectId.metal in Sources */,
+				82A1C1CF2781AF50004B9E77 /* ObjectId.metal in Sources */,
 				82D9AD88273902D9003E025A /* Movement.swift in Sources */,
 				820B881426B8E47E0070A134 /* RenderPassesApp.swift in Sources */,
 				824A97AB2774601A00DA096F /* PBR.metal in Sources */,
-				820123E2278029AC00435C83 /* ObjectIdRenderPass.swift in Sources */,
+				82A1C1CC2781AE1E004B9E77 /* ObjectIdRenderPass.swift in Sources */,
 				82D9AD8B27390D8C003E025A /* PlayerCamera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
