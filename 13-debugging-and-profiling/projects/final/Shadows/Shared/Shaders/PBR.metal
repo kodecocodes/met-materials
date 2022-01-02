@@ -133,7 +133,7 @@ fragment float4 fragment_PBR(
   float2 xy = shadowPosition.xy;
   xy = xy * 0.5 + 0.5;
   xy.y = 1 - xy.y;
-  if (xy.x > 1.0 || xy.y > 1.0 || xy.x < 0 || xy.y < 0) {
+  if (xy.x < 0.0 || xy.x > 1.0 || xy.y < 0.0 || xy.y > 1.0) {
     return float4(1, 0, 0, 1);
   }
   xy = saturate(xy);

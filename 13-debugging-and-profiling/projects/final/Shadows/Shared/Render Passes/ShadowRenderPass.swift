@@ -41,7 +41,7 @@ struct ShadowRenderPass: RenderPass {
   var pipelineState: MTLRenderPipelineState
   var shadowTexture: MTLTexture?
 
-  init(view: MTKView) {
+  init() {
     pipelineState =
       PipelineStates.createShadowPSO()
     shadowTexture = Self.makeTexture(

@@ -62,7 +62,7 @@ class Renderer: NSObject {
     Self.library = library
     self.options = options
     forwardRenderPass = ForwardRenderPass(view: metalView)
-    shadowRenderPass = ShadowRenderPass(view: metalView)
+    shadowRenderPass = ShadowRenderPass()
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 0.93,
