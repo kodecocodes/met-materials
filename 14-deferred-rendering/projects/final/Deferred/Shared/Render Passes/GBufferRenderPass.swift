@@ -101,11 +101,6 @@ struct GBufferRenderPass: RenderPass {
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
-
-    renderEncoder.setFragmentBuffer(
-      scene.lighting.sunBuffer,
-      offset: 0,
-      index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
     for model in scene.models {
       model.render(

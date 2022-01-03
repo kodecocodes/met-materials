@@ -35,7 +35,7 @@ import MetalKit
 struct LightingRenderPass: RenderPass {
   let label = "Lighting Render Pass"
   var descriptor: MTLRenderPassDescriptor?
-  var sunPipelineState: MTLRenderPipelineState
+  var sunLightPSO: MTLRenderPipelineState
   var pointLightPSO: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
   weak var albedoTexture: MTLTexture?
@@ -44,7 +44,7 @@ struct LightingRenderPass: RenderPass {
   var icosphere = Model(name: "icosphere.obj")
 
   init(view: MTKView) {
-    sunPipelineState = PipelineStates.createSunLightPSO(
+    sunLightPSO = PipelineStates.createSunLightPSO(
       colorPixelFormat: view.colorPixelFormat)
     pointLightPSO = PipelineStates.createPointLightPSO(
       colorPixelFormat: view.colorPixelFormat)
@@ -66,7 +66,7 @@ struct LightingRenderPass: RenderPass {
     params: Params
   ) {
     renderEncoder.pushDebugGroup("Sun Light")
-    renderEncoder.setRenderPipelineState(sunPipelineState)
+    renderEncoder.setRenderPipelineState(sunLightPSO)
     var params = params
     params.lightCount = UInt32(scene.lighting.sunlights.count)
     renderEncoder.setFragmentBytes(
