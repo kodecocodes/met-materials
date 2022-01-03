@@ -149,6 +149,7 @@ extension Renderer {
       lightingRenderPass.albedoTexture = gBufferRenderPass.albedoTexture
       lightingRenderPass.normalTexture = gBufferRenderPass.normalTexture
       lightingRenderPass.positionTexture = gBufferRenderPass.positionTexture
+      lightingRenderPass.stencilTexture = gBufferRenderPass.depthTexture
       lightingRenderPass.descriptor = descriptor
       lightingRenderPass.draw(
         commandBuffer: commandBuffer,

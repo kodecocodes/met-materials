@@ -86,6 +86,12 @@ enum PipelineStates {
     }
     pipelineDescriptor.setColorAttachmentPixelFormats()
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    if !tiled {
+      pipelineDescriptor.depthAttachmentPixelFormat
+        = .depth32Float_stencil8
+      pipelineDescriptor.stencilAttachmentPixelFormat
+        = .depth32Float_stencil8
+    }
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
     return createPSO(descriptor: pipelineDescriptor)
@@ -106,6 +112,12 @@ enum PipelineStates {
       pipelineDescriptor.setColorAttachmentPixelFormats()
     }
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    if !tiled {
+      pipelineDescriptor.depthAttachmentPixelFormat
+        = .depth32Float_stencil8
+      pipelineDescriptor.stencilAttachmentPixelFormat
+        = .depth32Float_stencil8
+    }
     return createPSO(descriptor: pipelineDescriptor)
   }
 
@@ -121,6 +133,12 @@ enum PipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    if !tiled {
+      pipelineDescriptor.depthAttachmentPixelFormat
+        = .depth32Float_stencil8
+      pipelineDescriptor.stencilAttachmentPixelFormat
+        = .depth32Float_stencil8
+    }
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
     let attachment = pipelineDescriptor.colorAttachments[0]

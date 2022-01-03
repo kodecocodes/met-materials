@@ -69,7 +69,7 @@ struct GameScene {
     treefir1.position = [-1, 0, 2.5]
     treefir2.position = [-3, 0, -2]
     treefir3.position = [1.5, 0, -0.5]
-    models = [treefir1, treefir2, treefir3, train, ground]
+    models = [ground, treefir1, treefir2, treefir3, train]
   }
 
   mutating func update(size: CGSize) {
