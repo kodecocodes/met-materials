@@ -47,6 +47,10 @@
 		827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DDAED2738DE15000E88B4 /* GameScene.swift */; };
 		82801105277A9C0E0088A01A /* DebugModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82801104277A9C0E0088A01A /* DebugModel.swift */; };
 		82801106277A9C0E0088A01A /* DebugModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82801104277A9C0E0088A01A /* DebugModel.swift */; };
+		829244B2278284D70058141C /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 829244B1278284D70058141C /* Deferred.metal */; };
+		829244B3278284D70058141C /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 829244B1278284D70058141C /* Deferred.metal */; };
+		829244B5278287940058141C /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829244B4278287940058141C /* LightingRenderPass.swift */; };
+		829244B6278287940058141C /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829244B4278287940058141C /* LightingRenderPass.swift */; };
 		82B8FAA527797E2F00DDACCC /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */; };
 		82B8FAA627797E2F00DDACCC /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */; };
 		82B8FAAF27797F6000DDACCC /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82B8FAA727797F6000DDACCC /* treefir.mtl */; };
@@ -93,10 +97,6 @@
 		82F19CE92740C59D001C5657 /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CE72740C59D001C5657 /* SceneLighting.swift */; };
 		82F19CEC2740C99E001C5657 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CEB2740C99E001C5657 /* Lighting.metal */; };
 		82F19CED2740C99E001C5657 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CEB2740C99E001C5657 /* Lighting.metal */; };
-		82FABCFD27806D85004E58B0 /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82FABCFC27806D84004E58B0 /* Deferred.metal */; };
-		82FABCFE27806D85004E58B0 /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82FABCFC27806D84004E58B0 /* Deferred.metal */; };
-		82FABD00278070FC004E58B0 /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FABCFF278070FC004E58B0 /* LightingRenderPass.swift */; };
-		82FABD01278070FC004E58B0 /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FABCFF278070FC004E58B0 /* LightingRenderPass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +122,8 @@
 		8265631027799E5400D7379F /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		827DDAED2738DE15000E88B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		82801104277A9C0E0088A01A /* DebugModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModel.swift; sourceTree = "<group>"; };
+		829244B1278284D70058141C /* Deferred.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Deferred.metal; sourceTree = "<group>"; };
+		829244B4278287940058141C /* LightingRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingRenderPass.swift; sourceTree = "<group>"; };
 		82B6707E274771A80085AD26 /* PBR.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
 		82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRenderPass.swift; sourceTree = "<group>"; };
 		82B8FAA727797F6000DDACCC /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
@@ -148,8 +150,6 @@
 		82F19CE72740C59D001C5657 /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
 		82F19CEA2740C978001C5657 /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
 		82F19CEB2740C99E001C5657 /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
-		82FABCFC27806D84004E58B0 /* Deferred.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Deferred.metal; sourceTree = "<group>"; };
-		82FABCFF278070FC004E58B0 /* LightingRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingRenderPass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,7 +296,7 @@
 				820B883D26B90B530070A134 /* Shaders.metal */,
 				82B6707E274771A80085AD26 /* PBR.metal */,
 				824EE082277F091B004D64C1 /* Shadow.metal */,
-				82FABCFC27806D84004E58B0 /* Deferred.metal */,
+				829244B1278284D70058141C /* Deferred.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -308,7 +308,7 @@
 				824EE07F277F0853004D64C1 /* ShadowRenderPass.swift */,
 				82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */,
 				82DB3351277FD3CE00A8A1DB /* GBufferRenderPass.swift */,
-				82FABCFF278070FC004E58B0 /* LightingRenderPass.swift */,
+				829244B4278287940058141C /* LightingRenderPass.swift */,
 				82B8FAC1277984D200DDACCC /* Pipelines.swift */,
 			);
 			path = "Render Passes";
@@ -485,12 +485,12 @@
 				82DB3352277FD3CE00A8A1DB /* GBufferRenderPass.swift in Sources */,
 				820B882426B8E4FE0070A134 /* MetalView.swift in Sources */,
 				824EE083277F091B004D64C1 /* Shadow.metal in Sources */,
-				82FABCFD27806D85004E58B0 /* Deferred.metal in Sources */,
+				829244B2278284D70058141C /* Deferred.metal in Sources */,
 				82801105277A9C0E0088A01A /* DebugModel.swift in Sources */,
 				824EE080277F0853004D64C1 /* ShadowRenderPass.swift in Sources */,
 				820B883E26B90B530070A134 /* Shaders.metal in Sources */,
 				820B881526B8E47E0070A134 /* ContentView.swift in Sources */,
-				82FABD00278070FC004E58B0 /* LightingRenderPass.swift in Sources */,
+				829244B5278287940058141C /* LightingRenderPass.swift in Sources */,
 				82044E4726C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE52740BECA001C5657 /* DebugLights.metal in Sources */,
 				8265631127799E5400D7379F /* RenderPass.swift in Sources */,
@@ -527,12 +527,12 @@
 				82DB3353277FD3CE00A8A1DB /* GBufferRenderPass.swift in Sources */,
 				820B882526B8E4FE0070A134 /* MetalView.swift in Sources */,
 				824EE084277F091B004D64C1 /* Shadow.metal in Sources */,
-				82FABCFE27806D85004E58B0 /* Deferred.metal in Sources */,
+				829244B3278284D70058141C /* Deferred.metal in Sources */,
 				82801106277A9C0E0088A01A /* DebugModel.swift in Sources */,
 				824EE081277F0853004D64C1 /* ShadowRenderPass.swift in Sources */,
 				820B883F26B90B530070A134 /* Shaders.metal in Sources */,
 				820B881626B8E47E0070A134 /* ContentView.swift in Sources */,
-				82FABD01278070FC004E58B0 /* LightingRenderPass.swift in Sources */,
+				829244B6278287940058141C /* LightingRenderPass.swift in Sources */,
 				82044E4826C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE62740BECA001C5657 /* DebugLights.metal in Sources */,
 				8265631227799E5400D7379F /* RenderPass.swift in Sources */,
@@ -674,7 +674,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -704,7 +704,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -76,6 +76,14 @@ struct ForwardRenderPass: RenderPass {
         uniforms: uniforms,
         params: params)
     }
+    /* Uncomment this to show the point light positions
+    // debug point light positions
+    DebugLights.draw(
+      lights: scene.lighting.pointLights,
+      encoder: renderEncoder,
+      uniforms: uniforms)
+    // end debugging
+    */
     renderEncoder.endEncoding()
   }
 }

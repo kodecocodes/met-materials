@@ -33,7 +33,7 @@
 import MetalKit
 
 struct GBufferRenderPass: RenderPass {
-  let label = "G-Buffer Render Pass"
+  let label = "G-buffer Render Pass"
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState
@@ -82,16 +82,16 @@ struct GBufferRenderPass: RenderPass {
       positionTexture
     ]
     for (index, texture) in textures.enumerated() {
-      let attachment = descriptor?.colorAttachments[index]
+      let attachment =
+        descriptor?.colorAttachments[RenderTargetAlbedo.index + index]
       attachment?.texture = texture
       attachment?.loadAction = .clear
       attachment?.storeAction = .store
       attachment?.clearColor =
-      MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
+        MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
     }
     descriptor?.depthAttachment.texture = depthTexture
     descriptor?.depthAttachment.storeAction = .dontCare
-
     guard let descriptor = descriptor,
     let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(

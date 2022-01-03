@@ -77,11 +77,8 @@ enum PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat
-      = .bgra8Unorm
-    pipelineDescriptor.colorAttachments[1].pixelFormat
-      = .rgba16Float
-    pipelineDescriptor.colorAttachments[2].pixelFormat
-      = .rgba16Float
+      = .invalid
+    pipelineDescriptor.setGBufferPixelFormats()
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
@@ -120,5 +117,16 @@ enum PipelineStates {
     attachment?.sourceRGBBlendFactor = .one
     attachment?.sourceAlphaBlendFactor = .one
     return createPSO(descriptor: pipelineDescriptor)
+  }
+}
+
+extension MTLRenderPipelineDescriptor {
+  func setGBufferPixelFormats() {
+    colorAttachments[RenderTargetAlbedo.index]
+      .pixelFormat = .bgra8Unorm
+    colorAttachments[RenderTargetNormal.index]
+      .pixelFormat = .rgba16Float
+    colorAttachments[RenderTargetPosition.index]
+      .pixelFormat = .rgba16Float
   }
 }

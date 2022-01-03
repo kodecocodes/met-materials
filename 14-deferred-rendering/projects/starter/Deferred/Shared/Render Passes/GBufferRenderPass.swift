@@ -33,7 +33,7 @@
 import MetalKit
 
 struct GBufferRenderPass: RenderPass {
-  let label = "G-Buffer Render Pass"
+  let label = "G-buffer Render Pass"
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState

@@ -37,9 +37,9 @@ using namespace metal;
 #import "Lighting.h"
 
 struct GBufferOut {
-  float4 albedo [[color(0)]];
-  float4 normal [[color(1)]];
-  float4 position [[color(2)]];
+  float4 albedo [[color(RenderTargetAlbedo)]];
+  float4 normal [[color(RenderTargetNormal)]];
+  float4 position [[color(RenderTargetPosition)]];
 };
 
 // 1
@@ -93,7 +93,12 @@ fragment float4 fragment_deferredSun(
     .specularColor = float3(0),
     .shininess = 500
   };
-  float3 color = phongLighting(normal, position, params, lights, material);
+  float3 color = phongLighting(
+    normal,
+    position,
+    params,
+    lights,
+    material);
   color *= albedo.a;
   return float4(color, 1);
 }
