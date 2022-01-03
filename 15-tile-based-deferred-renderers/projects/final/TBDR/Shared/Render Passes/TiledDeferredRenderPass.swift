@@ -132,15 +132,6 @@ struct TiledDeferredRenderPass: RenderPass {
       scene: scene,
       uniforms: uniforms,
       params: params)
-//    renderEncoder.endEncoding()
-//
-//    // MARK: Lighting pass
-//    // Set up Lighting descriptor
-//    guard let renderEncoder =
-//      commandBuffer.makeRenderCommandEncoder(
-//        descriptor: viewCurrentRenderPassDescriptor) else {
-//      return
-//    }
     drawLightingRenderPass(
       renderEncoder: renderEncoder,
       scene: scene,

@@ -34,7 +34,7 @@ import SwiftUI
 
 struct ContentView: View {
   @ObservedObject var options = Options()
-  @State var checked: Int = 0
+  @State var checked: Int = 1
   var body: some View {
     let tiledSupported = options.tiledSupported ?
     "Tiled Deferred" : "Tiled Deferred not Supported!"

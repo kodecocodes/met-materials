@@ -31,7 +31,6 @@
 /// THE SOFTWARE.
 
 import MetalKit
-import CoreData
 
 struct TiledDeferredRenderPass: RenderPass {
   let label = "Tiled Deferred Render Pass"
@@ -51,7 +50,8 @@ struct TiledDeferredRenderPass: RenderPass {
 
   init(view: MTKView) {
     gBufferPSO = PipelineStates.createGBufferPSO(
-      colorPixelFormat: view.colorPixelFormat)
+      colorPixelFormat: view.colorPixelFormat,
+      tiled: false)
     sunLightPSO = PipelineStates.createSunLightPSO(
       colorPixelFormat: view.colorPixelFormat,
       tiled: false)
