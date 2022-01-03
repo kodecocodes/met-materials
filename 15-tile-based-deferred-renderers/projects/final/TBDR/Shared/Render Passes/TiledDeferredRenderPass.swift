@@ -31,7 +31,6 @@
 /// THE SOFTWARE.
 
 import MetalKit
-import CoreData
 
 struct TiledDeferredRenderPass: RenderPass {
   let label = "Tiled Deferred Render Pass"
@@ -51,13 +50,14 @@ struct TiledDeferredRenderPass: RenderPass {
 
   init(view: MTKView) {
     gBufferPSO = PipelineStates.createGBufferPSO(
-      colorPixelFormat: view.colorPixelFormat)
+      colorPixelFormat: view.colorPixelFormat,
+      tiled: true)
     sunLightPSO = PipelineStates.createSunLightPSO(
       colorPixelFormat: view.colorPixelFormat,
-      tiled: false)
+      tiled: true)
     pointLightPSO = PipelineStates.createPointLightPSO(
       colorPixelFormat: view.colorPixelFormat,
-      tiled: false)
+      tiled: true)
     depthStencilState = Self.buildDepthStencilState()
     lightingDepthStencilState = Self.buildLightingDepthStencilState()
   }
@@ -74,22 +74,22 @@ struct TiledDeferredRenderPass: RenderPass {
       size: size,
       pixelFormat: .bgra8Unorm,
       label: "Albedo Texture",
-      storageMode: .private)
+      storageMode: .memoryless)
     normalTexture = Self.makeTexture(
       size: size,
       pixelFormat: .rgba16Float,
       label: "Normal Texture",
-      storageMode: .private)
+      storageMode: .memoryless)
     positionTexture = Self.makeTexture(
       size: size,
       pixelFormat: .rgba16Float,
       label: "Position Texture",
-      storageMode: .private)
+      storageMode: .memoryless)
     depthTexture = Self.makeTexture(
       size: size,
       pixelFormat: .depth32Float,
       label: "Depth Texture",
-      storageMode: .private)
+      storageMode: .memoryless)
   }
 
   func draw(
@@ -104,7 +104,7 @@ struct TiledDeferredRenderPass: RenderPass {
     }
 
     // MARK: G-buffer pass
-    let descriptor = MTLRenderPassDescriptor()
+    let descriptor = viewCurrentRenderPassDescriptor
     let textures = [
       albedoTexture,
       normalTexture,
@@ -115,7 +115,7 @@ struct TiledDeferredRenderPass: RenderPass {
         descriptor.colorAttachments[RenderTargetAlbedo.index + index]
       attachment?.texture = texture
       attachment?.loadAction = .clear
-      attachment?.storeAction = .store
+      attachment?.storeAction = .dontCare
       attachment?.clearColor =
       MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
     }
@@ -132,15 +132,15 @@ struct TiledDeferredRenderPass: RenderPass {
       scene: scene,
       uniforms: uniforms,
       params: params)
-    renderEncoder.endEncoding()
-
-    // MARK: Lighting pass
-    // Set up Lighting descriptor
-    guard let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(
-        descriptor: viewCurrentRenderPassDescriptor) else {
-      return
-    }
+//    renderEncoder.endEncoding()
+//
+//    // MARK: Lighting pass
+//    // Set up Lighting descriptor
+//    guard let renderEncoder =
+//      commandBuffer.makeRenderCommandEncoder(
+//        descriptor: viewCurrentRenderPassDescriptor) else {
+//      return
+//    }
     drawLightingRenderPass(
       renderEncoder: renderEncoder,
       scene: scene,
@@ -200,15 +200,6 @@ struct TiledDeferredRenderPass: RenderPass {
     params: Params
   ) {
     renderEncoder.pushDebugGroup("Sun Light")
-    renderEncoder.setFragmentTexture(
-      albedoTexture,
-      index: BaseColor.index)
-    renderEncoder.setFragmentTexture(
-      normalTexture,
-      index: NormalTexture.index)
-    renderEncoder.setFragmentTexture(
-      positionTexture,
-      index: NormalTexture.index + 1)
     renderEncoder.setRenderPipelineState(sunLightPSO)
     var params = params
     params.lightCount = UInt32(scene.lighting.sunlights.count)
