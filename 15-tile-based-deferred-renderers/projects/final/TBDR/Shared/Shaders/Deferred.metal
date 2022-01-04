@@ -177,7 +177,7 @@ fragment float4 fragment_tiled_pointLight(
   Light light = lights[in.instanceId];
   float3 normal = gBuffer.normal.xyz;
   float3 position = gBuffer.position.xyz;
-  
+
   Material material {
     .baseColor = 1
   };
