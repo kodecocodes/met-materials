@@ -53,7 +53,6 @@ struct LightingRenderPass: RenderPass {
 
   static func buildDepthStencilState() -> MTLDepthStencilState? {
     let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .lessEqual
     descriptor.isDepthWriteEnabled = false
     return Renderer.device.makeDepthStencilState(descriptor: descriptor)
   }
