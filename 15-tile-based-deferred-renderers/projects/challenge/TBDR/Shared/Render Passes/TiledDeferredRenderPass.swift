@@ -78,7 +78,6 @@ struct TiledDeferredRenderPass: RenderPass {
 
   static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
     let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .lessEqual
     descriptor.isDepthWriteEnabled = false
     let frontFaceStencil = MTLStencilDescriptor()
     frontFaceStencil.stencilCompareFunction = .notEqual

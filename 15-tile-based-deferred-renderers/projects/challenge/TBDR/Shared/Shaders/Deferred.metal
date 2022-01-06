@@ -183,5 +183,6 @@ fragment float4 fragment_tiled_pointLight(
   };
   float3 lighting =
     calculatePoint(light, position, normal, material);
+  lighting *= 0.5;
   return float4(lighting, 1);
 }
