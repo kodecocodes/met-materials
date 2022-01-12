@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "Warrior-roughness.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}
