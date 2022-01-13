@@ -1,4 +1,6 @@
-# References
+# Chapter 17: Particles
+
+## References
 
 [The Nature Of Code](http://natureofcode.com/book/chapter-4-particle-systems/)
 
