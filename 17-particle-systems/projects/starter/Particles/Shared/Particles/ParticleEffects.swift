@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,50 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import CoreGraphics
+
+struct ParticleDescriptor {
+  var position: float2 = [0, 0]
+  var positionXRange: ClosedRange<Float> = 0...0
+  var positionYRange: ClosedRange<Float> = 0...0
+  var direction: Float = 0
+  var directionRange: ClosedRange<Float> = 0...0
+  var speed: Float = 0
+  var speedRange: ClosedRange<Float> = 0...0
+  var pointSize: Float = 80
+  var pointSizeRange: ClosedRange<Float> = 0...0
+  var startScale: Float = 0
+  var startScaleRange: ClosedRange<Float> = 1...1
+  var endScale: Float = 0
+  var endScaleRange: ClosedRange<Float>?
+  var life: Float = 0
+  var lifeRange: ClosedRange<Float> = 1...1
+  var color: float4 = [0, 0, 0, 1]
+}
+
+enum ParticleEffects {
+  static func createFire(size: CGSize) -> Emitter {
+    var descriptor = ParticleDescriptor()
+    descriptor.position.x = Float(size.width) / 2 - 90
+    descriptor.positionXRange = 0...180
+    descriptor.direction = Float.pi / 2
+    descriptor.directionRange = -0.3...0.3
+    descriptor.speed = 3
+    descriptor.pointSize = 80
+    descriptor.startScale = 0
+    descriptor.startScaleRange = 0.5...1.0
+    descriptor.endScaleRange = 0...0
+    descriptor.life = 180
+    descriptor.lifeRange = -50...70
+    descriptor.color = float4(1.0, 0.392, 0.1, 0.5)
+    return Emitter(
+      descriptor,
+      texture: "fire",
+      particleCount: 1200,
+      birthRate: 5,
+      birthDelay: 0,
+      blending: true)
+  }
+}

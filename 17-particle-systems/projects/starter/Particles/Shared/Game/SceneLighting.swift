@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,64 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+// swiftlint:disable force_unwrapping
+
+import MetalKit
+
+struct SceneLighting {
+  static func buildDefaultLight() -> Light {
+    var light = Light()
+    light.position = [0, 0, 0]
+    light.color = float3(repeating: 1.0)
+    light.specularColor = float3(repeating: 0.6)
+    light.attenuation = [1, 0, 0]
+    light.type = Sun
+    return light
+  }
+
+  let sunlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [3, 3, -2]
+    light.color = float3(repeating: 1.0)
+    return light
+  }()
+
+  let backLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [0, 3, 2]
+    light.color = float3(repeating: 1.0)
+    return light
+  }()
+
+  let leftFillLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [3, -2, 0]
+    light.color = float3(repeating: 0.3)
+    return light
+  }()
+  let rightFillLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [-2, -1, 1]
+    light.color = float3(repeating: 0.1)
+    return light
+  }()
+
+
+  var lights: [Light] = []
+  var lightsBuffer: MTLBuffer
+
+  init() {
+    lights = [sunlight, backLight, leftFillLight, rightFillLight]
+    lightsBuffer = Self.createBuffer(lights: lights)
+  }
+
+  static func createBuffer(lights: [Light]) -> MTLBuffer {
+    var lights = lights
+    return Renderer.device.makeBuffer(
+      bytes: &lights,
+      length: MemoryLayout<Light>.stride * lights.count,
+      options: [])!
+  }
+}

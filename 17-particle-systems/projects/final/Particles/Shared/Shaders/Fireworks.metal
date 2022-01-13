@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,51 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#include <metal_stdlib>
+using namespace metal;
+
+#import "Common.h"
+
+kernel void clearScreen(
+  texture2d<half, access::read_write> output [[texture(0)]],
+  uint2 id [[thread_position_in_grid]])
+{
+  output.write(half4(0.0, 0.0, 0.0, 1.0), id);
+}
+
+struct FireworksParticle {
+  float2 position;
+  float  direction;
+  float  speed;
+  float3 color;
+  float  life;
+};
+
+kernel void fireworks(
+  texture2d<half, access::read_write> output [[texture(0)]],
+  // 1
+  device FireworksParticle *particles [[buffer(0)]],
+  uint id [[thread_position_in_grid]]) {
+  // 2
+  float xVelocity = particles[id].speed
+    * cos(particles[id].direction);
+  float yVelocity = particles[id].speed
+    * sin(particles[id].direction) + 3.0;
+  particles[id].position.x += xVelocity;
+  particles[id].position.y += yVelocity;
+  // 3
+  particles[id].life -= 1.0;
+  half4 color;
+  color.rgb =
+     half3(particles[id].color * particles[id].life / 255.0);
+  // 4
+  color.a = 1.0;
+  uint2 position = uint2(particles[id].position);
+  output.write(color, position);
+  output.write(color, position + uint2(0, 1));
+  output.write(color, position - uint2(0, 1));
+  output.write(color, position + uint2(1, 0));
+  output.write(color, position - uint2(1, 0));
+}

@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,47 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+// swiftlint:disable force_unwrapping
+
+import MetalKit
+
+struct FireworksEmitter {
+  let particleBuffer: MTLBuffer
+  init(
+    particleCount: Int,
+    size: CGSize,
+    life: Float
+  ) {
+    let bufferSize =
+      MemoryLayout<Particle>.stride * particleCount
+    particleBuffer =
+      Renderer.device.makeBuffer(length: bufferSize)!
+    let width = Float(size.width)
+    let height = Float(size.height)
+    let position = float2(
+      Float.random(in: 0...width),
+      Float.random(in: 0...height))
+    let color = float4(
+      Float.random(in: 0...life) / life,
+      Float.random(in: 0...life) / life,
+      Float.random(in: 0...life) / life,
+      1)
+    var pointer =
+      particleBuffer.contents().bindMemory(
+        to: Particle.self,
+        capacity: particleCount)
+    for _ in 0..<particleCount {
+      let direction =
+        2 * Float.pi * Float.random(in: 0...width) / width
+      let speed = 3 * Float.random(in: 0...width) / width
+      pointer.pointee.position = position
+      pointer.pointee.direction = direction
+      pointer.pointee.speed = speed
+      pointer.pointee.color = color
+      pointer.pointee.life = life
+      pointer = pointer.advanced(by: 1)
+    }
+  }
+}
