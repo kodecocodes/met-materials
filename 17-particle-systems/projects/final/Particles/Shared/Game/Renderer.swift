@@ -64,7 +64,7 @@ class Renderer: NSObject {
     particlesRenderPass = ParticlesRenderPass(view: metalView)
     super.init()
     metalView.clearColor = MTLClearColor(
-      red: 0, green: 0, blue: 0.3, alpha: 1.0)
+      red: 0.0, green: 0.0, blue: 0.3, alpha: 1.0)
     metalView.depthStencilPixelFormat = .depth32Float
     mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
     metalView.framebufferOnly = false

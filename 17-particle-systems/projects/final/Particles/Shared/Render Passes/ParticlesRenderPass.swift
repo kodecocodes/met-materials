@@ -43,7 +43,8 @@ struct ParticlesRenderPass: RenderPass {
   let blendingPSO: MTLRenderPipelineState
 
   init(view: MTKView) {
-    computePSO = PipelineStates.createComputePSO(function: "computeParticles")
+    computePSO = PipelineStates.createComputePSO(
+      function: "computeParticles")
     renderPSO = PipelineStates.createParticleRenderPSO(
       pixelFormat: view.colorPixelFormat)
     blendingPSO = PipelineStates.createParticleRenderPSO(
@@ -102,7 +103,8 @@ struct ParticlesRenderPass: RenderPass {
     // 1
     for emitter in scene.particleEffects {
       if emitter.currentParticles <= 0 { continue }
-      renderEncoder.setRenderPipelineState(emitter.blending ? blendingPSO : renderPSO)
+      renderEncoder.setRenderPipelineState(
+        emitter.blending ? blendingPSO : renderPSO)
       // 2
       renderEncoder.setVertexBuffer(
         emitter.particleBuffer,

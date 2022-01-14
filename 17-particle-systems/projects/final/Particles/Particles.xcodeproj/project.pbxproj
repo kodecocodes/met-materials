@@ -33,12 +33,6 @@
 		82163681278FCE1B00DACABB /* ParticlesRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216367F278FCE1B00DACABB /* ParticlesRenderPass.swift */; };
 		82163683278FCED900DACABB /* Fireworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82163682278FCED900DACABB /* Fireworks.swift */; };
 		82163684278FCED900DACABB /* Fireworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82163682278FCED900DACABB /* Fireworks.swift */; };
-		82163689278FD2D700DACABB /* FireworksEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82163688278FD2D700DACABB /* FireworksEmitter.swift */; };
-		8216368A278FD2D700DACABB /* FireworksEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82163688278FD2D700DACABB /* FireworksEmitter.swift */; };
-		8216368C278FD64100DACABB /* Fireworks.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8216368B278FD64100DACABB /* Fireworks.metal */; };
-		8216368D278FD64100DACABB /* Fireworks.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8216368B278FD64100DACABB /* Fireworks.metal */; };
-		8216368F278FFECD00DACABB /* Particles.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8216368E278FFECD00DACABB /* Particles.metal */; };
-		82163690278FFECD00DACABB /* Particles.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8216368E278FFECD00DACABB /* Particles.metal */; };
 		82213B19278F9AB60065B6A6 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82213B18278F9AB60065B6A6 /* Emitter.swift */; };
 		82213B1A278F9AB60065B6A6 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82213B18278F9AB60065B6A6 /* Emitter.swift */; };
 		8224335426CB7C6A00F627C5 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335326CB7C6A00F627C5 /* Mesh.swift */; };
@@ -47,6 +41,12 @@
 		8224335826CB7C7100F627C5 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335626CB7C7100F627C5 /* Submesh.swift */; };
 		822D02AE2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
 		822D02AF2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
+		8245C36027917A4C002089EC /* FireworksEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245C35F27917A4C002089EC /* FireworksEmitter.swift */; };
+		8245C36127917A4C002089EC /* FireworksEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245C35F27917A4C002089EC /* FireworksEmitter.swift */; };
+		8245C36327917CA3002089EC /* Fireworks.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C36227917CA3002089EC /* Fireworks.metal */; };
+		8245C36427917CA3002089EC /* Fireworks.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C36227917CA3002089EC /* Fireworks.metal */; };
+		8245C36627918433002089EC /* Particles.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C36527918433002089EC /* Particles.metal */; };
+		8245C36727918433002089EC /* Particles.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C36527918433002089EC /* Particles.metal */; };
 		824A97AB2774601A00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824A97AC2774601B00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824EE07D277EE3EC004D64C1 /* ShadowCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */; };
@@ -96,13 +96,13 @@
 		8216367B278FCB7300DACABB /* ParticleEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEffects.swift; sourceTree = "<group>"; };
 		8216367F278FCE1B00DACABB /* ParticlesRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlesRenderPass.swift; sourceTree = "<group>"; };
 		82163682278FCED900DACABB /* Fireworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fireworks.swift; sourceTree = "<group>"; };
-		82163688278FD2D700DACABB /* FireworksEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworksEmitter.swift; sourceTree = "<group>"; };
-		8216368B278FD64100DACABB /* Fireworks.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fireworks.metal; sourceTree = "<group>"; };
-		8216368E278FFECD00DACABB /* Particles.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Particles.metal; sourceTree = "<group>"; };
 		82213B18278F9AB60065B6A6 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
 		8224335326CB7C6A00F627C5 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		8224335626CB7C7100F627C5 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		822D02AD2736537E00296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		8245C35F27917A4C002089EC /* FireworksEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworksEmitter.swift; sourceTree = "<group>"; };
+		8245C36227917CA3002089EC /* Fireworks.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fireworks.metal; sourceTree = "<group>"; };
+		8245C36527918433002089EC /* Particles.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Particles.metal; sourceTree = "<group>"; };
 		824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowCamera.swift; sourceTree = "<group>"; };
 		8265631027799E5400D7379F /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		827DDAED2738DE15000E88B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -160,7 +160,6 @@
 				824A97A8277453B300DA096F /* Geometry */,
 				824A97A9277453BA00DA096F /* Textures */,
 				824A97AA277453C400DA096F /* Shaders */,
-				820B883626B8E5570070A134 /* Models */,
 				820B883226B8E53C0070A134 /* Utility */,
 				820B882226B8E4EF0070A134 /* SwiftUI Views */,
 				820B880726B8E47E0070A134 /* Assets.xcassets */,
@@ -195,18 +194,11 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		820B883626B8E5570070A134 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		8216367E278FCC0B00DACABB /* Fireworks */ = {
 			isa = PBXGroup;
 			children = (
 				82163682278FCED900DACABB /* Fireworks.swift */,
-				82163688278FD2D700DACABB /* FireworksEmitter.swift */,
+				8245C35F27917A4C002089EC /* FireworksEmitter.swift */,
 			);
 			path = Fireworks;
 			sourceTree = "<group>";
@@ -264,8 +256,8 @@
 				82F19CEB2740C99E001C5657 /* Lighting.metal */,
 				820B883D26B90B530070A134 /* Shaders.metal */,
 				82B6707E274771A80085AD26 /* PBR.metal */,
-				8216368B278FD64100DACABB /* Fireworks.metal */,
-				8216368E278FFECD00DACABB /* Particles.metal */,
+				8245C36227917CA3002089EC /* Fireworks.metal */,
+				8245C36527918433002089EC /* Particles.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -440,27 +432,27 @@
 				82D9AD842738F54B003E025A /* InputController.swift in Sources */,
 				822D02AE2736537E00296BE0 /* Transform.swift in Sources */,
 				820B882726B8E50F0070A134 /* Renderer.swift in Sources */,
+				8245C36627918433002089EC /* Particles.metal in Sources */,
 				8224335426CB7C6A00F627C5 /* Mesh.swift in Sources */,
 				824EE07D277EE3EC004D64C1 /* ShadowCamera.swift in Sources */,
 				820B882426B8E4FE0070A134 /* MetalView.swift in Sources */,
+				8245C36327917CA3002089EC /* Fireworks.metal in Sources */,
 				8216367C278FCB7300DACABB /* ParticleEffects.swift in Sources */,
 				820B883E26B90B530070A134 /* Shaders.metal in Sources */,
-				8216368F278FFECD00DACABB /* Particles.metal in Sources */,
 				82163683278FCED900DACABB /* Fireworks.swift in Sources */,
 				820B881526B8E47E0070A134 /* ContentView.swift in Sources */,
-				82163689278FD2D700DACABB /* FireworksEmitter.swift in Sources */,
 				82163680278FCE1B00DACABB /* ParticlesRenderPass.swift in Sources */,
 				82044E4726C8BA80008347C1 /* Options.swift in Sources */,
 				8265631127799E5400D7379F /* RenderPass.swift in Sources */,
 				82B8FAC2277984D200DDACCC /* Pipelines.swift in Sources */,
 				82213B19278F9AB60065B6A6 /* Emitter.swift in Sources */,
-				8216368C278FD64100DACABB /* Fireworks.metal in Sources */,
 				82F19CE82740C59D001C5657 /* SceneLighting.swift in Sources */,
 				82F19CEC2740C99E001C5657 /* Lighting.metal in Sources */,
 				82D9AD812738F23E003E025A /* Camera.swift in Sources */,
 				82EDE5E626CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEE2738DE15000E88B4 /* GameScene.swift in Sources */,
 				82D9AD87273902D9003E025A /* Movement.swift in Sources */,
+				8245C36027917A4C002089EC /* FireworksEmitter.swift in Sources */,
 				820B881326B8E47E0070A134 /* ParticlesApp.swift in Sources */,
 				824A97AC2774601B00DA096F /* PBR.metal in Sources */,
 				82D9AD8A27390D8C003E025A /* PlayerCamera.swift in Sources */,
@@ -480,27 +472,27 @@
 				82D9AD852738F54B003E025A /* InputController.swift in Sources */,
 				822D02AF2736537E00296BE0 /* Transform.swift in Sources */,
 				820B882826B8E50F0070A134 /* Renderer.swift in Sources */,
+				8245C36727918433002089EC /* Particles.metal in Sources */,
 				8224335526CB7C6A00F627C5 /* Mesh.swift in Sources */,
 				824EE07E277EE3EC004D64C1 /* ShadowCamera.swift in Sources */,
 				820B882526B8E4FE0070A134 /* MetalView.swift in Sources */,
+				8245C36427917CA3002089EC /* Fireworks.metal in Sources */,
 				8216367D278FCB7300DACABB /* ParticleEffects.swift in Sources */,
 				820B883F26B90B530070A134 /* Shaders.metal in Sources */,
-				82163690278FFECD00DACABB /* Particles.metal in Sources */,
 				82163684278FCED900DACABB /* Fireworks.swift in Sources */,
 				820B881626B8E47E0070A134 /* ContentView.swift in Sources */,
-				8216368A278FD2D700DACABB /* FireworksEmitter.swift in Sources */,
 				82163681278FCE1B00DACABB /* ParticlesRenderPass.swift in Sources */,
 				82044E4826C8BA80008347C1 /* Options.swift in Sources */,
 				8265631227799E5400D7379F /* RenderPass.swift in Sources */,
 				82213B1A278F9AB60065B6A6 /* Emitter.swift in Sources */,
 				82B8FAC3277984D200DDACCC /* Pipelines.swift in Sources */,
-				8216368D278FD64100DACABB /* Fireworks.metal in Sources */,
 				82F19CE92740C59D001C5657 /* SceneLighting.swift in Sources */,
 				82F19CED2740C99E001C5657 /* Lighting.metal in Sources */,
 				82D9AD822738F23E003E025A /* Camera.swift in Sources */,
 				82EDE5E726CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */,
 				82D9AD88273902D9003E025A /* Movement.swift in Sources */,
+				8245C36127917A4C002089EC /* FireworksEmitter.swift in Sources */,
 				820B881426B8E47E0070A134 /* ParticlesApp.swift in Sources */,
 				824A97AB2774601A00DA096F /* PBR.metal in Sources */,
 				82D9AD8B27390D8C003E025A /* PlayerCamera.swift in Sources */,

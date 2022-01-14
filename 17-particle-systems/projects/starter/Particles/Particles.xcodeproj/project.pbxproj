@@ -151,7 +151,6 @@
 				824A97A8277453B300DA096F /* Geometry */,
 				824A97A9277453BA00DA096F /* Textures */,
 				824A97AA277453C400DA096F /* Shaders */,
-				820B883626B8E5570070A134 /* Models */,
 				820B883226B8E53C0070A134 /* Utility */,
 				820B882226B8E4EF0070A134 /* SwiftUI Views */,
 				820B880726B8E47E0070A134 /* Assets.xcassets */,
@@ -184,13 +183,6 @@
 				820B883326B8E54A0070A134 /* MathLibrary.swift */,
 			);
 			path = Utility;
-			sourceTree = "<group>";
-		};
-		820B883626B8E5570070A134 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		8216367E278FCC0B00DACABB /* Fireworks */ = {

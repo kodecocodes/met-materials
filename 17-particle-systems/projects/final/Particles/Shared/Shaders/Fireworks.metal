@@ -36,24 +36,16 @@ using namespace metal;
 #import "Common.h"
 
 kernel void clearScreen(
-  texture2d<half, access::read_write> output [[texture(0)]],
+  texture2d<half, access::write> output [[texture(0)]],
   uint2 id [[thread_position_in_grid]])
 {
   output.write(half4(0.0, 0.0, 0.0, 1.0), id);
 }
 
-struct FireworksParticle {
-  float2 position;
-  float  direction;
-  float  speed;
-  float3 color;
-  float  life;
-};
-
 kernel void fireworks(
-  texture2d<half, access::read_write> output [[texture(0)]],
+  texture2d<half, access::write> output [[texture(0)]],
   // 1
-  device FireworksParticle *particles [[buffer(0)]],
+  device Particle *particles [[buffer(0)]],
   uint id [[thread_position_in_grid]]) {
   // 2
   float xVelocity = particles[id].speed
@@ -65,8 +57,8 @@ kernel void fireworks(
   // 3
   particles[id].life -= 1.0;
   half4 color;
-  color.rgb =
-     half3(particles[id].color * particles[id].life / 255.0);
+  color =
+     half4(particles[id].color) * particles[id].life / 255.0;
   // 4
   color.a = 1.0;
   uint2 position = uint2(particles[id].position);

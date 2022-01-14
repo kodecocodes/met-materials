@@ -36,8 +36,10 @@ using namespace metal;
 #import "Common.h"
 
 // 1
-kernel void computeParticles(device Particle *particles [[buffer(0)]],
-                    uint id [[thread_position_in_grid]]) {
+kernel void computeParticles(
+  device Particle *particles [[buffer(0)]],
+  uint id [[thread_position_in_grid]])
+{
   // 2
   float xVelocity = particles[id].speed
                        * cos(particles[id].direction);
@@ -69,7 +71,8 @@ vertex VertexOut vertex_particle(
   constant float2 &size [[buffer(0)]],
   const device Particle *particles [[buffer(1)]],
   constant float2 &emitterPosition [[buffer(2)]],
-  uint instance [[instance_id]]) {
+  uint instance [[instance_id]])
+{
   // 2
   float2 position = particles[instance].position
     + emitterPosition;
@@ -87,9 +90,10 @@ vertex VertexOut vertex_particle(
 
 // 1
 fragment float4 fragment_particle(
-           VertexOut in [[stage_in]],
-           texture2d<float> particleTexture [[texture(0)]],
-           float2 point [[point_coord]]) {
+  VertexOut in [[stage_in]],
+  texture2d<float> particleTexture [[texture(0)]],
+  float2 point [[point_coord]])
+{
   // 2
   constexpr sampler default_sampler;
   float4 color = particleTexture.sample(default_sampler, point);

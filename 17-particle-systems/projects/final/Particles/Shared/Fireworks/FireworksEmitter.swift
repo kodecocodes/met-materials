@@ -36,6 +36,7 @@ import MetalKit
 
 struct FireworksEmitter {
   let particleBuffer: MTLBuffer
+
   init(
     particleCount: Int,
     size: CGSize,
