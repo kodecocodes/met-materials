@@ -186,9 +186,7 @@ extension Model {
         height: 1,
         depth: 1)
       let threadsPerGrid = MTLSize(
-        width: vertexCount,
-        height: 1,
-        depth: 1)
+        width: vertexCount, height: 1, depth: 1)
       computeEncoder.dispatchThreads(
         threadsPerGrid,
         threadsPerThreadgroup: threadsPerGroup)

@@ -43,4 +43,3 @@ kernel void convert_mesh(
   vertices[id].position.z = -vertices[id].position.z;
   atomic_fetch_add_explicit(&vertexTotal, 1, memory_order_relaxed);
 }
-

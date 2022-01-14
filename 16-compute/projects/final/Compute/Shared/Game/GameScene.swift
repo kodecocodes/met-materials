@@ -51,7 +51,7 @@ struct GameScene {
   init() {
     camera.transform = defaultView
     camera.target = [0, 1.5, 0]
-    camera.distance = 3
+    camera.distance = 2.7
     models = [warrior]
     warrior.convertMesh()
   }
@@ -86,10 +86,11 @@ struct GameScene {
       // 3
       for _ in 0..<count {
         // 4
-        pointer.pointee.position.x = -pointer.pointee.position.x
+        pointer.pointee.position.z = -pointer.pointee.position.z
         pointer = pointer.advanced(by: 1)
       }
     }
+    // 5
     print("CPU Time:", CFAbsoluteTimeGetCurrent() - startTime)
   }
 }

@@ -51,7 +51,7 @@ struct GameScene {
   init() {
     camera.transform = defaultView
     camera.target = [0, 1.5, 0]
-    camera.distance = 3
+    camera.distance = 2.7
     models = [warrior]
   }
 

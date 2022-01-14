@@ -48,17 +48,15 @@ struct SceneLighting {
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
     light.position = [3, 3, -2]
-    light.color = float3(repeating: 1.0)
+    light.color = float3(repeating: 0.8)
     return light
   }()
-
   let backLight: Light = {
     var light = Self.buildDefaultLight()
     light.position = [0, 3, 2]
     light.color = float3(repeating: 1.0)
     return light
   }()
-
   let leftFillLight: Light = {
     var light = Self.buildDefaultLight()
     light.position = [3, -2, 0]
@@ -71,13 +69,18 @@ struct SceneLighting {
     light.color = float3(repeating: 0.1)
     return light
   }()
-
+  let ambientLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Ambient
+    light.color = [0.3, 0.3, 0.3]
+    return light
+  }()
 
   var lights: [Light] = []
   var lightsBuffer: MTLBuffer
 
   init() {
-    lights = [sunlight, backLight, leftFillLight, rightFillLight]
+    lights = [sunlight, backLight, leftFillLight, rightFillLight, ambientLight]
     lightsBuffer = Self.createBuffer(lights: lights)
   }
 

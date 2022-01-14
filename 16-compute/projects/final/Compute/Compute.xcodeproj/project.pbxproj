@@ -33,6 +33,8 @@
 		8224335826CB7C7100F627C5 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335626CB7C7100F627C5 /* Submesh.swift */; };
 		822D02AE2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
 		822D02AF2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
+		8245C35D27917275002089EC /* ConvertMesh.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C35C27917275002089EC /* ConvertMesh.metal */; };
+		8245C35E27917275002089EC /* ConvertMesh.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8245C35C27917275002089EC /* ConvertMesh.metal */; };
 		824A97AB2774601A00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824A97AC2774601B00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824EE07D277EE3EC004D64C1 /* ShadowCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */; };
@@ -47,8 +49,6 @@
 		82B8FAA627797E2F00DDACCC /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */; };
 		82B8FAC2277984D200DDACCC /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAC1277984D200DDACCC /* Pipelines.swift */; };
 		82B8FAC3277984D200DDACCC /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8FAC1277984D200DDACCC /* Pipelines.swift */; };
-		82D8DDD3278E4CF3008527D9 /* ConvertMesh.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D8DDD2278E4CF3008527D9 /* ConvertMesh.metal */; };
-		82D8DDD4278E4CF3008527D9 /* ConvertMesh.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D8DDD2278E4CF3008527D9 /* ConvertMesh.metal */; };
 		82D9AD812738F23E003E025A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD802738F23E003E025A /* Camera.swift */; };
 		82D9AD822738F23E003E025A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD802738F23E003E025A /* Camera.swift */; };
 		82D9AD842738F54B003E025A /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD832738F54B003E025A /* InputController.swift */; };
@@ -94,6 +94,7 @@
 		8224335326CB7C6A00F627C5 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		8224335626CB7C7100F627C5 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		822D02AD2736537E00296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		8245C35C27917275002089EC /* ConvertMesh.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ConvertMesh.metal; sourceTree = "<group>"; };
 		824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowCamera.swift; sourceTree = "<group>"; };
 		8265631027799E5400D7379F /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		827DDAED2738DE15000E88B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -102,7 +103,6 @@
 		82B8FAA427797E2F00DDACCC /* ForwardRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRenderPass.swift; sourceTree = "<group>"; };
 		82B8FABF2779807D00DDACCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		82B8FAC1277984D200DDACCC /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
-		82D8DDD2278E4CF3008527D9 /* ConvertMesh.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ConvertMesh.metal; sourceTree = "<group>"; };
 		82D9AD802738F23E003E025A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		82D9AD832738F54B003E025A /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		82D9AD86273902D9003E025A /* Movement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 				82F19CEB2740C99E001C5657 /* Lighting.metal */,
 				820B883D26B90B530070A134 /* Shaders.metal */,
 				82B6707E274771A80085AD26 /* PBR.metal */,
-				82D8DDD2278E4CF3008527D9 /* ConvertMesh.metal */,
+				8245C35C27917275002089EC /* ConvertMesh.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -429,7 +429,7 @@
 				820B882426B8E4FE0070A134 /* MetalView.swift in Sources */,
 				82801105277A9C0E0088A01A /* DebugModel.swift in Sources */,
 				820B883E26B90B530070A134 /* Shaders.metal in Sources */,
-				82D8DDD3278E4CF3008527D9 /* ConvertMesh.metal in Sources */,
+				8245C35D27917275002089EC /* ConvertMesh.metal in Sources */,
 				820B881526B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4726C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE52740BECA001C5657 /* DebugLights.metal in Sources */,
@@ -466,7 +466,7 @@
 				820B882526B8E4FE0070A134 /* MetalView.swift in Sources */,
 				82801106277A9C0E0088A01A /* DebugModel.swift in Sources */,
 				820B883F26B90B530070A134 /* Shaders.metal in Sources */,
-				82D8DDD4278E4CF3008527D9 /* ConvertMesh.metal in Sources */,
+				8245C35E27917275002089EC /* ConvertMesh.metal in Sources */,
 				820B881626B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4826C8BA80008347C1 /* Options.swift in Sources */,
 				82F19CE62740BECA001C5657 /* DebugLights.metal in Sources */,
@@ -608,7 +608,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -638,7 +638,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

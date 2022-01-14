@@ -62,10 +62,7 @@ class Renderer: NSObject {
     forwardRenderPass = ForwardRenderPass(view: metalView)
     super.init()
     metalView.clearColor = MTLClearColor(
-      red: 0.93,
-      green: 0.97,
-      blue: 1.0,
-      alpha: 1.0)
+      red: 0.93, green: 0.97, blue: 1.0, alpha: 1.0)
     metalView.depthStencilPixelFormat = .depth32Float
     mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
   }

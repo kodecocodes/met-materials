@@ -48,7 +48,7 @@ enum PipelineStates {
 
   static func createForwardPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_main")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
