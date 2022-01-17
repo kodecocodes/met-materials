@@ -1,4 +1,4 @@
-# References
+# Chapter 18: Particle Behavior References
 
 [Craig Reynolds' Boids](https://www.red3d.com/cwr/boids/)
 

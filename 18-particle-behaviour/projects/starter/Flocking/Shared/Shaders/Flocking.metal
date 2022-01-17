@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,32 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#include <metal_stdlib>
+using namespace metal;
+
+struct Boid {
+  float2 position;
+};
+
+kernel void clearScreen(
+  texture2d<half, access::write> output [[texture(0)]],
+  uint2 id [[thread_position_in_grid]])
+{
+  output.write(half4(0.0, 0.0, 0.0, 1.0), id);
+}
+
+kernel void boids(
+  texture2d<half, access::write> output [[texture(0)]],
+  device Boid *boids [[buffer(0)]],
+  constant uint& particleCount [[buffer(1)]],
+  uint id [[thread_position_in_grid]])
+{
+  Boid boid = boids[id];
+  float2 position = boid.position;
+  uint2 location = uint2(position);
+  half4 color = half4(1.0);
+  output.write(color, location);
+}
+
