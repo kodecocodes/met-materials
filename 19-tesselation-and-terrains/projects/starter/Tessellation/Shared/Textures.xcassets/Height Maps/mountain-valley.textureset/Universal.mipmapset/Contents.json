@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "mountain_valley.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}

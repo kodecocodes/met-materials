@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,42 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+enum PipelineStates {
+  static func createPSO(descriptor: MTLRenderPipelineDescriptor)
+    -> MTLRenderPipelineState {
+    let pipelineState: MTLRenderPipelineState
+    do {
+      pipelineState =
+      try Renderer.device.makeRenderPipelineState(
+        descriptor: descriptor)
+    } catch let error {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
+  }
+
+  static func createRenderPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+    let vertexFunction =
+      Renderer.library?.makeFunction(name: "vertex_main")
+    let fragmentFunction =
+      Renderer.library?.makeFunction(name: "fragment_main")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+
+    // set up vertex descriptor
+    let vertexDescriptor = MTLVertexDescriptor()
+    vertexDescriptor.attributes[0].format = .float3
+    vertexDescriptor.attributes[0].offset = 0
+    vertexDescriptor.attributes[0].bufferIndex = 0
+    vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+    pipelineDescriptor.vertexDescriptor = vertexDescriptor
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+}
