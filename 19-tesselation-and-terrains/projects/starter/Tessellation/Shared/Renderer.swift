@@ -48,10 +48,7 @@ class Renderer: NSObject {
   var params = Params()
 
   let quad = Quad()
-  var camera = ArcballCamera(
-    transform: Transform(position: [0, 0, -3]),
-    distance: 3
-  )
+  var camera = ArcballCamera(distance: 2)
 
   // model transform
   var modelMatrix: float4x4 {
@@ -111,15 +108,10 @@ extension Renderer: MTKViewDelegate {
       * uniforms.modelMatrix
   }
 
-  func draw(in view: MTKView) {
-    guard
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
-        return
-    }
-    updateUniforms()
+  func tessellation(commandBuffer: MTLCommandBuffer) {
+  }
 
-    // tessellation pass
-
+  func render(commandBuffer: MTLCommandBuffer, view: MTKView) {
     guard let descriptor = view.currentRenderPassDescriptor,
       let renderEncoder =
         commandBuffer.makeRenderCommandEncoder(
@@ -137,17 +129,33 @@ extension Renderer: MTKViewDelegate {
       length: MemoryLayout<Uniforms>.stride,
       index: BufferIndexUniforms.index)
 
-    renderEncoder.setVertexBuffer(quad.vertexBuffer, offset: 0, index: 0)
+    // draw
+    renderEncoder.setVertexBuffer(
+      quad.vertexBuffer,
+      offset: 0,
+      index: 0)
     let fillmode: MTLTriangleFillMode = options.isWireframe ? .lines : .fill
     renderEncoder.setTriangleFillMode(fillmode)
 
-    // draw
     renderEncoder.drawPrimitives(
       type: .triangle,
       vertexStart: 0,
       vertexCount: quad.vertices.count)
 
     renderEncoder.endEncoding()
+  }
+
+  func draw(in view: MTKView) {
+    guard
+      let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
+        return
+    }
+    updateUniforms()
+
+    tessellation(commandBuffer: commandBuffer)
+
+    render(commandBuffer: commandBuffer, view: view)
+
     guard let drawable = view.currentDrawable else {
       return
     }
