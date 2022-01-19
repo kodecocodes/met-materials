@@ -190,7 +190,6 @@ extension Renderer: MTKViewDelegate {
   }
 
   func tessellation(commandBuffer: MTLCommandBuffer) {
-    // tessellation pass
     guard let computeEncoder =
       commandBuffer.makeComputeCommandEncoder() else { return }
     computeEncoder.setComputePipelineState(

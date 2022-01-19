@@ -67,7 +67,7 @@ vertex VertexOut
     control_points[3].position.xz,
     control_points[2].position.xz,
     u);
-    
+
   VertexOut out;
   float2 interpolated = mix(top, bottom, v);
   float4 position = float4(

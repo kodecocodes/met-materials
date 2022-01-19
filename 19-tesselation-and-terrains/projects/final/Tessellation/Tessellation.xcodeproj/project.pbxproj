@@ -29,10 +29,10 @@
 		8252BCF3271CF7E600A97B5E /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8252BCF1271CF7E600A97B5E /* Quad.swift */; };
 		8252BCF8271D26EF00A97B5E /* IndexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8252BCF7271D26EF00A97B5E /* IndexExtensions.swift */; };
 		8252BCF9271D26EF00A97B5E /* IndexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8252BCF7271D26EF00A97B5E /* IndexExtensions.swift */; };
-		8299B3702796898E00DD4B95 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8299B36F2796898E00DD4B95 /* Tessellation.metal */; };
-		8299B3712796898E00DD4B95 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8299B36F2796898E00DD4B95 /* Tessellation.metal */; };
 		82AE793827966C18004464AE /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AE793727966C18004464AE /* Pipelines.swift */; };
 		82AE793927966C18004464AE /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AE793727966C18004464AE /* Pipelines.swift */; };
+		82BCBDCD27979AF0005C42C8 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82BCBDCC27979AF0005C42C8 /* Tessellation.metal */; };
+		82BCBDCE27979AF0005C42C8 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82BCBDCC27979AF0005C42C8 /* Tessellation.metal */; };
 		82C9E68D27964A130069795D /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9E68C27964A130069795D /* InputController.swift */; };
 		82C9E68E27964A130069795D /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9E68C27964A130069795D /* InputController.swift */; };
 		82C9E69027964A2C0069795D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9E68F27964A2C0069795D /* Camera.swift */; };
@@ -60,8 +60,8 @@
 		8252BCEE271CF06600A97B5E /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		8252BCF1271CF7E600A97B5E /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
 		8252BCF7271D26EF00A97B5E /* IndexExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexExtensions.swift; sourceTree = "<group>"; };
-		8299B36F2796898E00DD4B95 /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 		82AE793727966C18004464AE /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
+		82BCBDCC27979AF0005C42C8 /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 		82C9E68C27964A130069795D /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		82C9E68F27964A2C0069795D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		82C9E69227964A520069795D /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 				82EDE5E826CCD32600DE47E4 /* Textures.xcassets */,
 				820B884026B90B770070A134 /* Common.h */,
 				820B883D26B90B530070A134 /* Shaders.metal */,
-				8299B36F2796898E00DD4B95 /* Tessellation.metal */,
+				82BCBDCC27979AF0005C42C8 /* Tessellation.metal */,
 				82AE793A27966DCA004464AE /* Input */,
 				820B883226B8E53C0070A134 /* Utility */,
 				820B882226B8E4EF0070A134 /* SwiftUI Views */,
@@ -305,8 +305,8 @@
 				8252BCF8271D26EF00A97B5E /* IndexExtensions.swift in Sources */,
 				820B881526B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4726C8BA80008347C1 /* Options.swift in Sources */,
+				82BCBDCD27979AF0005C42C8 /* Tessellation.metal in Sources */,
 				82C9E69327964A520069795D /* Transform.swift in Sources */,
-				8299B3702796898E00DD4B95 /* Tessellation.metal in Sources */,
 				82AE793827966C18004464AE /* Pipelines.swift in Sources */,
 				82C9E69027964A2C0069795D /* Camera.swift in Sources */,
 				82EDE5E626CCC4BB00DE47E4 /* TextureController.swift in Sources */,
@@ -328,8 +328,8 @@
 				8252BCF9271D26EF00A97B5E /* IndexExtensions.swift in Sources */,
 				820B881626B8E47E0070A134 /* ContentView.swift in Sources */,
 				82044E4826C8BA80008347C1 /* Options.swift in Sources */,
+				82BCBDCE27979AF0005C42C8 /* Tessellation.metal in Sources */,
 				82C9E69427964A520069795D /* Transform.swift in Sources */,
-				8299B3712796898E00DD4B95 /* Tessellation.metal in Sources */,
 				82AE793927966C18004464AE /* Pipelines.swift in Sources */,
 				82C9E69127964A2C0069795D /* Camera.swift in Sources */,
 				82EDE5E726CCC4BB00DE47E4 /* TextureController.swift in Sources */,
