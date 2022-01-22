@@ -1,6 +1,7 @@
 ## Physically Based Rendering
 
-[Allegorithmic: The Theory of Physically-Based Rendering and Shading](https://www.allegorithmic.com/pbr-guide)
+[Adobe: The PBR Guide - Part 1](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
+[Adobe: The PBR Guide - Part 2](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-2)
 
 [SIGGRAPH University - Introduction to "Physically Based Shading in Theory and Practice" by Naty Hoffman](https://youtu.be/j-A0mwsJRmk)
 
@@ -13,7 +14,7 @@ Find an equirectangular environment map. This is a texture which has the full 36
 
 **Sources of environment maps:**
 
-[http://hdrihaven.com](http://hdrihaven.com) 100% free and licenced CC0
+[https://polyhaven.com/hdris](https://polyhaven.com/hdris) 100% free and licenced CC0
 
 [http://www.hdrlabs.com/sibl/archive.html](http://www.hdrlabs.com/sibl/archive.html) free, but licenced as Creative Commons Attribution-Noncommercial-Share Alike 3.0.
 
@@ -67,7 +68,7 @@ I've included a lot of references here, because although SH are easy to use, the
 
 [An Efficient Representation for Irradiance Environment Maps by Ravi Ramamoorthi and Pat Hanrahan](https://cseweb.ucsd.edu/~ravir/papers/envmap/)
 
-[Spherical Harmonic Lighting: The Gritty Details](http://silviojemma.com/public/papers/lighting/spherical-harmonic-lighting.pdf)
+[Spherical Harmonic Lighting: The Gritty Details](https://web.archive.org/web/20181011125928/http://silviojemma.com/public/papers/lighting/spherical-harmonic-lighting.pdf)
 
 [Stupid Spherical Harmonics tricks by Peter-Pike Sloan](https://www.ppsloan.org/publications/StupidSH36.pdf)
 
@@ -79,4 +80,4 @@ I've included a lot of references here, because although SH are easy to use, the
 
 ## Further reading
 
-[Videos from MIT Computer Graphics 6.837, September 2017](https://www.youtube.com/user/justinmsolomon/videos)
+[IBLBaker](https://github.com/derkreature/IBLBaker)
