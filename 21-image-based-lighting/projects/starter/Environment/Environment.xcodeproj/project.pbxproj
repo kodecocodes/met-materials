@@ -47,6 +47,7 @@
 		827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DDAED2738DE15000E88B4 /* GameScene.swift */; };
 		82801105277A9C0E0088A01A /* DebugModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82801104277A9C0E0088A01A /* DebugModel.swift */; };
 		82801106277A9C0E0088A01A /* DebugModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82801104277A9C0E0088A01A /* DebugModel.swift */; };
+		82810330279BFF5200F1F2DF /* IBL.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F7DB0F279ABDCC00EF870D /* IBL.metal */; };
 		8281E05E279A86A000934946 /* irradiance.png in Resources */ = {isa = PBXBuildFile; fileRef = 8281E05C279A86A000934946 /* irradiance.png */; };
 		8281E05F279A86A000934946 /* irradiance.png in Resources */ = {isa = PBXBuildFile; fileRef = 8281E05C279A86A000934946 /* irradiance.png */; };
 		8281E060279A86A000934946 /* cube-sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 8281E05D279A86A000934946 /* cube-sky.png */; };
@@ -550,6 +551,7 @@
 				82F19CE62740BECA001C5657 /* DebugLights.metal in Sources */,
 				8265631227799E5400D7379F /* RenderPass.swift in Sources */,
 				82B8FAC3277984D200DDACCC /* Pipelines.swift in Sources */,
+				82810330279BFF5200F1F2DF /* IBL.metal in Sources */,
 				82F19CE92740C59D001C5657 /* SceneLighting.swift in Sources */,
 				82F19CED2740C99E001C5657 /* Lighting.metal in Sources */,
 				82D9AD822738F23E003E025A /* Camera.swift in Sources */,

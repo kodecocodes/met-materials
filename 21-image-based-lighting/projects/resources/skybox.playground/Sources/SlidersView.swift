@@ -66,17 +66,17 @@ public class SlidersView: NSView {
     
     let albedoLabel = NSTextField()
     albedoLabel.isEditable = false
-    albedoLabel.stringValue = "Ground Albedo (0 to 10)"
+    albedoLabel.stringValue = "Ground Albedo (0 to 1)"
     albedoLabel.frame = NSRect(x: 600, y: 110, width:200, height: 44)
     addSubview(albedoLabel)
     
     let albedoSlider = NSSlider(
       value: 0,
       minValue: 0,
-      maxValue: 10,
+      maxValue: 1,
       target: metalView,
       action: #selector(metalView.albedoSliderChanged(sender:)))
-    albedoSlider.doubleValue = 4
+    albedoSlider.doubleValue = 0.5
     albedoSlider.isContinuous = false
     albedoSlider.frame = NSRect(x: 600, y: 100, width: 200, height: 44)
     addSubview(albedoSlider)

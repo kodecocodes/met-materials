@@ -134,7 +134,7 @@ public class Renderer: NSObject {
     var texture: MTLTexture?
     let skyTexture = MDLSkyCubeTexture(
       name: "sky",
-      channelEncoding: .uInt8,
+      channelEncoding: .float16,
       textureDimensions: dimensions,
       turbidity: skyboxSettings.turbidity,
       sunElevation: skyboxSettings.sunElevation,

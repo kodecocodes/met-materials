@@ -52,13 +52,6 @@ struct SceneLighting {
     return light
   }()
 
-  let ambientLight: Light = {
-    var light = Self.buildDefaultLight()
-    light.color = float3(repeating: 0.3)
-    light.type = Ambient
-    return light
-  }()
-
   var lights: [Light] = []
   var sunlights: [Light] = []
   var pointLights: [Light] = []
@@ -67,7 +60,7 @@ struct SceneLighting {
   var pointBuffer: MTLBuffer?
 
   init() {
-    lights = [sunlight, ambientLight]
+    lights = [sunlight]
     lightsBuffer = Self.createBuffer(lights: lights)
   }
 

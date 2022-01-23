@@ -46,8 +46,8 @@ struct GameScene {
   var camera = ArcballCamera()
   var defaultView: Transform {
     Transform(
-      position: [-2.32, 1.71, -1.85],
-      rotation: [-0.52, 0.9, 0])
+      position: [2.85, 1.54, -2.34],
+      rotation: [-0.4, -0.88, 0])
   }
   var lighting = SceneLighting()
 
@@ -55,7 +55,7 @@ struct GameScene {
     camera.transform = defaultView
     camera.target = car.position
     camera.distance = 4
-    camera.far = 10
+    camera.far = 20
     models = [ground, car]
   }
 

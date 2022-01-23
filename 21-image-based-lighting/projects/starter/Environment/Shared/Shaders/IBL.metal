@@ -32,16 +32,8 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "Common.h"
-
-struct VertexOut {
-  float4 position [[position]];
-  float3 worldPosition;
-  float3 worldNormal;
-  float2 uv;
-  float3 worldTangent;
-  float3 worldBitangent;
-};
+#import "Vertex.h"
+#import "Lighting.h"
 
 fragment float4 fragment_IBL(
   VertexOut in [[stage_in]],
@@ -52,7 +44,8 @@ fragment float4 fragment_IBL(
   texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
-  texture2d<float> opacityTexture [[texture(OpacityTexture)]])
+  texture2d<float> opacityTexture [[texture(OpacityTexture)]],
+  depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
   constexpr sampler textureSampler(
     filter::linear,
@@ -99,5 +92,7 @@ fragment float4 fragment_IBL(
       in.worldNormal) * normalValue;
   }
   normal = normalize(normal);
-  return float4(material.baseColor, 1);
+  
+  float4 color = float4(material.baseColor, 1);
+  return color;
 }

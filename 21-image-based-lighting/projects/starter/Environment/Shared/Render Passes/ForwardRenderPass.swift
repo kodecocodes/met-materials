@@ -46,11 +46,9 @@ struct ForwardRenderPass: RenderPass {
   weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
+    pipelineState = PipelineStates.createForwardPSO()
     depthStencilState = Self.buildDepthStencilState()
-    transparentPSO = PipelineStates.createForwardTransparentPSO(
-      colorPixelFormat: view.colorPixelFormat)
+    transparentPSO = PipelineStates.createForwardTransparentPSO()
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
