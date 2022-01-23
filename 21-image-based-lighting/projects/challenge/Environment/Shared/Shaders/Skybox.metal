@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,39 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#include <metal_stdlib>
+using namespace metal;
+
+#import "Common.h"
+
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+};
+
+struct VertexOut {
+  float4 position [[position]];
+  float3 textureCoordinates;
+};
+
+vertex VertexOut vertex_skybox(
+  const VertexIn in [[stage_in]],
+  constant float4x4 &vp [[buffer(UniformsBuffer)]])
+{
+  VertexOut out;
+  out.position = (vp * in.position).xyww;
+  out.textureCoordinates = in.position.xyz;
+  return out;
+}
+
+fragment half4 fragment_skybox(
+  VertexOut in [[stage_in]],
+  texturecube<half> cubeTexture [[texture(SkyboxTexture)]])
+{
+  constexpr sampler default_sampler(filter::linear);
+  half4 color = cubeTexture.sample(
+    default_sampler,
+    in.textureCoordinates);
+  return color;
+}
