@@ -1,0 +1,133 @@
+/// Copyright (c) 2022 Razeware LLC
+/// 
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+/// 
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+/// 
+/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+/// distribute, sublicense, create a derivative work, and/or sell copies of the
+/// Software in any work that is designed, intended, or marketed for pedagogical or
+/// instructional purposes related to programming, coding, application development,
+/// or information technology.  Permission for such use, copying, modification,
+/// merger, publication, distribution, sublicensing, creation of derivative works,
+/// or sale is expressly withheld.
+/// 
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+
+import MetalKit
+
+struct WaterRenderPass: RenderPass {
+  var label: String = "Water"
+  var descriptor: MTLRenderPassDescriptor?
+  var pipelineState: MTLRenderPipelineState
+  var depthStencilState: MTLDepthStencilState?
+
+  var reflectionTexture: MTLTexture?
+  var refractionTexture: MTLTexture?
+  var depthTexture: MTLTexture?
+
+  init() {
+    depthStencilState = Self.buildDepthStencilState()
+    pipelineState = PipelineStates.createForwardPSO()
+  }
+
+  mutating func resize(view: MTKView, size: CGSize) {
+    let size = CGSize(
+      width: size.width / 2, height: size.height / 2)
+    reflectionTexture = Self.makeTexture(
+      size: size,
+      pixelFormat: view.colorPixelFormat,
+      label: "Reflection Texture")
+    refractionTexture = Self.makeTexture(
+      size: size,
+      pixelFormat: view.colorPixelFormat,
+      label: "Refraction Texture")
+    depthTexture = Self.makeTexture(
+      size: size,
+      pixelFormat: .depth32Float,
+      label: "Reflection Depth Texture")
+    descriptor = MTLRenderPassDescriptor()
+    let attachment = descriptor?.colorAttachments[0]
+    attachment?.loadAction = .clear
+    attachment?.storeAction = .store
+    attachment?.clearColor = MTLClearColor(
+      red: 0.73, green: 0.92, blue: 1, alpha: 1)
+    let depthAttachment = descriptor?.depthAttachment
+    depthAttachment?.texture = depthTexture
+    depthAttachment?.loadAction = .clear
+    depthAttachment?.storeAction = .store
+    depthAttachment?.clearDepth = 1
+  }
+
+  func draw(commandBuffer: MTLCommandBuffer, scene: GameScene, uniforms: Uniforms, params: Params) {
+    guard let water = scene.water else { return }
+    water.reflectionTexture = reflectionTexture
+    water.refractionTexture = refractionTexture
+    water.refractionDepthTexture = depthTexture
+
+    descriptor?.colorAttachments[0].texture = reflectionTexture
+    descriptor?.depthAttachment.texture = depthTexture
+    // 1
+    guard let descriptor = descriptor,
+      let reflectEncoder =
+      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+    else { return }
+    reflectEncoder.label = "Reflection"
+    reflectEncoder.setDepthStencilState(depthStencilState)
+    reflectEncoder.setRenderPipelineState(pipelineState)
+    // 2
+    var reflectionCamera = scene.camera
+    reflectionCamera.position.y *= -1
+    reflectionCamera.rotation.x *= -1
+
+    var uniforms = uniforms
+    uniforms.viewMatrix = reflectionCamera.viewMatrix
+    var clipPlane = float4(0, 1, 0, 0.1)
+    uniforms.clipPlane = clipPlane
+    // 3
+    scene.skybox?.update(renderEncoder: reflectEncoder)
+    for model in scene.models {
+      model.render(
+        encoder: reflectEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    reflectEncoder.endEncoding()
+
+    descriptor.colorAttachments[0].texture = refractionTexture
+    guard let refractEncoder =
+      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        else { return }
+    refractEncoder.label = "Refraction"
+    refractEncoder.setDepthStencilState(depthStencilState)
+    refractEncoder.setRenderPipelineState(pipelineState)
+    // 1
+    clipPlane = float4(0, -1, 0, 0.1)
+    uniforms.clipPlane = clipPlane
+    uniforms.viewMatrix = scene.camera.viewMatrix
+    scene.skybox?.update(renderEncoder: refractEncoder)
+    for model in scene.models {
+      model.render(
+        encoder: refractEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    refractEncoder.endEncoding()
+  }
+}
