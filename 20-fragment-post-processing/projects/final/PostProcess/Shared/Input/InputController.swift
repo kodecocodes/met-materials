@@ -47,9 +47,7 @@ class InputController {
   var touchLocation: CGPoint?
   var touchDelta: CGSize? {
     didSet {
-//      #if os(iOS)
-        touchDelta?.height *= -1
-//      #endif
+      touchDelta?.height *= -1
       if let delta = touchDelta {
         mouseDelta = Point(x: Float(delta.width), y: Float(delta.height))
       }

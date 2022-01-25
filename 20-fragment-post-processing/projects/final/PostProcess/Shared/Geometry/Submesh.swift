@@ -99,7 +99,6 @@ private extension Material {
     if let baseColor = material?.property(with: .baseColor),
       baseColor.type == .float3 {
       self.baseColor = baseColor.float3Value
-      print(baseColor)
     }
     if let specular = material?.property(with: .specular),
       specular.type == .float3 {

@@ -91,27 +91,39 @@ struct ForwardRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
+    if params.scissorTesting {
+      let marginWidth = Int(params.width) / 4
+      let marginHeight = Int(params.height) / 4
+      let width = Int(params.width) / 2
+      let height = Int(params.height) / 2
+      let rect = MTLScissorRect(
+        x: marginWidth, y: marginHeight, width: width, height: height)
+      renderEncoder.setScissorRect(rect)
+    }
+
     var params = params
-    for transparency in [false, true] {
-      params.transparency = transparency
-      for model in scene.models {
-        model.render(
-          encoder: renderEncoder,
-          uniforms: uniforms,
-          params: params)
-        if params.scissorTesting {
-          let marginWidth = Int(params.width) / 4
-          let marginHeight = Int(params.height) / 4
-          let width = Int(params.width) / 2
-          let height = Int(params.height) / 2
-          let rect = MTLScissorRect(
-            x: marginWidth, y: marginHeight, width: width, height: height)
-          renderEncoder.setScissorRect(rect)
-        }
-      }
-      if params.alphaBlending {
-        renderEncoder.setRenderPipelineState(transparentPSO)
-      }
+    params.transparency = false
+
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+
+    // transparent mesh
+    let models = scene.models.filter {
+      $0.hasTransparency
+    }
+    params.transparency = true
+    if params.alphaBlending {
+      renderEncoder.setRenderPipelineState(transparentPSO)
+    }
+    for model in models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
     }
     renderEncoder.endEncoding()
   }

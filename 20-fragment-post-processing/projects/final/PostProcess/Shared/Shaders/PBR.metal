@@ -94,12 +94,11 @@ fragment float4 fragment_PBR(
   }
 
   float opacity = 1;
-  if (params.alphaTesting) {
+  if (params.alphaBlending) {
     if (!is_null_texture(opacityTexture)) {
       opacity = opacityTexture.sample(textureSampler, in.uv).r;
     }
   }
-
   
   // extract metallic
   if (!is_null_texture(metallicTexture)) {
