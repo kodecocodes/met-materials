@@ -75,6 +75,5 @@ struct GameScene {
     }
     input.keysPressed.removeAll()
     camera.update(deltaTime: deltaTime)
-    print(camera.position, camera.rotation)
   }
 }

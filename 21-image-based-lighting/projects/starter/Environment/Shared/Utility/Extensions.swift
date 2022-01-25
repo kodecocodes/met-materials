@@ -30,48 +30,10 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
 
-struct GameScene {
-  lazy var ground: Model = {
-    let model = Model(name: "large_plane.obj")
-    model.tiling = 16
-    return model
-  }()
-  lazy var car: Model = {
-    Model(name: "racing-car.obj")
-  }()
-
-  var models: [Model] = []
-  var camera = ArcballCamera()
-  var defaultView: Transform {
-    Transform(
-      position: [2.85, 1.54, -2.34],
-      rotation: [-0.4, -0.88, 0])
-  }
-  var lighting = SceneLighting()
-
-  init() {
-    camera.transform = defaultView
-    camera.target = car.position
-    camera.distance = 4
-    camera.far = 20
-    models = [ground, car]
-  }
-
-  mutating func update(size: CGSize) {
-    camera.update(size: size)
-  }
-
-  mutating func update(deltaTime: Float) {
-    let input = InputController.shared
-    if input.keysPressed.contains(.one) {
-      camera.transform = Transform()
-    }
-    if input.keysPressed.contains(.two) {
-      camera.transform = defaultView
-    }
-    input.keysPressed.removeAll()
-    camera.update(deltaTime: deltaTime)
+extension Array {
+  func anySatisfy(_ element: (Element) -> Bool) -> Bool {
+    return !allSatisfy { !element($0) }
   }
 }

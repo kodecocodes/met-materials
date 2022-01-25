@@ -65,7 +65,7 @@ float3 calculateSun(
         normalize(params.cameraPosition);
     float specularIntensity =
         pow(saturate(dot(reflection, viewDirection)),
-            material.shininess);
+            max(material.shininess, 0.001));
     specularColor +=
         light.specularColor * material.specularColor
           * specularIntensity;

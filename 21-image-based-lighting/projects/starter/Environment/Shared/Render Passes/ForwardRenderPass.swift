@@ -77,18 +77,31 @@ struct ForwardRenderPass: RenderPass {
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
     var params = params
-    for transparency in [false, true] {
-      params.transparency = transparency
-      for model in scene.models {
-        model.render(
-          encoder: renderEncoder,
-          uniforms: uniforms,
-          params: params)
-      }
-      if params.alphaBlending {
-        renderEncoder.setRenderPipelineState(transparentPSO)
-      }
+    params.transparency = false
+
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
     }
+
+    // transparent mesh
+    renderEncoder.pushDebugGroup("Transparency")
+    let models = scene.models.filter {
+      $0.hasTransparency
+    }
+    params.transparency = true
+    if params.alphaBlending {
+      renderEncoder.setRenderPipelineState(transparentPSO)
+    }
+    for model in models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()
   }
 }
