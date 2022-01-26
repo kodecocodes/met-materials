@@ -32,9 +32,6 @@
 
 import MetalKit
 
-// swiftlint:disable superfluous_disable_command
-// swiftlint:disable identifier_name
-
 struct ForwardRenderPass: RenderPass {
   let label = "Forward Render Pass"
   var descriptor: MTLRenderPassDescriptor?
@@ -79,23 +76,38 @@ struct ForwardRenderPass: RenderPass {
     scene.skybox?.update(renderEncoder: renderEncoder)
 
     var params = params
-    for transparency in [false, true] {
-      params.transparency = transparency
-      for model in scene.models {
-        model.render(
-          encoder: renderEncoder,
-          uniforms: uniforms,
-          params: params)
-      }
-      if !transparency {
-        scene.skybox?.render(
-          renderEncoder: renderEncoder,
-          uniforms: uniforms)
-      }
-      if params.alphaBlending {
-        renderEncoder.setRenderPipelineState(transparentPSO)
-      }
+    params.transparency = false
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
     }
+    scene.terrain?.render(
+      encoder: renderEncoder,
+      uniforms: uniforms,
+      params: params)
+
+    scene.skybox?.render(
+      renderEncoder: renderEncoder,
+      uniforms: uniforms)
+
+    // transparent mesh
+    renderEncoder.pushDebugGroup("Transparency")
+    let models = scene.models.filter {
+      $0.hasTransparency
+    }
+    params.transparency = true
+    if params.alphaBlending {
+      renderEncoder.setRenderPipelineState(transparentPSO)
+    }
+    for model in models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()
   }
 }

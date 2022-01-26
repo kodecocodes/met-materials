@@ -51,10 +51,12 @@ vertex VertexOut vertex_main(
     .worldNormal = uniforms.normalMatrix * in.normal,
     .worldTangent = uniforms.normalMatrix * in.tangent,
     .worldBitangent = uniforms.normalMatrix * in.bitangent,
-    .clip_distance[0] =
-        dot(uniforms.modelMatrix * in.position,
-            uniforms.clipPlane)
+    .shadowPosition =
+      uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
+      * uniforms.modelMatrix * in.position
   };
+  out.clip_distance[0] =
+    dot(uniforms.modelMatrix * in.position, uniforms.clipPlane);
   return out;
 }
 

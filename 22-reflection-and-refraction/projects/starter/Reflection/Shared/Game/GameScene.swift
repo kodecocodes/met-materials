@@ -33,37 +33,33 @@
 import MetalKit
 
 struct GameScene {
-  lazy var ground: Model = {
-    let model = Model(name: "terrain.obj")
-    model.tiling = 12
-    return model
-  }()
   lazy var cottage: Model = {
     Model(name: "house.obj")
   }()
 
   var models: [Model] = []
-  var camera = ArcballCamera()
-  let defaultDistance: Float = 35
+  var camera = PlayerCamera()
   var defaultView: Transform {
     Transform(
-      position: [1.86, 0.26, 34.94],
-      rotation: [0, -3.08, 0])
+      position: [1.32, 2.96, 35.38],
+      rotation: [-0.16, 3.09, 0])
   }
   var lighting = SceneLighting()
   let skybox: Skybox?
+  var terrain: Terrain?
 
   init() {
     skybox = Skybox(textureName: "sky")
 
+    terrain = Terrain(name: "terrain.obj")
+    terrain?.tiling = 12
+    terrain?.position = [0, 3, 0]
+
     camera.transform = defaultView
-    camera.target = cottage.position
-    camera.distance = defaultDistance
-    cottage.position = [0, 0.5, 5]
-    cottage.rotation.y = 0.4
-    cottage.scale = 2
-    ground.scale = 3
-    models = [ground, cottage]
+
+    cottage.position = [0, 0.4, 10]
+    cottage.rotation.y = 0.2
+    models = [cottage]
   }
 
   mutating func update(size: CGSize) {
@@ -74,12 +70,20 @@ struct GameScene {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()
+      input.keysPressed.remove(.one)
     }
     if input.keysPressed.contains(.two) {
-      camera.distance = defaultDistance
       camera.transform = defaultView
+      input.keysPressed.remove(.two)
     }
-    input.keysPressed.removeAll()
+    let positionYDelta = (input.mouseScroll.x + input.mouseScroll.y)
+      * Settings.mouseScrollSensitivity
+    let minY: Float = -1
+    if camera.position.y + positionYDelta > minY {
+      camera.position.y += positionYDelta
+    }
+    input.mouseScroll = .zero
+
     camera.update(deltaTime: deltaTime)
   }
 }

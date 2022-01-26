@@ -37,34 +37,41 @@ struct GameScene {
     Model(name: "house.obj")
   }()
 
-  var models: [Renderable] = []
+  var water: Water?
+
+  var models: [Model] = []
   var camera = PlayerCamera()
-  let defaultDistance: Float = 35
+  var defaultDistance: Float = 10
   var defaultView: Transform {
     Transform(
-      position: [5, 2, 35],
-      rotation: [-0.1, 3, 0])
+      position: [1.32, 2.96, 35.38],
+      rotation: [-0.16, 3.09, 0])
   }
+
+//  var defaultDistance: Float = 10.6
+//  var defaultView: Transform {
+//    Transform(
+//      position: [-1.22, 2.41, 35.24],
+//      rotation: [-0.23, 3.02, 0])
+//  }
+
   var lighting = SceneLighting()
   let skybox: Skybox?
-  var water: Water?
   var terrain: Terrain?
 
   init() {
     skybox = Skybox(textureName: "sky")
+
+    terrain = Terrain(name: "terrain.obj")
+    terrain?.tiling = 12
+    terrain?.position = [0, 3, 0]
+
     water = Water()
-    terrain = Terrain(name: "terrain.obj", tiling: 12)
-    terrain?.transform.position = [0, 3, 0]
+    water?.position = [0, -1, 0]
     camera.transform = defaultView
-    cottage.position = [0, 1, 10]
+    cottage.position = [0, 0.4, 10]
     cottage.rotation.y = 0.2
     models = [cottage]
-    if let terrain = terrain {
-      models.append(terrain)
-    }
-    if let skybox = skybox {
-      models.append(skybox)
-    }
   }
 
   mutating func update(size: CGSize) {
@@ -75,19 +82,30 @@ struct GameScene {
     water?.update(deltaTime: deltaTime)
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
+//      camera.distance = defaultDistance
       camera.transform = Transform()
+//      camera.rotation.y = -.pi
+      input.keysPressed.remove(.one)
     }
     if input.keysPressed.contains(.two) {
+//      camera.distance = defaultDistance
       camera.transform = defaultView
+      input.keysPressed.remove(.two)
     }
-    if input.keysPressed.contains(.downArrow) {
-      camera.position.y -= 1
+    
+    let positionYDelta = (input.mouseScroll.x + input.mouseScroll.y)
+      * Settings.mouseScrollSensitivity
+    if let water = water,
+       camera.position.y + positionYDelta > water.position.y {
+      camera.position.y += positionYDelta
     }
-    if input.keysPressed.contains(.upArrow) {
-      camera.position.y += 1
-    }
-
-    input.keysPressed.removeAll()
+    input.mouseScroll = .zero
+    
     camera.update(deltaTime: deltaTime)
+
+
+//    input.keysPressed.removeAll()
+
+//    print("\n", camera.position, "\n", camera.rotation, "\n", camera.distance)
   }
 }

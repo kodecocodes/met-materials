@@ -1,15 +1,15 @@
 /// Copyright (c) 2022 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,15 +32,10 @@
 
 import MetalKit
 
-class Water {
+class Water: Transformable {
   let mesh: MTKMesh
-  let transform = Transform(position: [0, -1, 0])
+  var transform = Transform()
   let pipelineState: MTLRenderPipelineState
-  var waterMovementTexture: MTLTexture?
-  var timer: Float = 0
-  weak var reflectionTexture: MTLTexture?
-  weak var refractionTexture: MTLTexture?
-  weak var refractionDepthTexture: MTLTexture?
 
   init() {
     let allocator =
@@ -53,8 +48,6 @@ class Water {
     do {
       mesh = try MTKMesh(
         mesh: plane, device: Renderer.device)
-      waterMovementTexture =
-        try TextureController.loadTexture(filename: "normal-water")
     } catch {
       fatalError("failed to create water plane")
     }
@@ -63,52 +56,38 @@ class Water {
         mesh.vertexDescriptor))
   }
 
-  func update(deltaTime: Float) {
-    timer += deltaTime
-  }
-
   func render(
-    renderEncoder: MTLRenderCommandEncoder,
-    uniforms: Uniforms
+    encoder: MTLRenderCommandEncoder,
+    uniforms: Uniforms,
+    params: Params
   ) {
-    renderEncoder.pushDebugGroup("Water")
-    renderEncoder.setRenderPipelineState(pipelineState)
-    renderEncoder.setVertexBuffer(
+    encoder.pushDebugGroup("Water")
+    encoder.setRenderPipelineState(pipelineState)
+    encoder.setVertexBuffer(
       mesh.vertexBuffers[0].buffer,
       offset: 0,
       index: 0)
     var uniforms = uniforms
     uniforms.modelMatrix = transform.modelMatrix
-    renderEncoder.setVertexBytes(
+    encoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
       index: UniformsBuffer.index)
 
-    renderEncoder.setFragmentTexture(
-      reflectionTexture,
-      index: 0)
-    renderEncoder.setFragmentTexture(
-      refractionTexture,
-      index: 1)
-    renderEncoder.setFragmentTexture(
-      waterMovementTexture, index: 2)
+    var params = params
+    encoder.setVertexBytes(
+      &params,
+      length: MemoryLayout<Params>.stride,
+      index: ParamsBuffer.index)
 
-    renderEncoder.setFragmentTexture(
-      refractionDepthTexture,
-      index: 4)
-
-    var timer = timer
-    renderEncoder.setFragmentBytes(
-      &timer,
-      length: MemoryLayout<Float>.size,
-      index: 3)
     let submesh = mesh.submeshes[0]
-    renderEncoder.drawIndexedPrimitives(
+    encoder.drawIndexedPrimitives(
       type: .triangle,
       indexCount: submesh.indexCount,
       indexType: submesh.indexType,
       indexBuffer: submesh.indexBuffer.buffer,
       indexBufferOffset: 0)
-    renderEncoder.popDebugGroup()
+
+    encoder.popDebugGroup()
   }
 }

@@ -85,7 +85,8 @@ typedef enum {
   OpacityTexture = 6,
   SkyboxTexture = 11,
   SkyboxDiffuseTexture = 12,
-  BRDFLutTexture = 13
+  BRDFLutTexture = 13,
+  MiscTexture = 31
 } TextureIndices;
 
 typedef enum {

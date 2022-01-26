@@ -44,8 +44,10 @@ class Renderer: NSObject {
   var uniforms = Uniforms()
   var params = Params()
 
-  var waterRenderPass: WaterRenderPass
   var forwardRenderPass: ForwardRenderPass
+  var shadowRenderPass: ShadowRenderPass
+  var waterRenderPass: WaterRenderPass
+  var shadowCamera = OrthographicCamera()
 
   init(metalView: MTKView, options: Options) {
     guard
@@ -63,6 +65,7 @@ class Renderer: NSObject {
     Self.colorPixelFormat = metalView.colorPixelFormat
     self.options = options
     forwardRenderPass = ForwardRenderPass(view: metalView)
+    shadowRenderPass = ShadowRenderPass(view: metalView)
     waterRenderPass = WaterRenderPass()
     super.init()
     metalView.clearColor = MTLClearColor(
@@ -83,16 +86,26 @@ extension Renderer {
     params.width = UInt32(size.width)
     params.height = UInt32(size.height)
     forwardRenderPass.resize(view: view, size: size)
+    shadowRenderPass.resize(view: view, size: size)
     waterRenderPass.resize(view: view, size: size)
   }
 
   func updateUniforms(scene: GameScene) {
     params.alphaBlending = options.alphaBlending
-    params.sunlight = scene.lighting.sunlight.position
+
     uniforms.viewMatrix = scene.camera.viewMatrix
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
     params.cameraPosition = scene.camera.position
+    let sun = scene.lighting.lights[0]
+    shadowCamera = OrthographicCamera.createShadowCamera(
+      using: scene.camera,
+      lightPosition: sun.position)
+    uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
+    uniforms.shadowViewMatrix = float4x4(
+      eye: shadowCamera.position,
+      center: shadowCamera.center,
+      up: [0, 1, 0])
   }
 
   func draw(scene: GameScene, in view: MTKView) {
@@ -104,6 +117,13 @@ extension Renderer {
 
     updateUniforms(scene: scene)
 
+    shadowRenderPass.draw(
+      commandBuffer: commandBuffer,
+      scene: scene,
+      uniforms: uniforms,
+      params: params)
+
+    waterRenderPass.shadowTexture = shadowRenderPass.shadowTexture
     waterRenderPass.draw(
       commandBuffer: commandBuffer,
       scene: scene,
@@ -111,6 +131,7 @@ extension Renderer {
       params: params)
 
     forwardRenderPass.descriptor = descriptor
+    forwardRenderPass.shadowTexture = shadowRenderPass.shadowTexture
     forwardRenderPass.draw(
       commandBuffer: commandBuffer,
       scene: scene,

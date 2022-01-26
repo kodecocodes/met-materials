@@ -34,11 +34,12 @@
 
 import MetalKit
 
-class Model: Transformable, Renderable {
+class Model: Transformable {
   var transform = Transform()
   let meshes: [Mesh]
   var tiling: UInt32 = 1
   var name: String
+  let hasTransparency: Bool
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(
@@ -71,11 +72,14 @@ class Model: Transformable, Renderable {
       Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
     }
     self.name = name
+    hasTransparency = meshes.contains { mesh in
+      mesh.submeshes.anySatisfy { $0.transparency }
+    }
   }
-}
-
-// Rendering
-extension Model {
+//}
+//
+//// Rendering
+//extension Model {
   func render(
     encoder: MTLRenderCommandEncoder,
     uniforms vertex: Uniforms,

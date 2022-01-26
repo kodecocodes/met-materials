@@ -32,7 +32,7 @@
 
 import MetalKit
 
-struct Skybox: Renderable {
+struct Skybox {
   let mesh: MTKMesh
   var texture: MTLTexture?
   let pipelineState: MTLRenderPipelineState
@@ -129,35 +129,35 @@ struct Skybox: Renderable {
   }
 
   func render(
-    encoder: MTLRenderCommandEncoder,
-    uniforms: Uniforms,
-    params: Params
+    renderEncoder: MTLRenderCommandEncoder,
+    uniforms: Uniforms
   ) {
-    encoder.pushDebugGroup("Skybox")
-    encoder.setRenderPipelineState(pipelineState)
-    encoder.setDepthStencilState(depthStencilState)
-    encoder.setVertexBuffer(
+    renderEncoder.pushDebugGroup("Skybox")
+    renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.setVertexBuffer(
       mesh.vertexBuffers[0].buffer,
       offset: 0,
       index: 0)
-    var viewMatrix = uniforms.viewMatrix
-    viewMatrix.columns.3 = [0, 0, 0, 1]
+
     var uniforms = uniforms
-    uniforms.viewMatrix = viewMatrix
-    encoder.setVertexBytes(
+    uniforms.modelMatrix = .identity
+    uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
+    renderEncoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
       index: UniformsBuffer.index)
+
     let submesh = mesh.submeshes[0]
-    encoder.setFragmentTexture(
+    renderEncoder.setFragmentTexture(
       texture,
       index: SkyboxTexture.index)
-    encoder.drawIndexedPrimitives(
+    renderEncoder.drawIndexedPrimitives(
       type: .triangle,
       indexCount: submesh.indexCount,
       indexType: submesh.indexType,
       indexBuffer: submesh.indexBuffer.buffer,
       indexBufferOffset: 0)
-    encoder.popDebugGroup()
+    renderEncoder.popDebugGroup()
   }
 }

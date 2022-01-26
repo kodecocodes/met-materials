@@ -30,46 +30,33 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
+import Metal
 
-struct Terrain: Renderable {
-  var terrain: Model
-  let pipelineState: MTLRenderPipelineState
-  var underwaterTexture: MTLTexture?
+class Terrain: Model {
+  var pipelineState: MTLRenderPipelineState
+  let underwaterTexture: MTLTexture?
 
-  var transform: Transform {
-    get {
-      terrain.transform
-    }
-    set {
-      terrain.transform = newValue
-    }
-  }
-
-  init(name: String, tiling: UInt32 = 1) {
-    terrain = Model(name: name)
-    terrain.tiling = tiling
+  override init(name: String) {
     pipelineState = PipelineStates.createTerrainPSO()
-    do {
-      underwaterTexture =
-        try TextureController.loadTexture(filename: "underwater-color")
-    } catch {
-      fatalError("failed to create terrain")
-    }
+    underwaterTexture = try? TextureController.loadTexture(
+      filename: "underwater-color")
+    super.init(name: name)
   }
 
-  func render(
+  override func render(
     encoder: MTLRenderCommandEncoder,
-    uniforms: Uniforms,
-    params: Params
+    uniforms vertex: Uniforms,
+    params fragment: Params
   ) {
     encoder.setRenderPipelineState(pipelineState)
     encoder.setFragmentTexture(
       underwaterTexture,
-      index: Misc.index)
-    terrain.render(
+      index: MiscTexture.index)
+
+    super.render(
       encoder: encoder,
-      uniforms: uniforms,
-      params: params)
+      uniforms: vertex,
+      params: fragment)
   }
 }

@@ -36,7 +36,7 @@ using namespace metal;
 #import "Lighting.h"
 
 fragment float4 fragment_IBL(
-  VertexOut in [[stage_in]],
+  FragmentIn in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
@@ -105,20 +105,10 @@ fragment float4 fragment_IBL(
     reflect(viewDirection, normal);
 
   float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
-  
-  // add in lambertian diffuse
-  float3 lightDirection = normalize(-float3(-1, 1.5, 2)); // position from SceneLighting
-  float diffuseIntensity = saturate(-dot(lightDirection, normal));
-  float maxIntensity = 2;
-  float minIntensity = 0.4;
-  diffuseIntensity = diffuseIntensity * (maxIntensity - minIntensity) + minIntensity;
-  diffuse *= diffuseIntensity;
-
-  
-  //diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
+  diffuse = mix(pow(diffuse, 0.2), diffuse, material.metallic);
+  diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
 
   color = diffuse * float4(material.baseColor, 1);
-
 
   constexpr sampler s(filter::linear, mip_filter::linear);
   float3 prefilteredColor = skybox.sample(
@@ -135,8 +125,5 @@ fragment float4 fragment_IBL(
   float3 specular = prefilteredColor * specularIBL;
   color += float4(specular, 1);
   color *= material.ambientOcclusion;
-
-  
-
   return color;
 }

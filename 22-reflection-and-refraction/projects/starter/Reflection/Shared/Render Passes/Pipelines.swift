@@ -121,4 +121,36 @@ enum PipelineStates {
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
     return createPSO(descriptor: pipelineDescriptor)
   }
+
+  static func createTerrainPSO() -> MTLRenderPipelineState {
+    let vertexFunction =
+      Renderer.library?.makeFunction(name: "vertex_main")
+    let fragmentFunction =
+      Renderer.library?.makeFunction(name: "fragment_terrain")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat =
+      Renderer.colorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor = .defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createWaterPSO(
+    vertexDescriptor: MTLVertexDescriptor?
+  ) -> MTLRenderPipelineState {
+    let vertexFunction =
+      Renderer.library?.makeFunction(name: "vertex_water")
+    let fragmentFunction =
+      Renderer.library?.makeFunction(name: "fragment_water")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat =
+      Renderer.colorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor = vertexDescriptor
+    return createPSO(descriptor: pipelineDescriptor)
+  }
 }

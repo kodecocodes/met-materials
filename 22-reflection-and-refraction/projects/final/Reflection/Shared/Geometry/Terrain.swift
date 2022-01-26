@@ -30,43 +30,33 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import Foundation
+import Metal
 
-#import "Common.h"
+class Terrain: Model {
+  var pipelineState: MTLRenderPipelineState
+  let underwaterTexture: MTLTexture?
 
-struct VertexIn {
-  float4 position [[attribute(Position)]];
-};
+  override init(name: String) {
+    pipelineState = PipelineStates.createTerrainPSO()
+    underwaterTexture = try? TextureController.loadTexture(
+      filename: "underwater-color")
+    super.init(name: name)
+  }
 
-struct VertexOut {
-  float4 position [[position]];
-  float3 textureCoordinates;
-};
+  override func render(
+    encoder: MTLRenderCommandEncoder,
+    uniforms vertex: Uniforms,
+    params fragment: Params
+  ) {
+    encoder.setRenderPipelineState(pipelineState)
+    encoder.setFragmentTexture(
+      underwaterTexture,
+      index: MiscTexture.index)
 
-struct FragmentIn {
-  float4 position;
-  float3 textureCoordinates;
-};
-
-vertex VertexOut vertex_skybox(
-  const VertexIn in [[stage_in]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
-{
-  VertexOut out;
-  float4x4 pv = uniforms.projectionMatrix * uniforms.viewMatrix;
-  out.position = (pv * in.position).xyww;
-  out.textureCoordinates = in.position.xyz;
-  return out;
-}
-
-fragment half4 fragment_skybox(
-  FragmentIn in [[stage_in]],
-  texturecube<half> cubeTexture [[texture(SkyboxTexture)]])
-{
-  constexpr sampler default_sampler(filter::linear);
-  half4 color = cubeTexture.sample(
-    default_sampler,
-    in.textureCoordinates);
-  return color;
+    super.render(
+      encoder: encoder,
+      uniforms: vertex,
+      params: fragment)
+  }
 }

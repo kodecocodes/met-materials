@@ -1,15 +1,15 @@
 /// Copyright (c) 2022 Razeware LLC
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,21 +32,22 @@
 
 #include <metal_stdlib>
 using namespace metal;
-
-#import "Common.h"
 #import "Vertex.h"
+#import "Lighting.h"
 
 fragment float4 fragment_terrain(
   FragmentIn in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
+  constant Light *lights [[buffer(LightBuffer)]],
   texture2d<float> baseColor [[texture(BaseColor)]],
-  texture2d<float> underwaterTexture [[texture(Misc)]])
+  texture2d<float> underwaterTexture [[texture(MiscTexture)]])
 {
   constexpr sampler default_sampler(filter::linear, address::repeat);
   float4 color;
   float4 grass = baseColor.sample(default_sampler, in.uv * params.tiling);
   color = grass;
 
+  // uncomment this for pebbles
   float4 underwater = underwaterTexture.sample(
     default_sampler,
     in.uv * params.tiling);
@@ -60,9 +61,10 @@ fragment float4 fragment_terrain(
    (color = grass) :
    (color = mix(grass, underwater, waterHeight))
    );
-  
+
   float3 normal = normalize(in.worldNormal);
-  float3 lightDirection = normalize(params.sunlight);
+  Light light = lights[0];
+  float3 lightDirection = normalize(light.position);
   float diffuseIntensity = saturate(dot(lightDirection, normal));
   float maxIntensity = 1;
   float minIntensity = 0.4;
@@ -70,3 +72,4 @@ fragment float4 fragment_terrain(
   color *= diffuseIntensity;
   return color;
 }
+

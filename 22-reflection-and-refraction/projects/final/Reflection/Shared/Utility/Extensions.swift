@@ -30,43 +30,10 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import Foundation
 
-#import "Common.h"
-
-struct VertexIn {
-  float4 position [[attribute(Position)]];
-};
-
-struct VertexOut {
-  float4 position [[position]];
-  float3 textureCoordinates;
-};
-
-struct FragmentIn {
-  float4 position;
-  float3 textureCoordinates;
-};
-
-vertex VertexOut vertex_skybox(
-  const VertexIn in [[stage_in]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
-{
-  VertexOut out;
-  float4x4 pv = uniforms.projectionMatrix * uniforms.viewMatrix;
-  out.position = (pv * in.position).xyww;
-  out.textureCoordinates = in.position.xyz;
-  return out;
-}
-
-fragment half4 fragment_skybox(
-  FragmentIn in [[stage_in]],
-  texturecube<half> cubeTexture [[texture(SkyboxTexture)]])
-{
-  constexpr sampler default_sampler(filter::linear);
-  half4 color = cubeTexture.sample(
-    default_sampler,
-    in.textureCoordinates);
-  return color;
+extension Array {
+  func anySatisfy(_ element: (Element) -> Bool) -> Bool {
+    return !allSatisfy { !element($0) }
+  }
 }

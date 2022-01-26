@@ -43,7 +43,6 @@ typedef struct {
   matrix_float4x4 shadowProjectionMatrix;
   matrix_float4x4 shadowViewMatrix;
   vector_float4 clipPlane;
-  vector_float3 cameraPosition;
 } Uniforms;
 
 typedef struct {
@@ -52,7 +51,6 @@ typedef struct {
   uint tiling;
   uint lightCount;
   vector_float3 cameraPosition;
-  vector_float3 sunlight;
   bool alphaBlending;
   bool transparency;
 } Params;
@@ -89,7 +87,7 @@ typedef enum {
   SkyboxTexture = 11,
   SkyboxDiffuseTexture = 12,
   BRDFLutTexture = 13,
-  Misc = 30
+  MiscTexture = 14
 } TextureIndices;
 
 typedef enum {

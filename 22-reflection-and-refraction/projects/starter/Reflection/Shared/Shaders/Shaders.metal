@@ -61,7 +61,7 @@ vertex VertexOut vertex_main(
 fragment float4 fragment_main(
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
-  VertexOut in [[stage_in]],
+  FragmentIn in [[stage_in]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
   texture2d<float> normalTexture [[texture(NormalTexture)]],

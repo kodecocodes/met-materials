@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "820B880B26B8E47E0070A134"
-               BuildableName = "Environment.app"
+               BuildableName = "Reflection.app"
                BlueprintName = "Reflection (iOS)"
                ReferencedContainer = "container:Reflection.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "820B880B26B8E47E0070A134"
-            BuildableName = "Environment.app"
+            BuildableName = "Reflection.app"
             BlueprintName = "Reflection (iOS)"
             ReferencedContainer = "container:Reflection.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "820B880B26B8E47E0070A134"
-            BuildableName = "Environment.app"
+            BuildableName = "Reflection.app"
             BlueprintName = "Reflection (iOS)"
             ReferencedContainer = "container:Reflection.xcodeproj">
          </BuildableReference>

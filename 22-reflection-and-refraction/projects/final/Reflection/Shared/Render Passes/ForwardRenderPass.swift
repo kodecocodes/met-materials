@@ -32,22 +32,20 @@
 
 import MetalKit
 
-// swiftlint:disable superfluous_disable_command
-// swiftlint:disable identifier_name
-
 struct ForwardRenderPass: RenderPass {
   let label = "Forward Render Pass"
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState
+  var transparentPSO: MTLRenderPipelineState
 
   let depthStencilState: MTLDepthStencilState?
-  weak var reflectionTexture: MTLTexture?
-  weak var refractionTexture: MTLTexture?
+  weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createForwardPSO()
     depthStencilState = Self.buildDepthStencilState()
+    transparentPSO = PipelineStates.createForwardTransparentPSO()
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
@@ -73,20 +71,48 @@ struct ForwardRenderPass: RenderPass {
       scene.lighting.lightsBuffer,
       offset: 0,
       index: LightBuffer.index)
+    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+
     scene.skybox?.update(renderEncoder: renderEncoder)
 
+    var params = params
+    params.transparency = false
     for model in scene.models {
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
     }
-    renderEncoder.setDepthStencilState(depthStencilState)
-    var uniforms = uniforms
-    uniforms.cameraPosition = scene.camera.position
+    scene.terrain?.render(
+      encoder: renderEncoder,
+      uniforms: uniforms,
+      params: params)
+
     scene.water?.render(
+      encoder: renderEncoder,
+      uniforms: uniforms,
+      params: params)
+
+    scene.skybox?.render(
       renderEncoder: renderEncoder,
       uniforms: uniforms)
+
+    // transparent mesh
+    renderEncoder.pushDebugGroup("Transparency")
+    let models = scene.models.filter {
+      $0.hasTransparency
+    }
+    params.transparency = true
+    if params.alphaBlending {
+      renderEncoder.setRenderPipelineState(transparentPSO)
+    }
+    for model in models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()
   }
 }

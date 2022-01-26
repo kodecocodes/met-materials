@@ -1,15 +1,15 @@
 /// Copyright (c) 2022 Razeware LLC
-///
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -43,8 +43,7 @@ struct VertexIn {
 struct VertexOut {
   float4 position [[position]];
   float2 uv;
-  float3 worldPosition;
-  float3 toCamera;
+  float4 worldPosition;
 };
 
 vertex VertexOut vertex_water(
@@ -53,12 +52,10 @@ vertex VertexOut vertex_water(
 {
   VertexOut out;
   float4x4 mvp = uniforms.projectionMatrix * uniforms.viewMatrix
-    * uniforms.modelMatrix;
+                   * uniforms.modelMatrix;
   out.position = mvp * in.position;
   out.uv = in.uv;
-  out.worldPosition =
-    (uniforms.modelMatrix * in.position).xyz;
-  out.toCamera = uniforms.cameraPosition - out.worldPosition;
+  out.worldPosition = uniforms.modelMatrix * in.position;
   return out;
 }
 
@@ -66,12 +63,16 @@ fragment float4 fragment_water(
   VertexOut in [[stage_in]],
   texture2d<float> reflectionTexture [[texture(0)]],
   texture2d<float> refractionTexture [[texture(1)]],
-  texture2d<float> waterMovement [[texture(2)]],
+  texture2d<float> normalTexture [[texture(2)]],
+  constant Params &params [[buffer(ParamsBuffer)]],
   constant float& timer [[buffer(3)]],
-  depth2d<float> depthMap [[texture(4)]])
+                               // addd
+                               depth2d<float> depthMap [[texture(4)]])
 {
   // 1
   constexpr sampler s(filter::linear, address::repeat);
+  
+  
   // 2
   float width = float(reflectionTexture.get_width() * 2.0);
   float height = float(reflectionTexture.get_height() * 2.0);
@@ -79,10 +80,14 @@ fragment float4 fragment_water(
   float y = in.position.y / height;
   float2 reflectionCoords = float2(x, 1 - y);
   float2 refractionCoords = float2(x, y);
-  // 3
+  // 1
+  float2 uv = in.uv * 2.0;
+  // 2
+  float waveStrength = 0.1;
   
-  float far = 100.0;   // camera.far
-  float near = 0.1;    // camera.near
+  // addd
+  float far = 100;
+  float near = 0.1;
   float proj33 = far / (far - near);
   float proj43 = proj33 * -near;
   float depth = depthMap.sample(s, refractionCoords);
@@ -91,30 +96,30 @@ fragment float4 fragment_water(
   float waterDistance = proj43 / (depth - proj33);
   depth = floorDistance - waterDistance;
 
-  // 1
-  float2 uv = in.uv * 2.0;
-  // 2
-  float waveStrength = 0.1;
-  float t = timer * 0.005;
-  float2 rippleX = float2(uv.x + t, uv.y);
-  float2 rippleY = float2(-uv.x, uv.y) + t;
+  
+  float2 rippleX = float2(uv.x + timer, uv.y);
+  float2 rippleY = float2(-uv.x, uv.y) + timer;
   float2 ripple =
-      ((waterMovement.sample(s, rippleX).rg * 2.0 - 1.0) +
-       (waterMovement.sample(s, rippleY).rg * 2.0 - 1.0))
-        * waveStrength;
+    ((normalTexture.sample(s, rippleX).rg * 2.0 - 1.0) +
+    (normalTexture.sample(s, rippleY).rg * 2.0 - 1.0))
+    * waveStrength;
   reflectionCoords += ripple;
   refractionCoords += ripple;
   // 3
   reflectionCoords = clamp(reflectionCoords, 0.001, 0.999);
   refractionCoords = clamp(refractionCoords, 0.001, 0.999);
-
-  float3 viewVector = normalize(in.toCamera);
-  float mixRatio = dot(viewVector, float3(0.0, 1.0, 0.0));
+  // 3
+  float3 viewVector =
+    normalize(params.cameraPosition - in.worldPosition.xyz);
+  float mixRatio = dot(viewVector, float3(0, 1, 0));
   float4 color =
-      mix(reflectionTexture.sample(s, reflectionCoords),
-          refractionTexture.sample(s, refractionCoords),
-          mixRatio);
+    mix(reflectionTexture.sample(s, reflectionCoords),
+      refractionTexture.sample(s, refractionCoords),
+      mixRatio);
   color = mix(color, float4(0.0, 0.3, 0.5, 1.0), 0.3);
-  color.a = clamp(depth * 0.75, 0.0, 1.0);
+  
+  // addd
+//  color.a = clamp(depth * 0.75, 0.0, 1.0);
   return color;
 }
+

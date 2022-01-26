@@ -32,12 +32,29 @@
 
 #include <metal_stdlib>
 using namespace metal;
+
 #import "Vertex.h"
 #import "Lighting.h"
 
-fragment float4 fragment_IBL(
+constant float pi = 3.1415926535897932384626433832795;
+
+// functions
+float3 computeSpecular(
+  float3 normal,
+  float3 viewDirection,
+  float3 lightDirection,
+  float roughness,
+  float3 F0);
+
+float3 computeDiffuse(
+  Material material,
+  float3 normal,
+  float3 lightDirection);
+
+fragment float4 fragment_PBR(
   FragmentIn in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
+  constant Light *lights [[buffer(LightBuffer)]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
   texture2d<float> normalTexture [[texture(NormalTexture)]],
@@ -45,10 +62,7 @@ fragment float4 fragment_IBL(
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
   texture2d<float> opacityTexture [[texture(OpacityTexture)]],
-  depth2d<float> shadowTexture [[texture(ShadowTexture)]],
-  texturecube<float> skybox [[texture(SkyboxTexture)]],
-  texturecube<float> skyboxDiffuse [[texture(SkyboxDiffuseTexture)]],
-  texture2d<float> brdfLut [[texture(BRDFLutTexture)]])
+  depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
   constexpr sampler textureSampler(
     filter::linear,
@@ -95,35 +109,87 @@ fragment float4 fragment_IBL(
       in.worldNormal) * normalValue;
   }
   normal = normalize(normal);
+  float3 viewDirection = normalize(params.cameraPosition);
+  float3 specularColor = 0;
+  float3 diffuseColor = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type == Ambient) {
+      diffuseColor += material.baseColor * light.color;
+      continue;
+    }
+    float3 lightDirection = normalize(light.position);
+    float3 F0 = mix(0.04, material.baseColor, material.metallic);
   
-  float4 color = float4(material.baseColor, 1);
+    specularColor +=
+      saturate(computeSpecular(
+        normal,
+        viewDirection,
+        lightDirection,
+        material.roughness,
+        F0));
 
-  float3 viewDirection =
-    in.worldPosition.xyz - params.cameraPosition;
-  viewDirection = normalize(viewDirection);
-  float3 textureCoordinates =
-    reflect(viewDirection, normal);
-
-  float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
-  diffuse = mix(pow(diffuse, 0.2), diffuse, material.metallic);
-  diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
-
-  color = diffuse * float4(material.baseColor, 1);
-
-  constexpr sampler s(filter::linear, mip_filter::linear);
-  float3 prefilteredColor = skybox.sample(
-    s,
-    textureCoordinates,
-    level(material.roughness * 10)).rgb;
-  // 3
-  float nDotV = saturate(dot(normal, -viewDirection));
-  float2 envBRDF = brdfLut.sample(
-    s,
-    float2(material.roughness, nDotV)).rg;
-  float3 f0 = mix(0.04, material.baseColor.rgb, material.metallic);
-  float3 specularIBL = f0 * envBRDF.r + envBRDF.g;
-  float3 specular = prefilteredColor * specularIBL;
-  color += float4(specular, 1);
-  color *= material.ambientOcclusion;
+    diffuseColor +=
+      saturate(computeDiffuse(
+        material,
+        normal,
+        lightDirection) * light.color);
+  }
+  // shadow calculation
+  diffuseColor *= calculateShadow(in.shadowPosition, shadowTexture);
+  float4 color = float4(diffuseColor * opacity + specularColor, opacity);
   return color;
+}
+
+float G1V(float nDotV, float k)
+{
+  return 1.0f / (nDotV * (1.0f - k) + k);
+}
+
+// specular optimized-ggx
+// AUTHOR John Hable. Released into the public domain
+float3 computeSpecular(
+    float3 normal,
+    float3 viewDirection,
+    float3 lightDirection,
+    float roughness,
+    float3 F0) {
+  float alpha = roughness * roughness;
+  float3 halfVector = normalize(viewDirection + lightDirection);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float nDotV = saturate(dot(normal, viewDirection));
+  float nDotH = saturate(dot(normal, halfVector));
+  float lDotH = saturate(dot(lightDirection, halfVector));
+  
+  float3 F;
+  float D, vis;
+  
+  // Distribution
+  float alphaSqr = alpha * alpha;
+  float pi = 3.14159f;
+  float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
+  D = alphaSqr / (pi * denom * denom);
+
+  // Fresnel
+  float lDotH5 = pow(1.0 - lDotH, 5);
+  F = F0 + (1.0 - F0) * lDotH5;
+  
+  // V
+  float k = alpha / 2.0f;
+  vis = G1V(nDotL, k) * G1V(nDotV, k);
+  
+  float3 specular = nDotL * D * F * vis;
+  return specular;
+}
+
+// diffuse
+float3 computeDiffuse(
+  Material material,
+  float3 normal,
+  float3 lightDirection)
+{
+  float nDotL = saturate(dot(normal, lightDirection));
+  float3 diffuse = float3(((1.0/pi) * material.baseColor) * (1.0 - material.metallic));
+  diffuse = float3(material.baseColor) * (1.0 - material.metallic);
+  return diffuse * nDotL * material.ambientOcclusion;
 }

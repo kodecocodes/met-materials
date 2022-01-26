@@ -54,4 +54,15 @@ struct VertexOut {
   float4 shadowPosition;
 };
 
+struct FragmentIn {
+  float4 position;
+  float2 uv;
+  float3 color;
+  float3 worldPosition;
+  float3 worldNormal;
+  float3 worldTangent;
+  float3 worldBitangent;
+  float4 shadowPosition;
+};
+
 #endif /* VertexHeader_h */
