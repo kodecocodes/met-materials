@@ -43,22 +43,16 @@ struct ForwardRenderPass: RenderPass {
   var transparentPSO: MTLRenderPipelineState
   var pipelineState_MSAA: MTLRenderPipelineState
   var transparentPSO_MSAA: MTLRenderPipelineState
-
   let depthStencilState: MTLDepthStencilState?
   weak var shadowTexture: MTLTexture?
 
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
+  init() {
+    pipelineState = PipelineStates.createForwardPSO()
+    transparentPSO = PipelineStates.createForwardTransparentPSO()
     depthStencilState = Self.buildDepthStencilState()
-    transparentPSO = PipelineStates.createForwardTransparentPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    pipelineState_MSAA =
-      PipelineStates.createForwardPSO_MSAA(
-      colorPixelFormat: view.colorPixelFormat)
+    pipelineState_MSAA = PipelineStates.createForwardPSO_MSAA()
     transparentPSO_MSAA =
-      PipelineStates.createForwardTransparentPSO_MSAA(
-      colorPixelFormat: view.colorPixelFormat)
+      PipelineStates.createForwardTransparentPSO_MSAA()
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
@@ -74,9 +68,8 @@ struct ForwardRenderPass: RenderPass {
       pipelineState_MSAA : pipelineState
     let transparentPSO = params.antialiasing ?
       transparentPSO_MSAA : transparentPSO
-
     guard let descriptor = descriptor,
-      let renderEncoder =
+    let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(
         descriptor: descriptor) else {
       return
@@ -112,6 +105,7 @@ struct ForwardRenderPass: RenderPass {
     }
 
     // transparent mesh
+    renderEncoder.pushDebugGroup("Transparency")
     let models = scene.models.filter {
       $0.hasTransparency
     }
@@ -125,6 +119,7 @@ struct ForwardRenderPass: RenderPass {
         uniforms: uniforms,
         params: params)
     }
+    renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()
   }
 }

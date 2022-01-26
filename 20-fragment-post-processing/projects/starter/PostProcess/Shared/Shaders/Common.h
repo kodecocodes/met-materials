@@ -32,9 +32,8 @@
 
 #ifndef Common_h
 #define Common_h
-#import "stdbool.h"
-
 #import <simd/simd.h>
+#import "stdbool.h"
 
 typedef struct {
   matrix_float4x4 modelMatrix;

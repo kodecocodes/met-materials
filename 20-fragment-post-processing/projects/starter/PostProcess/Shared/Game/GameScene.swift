@@ -30,7 +30,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import CoreGraphics
 
 struct GameScene {
   lazy var tree: Model = {
@@ -42,9 +42,6 @@ struct GameScene {
     return model
   }()
   lazy var window: Model = {
-    Model(name: "window.usdz")
-  }()
-  lazy var window2: Model = {
     Model(name: "window.usdz")
   }()
 
@@ -60,7 +57,7 @@ struct GameScene {
     camera.target.y = 3
     camera.distance = 5
     camera.far = 20
-    models = [ground, tree, window]
+    models = [ground, tree]
   }
 
   mutating func update(size: CGSize) {

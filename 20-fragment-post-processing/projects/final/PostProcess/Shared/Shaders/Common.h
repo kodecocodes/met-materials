@@ -85,8 +85,8 @@ typedef enum {
   RoughnessTexture = 2,
   MetallicTexture = 3,
   AOTexture = 4,
-  ShadowTexture = 5,
-  OpacityTexture = 6
+  OpacityTexture = 5,
+  ShadowTexture = 6
 } TextureIndices;
 
 typedef enum {

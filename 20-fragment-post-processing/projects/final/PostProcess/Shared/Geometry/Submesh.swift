@@ -49,6 +49,7 @@ struct Submesh {
 
   let textures: Textures
   let material: Material
+
   var transparency: Bool {
     return textures.opacity != nil || material.opacity < 1.0
   }
@@ -108,7 +109,6 @@ private extension Material {
       shininess.type == .float {
       self.shininess = shininess.floatValue
     }
-    ambientOcclusion = 1.0
     if let roughness = material?.property(with: .roughness),
       roughness.type == .float3 {
       self.roughness = roughness.floatValue
@@ -117,6 +117,7 @@ private extension Material {
       metallic.type == .float3 {
       self.metallic = metallic.floatValue
     }
+    ambientOcclusion = 1.0
     if let ambientOcclusion = material?.property(with: .ambientOcclusion),
       ambientOcclusion.type == .float3 {
       self.ambientOcclusion = ambientOcclusion.floatValue

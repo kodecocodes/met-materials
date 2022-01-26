@@ -37,7 +37,7 @@ struct PostProcessApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .navigationTitle("Shadows")
+        .navigationTitle("Fragment Post-Procssing")
     }
   }
 }

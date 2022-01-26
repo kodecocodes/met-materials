@@ -43,9 +43,8 @@ struct ForwardRenderPass: RenderPass {
   let depthStencilState: MTLDepthStencilState?
   weak var shadowTexture: MTLTexture?
 
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
+  init() {
+    pipelineState = PipelineStates.createForwardPSO()
     depthStencilState = Self.buildDepthStencilState()
   }
 

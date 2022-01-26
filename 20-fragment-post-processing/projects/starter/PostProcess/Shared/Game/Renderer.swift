@@ -38,6 +38,7 @@ class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
+  static var colorPixelFormat: MTLPixelFormat!
   var options: Options
 
   var uniforms = Uniforms()
@@ -55,13 +56,14 @@ class Renderer: NSObject {
     }
     Renderer.device = device
     Renderer.commandQueue = commandQueue
+    Renderer.colorPixelFormat = metalView.colorPixelFormat
     metalView.device = device
 
     let library = device.makeDefaultLibrary()
     Self.library = library
     self.options = options
-    forwardRenderPass = ForwardRenderPass(view: metalView)
-    shadowRenderPass = ShadowRenderPass(view: metalView)
+    forwardRenderPass = ForwardRenderPass()
+    shadowRenderPass = ShadowRenderPass()
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 0.93,
@@ -78,6 +80,8 @@ extension Renderer {
     _ view: MTKView,
     drawableSizeWillChange size: CGSize
   ) {
+    params.width = UInt32(size.width)
+    params.height = UInt32(size.height)
     forwardRenderPass.resize(view: view, size: size)
     shadowRenderPass.resize(view: view, size: size)
   }

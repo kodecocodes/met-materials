@@ -30,7 +30,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import CoreGraphics
 
 struct GameScene {
   lazy var tree: Model = {
@@ -42,9 +42,6 @@ struct GameScene {
     return model
   }()
   lazy var window: Model = {
-    Model(name: "window.usdz")
-  }()
-  lazy var window2: Model = {
     Model(name: "window.usdz")
   }()
 

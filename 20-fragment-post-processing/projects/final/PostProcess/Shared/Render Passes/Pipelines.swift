@@ -57,48 +57,49 @@ enum PipelineStates {
     return createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createForwardPSO(colorPixelFormat: MTLPixelFormat)
-    -> MTLRenderPipelineState {
+  static func createForwardPSO() -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
     let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
     return createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createForwardTransparentPSO(colorPixelFormat: MTLPixelFormat)
-    -> MTLRenderPipelineState {
+  static func createForwardTransparentPSO() -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
     let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
+    // 1
     let attachment = pipelineDescriptor.colorAttachments[0]
+    // 2
     attachment?.isBlendingEnabled = true
+    // 3
     attachment?.rgbBlendOperation = .add
+    // 4
     attachment?.sourceRGBBlendFactor = .sourceAlpha
+    // 5
     attachment?.destinationRGBBlendFactor = .oneMinusSourceAlpha
-
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
     return createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createForwardPSO_MSAA(colorPixelFormat: MTLPixelFormat)
-    -> MTLRenderPipelineState {
+  static func createForwardPSO_MSAA() -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
     let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout
@@ -106,20 +107,18 @@ enum PipelineStates {
     return createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createForwardTransparentPSO_MSAA(colorPixelFormat: MTLPixelFormat)
-    -> MTLRenderPipelineState {
+  static func createForwardTransparentPSO_MSAA() -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
     let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
     let attachment = pipelineDescriptor.colorAttachments[0]
     attachment?.isBlendingEnabled = true
     attachment?.rgbBlendOperation = .add
     attachment?.sourceRGBBlendFactor = .sourceAlpha
     attachment?.destinationRGBBlendFactor = .oneMinusSourceAlpha
-
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout

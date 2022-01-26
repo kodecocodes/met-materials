@@ -92,14 +92,12 @@ fragment float4 fragment_PBR(
     }
     material.baseColor = color.rgb;
   }
-
-  float opacity = 1;
   if (params.alphaBlending) {
     if (!is_null_texture(opacityTexture)) {
-      opacity = opacityTexture.sample(textureSampler, in.uv).r;
+      material.opacity =
+        opacityTexture.sample(textureSampler, in.uv).r;
     }
   }
-  
   // extract metallic
   if (!is_null_texture(metallicTexture)) {
     material.metallic = metallicTexture.sample(textureSampler, in.uv).r;
@@ -156,7 +154,8 @@ fragment float4 fragment_PBR(
   }
   // shadow calculation
   diffuseColor *= calculateShadow(in.shadowPosition, shadowTexture);
-  float4 color = float4(diffuseColor + specularColor, opacity);
+  float4 color =
+    float4(diffuseColor + specularColor, material.opacity);
   if (params.fog) {
     color = fog(in.position, color);
   }
