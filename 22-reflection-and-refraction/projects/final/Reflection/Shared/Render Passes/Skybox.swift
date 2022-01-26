@@ -141,13 +141,16 @@ struct Skybox {
       index: 0)
 
     var uniforms = uniforms
-    uniforms.modelMatrix = .identity
     uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
     renderEncoder.setVertexBytes(
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
       index: UniformsBuffer.index)
 
+    renderEncoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
     let submesh = mesh.submeshes[0]
     renderEncoder.setFragmentTexture(
       texture,

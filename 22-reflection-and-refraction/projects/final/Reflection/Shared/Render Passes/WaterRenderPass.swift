@@ -38,7 +38,6 @@ struct WaterRenderPass: RenderPass {
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
   weak var shadowTexture: MTLTexture?
-
   var reflectionTexture: MTLTexture?
   var refractionTexture: MTLTexture?
   var depthTexture: MTLTexture?
@@ -65,7 +64,7 @@ struct WaterRenderPass: RenderPass {
       pixelFormat: .depth32Float,
       label: "Reflection Depth Texture")
   }
-  
+
   func render(
     renderEncoder: MTLRenderCommandEncoder,
     scene: GameScene,
@@ -91,7 +90,6 @@ struct WaterRenderPass: RenderPass {
         uniforms: uniforms,
         params: params)
     }
-
     scene.terrain?.render(
       encoder: renderEncoder,
       uniforms: uniforms,
@@ -115,13 +113,9 @@ struct WaterRenderPass: RenderPass {
 
     let attachment = descriptor?.colorAttachments[0]
     attachment?.texture = reflectionTexture
-    attachment?.loadAction = .clear
     attachment?.storeAction = .store
-    attachment?.clearColor =
-      MTLClearColor(red: 1, green: 1, blue: 0, alpha: 1)
     let depthAttachment = descriptor?.depthAttachment
     depthAttachment?.texture = depthTexture
-    depthAttachment?.loadAction = .clear
     depthAttachment?.storeAction = .store
 
     guard let descriptor = descriptor,
@@ -135,10 +129,11 @@ struct WaterRenderPass: RenderPass {
     reflectionCamera.rotation.x *= -1
     let position = (scene.camera.position.y - water.position.y) * 2
     reflectionCamera.position.y -= position
+
     var uniforms = uniforms
     uniforms.viewMatrix = reflectionCamera.viewMatrix
 
-    var clipPlane = float4(0, 1, 0, -water.position.y + 1)
+    var clipPlane = float4(0, 1, 0, -water.position.y)
     uniforms.clipPlane = clipPlane
 
     render(
@@ -148,15 +143,19 @@ struct WaterRenderPass: RenderPass {
       params: params)
     renderEncoder.endEncoding()
 
+    // 1
     descriptor.colorAttachments[0].texture = refractionTexture
+    // 2
     guard let refractEncoder = commandBuffer.makeRenderCommandEncoder(
       descriptor: descriptor) else {
       return
     }
     refractEncoder.label = "Refraction"
+    // 3
     clipPlane = float4(0, -1, 0, -water.position.y)
     uniforms.clipPlane = clipPlane
     uniforms.viewMatrix = scene.camera.viewMatrix
+    // 4
     render(
       renderEncoder: refractEncoder,
       scene: scene,

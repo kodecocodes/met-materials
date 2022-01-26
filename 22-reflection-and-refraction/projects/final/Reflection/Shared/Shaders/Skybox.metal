@@ -44,11 +44,6 @@ struct VertexOut {
   float3 textureCoordinates;
 };
 
-struct FragmentIn {
-  float4 position;
-  float3 textureCoordinates;
-};
-
 vertex VertexOut vertex_skybox(
   const VertexIn in [[stage_in]],
   constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
@@ -61,7 +56,7 @@ vertex VertexOut vertex_skybox(
 }
 
 fragment half4 fragment_skybox(
-  FragmentIn in [[stage_in]],
+  VertexOut in [[stage_in]],
   texturecube<half> cubeTexture [[texture(SkyboxTexture)]])
 {
   constexpr sampler default_sampler(filter::linear);

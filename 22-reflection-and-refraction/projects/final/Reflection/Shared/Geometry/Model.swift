@@ -76,10 +76,7 @@ class Model: Transformable {
       mesh.submeshes.anySatisfy { $0.transparency }
     }
   }
-//}
-//
-//// Rendering
-//extension Model {
+
   func render(
     encoder: MTLRenderCommandEncoder,
     uniforms vertex: Uniforms,

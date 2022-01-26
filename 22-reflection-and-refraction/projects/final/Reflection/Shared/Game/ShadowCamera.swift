@@ -42,7 +42,7 @@ struct FrustumPoints {
 
 extension Camera {
   static func createShadowCamera(using camera: Camera, lightPosition: float3) -> OrthographicCamera {
-    guard let camera = camera as? ArcballCamera else { return OrthographicCamera() }
+    guard let camera = camera as? PlayerCamera else { return OrthographicCamera() }
     let nearPoints = calculatePlane(camera: camera, distance: camera.near)
     let farPoints = calculatePlane(camera: camera, distance: camera.far)
 
@@ -68,7 +68,7 @@ extension Camera {
     return shadowCamera
   }
 
-  static func calculatePlane(camera: ArcballCamera, distance: Float) -> FrustumPoints {
+  static func calculatePlane(camera: PlayerCamera, distance: Float) -> FrustumPoints {
     let halfFov = camera.fov * 0.5
     let halfHeight = tan(halfFov) * distance
     let halfWidth = halfHeight * camera.aspect

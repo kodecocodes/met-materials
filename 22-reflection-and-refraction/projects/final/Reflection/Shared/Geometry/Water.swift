@@ -54,14 +54,14 @@ class Water: Transformable {
     do {
       mesh = try MTKMesh(
         mesh: plane, device: Renderer.device)
-      waterMovementTexture =
-        try TextureController.loadTexture(filename: "normal-water")
     } catch {
       fatalError("failed to create water plane")
     }
     pipelineState = PipelineStates.createWaterPSO(
       vertexDescriptor: MTKMetalVertexDescriptorFromModelIO(
         mesh.vertexDescriptor))
+    waterMovementTexture =
+      try? TextureController.loadTexture(filename: "normal-water")
   }
 
   func update(deltaTime: Float) {
@@ -102,12 +102,9 @@ class Water: Transformable {
     encoder.setFragmentTexture(
       waterMovementTexture,
       index: 2)
-    
-    // addd
     encoder.setFragmentTexture(
-                      refractionDepthTexture,
-                      index: 4)
-    
+      refractionDepthTexture,
+      index: 3)
     var timer = timer
     encoder.setFragmentBytes(
       &timer,

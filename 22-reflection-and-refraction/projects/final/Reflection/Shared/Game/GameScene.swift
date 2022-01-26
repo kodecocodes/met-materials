@@ -37,27 +37,17 @@ struct GameScene {
     Model(name: "house.obj")
   }()
 
-  var water: Water?
-
   var models: [Model] = []
   var camera = PlayerCamera()
-  var defaultDistance: Float = 10
   var defaultView: Transform {
     Transform(
       position: [1.32, 2.96, 35.38],
       rotation: [-0.16, 3.09, 0])
   }
-
-//  var defaultDistance: Float = 10.6
-//  var defaultView: Transform {
-//    Transform(
-//      position: [-1.22, 2.41, 35.24],
-//      rotation: [-0.23, 3.02, 0])
-//  }
-
   var lighting = SceneLighting()
   let skybox: Skybox?
   var terrain: Terrain?
+  var water: Water?
 
   init() {
     skybox = Skybox(textureName: "sky")
@@ -68,7 +58,9 @@ struct GameScene {
 
     water = Water()
     water?.position = [0, -1, 0]
+
     camera.transform = defaultView
+
     cottage.position = [0, 0.4, 10]
     cottage.rotation.y = 0.2
     models = [cottage]
@@ -82,30 +74,21 @@ struct GameScene {
     water?.update(deltaTime: deltaTime)
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
-//      camera.distance = defaultDistance
       camera.transform = Transform()
-//      camera.rotation.y = -.pi
       input.keysPressed.remove(.one)
     }
     if input.keysPressed.contains(.two) {
-//      camera.distance = defaultDistance
       camera.transform = defaultView
       input.keysPressed.remove(.two)
     }
-    
     let positionYDelta = (input.mouseScroll.x + input.mouseScroll.y)
       * Settings.mouseScrollSensitivity
-    if let water = water,
-       camera.position.y + positionYDelta > water.position.y {
+    let minY: Float = -1
+    if camera.position.y + positionYDelta > minY {
       camera.position.y += positionYDelta
     }
     input.mouseScroll = .zero
-    
+
     camera.update(deltaTime: deltaTime)
-
-
-//    input.keysPressed.removeAll()
-
-//    print("\n", camera.position, "\n", camera.rotation, "\n", camera.distance)
   }
 }

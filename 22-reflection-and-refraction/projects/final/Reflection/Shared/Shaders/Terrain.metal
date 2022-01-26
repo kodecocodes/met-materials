@@ -39,6 +39,7 @@ fragment float4 fragment_terrain(
   FragmentIn in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
+  depth2d<float> shadowTexture [[texture(ShadowTexture)]],
   texture2d<float> baseColor [[texture(BaseColor)]],
   texture2d<float> underwaterTexture [[texture(MiscTexture)]])
 {
@@ -67,9 +68,10 @@ fragment float4 fragment_terrain(
   float3 lightDirection = normalize(light.position);
   float diffuseIntensity = saturate(dot(lightDirection, normal));
   float maxIntensity = 1;
-  float minIntensity = 0.4;
+  float minIntensity = 0.2;
   diffuseIntensity = diffuseIntensity * (maxIntensity - minIntensity) + minIntensity;
   color *= diffuseIntensity;
+  color *= calculateShadow(in.shadowPosition, shadowTexture);
   return color;
 }
 

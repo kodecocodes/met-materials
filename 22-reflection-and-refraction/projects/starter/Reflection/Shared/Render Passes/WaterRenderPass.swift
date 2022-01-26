@@ -93,6 +93,7 @@ struct WaterRenderPass: RenderPass {
         descriptor: descriptor) else {
       return
     }
+    renderEncoder.label = label
 
     render(
       renderEncoder: renderEncoder,
