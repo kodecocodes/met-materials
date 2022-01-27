@@ -78,12 +78,9 @@ fragment float4 fragment_water(
   float y = in.position.y / height;
   float2 reflectionCoords = float2(x, 1 - y);
   float2 refractionCoords = float2(x, y);
-  // 3
-  // 1
   float2 uv = in.uv * 2.0;
-  // 2
+
   float waveStrength = 0.1;
-  
   float far = 100;    // the camera's far plane
   float near = 0.1;   // the camera's near plane
   float proj33 = far / (far - near);
@@ -102,7 +99,7 @@ fragment float4 fragment_water(
     * waveStrength;
   reflectionCoords += ripple;
   refractionCoords += ripple;
-  // 3
+
   reflectionCoords = clamp(reflectionCoords, 0.001, 0.999);
   refractionCoords = clamp(refractionCoords, 0.001, 0.999);
   float3 viewVector =

@@ -152,9 +152,9 @@ struct WaterRenderPass: RenderPass {
     }
     refractEncoder.label = "Refraction"
     // 3
+    uniforms.viewMatrix = scene.camera.viewMatrix
     clipPlane = float4(0, -1, 0, -water.position.y)
     uniforms.clipPlane = clipPlane
-    uniforms.viewMatrix = scene.camera.viewMatrix
     // 4
     render(
       renderEncoder: refractEncoder,

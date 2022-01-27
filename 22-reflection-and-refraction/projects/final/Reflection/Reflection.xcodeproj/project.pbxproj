@@ -43,6 +43,8 @@
 		8224335826CB7C7100F627C5 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335626CB7C7100F627C5 /* Submesh.swift */; };
 		822D02AE2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
 		822D02AF2736537E00296BE0 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D02AD2736537E00296BE0 /* Transform.swift */; };
+		823C12FA27A236600068CF26 /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = 823C12F927A236600068CF26 /* Water.metal */; };
+		823C12FB27A236AF0068CF26 /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = 823C12F927A236600068CF26 /* Water.metal */; };
 		824A97AB2774601A00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824A97AC2774601B00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
 		824EE07D277EE3EC004D64C1 /* ShadowCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */; };
@@ -78,8 +80,6 @@
 		82D0EBB527A1169800A012FD /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0EBB327A1169800A012FD /* Terrain.swift */; };
 		82D0EBB727A1172000A012FD /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0EBB627A1172000A012FD /* Terrain.metal */; };
 		82D0EBB827A1172000A012FD /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0EBB627A1172000A012FD /* Terrain.metal */; };
-		82D0EBBA27A1238E00A012FD /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0EBB927A1238E00A012FD /* Water.metal */; };
-		82D0EBBB27A1240800A012FD /* Water.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0EBB927A1238E00A012FD /* Water.metal */; };
 		82D9AD812738F23E003E025A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD802738F23E003E025A /* Camera.swift */; };
 		82D9AD822738F23E003E025A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD802738F23E003E025A /* Camera.swift */; };
 		82D9AD842738F54B003E025A /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9AD832738F54B003E025A /* InputController.swift */; };
@@ -131,6 +131,7 @@
 		8224335326CB7C6A00F627C5 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		8224335626CB7C7100F627C5 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		822D02AD2736537E00296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		823C12F927A236600068CF26 /* Water.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Water.metal; sourceTree = "<group>"; };
 		824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowCamera.swift; sourceTree = "<group>"; };
 		824EE07F277F0853004D64C1 /* ShadowRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowRenderPass.swift; sourceTree = "<group>"; };
 		824EE082277F091B004D64C1 /* Shadow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shadow.metal; sourceTree = "<group>"; };
@@ -149,7 +150,6 @@
 		82BFDB0C279F957C0091233E /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
 		82D0EBB327A1169800A012FD /* Terrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
 		82D0EBB627A1172000A012FD /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
-		82D0EBB927A1238E00A012FD /* Water.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Water.metal; sourceTree = "<group>"; };
 		82D9AD802738F23E003E025A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		82D9AD832738F54B003E025A /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		82D9AD86273902D9003E025A /* Movement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
@@ -332,7 +332,7 @@
 				824EE082277F091B004D64C1 /* Shadow.metal */,
 				8281032C279BD32800F1F2DF /* Skybox.metal */,
 				82D0EBB627A1172000A012FD /* Terrain.metal */,
-				82D0EBB927A1238E00A012FD /* Water.metal */,
+				823C12F927A236600068CF26 /* Water.metal */,
 				82F9D28727991E4E0088E644 /* stdbool.h */,
 			);
 			path = Shaders;
@@ -550,7 +550,7 @@
 				82EDE5E626CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEE2738DE15000E88B4 /* GameScene.swift in Sources */,
 				82D9AD87273902D9003E025A /* Movement.swift in Sources */,
-				82D0EBBA27A1238E00A012FD /* Water.metal in Sources */,
+				823C12FA27A236600068CF26 /* Water.metal in Sources */,
 				820B881326B8E47E0070A134 /* ReflectionApp.swift in Sources */,
 				82D0EBB427A1169800A012FD /* Terrain.swift in Sources */,
 				824A97AC2774601B00DA096F /* PBR.metal in Sources */,
@@ -599,7 +599,7 @@
 				82D9AD88273902D9003E025A /* Movement.swift in Sources */,
 				8281032E279BD32800F1F2DF /* Skybox.metal in Sources */,
 				820B881426B8E47E0070A134 /* ReflectionApp.swift in Sources */,
-				82D0EBBB27A1240800A012FD /* Water.metal in Sources */,
+				823C12FB27A236AF0068CF26 /* Water.metal in Sources */,
 				824A97AB2774601A00DA096F /* PBR.metal in Sources */,
 				82D0EBB527A1169800A012FD /* Terrain.swift in Sources */,
 				82D9AD8B27390D8C003E025A /* PlayerCamera.swift in Sources */,
