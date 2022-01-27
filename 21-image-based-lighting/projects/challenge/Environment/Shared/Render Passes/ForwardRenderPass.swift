@@ -76,7 +76,7 @@ struct ForwardRenderPass: RenderPass {
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
-    scene.skybox?.update(renderEncoder: renderEncoder)
+    scene.skybox?.update(encoder: renderEncoder)
 
     var params = params
     params.transparency = false
@@ -86,8 +86,9 @@ struct ForwardRenderPass: RenderPass {
         uniforms: uniforms,
         params: params)
     }
+
     scene.skybox?.render(
-      renderEncoder: renderEncoder,
+      encoder: renderEncoder,
       uniforms: uniforms)
 
     // transparent mesh

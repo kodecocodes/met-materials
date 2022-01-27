@@ -46,9 +46,10 @@ struct VertexOut {
 
 vertex VertexOut vertex_skybox(
   const VertexIn in [[stage_in]],
-  constant float4x4 &vp [[buffer(UniformsBuffer)]])
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
 {
   VertexOut out;
+  float4x4 vp = uniforms.projectionMatrix * uniforms.viewMatrix;
   out.position = (vp * in.position).xyww;
   out.textureCoordinates = in.position.xyz;
   return out;

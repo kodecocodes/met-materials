@@ -105,17 +105,17 @@ fragment float4 fragment_IBL(
     reflect(viewDirection, normal);
 
   float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
-  diffuse = mix(pow(diffuse, 0.5), diffuse, material.metallic);
+  diffuse = mix(pow(diffuse, 0.2), diffuse, material.metallic);
   diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
 
   color = diffuse * float4(material.baseColor, 1);
-  
+
   constexpr sampler s(filter::linear, mip_filter::linear);
   float3 prefilteredColor = skybox.sample(
     s,
     textureCoordinates,
     level(material.roughness * 10)).rgb;
-  // 3
+
   float nDotV = saturate(dot(normal, -viewDirection));
   float2 envBRDF = brdfLut.sample(
     s,

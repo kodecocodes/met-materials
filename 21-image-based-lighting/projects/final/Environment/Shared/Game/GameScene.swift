@@ -30,7 +30,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import CoreGraphics
 
 struct GameScene {
   lazy var ground: Model = {
@@ -50,15 +50,15 @@ struct GameScene {
       rotation: [-0.4, -0.88, 0])
   }
   var lighting = SceneLighting()
-  var skybox: Skybox?
+  let skybox: Skybox?
 
   init() {
+    skybox = Skybox(textureName: "sky")
     camera.transform = defaultView
     camera.target = car.position
     camera.distance = 4
     camera.far = 20
     models = [ground, car]
-    skybox = Skybox(textureName: "sky")
   }
 
   mutating func update(size: CGSize) {

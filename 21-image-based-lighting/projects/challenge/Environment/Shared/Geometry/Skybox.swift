@@ -34,7 +34,9 @@ import MetalKit
 
 struct Skybox {
   let mesh: MTKMesh
-  var texture: MTLTexture?
+  var skyTexture: MTLTexture?
+  var diffuseTexture: MTLTexture?
+  var brdfLut: MTLTexture?
   let pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
 
@@ -45,9 +47,6 @@ struct Skybox {
     var groundAlbedo: Float = 0.8
   }
   var skySettings = SkySettings()
-
-  var diffuseTexture: MTLTexture?
-  var brdfLut: MTLTexture?
 
   init(textureName: String?) {
     let allocator =
@@ -70,7 +69,7 @@ struct Skybox {
     depthStencilState = Self.buildDepthStencilState()
     if let textureName = textureName {
       do {
-        texture = try TextureController.loadCubeTexture(
+        skyTexture = try TextureController.loadCubeTexture(
           imageName: textureName)
         diffuseTexture =
           try TextureController.loadCubeTexture(
@@ -79,7 +78,7 @@ struct Skybox {
         fatalError(error.localizedDescription)
       }
     } else {
-      texture = loadGeneratedSkyboxTexture(dimensions: [256, 256])
+      skyTexture = loadGeneratedSkyboxTexture(dimensions: [256, 256])
     }
     brdfLut = Renderer.buildBRDF()
   }
@@ -108,18 +107,6 @@ struct Skybox {
     return texture
   }
 
-  func update(renderEncoder: MTLRenderCommandEncoder) {
-    renderEncoder.setFragmentTexture(
-      texture,
-      index: SkyboxTexture.index)
-    renderEncoder.setFragmentTexture(
-      diffuseTexture,
-      index: SkyboxDiffuseTexture.index)
-    renderEncoder.setFragmentTexture(
-      brdfLut,
-      index: BRDFLutTexture.index)
-  }
-
   static func buildDepthStencilState() -> MTLDepthStencilState? {
     let descriptor = MTLDepthStencilDescriptor()
     descriptor.depthCompareFunction = .lessEqual
@@ -128,35 +115,47 @@ struct Skybox {
       descriptor: descriptor)
   }
 
+  func update(encoder: MTLRenderCommandEncoder) {
+    encoder.setFragmentTexture(
+      skyTexture,
+      index: SkyboxTexture.index)
+    encoder.setFragmentTexture(
+      diffuseTexture,
+      index: SkyboxDiffuseTexture.index)
+    encoder.setFragmentTexture(
+      brdfLut,
+      index: BRDFLutTexture.index)
+  }
+
   func render(
-    renderEncoder: MTLRenderCommandEncoder,
+    encoder: MTLRenderCommandEncoder,
     uniforms: Uniforms
   ) {
-    renderEncoder.pushDebugGroup("Skybox")
-    renderEncoder.setRenderPipelineState(pipelineState)
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setVertexBuffer(
+    encoder.pushDebugGroup("Skybox")
+    encoder.setRenderPipelineState(pipelineState)
+    encoder.setDepthStencilState(depthStencilState)
+    encoder.setVertexBuffer(
       mesh.vertexBuffers[0].buffer,
       offset: 0,
       index: 0)
-    var viewMatrix = uniforms.viewMatrix
-    viewMatrix.columns.3 = [0, 0, 0, 1]
-    var viewProjectionMatrix =
-      uniforms.projectionMatrix * viewMatrix
-    renderEncoder.setVertexBytes(
-      &viewProjectionMatrix,
-      length: MemoryLayout<float4x4>.stride,
+    var uniforms = uniforms
+    uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
+    encoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
       index: UniformsBuffer.index)
-    let submesh = mesh.submeshes[0]
-    renderEncoder.setFragmentTexture(
-      texture,
+
+    encoder.setFragmentTexture(
+      skyTexture,
       index: SkyboxTexture.index)
-    renderEncoder.drawIndexedPrimitives(
+
+    let submesh = mesh.submeshes[0]
+    encoder.drawIndexedPrimitives(
       type: .triangle,
       indexCount: submesh.indexCount,
       indexType: submesh.indexType,
       indexBuffer: submesh.indexBuffer.buffer,
       indexBufferOffset: 0)
-    renderEncoder.popDebugGroup()
+    encoder.popDebugGroup()
   }
 }
