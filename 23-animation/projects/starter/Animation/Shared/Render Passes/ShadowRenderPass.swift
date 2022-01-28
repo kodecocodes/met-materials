@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,56 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+struct ShadowRenderPass: RenderPass {
+  let label: String = "Shadow Render Pass"
+  var descriptor: MTLRenderPassDescriptor?
+    = MTLRenderPassDescriptor()
+  var depthStencilState: MTLDepthStencilState?
+    = Self.buildDepthStencilState()
+  var pipelineState: MTLRenderPipelineState
+  var shadowTexture: MTLTexture?
+
+  init(view: MTKView) {
+    pipelineState = PipelineStates.createShadowPSO()
+    shadowTexture = Self.makeTexture(
+      size: CGSize(
+        width: 4096,
+        height: 4096),
+      pixelFormat: .depth32Float,
+      label: "Shadow Depth Texture")
+  }
+
+  mutating func resize(view: MTKView, size: CGSize) {
+  }
+
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  ) {
+    guard let descriptor = descriptor else { return }
+    descriptor.depthAttachment.texture = shadowTexture
+    descriptor.depthAttachment.loadAction = .clear
+    descriptor.depthAttachment.storeAction = .store
+
+    guard let renderEncoder =
+      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+      return
+    }
+    renderEncoder.label = "Shadow Encoder"
+    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.setRenderPipelineState(pipelineState)
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.endEncoding()
+  }
+}
