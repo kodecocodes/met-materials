@@ -10,11 +10,9 @@
 
 ## Blender animation 
 
-(Unfortunately version 2.79. The concepts are the same, but the interface will be different.)
-
-[Animate a mushroom](https://www.raywenderlich.com/52804/beginning-blender-tutorial-animating-rendering-mushroom)    
-[Sebastian Lague videos](https://www.youtube.com/playlist?list=PLFt_AvWsXl0fEx02iXR8uhDsVGhmM9Pse)    
-[Grant Abbitt](https://www.youtube.com/playlist?list=PLn3ukorJv4vvNIeMqu82PqM37Xnds5zAy)
+[Blender 3.0 Beginner Animation Tutorial (Donut part 11)](https://youtu.be/LMA3S2EGM6U)
+[CG Geek: Become a PRO at Animation in 25 Minutes | Blender Tutorial](https://youtu.be/_C2ClFO3FAY)
+[Blender 3.0 Geometry Nodes Beginner Animation Tutorial](https://youtu.be/tRuhttgHTS4)
 
 ## Procedural animation
 
@@ -24,11 +22,11 @@
 ## Sample models
 
 [https://sketchfab.com](https://sketchfab.com)
+[Apple's AR Quick Look Gallery](https://developer.apple.com/augmented-reality/quick-look/)
 
 ## USD
 
 [Pixar's USD documenation](https://graphics.pixar.com/usd/docs/index.html)
-[Apple's USDZ tools](https://developer.apple.com/augmented-reality/quick-look/)
 
 ## Quaternions
 
@@ -40,7 +38,7 @@
 
 ## Gimbal Lock
 
-[Gimbal Lock Explained in 30 Seconds](https://youtu.be/N5PDboNJwks)
+[Euler (gimbal lock) Explained](https://youtu.be/zc8b2Jo7mno)
 
 
 

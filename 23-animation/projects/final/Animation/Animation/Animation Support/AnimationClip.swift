@@ -30,7 +30,7 @@
  */
 
 import MetalKit
-
+  
 class AnimationClip {
   let name: String
   var jointAnimation: [String: Animation?] = [:]
