@@ -89,8 +89,6 @@
 		82F19CE92740C59D001C5657 /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CE72740C59D001C5657 /* SceneLighting.swift */; };
 		82F19CEC2740C99E001C5657 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CEB2740C99E001C5657 /* Lighting.metal */; };
 		82F19CED2740C99E001C5657 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F19CEB2740C99E001C5657 /* Lighting.metal */; };
-		82F40F2027A769FC00C276B5 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 82F40F1F27A769FC00C276B5 /* skeleton.usda */; };
-		82F40F2127A769FC00C276B5 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 82F40F1F27A769FC00C276B5 /* skeleton.usda */; };
 		82F7DB1B279B864100EF870D /* RendererBRDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F7DB19279B864100EF870D /* RendererBRDF.swift */; };
 		82F7DB1C279B864100EF870D /* RendererBRDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F7DB19279B864100EF870D /* RendererBRDF.swift */; };
 		82F7DB1D279B864100EF870D /* BRDF.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F7DB1A279B864100EF870D /* BRDF.metal */; };
@@ -144,7 +142,6 @@
 		82F19CE72740C59D001C5657 /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
 		82F19CEA2740C978001C5657 /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
 		82F19CEB2740C99E001C5657 /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
-		82F40F1F27A769FC00C276B5 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
 		82F7DB19279B864100EF870D /* RendererBRDF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererBRDF.swift; sourceTree = "<group>"; };
 		82F7DB1A279B864100EF870D /* BRDF.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = BRDF.metal; sourceTree = "<group>"; };
 		82F9D28727991E4E0088E644 /* stdbool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdbool.h; sourceTree = "<group>"; };
@@ -306,7 +303,6 @@
 		8258D3E327A3D52D0066891A /* Skeleton */ = {
 			isa = PBXGroup;
 			children = (
-				82F40F1F27A769FC00C276B5 /* skeleton.usda */,
 				8258D3E027A3D5280066891A /* skeletonWave.usda */,
 			);
 			path = Skeleton;
@@ -430,7 +426,6 @@
 				82EDE5E926CCD32600DE47E4 /* Textures.xcassets in Resources */,
 				8258D3E227A3D5280066891A /* skeletonWave.usda in Resources */,
 				823C130027A25FB80068CF26 /* large_plane.obj in Resources */,
-				82F40F2127A769FC00C276B5 /* skeleton.usda in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +438,6 @@
 				82EDE5EA26CCD32600DE47E4 /* Textures.xcassets in Resources */,
 				8258D3E127A3D5280066891A /* skeletonWave.usda in Resources */,
 				823C130127A25FB80068CF26 /* large_plane.obj in Resources */,
-				82F40F2027A769FC00C276B5 /* skeleton.usda in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

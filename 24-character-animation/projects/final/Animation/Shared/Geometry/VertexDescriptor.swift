@@ -58,7 +58,7 @@ extension MDLVertexDescriptor {
         offset: offset,
         bufferIndex: VertexBuffer.index)
     offset += MemoryLayout<float3>.stride
-  
+
     // joints and weights attributes
     vertexDescriptor.attributes[Joints.index] =
       MDLVertexAttribute(

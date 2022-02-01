@@ -90,7 +90,7 @@ class Model: Transformable {
   func update(deltaTime: Float) {
     currentTime += deltaTime
     for i in 0..<meshes.count {
-      meshes[i].transform?.setCurrentTransform(at: currentTime)
+      meshes[i].transform?.getCurrentTransform(at: currentTime)
     }
   }
 

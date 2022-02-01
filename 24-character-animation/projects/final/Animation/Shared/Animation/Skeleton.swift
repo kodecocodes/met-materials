@@ -69,7 +69,7 @@ struct Skeleton {
   }
 
   func updatePose(
-    animationClip: AnimationClip,
+    animationClip: AnimationClip?,
     at time: Float
   ) {
     guard let paletteBuffer = jointMatrixPaletteBuffer
@@ -77,9 +77,12 @@ struct Skeleton {
     var palettePointer = paletteBuffer.contents().bindMemory(
       to: float4x4.self,
       capacity: jointPaths.count)
-    palettePointer.initialize(
-      repeating: .identity,
-      count: jointPaths.count)
+    guard let animationClip = animationClip else {
+      palettePointer.initialize(
+        repeating: .identity,
+        count: jointPaths.count)
+      return
+    }
     var poses =
       [float4x4](repeatElement(.identity, count: jointPaths.count))
     for (jointIndex, jointPath) in jointPaths.enumerated() {

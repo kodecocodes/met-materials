@@ -71,7 +71,38 @@ enum PipelineStates {
     return createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createForwardTransparentPSO(hasSkeleton: Bool = false) -> MTLRenderPipelineState {
+  static func makeFunctionConstants(hasSkeleton: Bool)
+  -> MTLFunctionConstantValues {
+    let functionConstants = MTLFunctionConstantValues()
+    var property = hasSkeleton
+    functionConstants.setConstantValue(
+      &property,
+      type: .bool,
+      index: 0)
+    return functionConstants
+  }
+
+  static func createForwardPSO(hasSkeleton: Bool = false)
+  -> MTLRenderPipelineState {
+    let functionConstants =
+    makeFunctionConstants(hasSkeleton: hasSkeleton)
+    let vertexFunction = try? Renderer.library?.makeFunction(
+      name: "vertex_main",
+      constantValues: functionConstants)
+    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat
+      = Renderer.colorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor =
+      MTLVertexDescriptor.defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createForwardTransparentPSO(hasSkeleton: Bool = false)
+  -> MTLRenderPipelineState {
     let functionConstants =
       makeFunctionConstants(hasSkeleton: hasSkeleton)
     let vertexFunction = try? Renderer.library?.makeFunction(
@@ -89,36 +120,6 @@ enum PipelineStates {
     attachment?.sourceRGBBlendFactor = .one
     attachment?.destinationRGBBlendFactor = .oneMinusSourceAlpha
 
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    pipelineDescriptor.vertexDescriptor =
-      MTLVertexDescriptor.defaultLayout
-    return createPSO(descriptor: pipelineDescriptor)
-  }
-
-  static func makeFunctionConstants(hasSkeleton: Bool)
-  -> MTLFunctionConstantValues {
-    let functionConstants = MTLFunctionConstantValues()
-    var property = hasSkeleton
-    functionConstants.setConstantValue(
-      &property,
-      type: .bool,
-      index: 0)
-    return functionConstants
-  }
-
-  static func createForwardPSO(hasSkeleton: Bool = false)
-    -> MTLRenderPipelineState {
-    let functionConstants =
-      makeFunctionConstants(hasSkeleton: hasSkeleton)
-    let vertexFunction = try? Renderer.library?.makeFunction(
-      name: "vertex_main",
-      constantValues: functionConstants)
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_PBR")
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat
-      = Renderer.colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor =
       MTLVertexDescriptor.defaultLayout

@@ -58,7 +58,7 @@ struct TransformComponent {
     }
   }
 
-  mutating func setCurrentTransform(at time: Float) {
+  mutating func getCurrentTransform(at time: Float) {
     guard duration > 0 else {
       currentTransform = .identity
       return

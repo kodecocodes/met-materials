@@ -90,10 +90,14 @@ class Model: Transformable {
     let assetAnimations = asset.animations.objects.compactMap {
       $0 as? MDLPackedJointAnimation
     }
-    let animations = Dictionary(uniqueKeysWithValues: assetAnimations.map {
+    let animations
+      = Dictionary(uniqueKeysWithValues: assetAnimations.map {
       ($0.name, AnimationComponent.load(animation: $0))
-    })
+      })
     self.animations = animations
+    animations.forEach {
+      print("Animation:", $0.key)
+    }
   }
 
   func update(deltaTime: Float) {
