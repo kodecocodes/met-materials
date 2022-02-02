@@ -410,8 +410,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				820B881126B8E47E0070A134 /* Animation (macOS) */,
 				820B880B26B8E47E0070A134 /* Animation (iOS) */,
+				820B881126B8E47E0070A134 /* Animation (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -696,7 +696,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3E7TCD55JT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -710,7 +710,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -726,7 +726,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3E7TCD55JT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -740,7 +740,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -770,7 +770,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -798,7 +798,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;

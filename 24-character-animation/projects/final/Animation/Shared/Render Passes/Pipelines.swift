@@ -85,7 +85,7 @@ enum PipelineStates {
   static func createForwardPSO(hasSkeleton: Bool = false)
   -> MTLRenderPipelineState {
     let functionConstants =
-    makeFunctionConstants(hasSkeleton: hasSkeleton)
+      makeFunctionConstants(hasSkeleton: hasSkeleton)
     let vertexFunction = try? Renderer.library?.makeFunction(
       name: "vertex_main",
       constantValues: functionConstants)

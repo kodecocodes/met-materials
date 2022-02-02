@@ -41,7 +41,9 @@ constant bool hasSkeleton [[function_constant(0)]];
 vertex VertexOut vertex_main(
   const VertexIn in [[stage_in]],
   constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  constant float4x4 *jointMatrices [[buffer(JointBuffer)]])
+  constant float4x4 *jointMatrices [[
+    buffer(JointBuffer),
+    function_constant(hasSkeleton)]])
 {
   float4 position = in.position;
   float4 normal = float4(in.normal, 0);
@@ -73,6 +75,7 @@ vertex VertexOut vertex_main(
       uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
       * uniforms.modelMatrix * position
   };
+
   out.clip_distance[0] =
     dot(uniforms.modelMatrix * in.position, uniforms.clipPlane); 
   return out;

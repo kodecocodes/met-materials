@@ -410,8 +410,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				820B881126B8E47E0070A134 /* Animation (macOS) */,
 				820B880B26B8E47E0070A134 /* Animation (iOS) */,
+				820B881126B8E47E0070A134 /* Animation (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -710,7 +710,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -740,7 +740,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -759,6 +759,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -770,7 +771,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -787,6 +788,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -798,7 +800,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Reflection;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Animation;
 				PRODUCT_NAME = Animation;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;

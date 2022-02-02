@@ -43,12 +43,12 @@ struct ShadowRenderPass: RenderPass {
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
-      size: CGSize(
-        width: 4096,
-        height: 4096),
-      pixelFormat: .depth32Float,
-      label: "Shadow Depth Texture")
+//    shadowTexture = Self.makeTexture(
+//      size: CGSize(
+//        width: 4096,
+//        height: 4096),
+//      pixelFormat: .depth32Float,
+//      label: "Shadow Depth Texture")
   }
 
   mutating func resize(view: MTKView, size: CGSize) {

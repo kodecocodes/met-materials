@@ -95,9 +95,6 @@ class Model: Transformable {
       ($0.name, AnimationComponent.load(animation: $0))
       })
     self.animations = animations
-    animations.forEach {
-      print("Animation:", $0.key)
-    }
   }
 
   func update(deltaTime: Float) {
