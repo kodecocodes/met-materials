@@ -32,20 +32,15 @@
 
 import Foundation
 
-struct Keyframe {
+struct Keyframe<Value> {
   var time: Float = 0
-  var value: float3 = [0, 0, 0]
-}
-
-struct KeyQuaternion {
-  var time: Float = 0
-  var value = simd_quatf()
+  var value: Value
 }
 
 struct Animation {
-  var translations: [Keyframe] = []
+  var translations: [Keyframe<float3>] = []
+  var rotations: [Keyframe<simd_quatf>] = []
   var repeatAnimation = true
-  var rotations: [KeyQuaternion] = []
 
   func getTranslation(at time: Float) -> float3? {
     // 1

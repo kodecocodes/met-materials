@@ -36,9 +36,9 @@ class GameController: NSObject {
   var scene: GameScene
   var renderer: Renderer
   var options = Options()
-  static var fps: Double = 0
   var deltaTime: Double = 0
   var lastTime: Double = CFAbsoluteTimeGetCurrent()
+  static var fps: Double = 0
 
   init(metalView: MTKView, options: Options) {
     Self.fps = Double(metalView.preferredFramesPerSecond)

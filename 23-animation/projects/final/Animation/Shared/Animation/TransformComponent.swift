@@ -30,8 +30,6 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
-
 import ModelIO
 
 struct TransformComponent {
@@ -50,7 +48,6 @@ struct TransformComponent {
       from: startTime,
       to: endTime,
       by: 1 / TimeInterval(GameController.fps))
-
     keyTransforms = Array(timeStride).map { time in
       MDLTransform.globalTransform(
         with: object,
@@ -58,7 +55,7 @@ struct TransformComponent {
     }
   }
 
-  mutating func setCurrentTransform(at time: Float) {
+  mutating func getCurrentTransform(at time: Float) {
     guard duration > 0 else {
       currentTransform = .identity
       return

@@ -90,7 +90,7 @@ class Model: Transformable {
   func update(deltaTime: Float) {
     currentTime += deltaTime
     for i in 0..<meshes.count {
-      meshes[i].transform?.setCurrentTransform(at: currentTime)
+      meshes[i].transform?.getCurrentTransform(at: currentTime)
     }
   }
 
@@ -103,7 +103,6 @@ class Model: Transformable {
     var uniforms = vertex
     var params = fragment
     params.tiling = tiling
-
 
     encoder.setFragmentBytes(
       &params,
@@ -120,6 +119,7 @@ class Model: Transformable {
         &uniforms,
         length: MemoryLayout<Uniforms>.stride,
         index: UniformsBuffer.index)
+
       for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
         encoder.setVertexBuffer(
           vertexBuffer,

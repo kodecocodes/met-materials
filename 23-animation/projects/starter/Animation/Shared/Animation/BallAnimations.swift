@@ -49,7 +49,7 @@ let ballPositionXArray: [Float] = [
 ]
 
 /*
-let ballTranslations: [Keyframe] = [
+let ballTranslations: [Keyframe<float3>] = [
   Keyframe(time: 0,    value: [-1, 0, 0]),
   Keyframe(time: 0.17, value: [ 0, 1, 0]),
   Keyframe(time: 0.35, value: [ 1, 0, 0]),
@@ -61,17 +61,17 @@ let ballTranslations: [Keyframe] = [
 */
 
 /*
-let ballRotations: [KeyQuaternion] = [
-  KeyQuaternion(time: 0,    value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1)),
-  KeyQuaternion(time: 0.08, value: simd_quatf(angle: .pi/2, axis: [0, 0, -1])),
-  KeyQuaternion(time: 0.17, value: simd_quatf(angle: .pi, axis: [0, 0, -1])),
-  KeyQuaternion(time: 0.26, value: simd_quatf(angle: .pi + .pi/2, axis: [0, 0, -1])),
-  KeyQuaternion(time: 0.35, value: simd_quatf(angle: 0, axis: [0, 0, -1])),
-  KeyQuaternion(time: 1.0,  value: simd_quatf(angle: 0, axis: [0, 0, -1])),
-  KeyQuaternion(time: 1.08, value: simd_quatf(angle: .pi + .pi/2, axis: [0, 0, -1])),
-  KeyQuaternion(time: 1.17, value: simd_quatf(angle: .pi, axis: [0, 0, -1])),
-  KeyQuaternion(time: 1.26, value: simd_quatf(angle: .pi/2, axis: [0, 0, -1])),
-  KeyQuaternion(time: 1.35, value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1)),
-  KeyQuaternion(time: 2,    value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1))
+let ballRotations: [Keyframe<simd_quatf>] = [
+  Keyframe(time: 0,    value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1)),
+  Keyframe(time: 0.08, value: simd_quatf(angle: .pi/2, axis: [0, 0, -1])),
+  Keyframe(time: 0.17, value: simd_quatf(angle: .pi, axis: [0, 0, -1])),
+  Keyframe(time: 0.26, value: simd_quatf(angle: .pi + .pi/2, axis: [0, 0, -1])),
+  Keyframe(time: 0.35, value: simd_quatf(angle: 0, axis: [0, 0, -1])),
+  Keyframe(time: 1.0,  value: simd_quatf(angle: 0, axis: [0, 0, -1])),
+  Keyframe(time: 1.08, value: simd_quatf(angle: .pi + .pi/2, axis: [0, 0, -1])),
+  Keyframe(time: 1.17, value: simd_quatf(angle: .pi, axis: [0, 0, -1])),
+  Keyframe(time: 1.26, value: simd_quatf(angle: .pi/2, axis: [0, 0, -1])),
+  Keyframe(time: 1.35, value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1)),
+  Keyframe(time: 2,    value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1))
 ]
 */
