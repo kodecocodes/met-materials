@@ -76,16 +76,18 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
   float2 uv = float2(gid) / resolution;
   uv = uv * 2.0 - 1.0;
   float tiles = 4.0;
-  
+
   float2 noise = uv;
   noise.x += time * 0.1;
   noise *= tiles;
   float3 clouds = float3(fbm(noise));
+
   float3 land = float3(0.3, 0.2, 0.2);
   float3 sky = float3(0.4, 0.6, 0.8);
   clouds *= sky * 3.0;
   uv.y = -uv.y;
-  Ray ray = Ray(float3(0.0, 4.0, -12.0), normalize(float3(uv, 1.0)));
+  Ray ray = Ray(float3(0.0, 4.0, -12.0),
+                normalize(float3(uv, 1.0)));
   Plane plane = Plane(0.0);
   for (int i = 0.0; i < 100.0; i++) {
     float distance = distanceToScene(ray, plane);

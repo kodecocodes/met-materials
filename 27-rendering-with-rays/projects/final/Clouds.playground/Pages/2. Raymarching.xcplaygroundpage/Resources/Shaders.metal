@@ -25,8 +25,10 @@ float distanceToSphere(Ray r, Sphere s) {
 }
 
 float distanceToScene(Ray r, Sphere s, float range) {
+  // 1
   Ray repeatRay = r;
   repeatRay.origin = fmod(r.origin, range);
+  // 2
   return distanceToSphere(repeatRay, s);
 }
 
@@ -41,7 +43,10 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
   
   // raymarching
   Sphere s = Sphere(float3(1.0), 0.5);
-  float3 cameraPosition = float3(1000.0 + sin(time) + 1.0, 1000.0 + cos(time) + 1.0, time);
+  float3 cameraPosition = float3(
+    1000.0 + sin(time) + 1.0,
+    1000.0 + cos(time) + 1.0,
+    time);
   Ray ray = Ray(cameraPosition, normalize(float3(uv, 1.0)));
   for (int i = 0.0; i < 100.0; i++) {
     float distance = distanceToScene(ray, s, 2.0);
@@ -51,7 +56,8 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
     }
     ray.origin += ray.direction * distance;
   }
-  
+
   float3 positionToCamera = ray.origin - cameraPosition;
-  output.write(float4(color * abs(positionToCamera / 10.0), 1.0), gid);
+  output.write(float4(color * abs(positionToCamera / 10.0),
+                      1.0), gid);
 }

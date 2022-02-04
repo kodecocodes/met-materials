@@ -8,5 +8,3 @@ let mView = Renderer()
 let view = MTKView(frame: frame, device: mView.device)
 view.delegate = mView
 PlaygroundPage.current.liveView = view
-
-//: [Next](@next)
