@@ -16,6 +16,10 @@ struct Plane {
   float yCoord;
 };
 
+struct Light {
+  float3 position;
+};
+
 struct Box {
   float3 center;
   float size;
@@ -45,7 +49,8 @@ float distToPlane(Ray ray, Plane plane) {
 
 float distToBox(Ray r, Box b) {
   float3 d = abs(r.origin - b.center) - float3(b.size);
-  return min(max(d.x, max(d.y, d.z)), 0.0) + length(max(d, 0.0));
+  return min(max(d.x, max(d.y, d.z)), 0.0)
+              + length(max(d, 0.0));
 }
 
 float distToScene(Ray r) {
@@ -86,7 +91,7 @@ float ao(float3 pos, float3 n) {
     float coneWidth = 2.0 * eps;
     float occlusionAmount = max(coneWidth - d, 0.);
     float occlusionFactor = occlusionAmount / coneWidth;
-    occlusionFactor  *= 1.0 - (i / 10.0);
+    occlusionFactor *= 1.0 - (i / 10.0);
     occlusion = max(occlusion, occlusionFactor);
     eps *= 2.0;
     pos += n * eps;
@@ -94,14 +99,16 @@ float ao(float3 pos, float3 n) {
   return max(0.0, 1.0 - occlusion);
 }
 
-Camera setupCam(float3 pos, float3 target, float fov, float2 uv, int x) {
+Camera setupCam(float3 pos, float3 target,
+                float fov, float2 uv, int x) {
   uv *= fov;
-  float3 cw = normalize(target - pos );
+  float3 cw = normalize(target - pos);
   float3 cp = float3(0.0, 1.0, 0.0);
   float3 cu = normalize(cross(cw, cp));
   float3 cv = normalize(cross(cu, cw));
-  Ray ray{pos, normalize(uv.x * cu + uv.y * cv + 0.5 * cw)};
-  Camera cam{pos, ray, fov / float(x)};
+  Ray ray = Ray{pos,
+                normalize(uv.x * cu + uv.y * cv + 0.5 * cw)};
+  Camera cam = Camera{pos, ray, fov / float(x)};
   return cam;
 }
 
@@ -113,10 +120,10 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
   float2 uv = float2(gid) / float2(width, height);
   uv = uv * 2.0 - 1.0;
   uv.y = -uv.y;
+  float3 col = float3(0.0);
   float3 camPos = float3(sin(time) * 10., 3., cos(time) * 10.);
   Camera cam = setupCam(camPos, float3(0), 1.25, uv, width);
   Ray ray = cam.ray;
-  float3 col = float3(1.0);
   bool hit = false;
   for (int i = 0; i < 200; i++) {
     float dist = distToScene(ray);
@@ -126,6 +133,7 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
     }
     ray.origin += ray.direction * dist;
   }
+  col = float3(1.0);
   if (!hit) {
     col = float3(0.8, 0.5, 0.5);
   } else {
