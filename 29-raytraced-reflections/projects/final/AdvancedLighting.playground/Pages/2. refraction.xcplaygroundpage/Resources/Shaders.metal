@@ -119,8 +119,10 @@ kernel void compute(texture2d<float, access::write> output [[ texture(0) ]],
         float check = mod(pos.x + pos.y, 2.0);
         col *= check * 0.5 + 0.5;
         cam = reflectRay(cam, normal, eps);
-      } else if (closestObject == SphereObj) {
+      }// 1
+      else if (closestObject == SphereObj) {
         inside = !inside;
+        // 2
         float ior = inside ? 1.0 / 1.33 : 1.33;
         cam = refractRay(cam, normal, eps, ior);
       }

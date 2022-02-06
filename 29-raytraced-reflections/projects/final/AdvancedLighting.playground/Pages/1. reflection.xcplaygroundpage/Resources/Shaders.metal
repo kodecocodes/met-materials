@@ -86,8 +86,8 @@ Camera reflectRay(Camera cam, float3 n, float eps) {
 }
 
 kernel void compute(texture2d<float, access::write> output [[ texture(0) ]],
-                    constant float &time [[ buffer(0) ]],
-                    uint2 gid [[ thread_position_in_grid ]]) {
+                    uint2 gid [[ thread_position_in_grid ]],
+                    constant float &time [[buffer(0)]]) {
   int width = output.get_width();
   int height = output.get_height();
   float2 uv = float2(gid) / float2(width, height);
@@ -103,11 +103,15 @@ kernel void compute(texture2d<float, access::write> output [[ texture(0) ]],
     float2 dist = distToScene(cam.ray);
     float closestObject = dist.y;
     if (dist.x < eps) {
+      // 1
       if (closestObject == PlaneObj) {
+        // 2
         float2 pos = cam.ray.origin.xz;
         pos *= 0.1;
+        // 3
         pos = floor(fmod(pos, 2.0));
         float check = mod(pos.x + pos.y, 2.0);
+        // 4
         col *= check * 0.5 + 0.5;
       }
       float3 normal = getNormal(cam.ray);
@@ -116,6 +120,6 @@ kernel void compute(texture2d<float, access::write> output [[ texture(0) ]],
     cam.ray.origin += cam.ray.dir * dist.x;
     eps += cam.rayDivergence * dist.x;
   }
-  col *= mix(float3(0.8, 0.8, 0.4), float3(0.4, 0.4, 1.0), cam.ray.dir.y);
-  output.write(float4(col, 1.0), gid);
+  col *= mix(float3(0.8, 0.8, 0.4), float3(0.4, 0.4, 1.0),
+             cam.ray.dir.y);  output.write(float4(col, 1.0), gid);
 }
