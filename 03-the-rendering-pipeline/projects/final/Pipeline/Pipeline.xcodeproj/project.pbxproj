@@ -3,34 +3,44 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1384A37322C1B388006036BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384A37222C1B388006036BA /* AppDelegate.swift */; };
-		1384A37522C1B389006036BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1384A37422C1B389006036BA /* Assets.xcassets */; };
-		1384A37822C1B389006036BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1384A37622C1B389006036BA /* Main.storyboard */; };
-		1384A38122C1B3C2006036BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384A38022C1B3C2006036BA /* ViewController.swift */; };
-		1384A38922C1B53E006036BA /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384A38822C1B53E006036BA /* Renderer.swift */; };
-		1384A38B22C1BA95006036BA /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384A38A22C1BA95006036BA /* Primitive.swift */; };
-		1384A38D22C1BE70006036BA /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1384A38C22C1BE70006036BA /* Shaders.metal */; };
+		820EACE5267C1D8600570060 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD7267C1D8500570060 /* PipelineApp.swift */; };
+		820EACE6267C1D8600570060 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD7267C1D8500570060 /* PipelineApp.swift */; };
+		820EACE7267C1D8600570060 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD8267C1D8500570060 /* ContentView.swift */; };
+		820EACE8267C1D8600570060 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACD8267C1D8500570060 /* ContentView.swift */; };
+		820EACE9267C1D8600570060 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820EACD9267C1D8600570060 /* Assets.xcassets */; };
+		820EACEA267C1D8600570060 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820EACD9267C1D8600570060 /* Assets.xcassets */; };
+		820EACF7267C262F00570060 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACF6267C262F00570060 /* Renderer.swift */; };
+		820EACF8267C262F00570060 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EACF6267C262F00570060 /* Renderer.swift */; };
+		8289B17B267C690B0062BFCD /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8289B17A267C690B0062BFCD /* Shaders.metal */; };
+		8289B17C267C690B0062BFCD /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8289B17A267C690B0062BFCD /* Shaders.metal */; };
+		82BC1CBE267C78650002A637 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC1CBD267C78650002A637 /* MetalView.swift */; };
+		82BC1CBF267C78650002A637 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC1CBD267C78650002A637 /* MetalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1384A36F22C1B388006036BA /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1384A37222C1B388006036BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1384A37422C1B389006036BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1384A37722C1B389006036BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1384A37922C1B389006036BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1384A37A22C1B389006036BA /* Pipeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pipeline.entitlements; sourceTree = "<group>"; };
-		1384A38022C1B3C2006036BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1384A38822C1B53E006036BA /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		1384A38A22C1BA95006036BA /* Primitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
-		1384A38C22C1BE70006036BA /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		820EACD7267C1D8500570060 /* PipelineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineApp.swift; sourceTree = "<group>"; };
+		820EACD8267C1D8500570060 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		820EACD9267C1D8600570060 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		820EACDE267C1D8600570060 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		820EACE4267C1D8600570060 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		820EACF6267C262F00570060 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		8289B17A267C690B0062BFCD /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		82BC1CBD267C78650002A637 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1384A36C22C1B388006036BA /* Frameworks */ = {
+		820EACDB267C1D8600570060 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE1267C1D8600570060 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,131 +50,199 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1384A36622C1B388006036BA = {
+		820EACD1267C1D8500570060 = {
 			isa = PBXGroup;
 			children = (
-				1384A37122C1B388006036BA /* Pipeline */,
-				1384A37022C1B388006036BA /* Products */,
+				820EACD6267C1D8500570060 /* Shared */,
+				820EACDF267C1D8600570060 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		1384A37022C1B388006036BA /* Products */ = {
+		820EACD6267C1D8500570060 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				1384A36F22C1B388006036BA /* Pipeline.app */,
+				820EACD7267C1D8500570060 /* PipelineApp.swift */,
+				820EACD8267C1D8500570060 /* ContentView.swift */,
+				82BC1CBD267C78650002A637 /* MetalView.swift */,
+				820EACF6267C262F00570060 /* Renderer.swift */,
+				8289B17A267C690B0062BFCD /* Shaders.metal */,
+				820EACD9267C1D8600570060 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		820EACDF267C1D8600570060 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				820EACDE267C1D8600570060 /* Pipeline.app */,
+				820EACE4267C1D8600570060 /* Pipeline.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		1384A37122C1B388006036BA /* Pipeline */ = {
-			isa = PBXGroup;
-			children = (
-				1384A37222C1B388006036BA /* AppDelegate.swift */,
-				1384A38022C1B3C2006036BA /* ViewController.swift */,
-				1384A38822C1B53E006036BA /* Renderer.swift */,
-				1384A38C22C1BE70006036BA /* Shaders.metal */,
-				1384A38A22C1BA95006036BA /* Primitive.swift */,
-				1384A37422C1B389006036BA /* Assets.xcassets */,
-				1384A37622C1B389006036BA /* Main.storyboard */,
-				1384A37922C1B389006036BA /* Info.plist */,
-				1384A37A22C1B389006036BA /* Pipeline.entitlements */,
-			);
-			path = Pipeline;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1384A36E22C1B388006036BA /* Pipeline */ = {
+		820EACDD267C1D8600570060 /* Pipeline (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1384A37D22C1B389006036BA /* Build configuration list for PBXNativeTarget "Pipeline" */;
+			buildConfigurationList = 820EACED267C1D8600570060 /* Build configuration list for PBXNativeTarget "Pipeline (iOS)" */;
 			buildPhases = (
-				1384A36B22C1B388006036BA /* Sources */,
-				1384A36C22C1B388006036BA /* Frameworks */,
-				1384A36D22C1B388006036BA /* Resources */,
+				820EACDA267C1D8600570060 /* Sources */,
+				820EACDB267C1D8600570060 /* Frameworks */,
+				820EACDC267C1D8600570060 /* Resources */,
+				820EACF9267C298800570060 /* SwiftLint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Pipeline;
-			productName = Pipeline;
-			productReference = 1384A36F22C1B388006036BA /* Pipeline.app */;
+			name = "Pipeline (iOS)";
+			productName = "Pipeline (iOS)";
+			productReference = 820EACDE267C1D8600570060 /* Pipeline.app */;
+			productType = "com.apple.product-type.application";
+		};
+		820EACE3267C1D8600570060 /* Pipeline (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820EACF0267C1D8600570060 /* Build configuration list for PBXNativeTarget "Pipeline (macOS)" */;
+			buildPhases = (
+				820EACE0267C1D8600570060 /* Sources */,
+				820EACE1267C1D8600570060 /* Frameworks */,
+				820EACE2267C1D8600570060 /* Resources */,
+				820EACFA267C29AD00570060 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pipeline (macOS)";
+			productName = "Pipeline (macOS)";
+			productReference = 820EACE4267C1D8600570060 /* Pipeline.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		1384A36722C1B388006036BA /* Project object */ = {
+		820EACD2267C1D8500570060 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
-				ORGANIZATIONNAME = Razeware;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					1384A36E22C1B388006036BA = {
-						CreatedOnToolsVersion = 11.0;
+					820EACDD267C1D8600570060 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					820EACE3267C1D8600570060 = {
+						CreatedOnToolsVersion = 13.0;
 					};
 				};
 			};
-			buildConfigurationList = 1384A36A22C1B388006036BA /* Build configuration list for PBXProject "Pipeline" */;
-			compatibilityVersion = "Xcode 9.3";
+			buildConfigurationList = 820EACD5267C1D8500570060 /* Build configuration list for PBXProject "Pipeline" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 1384A36622C1B388006036BA;
-			productRefGroup = 1384A37022C1B388006036BA /* Products */;
+			mainGroup = 820EACD1267C1D8500570060;
+			productRefGroup = 820EACDF267C1D8600570060 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1384A36E22C1B388006036BA /* Pipeline */,
+				820EACDD267C1D8600570060 /* Pipeline (iOS) */,
+				820EACE3267C1D8600570060 /* Pipeline (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1384A36D22C1B388006036BA /* Resources */ = {
+		820EACDC267C1D8600570060 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1384A37522C1B389006036BA /* Assets.xcassets in Resources */,
-				1384A37822C1B389006036BA /* Main.storyboard in Resources */,
+				820EACE9267C1D8600570060 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE2267C1D8600570060 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820EACEA267C1D8600570060 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		820EACF9267C298800570060 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+		820EACFA267C29AD00570060 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		1384A36B22C1B388006036BA /* Sources */ = {
+		820EACDA267C1D8600570060 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1384A38122C1B3C2006036BA /* ViewController.swift in Sources */,
-				1384A38922C1B53E006036BA /* Renderer.swift in Sources */,
-				1384A37322C1B388006036BA /* AppDelegate.swift in Sources */,
-				1384A38B22C1BA95006036BA /* Primitive.swift in Sources */,
-				1384A38D22C1BE70006036BA /* Shaders.metal in Sources */,
+				8289B17B267C690B0062BFCD /* Shaders.metal in Sources */,
+				820EACF7267C262F00570060 /* Renderer.swift in Sources */,
+				82BC1CBE267C78650002A637 /* MetalView.swift in Sources */,
+				820EACE7267C1D8600570060 /* ContentView.swift in Sources */,
+				820EACE5267C1D8600570060 /* PipelineApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820EACE0267C1D8600570060 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8289B17C267C690B0062BFCD /* Shaders.metal in Sources */,
+				820EACF8267C262F00570060 /* Renderer.swift in Sources */,
+				82BC1CBF267C78650002A637 /* MetalView.swift in Sources */,
+				820EACE8267C1D8600570060 /* ContentView.swift in Sources */,
+				820EACE6267C1D8600570060 /* PipelineApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		1384A37622C1B389006036BA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1384A37722C1B389006036BA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		1384A37B22C1B389006036BA /* Debug */ = {
+		820EACEB267C1D8600570060 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -190,6 +268,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -214,17 +293,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		1384A37C22C1B389006036BA /* Release */ = {
+		820EACEC267C1D8600570060 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -250,6 +327,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -268,47 +346,130 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		1384A37E22C1B389006036BA /* Debug */ = {
+		820EACEE267C1D8600570060 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Pipeline;
+				PRODUCT_NAME = Pipeline;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		820EACEF267C1D8600570060 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Pipeline;
+				PRODUCT_NAME = Pipeline;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		820EACF1267C1D8600570060 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Pipeline/Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Pipeline;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Pipeline;
+				PRODUCT_NAME = Pipeline;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		1384A37F22C1B389006036BA /* Release */ = {
+		820EACF2267C1D8600570060 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Pipeline/Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Pipeline;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = raywenderlich.Pipeline;
+				PRODUCT_NAME = Pipeline;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -316,25 +477,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1384A36A22C1B388006036BA /* Build configuration list for PBXProject "Pipeline" */ = {
+		820EACD5267C1D8500570060 /* Build configuration list for PBXProject "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1384A37B22C1B389006036BA /* Debug */,
-				1384A37C22C1B389006036BA /* Release */,
+				820EACEB267C1D8600570060 /* Debug */,
+				820EACEC267C1D8600570060 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1384A37D22C1B389006036BA /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
+		820EACED267C1D8600570060 /* Build configuration list for PBXNativeTarget "Pipeline (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1384A37E22C1B389006036BA /* Debug */,
-				1384A37F22C1B389006036BA /* Release */,
+				820EACEE267C1D8600570060 /* Debug */,
+				820EACEF267C1D8600570060 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820EACF0267C1D8600570060 /* Build configuration list for PBXNativeTarget "Pipeline (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820EACF1267C1D8600570060 /* Debug */,
+				820EACF2267C1D8600570060 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 1384A36722C1B388006036BA /* Project object */;
+	rootObject = 820EACD2267C1D8500570060 /* Project object */;
 }
