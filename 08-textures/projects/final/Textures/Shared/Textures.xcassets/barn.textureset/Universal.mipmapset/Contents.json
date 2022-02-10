@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "lowpoly-barn-color.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}
