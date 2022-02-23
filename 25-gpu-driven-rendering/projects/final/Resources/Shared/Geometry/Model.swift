@@ -173,12 +173,9 @@ class Model: Transformable {
 
         if renderState != .shadowPass {
           encoder.setFragmentBuffer(
-            submesh.argumentBuffer,
+            submesh.materialsBuffer,
             offset: 0,
             index: MaterialBuffer.index)
-          if let argumentBuffer = submesh.argumentBuffer {
-            encoder.useResource(argumentBuffer, usage: .read)
-          }
         }
 
         encoder.drawIndexedPrimitives(

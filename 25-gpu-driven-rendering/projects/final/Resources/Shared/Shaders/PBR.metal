@@ -35,6 +35,7 @@ using namespace metal;
 
 #import "Vertex.h"
 #import "Lighting.h"
+#import "Material.h"
 
 constant float pi = 3.1415926535897932384626433832795;
 
@@ -50,16 +51,6 @@ float3 computeDiffuse(
   Material material,
   float3 normal,
   float3 lightDirection);
-
-struct ShaderMaterial {
-  texture2d<float> baseColorTexture;
-  texture2d<float> normalTexture;
-  texture2d<float> roughnessTexture;
-  texture2d<float> metallicTexture;
-  texture2d<float> aoTexture;
-  texture2d<float> opacityTexture;
-  Material material;
-};
 
 fragment float4 fragment_PBR(
   FragmentIn in [[stage_in]],

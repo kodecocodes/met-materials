@@ -80,7 +80,8 @@ struct ForwardRenderPass: RenderPass {
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
-        params: params)
+        params: params,
+        renderState: .mainPass)
     }
 
     // transparent mesh
@@ -96,7 +97,8 @@ struct ForwardRenderPass: RenderPass {
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
-        params: params)
+        params: params,
+        renderState: .mainPass)
     }
     renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()

@@ -66,12 +66,10 @@ struct ForwardRenderPass: RenderPass {
     if let heap = TextureController.heap {
       renderEncoder.useHeap(heap)
     }
-
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
 
-    renderEncoder.setCullMode(.back)
     renderEncoder.setFragmentBuffer(
       scene.lighting.lightsBuffer,
       offset: 0,
@@ -85,7 +83,8 @@ struct ForwardRenderPass: RenderPass {
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
-        params: params)
+        params: params,
+        renderState: .mainPass)
     }
 
     // transparent mesh
@@ -101,7 +100,8 @@ struct ForwardRenderPass: RenderPass {
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
-        params: params)
+        params: params,
+        renderState: .mainPass)
     }
     renderEncoder.popDebugGroup()
     renderEncoder.endEncoding()

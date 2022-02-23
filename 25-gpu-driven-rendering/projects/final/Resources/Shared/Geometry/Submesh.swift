@@ -30,6 +30,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 import MetalKit
 
 struct Submesh {
@@ -37,7 +39,6 @@ struct Submesh {
   let indexType: MTLIndexType
   let indexBuffer: MTLBuffer
   let indexBufferOffset: Int
-  var argumentBuffer: MTLBuffer?
 
   struct Textures {
     let baseColor: Int?
@@ -62,6 +63,7 @@ struct Submesh {
       TextureController.getTexture(textures.ambientOcclusion),
       TextureController.getTexture(textures.opacity)
     ]}
+  var materialsBuffer: MTLBuffer!
 
   mutating func initializeMaterials() {
     guard let fragment =
@@ -70,11 +72,11 @@ struct Submesh {
       }
     let materialEncoder = fragment.makeArgumentEncoder(
       bufferIndex: MaterialBuffer.index)
-    argumentBuffer = Renderer.device.makeBuffer(
+    materialsBuffer = Renderer.device.makeBuffer(
       length: materialEncoder.encodedLength,
       options: [])
     // 1
-    materialEncoder.setArgumentBuffer(argumentBuffer, offset: 0)
+    materialEncoder.setArgumentBuffer(materialsBuffer, offset: 0)
     // 2
     let range = Range(BaseColor.index...OpacityTexture.index)
     materialEncoder.setTextures(allTextures, range: range)
