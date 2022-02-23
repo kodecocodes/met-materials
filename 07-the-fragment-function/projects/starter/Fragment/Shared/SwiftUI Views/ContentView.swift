@@ -49,7 +49,7 @@ struct ContentView: View {
           Text("Train").tag(RenderChoice.train)
           Text("Quad").tag(RenderChoice.quad)
       }
-        .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(SegmentedPickerStyle())
     }
     .padding()
   }

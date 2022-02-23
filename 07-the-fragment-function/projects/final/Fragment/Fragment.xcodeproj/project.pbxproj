@@ -52,7 +52,7 @@
 		820B884026B90B770070A134 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		820B884426B9105A0070A134 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		822D02B0273656B200296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
-		8291F91A2751F47F00E876CB /* ShaderDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefs.h; sourceTree = "<group>"; };
+		82D20F0A27C5C6C50037C5BA /* ShaderDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 				822D02B0273656B200296BE0 /* Transform.swift */,
 				820B882C26B8E5290070A134 /* VertexDescriptor.swift */,
 				820B884026B90B770070A134 /* Common.h */,
-				8291F91A2751F47F00E876CB /* ShaderDefs.h */,
+				82D20F0A27C5C6C50037C5BA /* ShaderDefs.h */,
 				820B883D26B90B530070A134 /* Vertex.metal */,
 				820B882F26B8E5350070A134 /* Fragment.metal */,
 				820B883626B8E5570070A134 /* Models */,
