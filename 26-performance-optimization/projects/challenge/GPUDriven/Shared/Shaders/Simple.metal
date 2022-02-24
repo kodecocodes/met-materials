@@ -32,50 +32,75 @@
 
 #include <metal_stdlib>
 using namespace metal;
-
 #import "Common.h"
+#import "Lighting.h"
+#import "Material.h"
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
+struct VertexOut {
+  float4 position [[position]];
+  float2 uv;
+  uint modelIndex [[flat]];
 };
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
-
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
+vertex VertexOut vertex_simple(
+  constant float3 *positions [[buffer(PositionBuffer)]],
+  constant float2 *uvs [[buffer(UVBuffer)]],
   constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
+  constant ModelParams *modelParamsArray [[buffer(ModelParamsBuffer)]],
+  constant uint &modelIndex [[buffer(SubmeshesArrayBuffer)]],
+  uint baseInstance [[base_instance]],
+  uint vertexId [[vertex_id]])
 {
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+  ModelParams modelParams = modelParamsArray[modelIndex];
+  float4 position = float4(positions[vertexId], 1);
+  VertexOut out {
+    .position = uniforms.projectionMatrix * uniforms.viewMatrix
+                  * modelParams.modelMatrix * position,
+    .uv = uvs[vertexId],
+    .modelIndex = modelIndex
+  };
+  return out;
 }
+
+
+fragment float4 fragment_simple(
+  VertexOut in [[stage_in]],
+  constant Params &params [[buffer(ParamsBuffer)]],
+  constant ModelParams *modelParamsArray [[buffer(ModelParamsBuffer)]],
+  constant ShaderMaterial &shaderMaterial [[buffer(MaterialBuffer)]])
+{
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear);
+
+  ModelParams modelParams = modelParamsArray[in.modelIndex];
+  Material material = shaderMaterial.material;
+  texture2d<float> baseColorTexture = shaderMaterial.baseColorTexture;
+  texture2d<float> opacityTexture = shaderMaterial.opacityTexture;
+
+  float opacity = material.opacity;
+  if (!is_null_texture(opacityTexture)) {
+    if (params.alphaBlending) {
+      opacity = opacityTexture.sample(textureSampler, in.uv).r;
+    }
+    if (params.alphaTesting) {
+      opacity = opacityTexture.sample(textureSampler, in.uv).r;
+      if (opacity < 0.2) {
+        discard_fragment();
+        return(0);
+      }
+    }
+  }
+
+  if (!is_null_texture(baseColorTexture)) {
+    float4 color = baseColorTexture.sample(
+      textureSampler,
+      in.uv * modelParams.tiling);
+    material.baseColor = color.rgb;
+  }
+
+  return float4(material.baseColor, 1);
+}
+
+

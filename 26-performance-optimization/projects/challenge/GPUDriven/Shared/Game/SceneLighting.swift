@@ -30,52 +30,52 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+// swiftlint:disable force_unwrapping
 
-#import "Common.h"
+import MetalKit
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
-};
+struct SceneLighting {
+  static func buildDefaultLight() -> Light {
+    var light = Light()
+    light.position = [0, 0, 0]
+    light.color = float3(repeating: 1.0)
+    light.specularColor = float3(repeating: 0.6)
+    light.attenuation = [1, 0, 0]
+    light.type = Sun
+    return light
+  }
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
+  let sunlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = normalize([-6, 8, 4])
+    light.color = float3(repeating: 0.2)
+    return light
+  }()
 
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
-{
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+  let ambient: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Ambient
+    light.color = float3(repeating: 0.8)
+    return light
+  }()
+
+  var lights: [Light] = []
+  var sunlights: [Light] = []
+  var pointLights: [Light] = []
+  var lightsBuffer: MTLBuffer?
+  var sunBuffer: MTLBuffer?
+  var pointBuffer: MTLBuffer?
+
+  init() {
+    lights = [sunlight, ambient]
+    lightsBuffer = Self.createBuffer(lights: lights)
+  }
+
+  static func createBuffer(lights: [Light]) -> MTLBuffer {
+    var lights = lights
+    return Renderer.device.makeBuffer(
+      bytes: &lights,
+      length: MemoryLayout<Light>.stride * lights.count,
+      options: [])!
+  }
 }

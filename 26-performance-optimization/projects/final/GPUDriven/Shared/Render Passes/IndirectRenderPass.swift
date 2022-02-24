@@ -32,6 +32,7 @@
 
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable force_unwrapping
+
 import MetalKit
 
 struct IndirectRenderPass: RenderPass {
@@ -64,26 +65,6 @@ struct IndirectRenderPass: RenderPass {
     initializeDrawArguments(models: models)
   }
 
-  mutating func initializeUniforms(_ models: [Model]) {
-    let bufferLength = MemoryLayout<Uniforms>.stride
-    uniformsBuffer =
-      Renderer.device.makeBuffer(length: bufferLength, options: [])
-    uniformsBuffer.label = "Uniforms"
-
-    var modelParams: [ModelParams] = models.map { model in
-      var modelParams = ModelParams()
-      modelParams.modelMatrix = model.transform.modelMatrix
-      modelParams.normalMatrix = modelParams.modelMatrix.upperLeft
-      modelParams.tiling = model.tiling
-      return modelParams
-    }
-    modelParamsBuffer = Renderer.device.makeBuffer(
-      bytes: &modelParams,
-      length: MemoryLayout<ModelParams>.stride * models.count,
-      options: [])
-    modelParamsBuffer.label = "Model Transforms Array"
-  }
-
   mutating func initializeICBCommands(_ models: [Model]) {
     let icbDescriptor = MTLIndirectCommandBufferDescriptor()
     icbDescriptor.commandTypes = [.drawIndexed]
@@ -105,6 +86,26 @@ struct IndirectRenderPass: RenderPass {
     icbEncoder.setIndirectCommandBuffer(icb, index: 0)
   }
 
+  mutating func initializeUniforms(_ models: [Model]) {
+    let bufferLength = MemoryLayout<Uniforms>.stride
+    uniformsBuffer =
+      Renderer.device.makeBuffer(length: bufferLength, options: [])
+    uniformsBuffer.label = "Uniforms"
+
+    var modelParams: [ModelParams] = models.map { model in
+      var modelParams = ModelParams()
+      modelParams.modelMatrix = model.transform.modelMatrix
+      modelParams.normalMatrix = modelParams.modelMatrix.upperLeft
+      modelParams.tiling = model.tiling
+      return modelParams
+    }
+    modelParamsBuffer = Renderer.device.makeBuffer(
+      bytes: &modelParams,
+      length: MemoryLayout<ModelParams>.stride * models.count,
+      options: [])
+    modelParamsBuffer.label = "Model Transforms Array"
+  }
+
   mutating func initializeModels(_ models: [Model]) {
     // 1
     let encoder = icbComputeFunction.makeArgumentEncoder(
@@ -117,13 +118,9 @@ struct IndirectRenderPass: RenderPass {
       let mesh = model.meshes[0]
       let submesh = mesh.submeshes[0]
       encoder.setArgumentBuffer(
-        modelsBuffer,
-        startOffset: 0,
-        arrayElement: index)
+        modelsBuffer, startOffset: 0, arrayElement: index)
       encoder.setBuffer(
-        mesh.vertexBuffers[VertexBuffer.index],
-        offset: 0,
-        index: 0)
+        mesh.vertexBuffers[VertexBuffer.index], offset: 0, index: 0)
       encoder.setBuffer(
         mesh.vertexBuffers[UVBuffer.index],
         offset: 0,
@@ -195,7 +192,6 @@ struct IndirectRenderPass: RenderPass {
     encoder.popDebugGroup()
   }
 
-
   func encodeDraw(encoder: MTLComputeCommandEncoder) {
     encoder.setComputePipelineState(icbPipelineState)
     encoder.setBuffer(
@@ -223,7 +219,6 @@ struct IndirectRenderPass: RenderPass {
       threadsPerThreadgroup: threadsPerThreadgroup)
   }
 
-
   func draw(
     commandBuffer: MTLCommandBuffer,
     scene: GameScene,
@@ -239,7 +234,6 @@ struct IndirectRenderPass: RenderPass {
     dispatchThreads(
       encoder: computeEncoder, drawCount: scene.models.count)
     computeEncoder.endEncoding()
-
     guard let descriptor = descriptor,
       let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(

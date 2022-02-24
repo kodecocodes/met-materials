@@ -30,52 +30,38 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import MetalKit
 
-#import "Common.h"
+class GameController: NSObject {
+  var scene: GameScene
+  var renderer: Renderer
+  var options = Options()
+  static var fps: Double = 0
+  var deltaTime: Double = 0
+  var lastTime: Double = CFAbsoluteTimeGetCurrent()
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
-};
+  init(metalView: MTKView, options: Options) {
+    Self.fps = Double(metalView.preferredFramesPerSecond)
+    renderer = Renderer(metalView: metalView, options: options)
+    scene = GameScene()
+    renderer.initialize(scene)
+    super.init()
+    self.options = options
+    metalView.delegate = self
+  }
+}
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
+extension GameController: MTKViewDelegate {
+  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    scene.update(size: size)
+    renderer.mtkView(view, drawableSizeWillChange: size)
+  }
 
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
-{
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+  func draw(in view: MTKView) {
+    let currentTime = CFAbsoluteTimeGetCurrent()
+    let deltaTime = (currentTime - lastTime)
+    lastTime = currentTime
+    scene.update(deltaTime: Float(deltaTime))
+    renderer.draw(scene: scene, in: view)
+  }
 }

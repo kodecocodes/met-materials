@@ -34,48 +34,32 @@
 using namespace metal;
 
 #import "Common.h"
+#import "Vertex.h"
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
-};
+constant bool hasSkeleton [[function_constant(0)]];
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
-
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
+vertex float4
+  vertex_depth(const VertexIn in [[stage_in]],
   constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
+  constant ModelParams &modelParams [[buffer(ModelParamsBuffer)]],
+  constant float4x4 *jointMatrices [[
+    buffer(JointBuffer),
+    function_constant(hasSkeleton)]])
 {
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+  matrix_float4x4 mvp =
+    uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
+    * modelParams.modelMatrix;
+  
+  float4 position = in.position;
+
+  if (hasSkeleton) {
+    float4 weights = in.weights;
+    ushort4 joints = in.joints;
+    position =
+        weights.x * (jointMatrices[joints.x] * position) +
+        weights.y * (jointMatrices[joints.y] * position) +
+        weights.z * (jointMatrices[joints.z] * position) +
+        weights.w * (jointMatrices[joints.w] * position);
+  }
+  return mvp * position;
 }

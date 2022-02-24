@@ -42,40 +42,46 @@ struct ICBContainer {
 struct Model {
   constant float *vertexBuffer;
   constant float *uvBuffer;
+};
+
+struct Submesh {
   constant uint *indexBuffer;
   constant float *materialBuffer;
+  constant uint &modelIndexBuffer;
+  render_pipeline_state pipelineState;
 };
 
 kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
+  uint drawIndex [[thread_position_in_grid]],
   constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
+  constant Params &params
+    [[buffer(ParamsBuffer)]],
   constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
-{
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]],
+  constant ModelParams *modelParamsArray
+    [[buffer(ModelParamsBuffer)]],
+  constant Model *modelsArray [[buffer(ModelsArrayBuffer)]],
+  constant Submesh *submeshesArray [[buffer(SubmeshesArrayBuffer)]],
+  device ICBContainer *icbContainer [[buffer(ICBBuffer)]]) {
+    Submesh submesh = submeshesArray[drawIndex];
+    MTLDrawIndexedPrimitivesIndirectArguments drawArguments
+      = drawArgumentsBuffer[drawIndex];
+    render_command cmd(icbContainer->icb, drawIndex);
+    Model model = modelsArray[submesh.modelIndexBuffer];
+    cmd.set_render_pipeline_state(submesh.pipelineState);
+    cmd.set_vertex_buffer  (&submesh.modelIndexBuffer,  SubmeshesArrayBuffer);
+    cmd.set_vertex_buffer  (&uniforms,            UniformsBuffer);
+    cmd.set_fragment_buffer(&params,              ParamsBuffer);
+    cmd.set_vertex_buffer  (modelParamsArray,     ModelParamsBuffer);
+    cmd.set_fragment_buffer(modelParamsArray,     ModelParamsBuffer);
+    cmd.set_vertex_buffer  (model.vertexBuffer,   PositionBuffer);
+    cmd.set_vertex_buffer  (model.uvBuffer,       UVBuffer);
+    cmd.set_fragment_buffer(submesh.materialBuffer, MaterialBuffer);
+    cmd.draw_indexed_primitives(
+      primitive_type::triangle,
+      drawArguments.indexCount,
+      submesh.indexBuffer + drawArguments.indexStart,
+      drawArguments.instanceCount,
+      drawArguments.baseVertex,
+      drawArguments.baseInstance);
 }

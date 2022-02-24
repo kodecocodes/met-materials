@@ -30,52 +30,44 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import Foundation
 
-#import "Common.h"
+import ModelIO
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
-};
+struct TransformComponent {
+  let keyTransforms: [float4x4]
+  let duration: Float
+  var currentTransform: float4x4 = .identity
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
+  init(
+    transform: MDLTransformComponent,
+    object: MDLObject,
+    startTime: TimeInterval,
+    endTime: TimeInterval
+  ) {
+    duration = Float(endTime - startTime)
+    let timeStride = stride(
+      from: startTime,
+      to: endTime,
+      by: 1 / TimeInterval(GameController.fps))
 
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
-{
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
+    keyTransforms = Array(timeStride).map { time in
+      MDLTransform.globalTransform(
+        with: object,
+        atTime: time)
+    }
+  }
+
+  mutating func getCurrentTransform(at time: Float) {
+    guard duration > 0 else {
+      currentTransform = .identity
+      return
+    }
+    let frame = Int(fmod(time, duration) * Float(GameController.fps))
+    if frame < keyTransforms.count {
+      currentTransform = keyTransforms[frame]
+    } else {
+      currentTransform = keyTransforms.last ?? .identity
+    }
+  }
 }

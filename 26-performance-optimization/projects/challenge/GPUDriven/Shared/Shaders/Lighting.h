@@ -30,52 +30,44 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+#ifndef Lighting_h
+#define Lighting_h
 
 #import "Common.h"
 
-struct ICBContainer {
-  command_buffer icb [[id(0)]];
-};
+Material defaultMaterial();
 
-struct Model {
-  constant float *vertexBuffer;
-  constant float *uvBuffer;
-  constant uint *indexBuffer;
-  constant float *materialBuffer;
-};
+float3 phongLighting(
+  float3 normal,
+  float3 position,
+  constant Params &params,
+  constant Light *lights,
+  Material material);
 
-kernel void encodeCommands(
-  // 1
-  uint modelIndex [[thread_position_in_grid]],
-  // 2
-  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-  // 3
-  constant Model *models [[buffer(ModelsBuffer)]],
-  constant ModelParams *modelParams [[buffer(ModelParamsBuffer)]],
-  constant MTLDrawIndexedPrimitivesIndirectArguments
-    *drawArgumentsBuffer [[buffer(DrawArgumentsBuffer)]])
-{
-  // 1
-  Model model = models[modelIndex];
-  MTLDrawIndexedPrimitivesIndirectArguments drawArguments
-    = drawArgumentsBuffer[modelIndex];
-  // 2
-  render_command cmd(icbContainer->icb, modelIndex);
-  // 3
-  cmd.set_vertex_buffer  (&uniforms,       UniformsBuffer);
-  cmd.set_vertex_buffer  (model.vertexBuffer,   VertexBuffer);
-  cmd.set_vertex_buffer  (model.uvBuffer,  UVBuffer);
-  cmd.set_vertex_buffer  (modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(modelParams,     ModelParamsBuffer);
-  cmd.set_fragment_buffer(model.materialBuffer, MaterialBuffer);
-  cmd.draw_indexed_primitives(
-    primitive_type::triangle,
-    drawArguments.indexCount,
-    model.indexBuffer + drawArguments.indexStart,
-    drawArguments.instanceCount,
-    drawArguments.baseVertex,
-    drawArguments.baseInstance);
-}
+float calculateShadow(
+  float4 shadowPosition,
+  depth2d<float> shadowTexture);
+
+float3 calculateSun(
+  Light light,
+  float3 normal,
+  Params params,
+  Material material);
+
+float3 calculatePoint(
+  Light light,
+  float3 position,
+  float3 normal,
+  Material material);
+
+float3 calculateSpot(
+  Light light,
+  float3 position,
+  float3 normal,
+  Material material);
+
+float calculateShadow(
+  float4 shadowPosition,
+  depth2d<float> shadowTexture);
+
+#endif /* Lighting_h */
