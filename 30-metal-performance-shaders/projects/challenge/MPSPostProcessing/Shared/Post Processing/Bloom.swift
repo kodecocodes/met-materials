@@ -50,7 +50,7 @@ struct Bloom {
       size: size,
       pixelFormat: view.colorPixelFormat,
       label: "Final Texture",
-      usage: .shaderWrite)
+      usage: [.shaderRead, .shaderWrite])
   }
 
   mutating func postProcess(
@@ -82,11 +82,14 @@ struct Bloom {
       inPlaceTexture: &outputTexture,
       fallbackCopyAllocator: nil)
     let add = MPSImageAdd(device: Renderer.device)
+
+    // Combine original render and filtered render
     add.encode(
       commandBuffer: commandBuffer,
       primaryTexture: drawableTexture,
       secondaryTexture: outputTexture,
       destinationTexture: finalTexture)
+
     guard let blitEncoder = commandBuffer.makeBlitCommandEncoder()
       else { return }
     let origin = MTLOrigin(x: 0, y: 0, z: 0)

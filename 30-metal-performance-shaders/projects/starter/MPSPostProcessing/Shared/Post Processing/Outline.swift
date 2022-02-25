@@ -34,7 +34,7 @@ import MetalKit
 import MetalPerformanceShaders
 
 struct Outline {
-  let label = "Outline Filter"
+  let label = "Outline"
 
   mutating func resize(view: MTKView, size: CGSize) {
   }

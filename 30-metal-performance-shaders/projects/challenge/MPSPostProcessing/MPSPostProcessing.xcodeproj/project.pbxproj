@@ -27,8 +27,6 @@
 		820B883526B8E54A0070A134 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B883326B8E54A0070A134 /* MathLibrary.swift */; };
 		820B883E26B90B530070A134 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820B883D26B90B530070A134 /* Shaders.metal */; };
 		820B883F26B90B530070A134 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820B883D26B90B530070A134 /* Shaders.metal */; };
-		821D82EC27C8A65400714CB1 /* Outline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821D82EB27C8A65400714CB1 /* Outline.swift */; };
-		821D82ED27C8A65400714CB1 /* Outline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821D82EB27C8A65400714CB1 /* Outline.swift */; };
 		8224335426CB7C6A00F627C5 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335326CB7C6A00F627C5 /* Mesh.swift */; };
 		8224335526CB7C6A00F627C5 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335326CB7C6A00F627C5 /* Mesh.swift */; };
 		8224335726CB7C7100F627C5 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224335626CB7C7100F627C5 /* Submesh.swift */; };
@@ -67,6 +65,8 @@
 		823C653C27B4D0B800FC1A97 /* license.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 823C653A27B4D0B800FC1A97 /* license.rtf */; };
 		8248A33927C883830025F46C /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33827C883830025F46C /* RadioButton.swift */; };
 		8248A33A27C883830025F46C /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33827C883830025F46C /* RadioButton.swift */; };
+		8248A33D27C884B70025F46C /* Outline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33C27C884B70025F46C /* Outline.swift */; };
+		8248A33E27C884B70025F46C /* Outline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33C27C884B70025F46C /* Outline.swift */; };
 		8248A34027C884BF0025F46C /* Bloom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33F27C884BF0025F46C /* Bloom.swift */; };
 		8248A34127C884BF0025F46C /* Bloom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A33F27C884BF0025F46C /* Bloom.swift */; };
 		824A97AB2774601A00DA096F /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82B6707E274771A80085AD26 /* PBR.metal */; };
@@ -134,7 +134,6 @@
 		820B883D26B90B530070A134 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		820B884026B90B770070A134 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		820BA3A027C5E9E0002EF112 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
-		821D82EB27C8A65400714CB1 /* Outline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outline.swift; sourceTree = "<group>"; };
 		8224335326CB7C6A00F627C5 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		8224335626CB7C7100F627C5 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		822D02AD2736537E00296BE0 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
@@ -154,6 +153,7 @@
 		823C653127B4BC4800FC1A97 /* house1.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = house1.mtl; sourceTree = "<group>"; };
 		823C653A27B4D0B800FC1A97 /* license.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = license.rtf; sourceTree = "<group>"; };
 		8248A33827C883830025F46C /* RadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		8248A33C27C884B70025F46C /* Outline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outline.swift; sourceTree = "<group>"; };
 		8248A33F27C884BF0025F46C /* Bloom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bloom.swift; sourceTree = "<group>"; };
 		824EE07C277EE3EC004D64C1 /* ShadowCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowCamera.swift; sourceTree = "<group>"; };
 		824EE07F277F0853004D64C1 /* ShadowRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowRenderPass.swift; sourceTree = "<group>"; };
@@ -309,7 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				8248A33F27C884BF0025F46C /* Bloom.swift */,
-				821D82EB27C8A65400714CB1 /* Outline.swift */,
+				8248A33C27C884B70025F46C /* Outline.swift */,
 			);
 			path = "Post Processing";
 			sourceTree = "<group>";
@@ -582,6 +582,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8224335726CB7C7100F627C5 /* Submesh.swift in Sources */,
+				8248A33D27C884B70025F46C /* Outline.swift in Sources */,
 				82EBAD5C27A376640008D771 /* Animation.swift in Sources */,
 				82F19C5D273DEE8B001C5657 /* GameController.swift in Sources */,
 				82B8FAA527797E2F00DDACCC /* ForwardRenderPass.swift in Sources */,
@@ -596,7 +597,6 @@
 				8224335426CB7C6A00F627C5 /* Mesh.swift in Sources */,
 				824EE07D277EE3EC004D64C1 /* ShadowCamera.swift in Sources */,
 				820B882426B8E4FE0070A134 /* MetalView.swift in Sources */,
-				821D82EC27C8A65400714CB1 /* Outline.swift in Sources */,
 				824EE083277F091B004D64C1 /* Shadow.metal in Sources */,
 				824EE080277F0853004D64C1 /* ShadowRenderPass.swift in Sources */,
 				820B883E26B90B530070A134 /* Shaders.metal in Sources */,
@@ -625,6 +625,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8224335826CB7C7100F627C5 /* Submesh.swift in Sources */,
+				8248A33E27C884B70025F46C /* Outline.swift in Sources */,
 				82EBAD5B27A376640008D771 /* Animation.swift in Sources */,
 				82F19C5E273DEE8B001C5657 /* GameController.swift in Sources */,
 				82B8FAA627797E2F00DDACCC /* ForwardRenderPass.swift in Sources */,
@@ -639,7 +640,6 @@
 				8224335526CB7C6A00F627C5 /* Mesh.swift in Sources */,
 				824EE07E277EE3EC004D64C1 /* ShadowCamera.swift in Sources */,
 				820B882526B8E4FE0070A134 /* MetalView.swift in Sources */,
-				821D82ED27C8A65400714CB1 /* Outline.swift in Sources */,
 				824EE084277F091B004D64C1 /* Shadow.metal in Sources */,
 				824EE081277F0853004D64C1 /* ShadowRenderPass.swift in Sources */,
 				820B883F26B90B530070A134 /* Shaders.metal in Sources */,
@@ -786,7 +786,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -816,7 +816,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3E7TCD55JT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

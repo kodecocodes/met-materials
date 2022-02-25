@@ -43,7 +43,7 @@ struct ShadowRenderPass: RenderPass {
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
+    shadowTexture = TextureController.makeTexture(
       size: CGSize(
         width: 4096,
         height: 4096),

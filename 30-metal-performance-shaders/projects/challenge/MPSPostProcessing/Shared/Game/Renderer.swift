@@ -151,7 +151,7 @@ extension Renderer {
       return
     }
 
-    // MARK: - Post processing
+    // Post processing
     switch options.renderChoice {
     case .bloom:
       bloom.postProcess(view: view, commandBuffer: commandBuffer)

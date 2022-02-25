@@ -43,6 +43,6 @@ struct Outline {
     view: MTKView,
     commandBuffer: MTLCommandBuffer
   ) {
-    print("Outline")
+    print("Post processing: Outline")
   }
 }

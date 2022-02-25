@@ -152,10 +152,10 @@ extension Renderer {
 
     // Post processing
     switch options.renderChoice {
-    case .outline:
-      outline.postProcess(view: view, commandBuffer: commandBuffer)
     case .bloom:
       bloom.postProcess(view: view, commandBuffer: commandBuffer)
+    case .outline:
+      outline.postProcess(view: view, commandBuffer: commandBuffer)
     default:
       break
     }
