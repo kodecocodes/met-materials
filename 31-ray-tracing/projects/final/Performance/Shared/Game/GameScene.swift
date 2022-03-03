@@ -33,7 +33,7 @@
 import MetalKit
 
 struct GameScene {
-  let skeletonCount = 7
+  let skeletonCount = 10
   lazy var skeletons: [Model] = []
   lazy var skeletonDirections = [Float](repeating: -1, count: skeletonCount)
   lazy var skeletonPositions = [float3](repeating: .zero, count: skeletonCount)
@@ -101,8 +101,8 @@ struct GameScene {
     barrels[3].position = [-6.5, 0, 2]
     models += barrels
 
-    nature = [loadRocks(count: 100)]
-    var grass = setupGrass(count: 10000, width: 3, depth: 2)
+    nature = [loadRocks(count: 200)]
+    var grass = setupGrass(count: 50000, width: 3, depth: 2)
     grass.position.x = 5
     grass.position.z = 8
     grass.scale = 2

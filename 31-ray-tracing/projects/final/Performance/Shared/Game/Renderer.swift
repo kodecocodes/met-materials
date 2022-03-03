@@ -39,7 +39,7 @@ enum RenderState {
 }
 
 class Renderer: NSObject {
-  static var cullFaces = false
+  static var cullFaces = true
 
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!

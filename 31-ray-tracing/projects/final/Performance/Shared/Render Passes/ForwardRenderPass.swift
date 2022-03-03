@@ -97,7 +97,7 @@ struct ForwardRenderPass: RenderPass {
 
     // transparent mesh
     renderEncoder.pushDebugGroup("Transparency")
-    renderEncoder.setCullMode(.none)
+
     let models = scene.models.filter {
       $0.hasTransparency
     }
@@ -105,7 +105,7 @@ struct ForwardRenderPass: RenderPass {
     if params.alphaBlending {
       renderEncoder.setRenderPipelineState(transparentPSO)
     }
-
+    renderEncoder.setCullMode(.none)
     for model in models {
       model.render(
         encoder: renderEncoder,
