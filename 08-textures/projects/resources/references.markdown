@@ -4,9 +4,9 @@
 
 CC0 means Creative Commons CC0 License, which means that there is no copyright reserved and you can use the textures as you want. There are several CC0 texture sites which you can support through Patreon. Metal by Tutorials uses textures from:
 
-[Poly Haven](https://www.patreon.com/polyhaven)
+[Poly Haven](https://polyhaven.com)
 
-[CC0Textures](https://www.patreon.com/m/ambientCG)
+[CC0Textures](https://ambientcg.com)
 
 [3DAssets.one](https://www.3dassets.one)
 
