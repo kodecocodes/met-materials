@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "helmet_ao.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}

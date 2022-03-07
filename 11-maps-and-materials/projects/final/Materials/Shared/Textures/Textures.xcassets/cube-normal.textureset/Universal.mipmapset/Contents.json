@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "cube-normal.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}
