@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,22 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+enum PipelineStates {
+  static func createComputePSO(function: String)
+    -> MTLComputePipelineState {
+    guard let kernel = Renderer.library.makeFunction(name: function)
+    else { fatalError("Unable to create \(function) PSO") }
+    let pipelineState: MTLComputePipelineState
+    do {
+      pipelineState =
+      try Renderer.device.makeComputePipelineState(function: kernel)
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
+  }
+}
