@@ -1,4 +1,6 @@
-## Further reading
+## Chapter 19: Tessellation
+
+## Further Reading
 
 ### Bezier surfaces
 
@@ -7,6 +9,8 @@
 [Bezier Curves and Surfaces](https://www.scratchapixel.com/lessons/advanced-rendering/bezier-curve-rendering-utah-teapot/bezier-surface)
 
 [Visualizing Parametric Equations with K3DSurf](http://k3dsurf.sourceforge.net)
+
+[Introduction to Tessellation in Metal](https://metalbyexample.com/tessellation/)
 
 JungHyun Han 2011. 3D Graphics for Game Programming. CRC Press. Chapter 6 - Parametric Curves and Surfaces
 
