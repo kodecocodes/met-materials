@@ -1,5 +1,7 @@
-[Apple's sample code](https://developer.apple.com/library/content/samplecode/MetalDeferredLighting/Introduction/Intro.html)
+## Chapter 14: Deferred Rendering
 
-[Modern OpenGL Tutorials](http://ogldev.atspace.co.uk/www/tutorial35/tutorial35.html)
+[Apple's sample code](https://developer.apple.com/documentation/metal/rendering_a_scene_with_deferred_lighting_in_swift)
+
+[Modern OpenGL Tutorials: Tutorial 35](http://ogldev.atspace.co.uk/www/tutorial35/tutorial35.html)
 
 [Deferred Lighting Tutorial](https://github.com/sevanspowell/MetalDeferredLightingTutorial/blob/master/doc/implementing-deferred-shading-in-metal.md)

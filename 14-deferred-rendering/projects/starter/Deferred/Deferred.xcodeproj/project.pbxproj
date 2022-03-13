@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		82044E4726C8BA80008347C1 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82044E4626C8BA80008347C1 /* Options.swift */; };
 		82044E4826C8BA80008347C1 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82044E4626C8BA80008347C1 /* Options.swift */; };
-		820B881326B8E47E0070A134 /* ShadowsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880526B8E47D0070A134 /* ShadowsApp.swift */; };
-		820B881426B8E47E0070A134 /* ShadowsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880526B8E47D0070A134 /* ShadowsApp.swift */; };
+		820B881326B8E47E0070A134 /* DeferredApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880526B8E47D0070A134 /* DeferredApp.swift */; };
+		820B881426B8E47E0070A134 /* DeferredApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880526B8E47D0070A134 /* DeferredApp.swift */; };
 		820B881526B8E47E0070A134 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880626B8E47D0070A134 /* ContentView.swift */; };
 		820B881626B8E47E0070A134 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820B880626B8E47D0070A134 /* ContentView.swift */; };
 		820B881726B8E47E0070A134 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820B880726B8E47E0070A134 /* Assets.xcassets */; };
@@ -97,7 +97,7 @@
 
 /* Begin PBXFileReference section */
 		82044E4626C8BA80008347C1 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
-		820B880526B8E47D0070A134 /* ShadowsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsApp.swift; sourceTree = "<group>"; };
+		820B880526B8E47D0070A134 /* DeferredApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferredApp.swift; sourceTree = "<group>"; };
 		820B880626B8E47D0070A134 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		820B880726B8E47E0070A134 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		820B880C26B8E47E0070A134 /* Deferred.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deferred.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,7 +175,7 @@
 		820B880426B8E47D0070A134 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				820B880526B8E47D0070A134 /* ShadowsApp.swift */,
+				820B880526B8E47D0070A134 /* DeferredApp.swift */,
 				824A97A6277453A500DA096F /* Game */,
 				82B8FAC0277984B200DDACCC /* Render Passes */,
 				824A97A7277453AC00DA096F /* Input */,
@@ -493,7 +493,7 @@
 				82EDE5E626CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEE2738DE15000E88B4 /* GameScene.swift in Sources */,
 				82D9AD87273902D9003E025A /* Movement.swift in Sources */,
-				820B881326B8E47E0070A134 /* ShadowsApp.swift in Sources */,
+				820B881326B8E47E0070A134 /* DeferredApp.swift in Sources */,
 				824A97AC2774601B00DA096F /* PBR.metal in Sources */,
 				82D9AD8A27390D8C003E025A /* PlayerCamera.swift in Sources */,
 			);
@@ -533,7 +533,7 @@
 				82EDE5E726CCC4BB00DE47E4 /* TextureController.swift in Sources */,
 				827DDAEF2738DE15000E88B4 /* GameScene.swift in Sources */,
 				82D9AD88273902D9003E025A /* Movement.swift in Sources */,
-				820B881426B8E47E0070A134 /* ShadowsApp.swift in Sources */,
+				820B881426B8E47E0070A134 /* DeferredApp.swift in Sources */,
 				824A97AB2774601A00DA096F /* PBR.metal in Sources */,
 				82D9AD8B27390D8C003E025A /* PlayerCamera.swift in Sources */,
 			);

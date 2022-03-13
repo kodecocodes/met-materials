@@ -36,10 +36,10 @@ using namespace metal;
 #import "Lighting.h"
 
 float3 calculateSun(
-                    Light light,
-                    float3 normal,
-                    Params params,
-                    Material material)
+  Light light,
+  float3 normal,
+  Params params,
+  Material material)
 {
   float3 diffuseColor = 0;
   float3 specularColor = 0;

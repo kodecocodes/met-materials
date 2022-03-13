@@ -33,11 +33,11 @@
 import SwiftUI
 
 @main
-struct ShadowsApp: App {
+struct DeferredApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .navigationTitle("Shadows")
+        .navigationTitle("Deferred")
     }
   }
 }
