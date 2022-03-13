@@ -42,7 +42,7 @@ let view = MTKView(frame: frame, device: device)
 view.clearColor = MTLClearColor(red: 1, green: 1, blue: 0.8, alpha: 1)
 
 let allocator = MTKMeshBufferAllocator(device: device)
-let mdlMesh = MDLMesh(sphereWithExtent: [0.75, 0.75, 0.75],
+let mdlMesh = MDLMesh(sphereWithExtent: [0.2, 0.75, 0.2],
                       segments: [100, 100],
                       inwardNormals: false,
                       geometryType: .triangles,
@@ -66,7 +66,7 @@ vertex float4 vertex_main(const VertexIn vertex_in [[stage_in]]) {
 }
 
 fragment float4 fragment_main() {
-  return float4(1, 0, 0, 1);
+  return float4(0, 0.4, 0.21, 1);
 }
 """
 
