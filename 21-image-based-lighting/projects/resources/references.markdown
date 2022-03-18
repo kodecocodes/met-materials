@@ -43,8 +43,8 @@ In your project, create a cube texture in the asset catalog, and drag the six im
 Epic developed an approachable rendering system adapted from Disney's physically based shading algorithms: 
 
 * Video (bad quality): [https://www.youtube.com/watch?v=fJz0GgarVTo](https://www.youtube.com/watch?v=fJz0GgarVTo)
-* Slides: [http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf](http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf)
-* Paper: [http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf](http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf). 
+* Slides: [Real Shading in Unreal Engine 4 by Brian Karis, Epic Games](https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf)
+* Paper: [Real Shading in Unreal Engine 4 by Brian Karis, Epic Games](https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf)
 
 This is now widely adopted, and is explained well at:
 
@@ -76,7 +76,7 @@ I've included a lot of references here, because although SH are easy to use, the
 
 [Spherical Harmonics for Dummies](https://math.stackexchange.com/questions/24671/spherical-harmonics-for-dummies)
 
-[Spherical Harmonics by Volker Schönefeld](http://limbicsoft.com/volker/prosem_paper.pdf)
+[Spherical Harmonics by Volker Schönefeld](https://bit.ly/3D5U54R)
 
 ## Further reading
 
