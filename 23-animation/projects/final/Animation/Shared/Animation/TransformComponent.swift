@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/ Copyright (c) ___YEAR___ Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +28,43 @@
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import ModelIO
+
+struct TransformComponent {
+  let keyTransforms: [float4x4]
+  let duration: Float
+  var currentTransform: float4x4 = .identity
+
+  init(
+    transform: MDLTransformComponent,
+    object: MDLObject,
+    startTime: TimeInterval,
+    endTime: TimeInterval
+  ) {
+    duration = Float(endTime - startTime)
+    let timeStride = stride(
+      from: startTime,
+      to: endTime,
+      by: 1 / TimeInterval(GameController.fps))
+    keyTransforms = Array(timeStride).map { time in
+      MDLTransform.globalTransform(
+        with: object,
+        atTime: time)
+    }
+  }
+
+  mutating func getCurrentTransform(at time: Float) {
+    guard duration > 0 else {
+      currentTransform = .identity
+      return
+    }
+    let frame = Int(fmod(time, duration) * Float(GameController.fps))
+    if frame < keyTransforms.count {
+      currentTransform = keyTransforms[frame]
+    } else {
+      currentTransform = keyTransforms.last ?? .identity
+    }
+  }
+}
