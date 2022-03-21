@@ -49,10 +49,12 @@ float2 distToScene(Ray r) {
   float dts = distToSphere(r, s);
   float object = (dtp > dts) ? SphereObj : PlaneObj;
   if (object == SphereObj) {
+    // 1
     float3 pos = r.origin;
     pos += float3(sin(pos.y * 5.0),
                   sin(pos.z * 5.0),
                   sin(pos.x * 5.0)) * 0.05;
+    // 2
     Ray ray = Ray{pos, r.dir};
     dts = distToSphere(ray, s);
   }
