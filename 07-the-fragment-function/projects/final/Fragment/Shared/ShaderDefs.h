@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+#ifndef ShaderDefs_h
+#define ShaderDefs_h
+
 #include <metal_stdlib>
 using namespace metal;
 
@@ -37,3 +40,5 @@ struct VertexOut {
   float4 position [[position]];
   float3 normal;
 };
+
+#endif /* ShaderDefs_h */

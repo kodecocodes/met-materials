@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2022 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ struct ContentView: View {
           Text("Train").tag(RenderChoice.train)
           Text("Quad").tag(RenderChoice.quad)
       }
-        .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(SegmentedPickerStyle())
     }
     .padding()
   }
