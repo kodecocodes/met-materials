@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		822994C12751EAF600D30885 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822994C02751EAF600D30885 /* Transform.swift */; };
-		822994C22751EAF600D30885 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822994C02751EAF600D30885 /* Transform.swift */; };
 		823D8B1C26B12E8600D2A25A /* SpacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823D8B0E26B12E8500D2A25A /* SpacesApp.swift */; };
 		823D8B1D26B12E8600D2A25A /* SpacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823D8B0E26B12E8500D2A25A /* SpacesApp.swift */; };
 		823D8B1E26B12E8600D2A25A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823D8B0F26B12E8500D2A25A /* ContentView.swift */; };
@@ -29,11 +27,10 @@
 		823D8B3C26B12F7A00D2A25A /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823D8B3A26B12F7A00D2A25A /* MathLibrary.swift */; };
 		823D8B3F26B1308400D2A25A /* train.usd in Resources */ = {isa = PBXBuildFile; fileRef = 823D8B3E26B1308400D2A25A /* train.usd */; };
 		823D8B4026B1308400D2A25A /* train.usd in Resources */ = {isa = PBXBuildFile; fileRef = 823D8B3E26B1308400D2A25A /* train.usd */; };
+		825D702627BE29CC00B689D3 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825D702527BE29CC00B689D3 /* Transform.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		822994BF2751E7C800D30885 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		822994C02751EAF600D30885 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		823D8B0E26B12E8500D2A25A /* SpacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacesApp.swift; sourceTree = "<group>"; };
 		823D8B0F26B12E8500D2A25A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		823D8B1026B12E8600D2A25A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -46,6 +43,8 @@
 		823D8B3726B12F2C00D2A25A /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		823D8B3A26B12F7A00D2A25A /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		823D8B3E26B1308400D2A25A /* train.usd */ = {isa = PBXFileReference; lastKnownFileType = file; path = train.usd; sourceTree = "<group>"; };
+		825D702427BE282700B689D3 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		825D702527BE29CC00B689D3 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +78,11 @@
 			children = (
 				823D8B0E26B12E8500D2A25A /* SpacesApp.swift */,
 				823D8B2E26B12F1200D2A25A /* Renderer.swift */,
+				825D702527BE29CC00B689D3 /* Transform.swift */,
 				823D8B3126B12F1B00D2A25A /* Model.swift */,
-				822994C02751EAF600D30885 /* Transform.swift */,
 				823D8B3426B12F2300D2A25A /* VertexDescriptor.swift */,
+				825D702427BE282700B689D3 /* Common.h */,
 				823D8B3726B12F2C00D2A25A /* Shaders.metal */,
-				822994BF2751E7C800D30885 /* Common.h */,
 				823D8B4126B1313500D2A25A /* Utility */,
 				823D8B3D26B1307400D2A25A /* Models */,
 				823D8B2D26B12F0700D2A25A /* SwiftUI Views */,
@@ -274,7 +273,7 @@
 				823D8B2F26B12F1200D2A25A /* Renderer.swift in Sources */,
 				823D8B2B26B12EF800D2A25A /* MetalView.swift in Sources */,
 				823D8B1E26B12E8600D2A25A /* ContentView.swift in Sources */,
-				822994C12751EAF600D30885 /* Transform.swift in Sources */,
+				825D702627BE29CC00B689D3 /* Transform.swift in Sources */,
 				823D8B1C26B12E8600D2A25A /* SpacesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,7 +289,6 @@
 				823D8B3026B12F1200D2A25A /* Renderer.swift in Sources */,
 				823D8B2C26B12EF800D2A25A /* MetalView.swift in Sources */,
 				823D8B1F26B12E8600D2A25A /* ContentView.swift in Sources */,
-				822994C22751EAF600D30885 /* Transform.swift in Sources */,
 				823D8B1D26B12E8600D2A25A /* SpacesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
