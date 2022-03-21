@@ -61,9 +61,9 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
   float2 uv = float2(gid) / resolution;
   uv = uv * 2.0 - 1.0;
   float tiles = 4.0;
-  
+
   uv *= tiles;
   float3 clouds = float3(fbm(uv));
-  
+
   output.write(float4(clouds, 1.0), gid);
 }

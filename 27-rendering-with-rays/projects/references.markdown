@@ -1,5 +1,7 @@
 # Chapter 18 Further Reading
 
+[Peter Shirley's Ray Tracing in One Weekend Book Series](https://raytracing.github.io)
+
 [Tutorial of Ray Casting, Ray Tracing, Path Tracing and Ray Marching](http://blog.ruofeidu.com/tutorial-of-ray-casting-ray-tracing-and-ray-marching/)
 
 [modeling with distance functions](http://iquilezles.org/www/articles/distfunctions/distfunctions.htm)

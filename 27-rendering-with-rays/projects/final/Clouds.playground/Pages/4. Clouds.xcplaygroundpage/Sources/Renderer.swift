@@ -17,10 +17,8 @@ public class Renderer: NSObject, MTKViewDelegate {
     device = MTLCreateSystemDefaultDevice()
     queue = device!.makeCommandQueue()
     do {
-      guard let path = Bundle.main.path(forResource: "Shaders", ofType: "metal") else { fatalError() }
-      let input = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
-      let library = try device.makeLibrary(source: input, options: nil)
-      guard let kernel = library.makeFunction(name: "compute") else { fatalError() }
+      let library = device.makeDefaultLibrary()
+      guard let kernel = library?.makeFunction(name: "compute") else { fatalError() }
       pipelineState = try device.makeComputePipelineState(function: kernel)
     } catch {
       print(error)
