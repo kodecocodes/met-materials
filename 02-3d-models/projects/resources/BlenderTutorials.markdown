@@ -1,5 +1,5 @@
 #Blender Tutorial Links
-© Ray Wenderlich 2021
+© Ray Wenderlich 2022
 
 When Blender 2.8 was released in 2019, it was a significant upgrade from Blender 2.79. Tutorials made for Blender 2.8 and upwards are easy to follow in Blender 2.9+.
 
