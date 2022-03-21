@@ -8,10 +8,14 @@ struct Rectangle {
 };
 
 float distanceToRectangle(float2 point, Rectangle rectangle) {
-  float2 distances = abs(point - rectangle.center) - rectangle.size / 2;
+  // 1
+  float2 distances =
+      abs(point - rectangle.center) - rectangle.size / 2;
   return
+    // 2
     all(sign(distances) > 0)
     ? length(distances)
+    // 3
     : max(distances.x, distances.y);
 }
 
@@ -52,7 +56,8 @@ kernel void compute(texture2d<float, access::write> output [[texture(0)]],
   uv = uv * 2.0 - 1.0;
   float d2scene = distanceToScene(uv);
   bool inside = d2scene < 0.0;
-  float4 color = inside ? float4(0.8,0.5,0.5,1.0) : float4(0.9,0.9,0.8,1.0);
+  float4 color = inside ? float4(0.8,0.5,0.5,1.0) :
+    float4(0.9,0.9,0.8,1.0);
   float2 lightPos = 2.8 * float2(sin(time), cos(time));
   float dist2light = length(lightPos - uv);
   color *= max(0.3, 2.0 - dist2light);
