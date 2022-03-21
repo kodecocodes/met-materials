@@ -39,7 +39,7 @@ struct RadioButton: View {
   @State var checked: Int = 0
   var body: some View {
     HStack {
-      ForEach(0..<options.count) { index in
+      ForEach(0..<options.count, id: \.self) { index in
         HStack {
           Text(options[index])
         index == checked ?
