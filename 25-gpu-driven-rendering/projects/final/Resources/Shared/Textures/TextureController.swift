@@ -48,7 +48,7 @@ enum TextureController {
     }
     return nil
   }
-  
+
   static func buildHeap() -> MTLHeap? {
     let heapDescriptor = MTLHeapDescriptor()
 
