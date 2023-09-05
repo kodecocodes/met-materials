@@ -1,35 +1,3 @@
-/// Copyright (c) 2022 Razeware LLC
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in
-/// all copies or substantial portions of the Software.
-///
-/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
-/// distribute, sublicense, create a derivative work, and/or sell copies of the
-/// Software in any work that is designed, intended, or marketed for pedagogical or
-/// instructional purposes related to programming, coding, application development,
-/// or information technology.  Permission for such use, copying, modification,
-/// merger, publication, distribution, sublicensing, creation of derivative works,
-/// or sale is expressly withheld.
-///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.
-
 import PlaygroundSupport
 import MetalKit
 
@@ -39,14 +7,16 @@ guard let device = MTLCreateSystemDefaultDevice() else {
 
 let frame = CGRect(x: 0, y: 0, width: 600, height: 600)
 let view = MTKView(frame: frame, device: device)
-view.clearColor = MTLClearColor(red: 1, green: 1, blue: 0.8, alpha: 1)
+view.clearColor = MTLClearColor(red: 1,
+  green: 1, blue: 0.8, alpha: 1)
 
 let allocator = MTKMeshBufferAllocator(device: device)
-let mdlMesh = MDLMesh(sphereWithExtent: [0.2, 0.75, 0.2],
-                      segments: [100, 100],
-                      inwardNormals: false,
-                      geometryType: .triangles,
-                      allocator: allocator)
+let mdlMesh = MDLMesh(
+  sphereWithExtent: [0.2, 0.75, 0.2],
+  segments: [100, 100],
+  inwardNormals: false,
+  geometryType: .triangles,
+  allocator: allocator)
 let mesh = try MTKMesh(mesh: mdlMesh, device: device)
 
 guard let commandQueue = device.makeCommandQueue() else {
@@ -85,11 +55,8 @@ pipelineDescriptor.vertexDescriptor =
 let pipelineState =
   try device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
-// 1
 guard let commandBuffer = commandQueue.makeCommandBuffer(),
-// 2
   let renderPassDescriptor = view.currentRenderPassDescriptor,
-// 3
   let renderEncoder = commandBuffer.makeRenderCommandEncoder(
     descriptor:  renderPassDescriptor)
 else { fatalError() }
