@@ -1,28 +1,28 @@
 import PlaygroundSupport
 import MetalKit
 
-
 guard let device = MTLCreateSystemDefaultDevice() else {
- fatalError("GPU is not supported")
+  fatalError("GPU is not supported")
 }
 
 let frame = CGRect(x: 0, y: 0, width: 600, height: 600)
 let view = MTKView(frame: frame, device: device)
-view.clearColor =
-  MTLClearColor(red: 1, green: 1, blue: 0.8, alpha: 1)
-view.isPaused = true
-view.enableSetNeedsDisplay = false
+view.clearColor = MTLClearColor(red: 1,
+  green: 1, blue: 0.8, alpha: 1)
 
 let allocator = MTKMeshBufferAllocator(device: device)
+
 guard let assetURL = Bundle.main.url(
   forResource: "mushroom",
-  withExtension: "obj") else {
+  withExtension: "usdz") else {
   fatalError()
 }
+
 let vertexDescriptor = MTLVertexDescriptor()
 vertexDescriptor.attributes[0].format = .float3
 vertexDescriptor.attributes[0].offset = 0
 vertexDescriptor.attributes[0].bufferIndex = 0
+
 vertexDescriptor.layouts[0].stride =
   MemoryLayout<SIMD3<Float>>.stride
 let meshDescriptor =
@@ -34,6 +34,7 @@ let asset = MDLAsset(
   url: assetURL,
   vertexDescriptor: meshDescriptor,
   bufferAllocator: allocator)
+
 let mdlMesh =
   asset.childObjects(of: MDLMesh.self).first as! MDLMesh
 
@@ -51,9 +52,10 @@ struct VertexIn {
   float4 position [[attribute(0)]];
 };
 
-vertex float4
-  vertex_main(const VertexIn vertex_in [[stage_in]]) {
-  return vertex_in.position;
+vertex float4 vertex_main(const VertexIn vertex_in [[stage_in]]) {
+  float4 position = vertex_in.position;
+  position.y -= 1.0;
+  return position;
 }
 
 fragment float4 fragment_main() {
@@ -61,11 +63,9 @@ fragment float4 fragment_main() {
 }
 """
 
-let library =
-  try device.makeLibrary(source: shader, options: nil)
+let library = try device.makeLibrary(source: shader, options: nil)
 let vertexFunction = library.makeFunction(name: "vertex_main")
-let fragmentFunction =
-  library.makeFunction(name: "fragment_main")
+let fragmentFunction = library.makeFunction(name: "fragment_main")
 
 let pipelineDescriptor = MTLRenderPipelineDescriptor()
 pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -73,25 +73,21 @@ pipelineDescriptor.vertexFunction = vertexFunction
 pipelineDescriptor.fragmentFunction = fragmentFunction
 
 pipelineDescriptor.vertexDescriptor =
-    MTKMetalVertexDescriptorFromModelIO(mesh.vertexDescriptor)
+  MTKMetalVertexDescriptorFromModelIO(mesh.vertexDescriptor)
 
 let pipelineState =
-  try device.makeRenderPipelineState(
-    descriptor: pipelineDescriptor)
+  try device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
 guard let commandBuffer = commandQueue.makeCommandBuffer(),
   let renderPassDescriptor = view.currentRenderPassDescriptor,
-  let renderEncoder =
-    commandBuffer.makeRenderCommandEncoder(
+  let renderEncoder = commandBuffer.makeRenderCommandEncoder(
     descriptor:  renderPassDescriptor)
 else { fatalError() }
 
 renderEncoder.setRenderPipelineState(pipelineState)
 
 renderEncoder.setVertexBuffer(
-  mesh.vertexBuffers[0].buffer,
-  offset: 0,
-  index: 0)
+  mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
 renderEncoder.setTriangleFillMode(.lines)
 
 for submesh in mesh.submeshes {
@@ -105,7 +101,9 @@ for submesh in mesh.submeshes {
 }
 
 renderEncoder.endEncoding()
-guard let drawable = view.currentDrawable else { fatalError() }
+guard let drawable = view.currentDrawable else {
+  fatalError()
+}
 commandBuffer.present(drawable)
 commandBuffer.commit()
 
