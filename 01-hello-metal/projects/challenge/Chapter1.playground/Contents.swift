@@ -7,8 +7,8 @@ guard let device = MTLCreateSystemDefaultDevice() else {
 
 let frame = CGRect(x: 0, y: 0, width: 600, height: 600)
 let view = MTKView(frame: frame, device: device)
-view.clearColor = MTLClearColor(red: 1,
-  green: 1, blue: 0.8, alpha: 1)
+view.clearColor = MTLClearColor(
+  red: 1, green: 1, blue: 0.8, alpha: 1)
 
 let allocator = MTKMeshBufferAllocator(device: device)
 let mdlMesh = MDLMesh(
