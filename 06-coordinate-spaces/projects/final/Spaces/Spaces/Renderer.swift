@@ -87,6 +87,9 @@ class Renderer: NSObject {
       blue: 0.9,
       alpha: 1.0)
     metalView.delegate = self
+    mtkView(
+      metalView,
+      drawableSizeWillChange: metalView.drawableSize)
   }
 }
 
