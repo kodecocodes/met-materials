@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,13 @@ import MetalKit
 
 struct MetalView: View {
   @State private var metalView = MTKView()
+  @State private var renderer: Renderer?
 
   var body: some View {
     MetalViewRepresentable(metalView: $metalView)
+      .onAppear {
+        renderer = Renderer(metalView: metalView)
+      }
   }
 }
 
@@ -50,14 +54,14 @@ typealias ViewRepresentable = UIViewRepresentable
 struct MetalViewRepresentable: ViewRepresentable {
   @Binding var metalView: MTKView
 
-  #if os(macOS)
+#if os(macOS)
   func makeNSView(context: Context) -> some NSView {
     metalView
   }
   func updateNSView(_ uiView: NSViewType, context: Context) {
     updateMetalView()
   }
-  #elseif os(iOS)
+#elseif os(iOS)
   func makeUIView(context: Context) -> MTKView {
     metalView
   }
@@ -65,7 +69,7 @@ struct MetalViewRepresentable: ViewRepresentable {
   func updateUIView(_ uiView: MTKView, context: Context) {
     updateMetalView()
   }
-  #endif
+#endif
 
   func updateMetalView() {
   }
