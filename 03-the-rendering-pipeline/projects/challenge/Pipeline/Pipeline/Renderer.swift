@@ -50,8 +50,8 @@ class Renderer: NSObject {
       let commandQueue = device.makeCommandQueue() else {
         fatalError("GPU not available")
     }
-    Renderer.device = device
-    Renderer.commandQueue = commandQueue
+    Self.device = device
+    Self.commandQueue = commandQueue
     metalView.device = device
 
     // load the train model
@@ -89,7 +89,7 @@ class Renderer: NSObject {
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
-    Renderer.library = library
+    Self.library = library
     let vertexFunction = library?.makeFunction(name: "vertex_main")
     let fragmentFunction =
       library?.makeFunction(name: "fragment_main")
@@ -128,7 +128,7 @@ extension Renderer: MTKViewDelegate {
 
   func draw(in view: MTKView) {
     guard
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer(),
+      let commandBuffer = Self.commandQueue.makeCommandBuffer(),
       let descriptor = view.currentRenderPassDescriptor,
       let renderEncoder =
         commandBuffer.makeRenderCommandEncoder(

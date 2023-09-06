@@ -32,6 +32,8 @@
 
 import MetalKit
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
@@ -39,6 +41,12 @@ class Renderer: NSObject {
   var mesh: MTKMesh!
   var vertexBuffer: MTLBuffer!
   var pipelineState: MTLRenderPipelineState!
+
+  lazy var quad: Quad = {
+    Quad(device: Self.device, scale: 0.8)
+  }()
+
+  var timer: Float = 0
 
   init(metalView: MTKView) {
     guard
@@ -49,22 +57,6 @@ class Renderer: NSObject {
     Self.device = device
     Self.commandQueue = commandQueue
     metalView.device = device
-
-    // create the mesh
-    let allocator = MTKMeshBufferAllocator(device: device)
-    let size: Float = 0.8
-    let mdlMesh = MDLMesh(
-      boxWithExtent: [size, size, size],
-      segments: [1, 1, 1],
-      inwardNormals: false,
-      geometryType: .triangles,
-      allocator: allocator)
-    do {
-      mesh = try MTKMesh(mesh: mdlMesh, device: device)
-    } catch let error {
-      print(error.localizedDescription)
-    }
-    vertexBuffer = mesh.vertexBuffers[0].buffer
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
@@ -80,7 +72,7 @@ class Renderer: NSObject {
     pipelineDescriptor.colorAttachments[0].pixelFormat =
       metalView.colorPixelFormat
     pipelineDescriptor.vertexDescriptor =
-      MTKMetalVertexDescriptorFromModelIO(mdlMesh.vertexDescriptor)
+      MTLVertexDescriptor.defaultLayout
     do {
       pipelineState =
         try device.makeRenderPipelineState(
@@ -114,16 +106,33 @@ extension Renderer: MTKViewDelegate {
           descriptor: descriptor) else {
         return
     }
+
+    timer += 0.005
+    var currentTime = sin(timer)
+    renderEncoder.setVertexBytes(
+      &currentTime,
+      length: MemoryLayout<Float>.stride,
+      index: 11)
+
     renderEncoder.setRenderPipelineState(pipelineState)
-    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-    for submesh in mesh.submeshes {
-      renderEncoder.drawIndexedPrimitives(
-        type: .triangle,
-        indexCount: submesh.indexCount,
-        indexType: submesh.indexType,
-        indexBuffer: submesh.indexBuffer.buffer,
-        indexBufferOffset: submesh.indexBuffer.offset)
-    }
+
+    // do drawing here
+    renderEncoder.setVertexBuffer(
+      quad.vertexBuffer,
+      offset: 0,
+      index: 0)
+
+    renderEncoder.setVertexBuffer(
+      quad.colorBuffer,
+      offset: 0,
+      index: 1)
+
+    renderEncoder.drawIndexedPrimitives(
+      type: .point,
+      indexCount: quad.indices.count,
+      indexType: .uint16,
+      indexBuffer: quad.indexBuffer,
+      indexBufferOffset: 0)
 
     renderEncoder.endEncoding()
     guard let drawable = view.currentDrawable else {
@@ -133,3 +142,5 @@ extension Renderer: MTKViewDelegate {
     commandBuffer.commit()
   }
 }
+
+// swiftlint:enable implicitly_unwrapped_optional

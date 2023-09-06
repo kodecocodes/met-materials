@@ -32,6 +32,8 @@
 
 import MetalKit
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
@@ -50,22 +52,6 @@ class Renderer: NSObject {
     Self.commandQueue = commandQueue
     metalView.device = device
 
-    // create the mesh
-    let allocator = MTKMeshBufferAllocator(device: device)
-    let size: Float = 0.8
-    let mdlMesh = MDLMesh(
-      boxWithExtent: [size, size, size],
-      segments: [1, 1, 1],
-      inwardNormals: false,
-      geometryType: .triangles,
-      allocator: allocator)
-    do {
-      mesh = try MTKMesh(mesh: mdlMesh, device: device)
-    } catch let error {
-      print(error.localizedDescription)
-    }
-    vertexBuffer = mesh.vertexBuffers[0].buffer
-
     // create the shader function library
     let library = device.makeDefaultLibrary()
     Self.library = library
@@ -79,8 +65,6 @@ class Renderer: NSObject {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat =
       metalView.colorPixelFormat
-    pipelineDescriptor.vertexDescriptor =
-      MTKMetalVertexDescriptorFromModelIO(mdlMesh.vertexDescriptor)
     do {
       pipelineState =
         try device.makeRenderPipelineState(
@@ -115,15 +99,8 @@ extension Renderer: MTKViewDelegate {
         return
     }
     renderEncoder.setRenderPipelineState(pipelineState)
-    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-    for submesh in mesh.submeshes {
-      renderEncoder.drawIndexedPrimitives(
-        type: .triangle,
-        indexCount: submesh.indexCount,
-        indexType: submesh.indexType,
-        indexBuffer: submesh.indexBuffer.buffer,
-        indexBufferOffset: submesh.indexBuffer.offset)
-    }
+
+    // do drawing here
 
     renderEncoder.endEncoding()
     guard let drawable = view.currentDrawable else {
@@ -133,3 +110,5 @@ extension Renderer: MTKViewDelegate {
     commandBuffer.commit()
   }
 }
+
+// swiftlint:enable implicitly_unwrapped_optional
