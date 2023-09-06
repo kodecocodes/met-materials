@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1320"
+   LastUpgradeVersion = "1500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "820EACE3267C1D8600570060"
-               BuildableName = "Pipeline.app"
-               BlueprintName = "Pipeline (macOS)"
-               ReferencedContainer = "container:Pipeline.xcodeproj">
+               BlueprintIdentifier = "CD30C91F251474DC0049DB93"
+               BuildableName = "HIITFit.app"
+               BlueprintName = "HIITFit"
+               ReferencedContainer = "container:HIITFit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -39,16 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      enableGPUFrameCaptureMode = "1"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "820EACE3267C1D8600570060"
-            BuildableName = "Pipeline.app"
-            BlueprintName = "Pipeline (macOS)"
-            ReferencedContainer = "container:Pipeline.xcodeproj">
+            BlueprintIdentifier = "CD30C91F251474DC0049DB93"
+            BuildableName = "HIITFit.app"
+            BlueprintName = "HIITFit"
+            ReferencedContainer = "container:HIITFit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "820EACE3267C1D8600570060"
-            BuildableName = "Pipeline.app"
-            BlueprintName = "Pipeline (macOS)"
-            ReferencedContainer = "container:Pipeline.xcodeproj">
+            BlueprintIdentifier = "CD30C91F251474DC0049DB93"
+            BuildableName = "HIITFit.app"
+            BlueprintName = "HIITFit"
+            ReferencedContainer = "container:HIITFit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

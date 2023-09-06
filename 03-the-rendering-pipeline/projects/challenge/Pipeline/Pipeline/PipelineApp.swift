@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,19 +30,13 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import SwiftUI
 
-struct VertexIn {
-  float4 position [[attribute(0)]];
-};
-
-vertex float4 vertex_main(const VertexIn vertexIn [[stage_in]]) {
-  float4 position = vertexIn.position;
-  position.y -= 1.0;
-  return position;
-}
-
-fragment float4 fragment_main() {
-  return float4(0, 0, 1, 1);
+@main
+struct PipelineApp: App {
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+    }
+  }
 }
