@@ -14,8 +14,8 @@
 		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
 		824770FA2AA804E20095AB72 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 824770F92AA804E20095AB72 /* Shaders.metal */; };
 		824771002AA80C930095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FF2AA80C930095AB72 /* MetalView.swift */; };
-		824771022AA812570095AB72 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824771012AA812570095AB72 /* Quad.swift */; };
-		824771042AA815EA0095AB72 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824771032AA815EA0095AB72 /* VertexDescriptor.swift */; };
+		824A1AF02AA83021009BCA63 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824A1AEF2AA83021009BCA63 /* Quad.swift */; };
+		824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,8 @@
 		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		824770F92AA804E20095AB72 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		824770FF2AA80C930095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
-		824771012AA812570095AB72 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
-		824771032AA815EA0095AB72 /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
+		824A1AEF2AA83021009BCA63 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
+		824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +64,8 @@
 			children = (
 				824770E32AA7FA0B0095AB72 /* VertexApp.swift */,
 				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
-				824771012AA812570095AB72 /* Quad.swift */,
-				824771032AA815EA0095AB72 /* VertexDescriptor.swift */,
+				824A1AEF2AA83021009BCA63 /* Quad.swift */,
+				824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */,
 				824770F92AA804E20095AB72 /* Shaders.metal */,
 				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
 				824770FF2AA80C930095AB72 /* MetalView.swift */,
@@ -178,8 +178,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824771042AA815EA0095AB72 /* VertexDescriptor.swift in Sources */,
-				824771022AA812570095AB72 /* Quad.swift in Sources */,
+				824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */,
+				824A1AF02AA83021009BCA63 /* Quad.swift in Sources */,
 				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				824771002AA80C930095AB72 /* MetalView.swift in Sources */,

@@ -47,7 +47,6 @@ extension MTLVertexDescriptor {
     vertexDescriptor.attributes[1].bufferIndex = 1
     vertexDescriptor.layouts[1].stride =
       MemoryLayout<simd_float3>.stride
-
     return vertexDescriptor
   }
 }

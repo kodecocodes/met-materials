@@ -31,24 +31,30 @@
 /// THE SOFTWARE.
 
 import MetalKit
+// swiftlint:disable identifier_name
+// swiftlint:disable colon
 
-// swiftlint:disable comma
+struct Vertex {
+  var x: Float
+  var y: Float
+  var z: Float
+}
 
 struct Quad {
-  var oldVertices: [Float] = [
-    -1,  1,  0,    // triangle 1
-     1, -1,  0,
-    -1, -1,  0,
-    -1,  1,  0,    // triangle 2
-     1,  1,  0,
-     1, -1,  0
+  var oldVertices: [Vertex] = [
+    Vertex(x: -1, y:  1, z: 0),    // triangle 1
+    Vertex(x:  1, y: -1, z: 0),
+    Vertex(x: -1, y: -1, z: 0),
+    Vertex(x: -1, y:  1, z: 0),    // triangle 2
+    Vertex(x:  1, y:  1, z: 0),
+    Vertex(x:  1, y: -1, z: 0)
   ]
 
-  var vertices: [Float] = [
-    -1,  1,  0,
-     1,  1,  0,
-    -1, -1,  0,
-     1, -1,  0
+  var vertices: [Vertex] = [
+    Vertex(x: -1, y:  1, z: 0),
+    Vertex(x:  1, y:  1, z: 0),
+    Vertex(x: -1, y: -1, z: 0),
+    Vertex(x:  1, y: -1, z: 0)
   ]
 
   var indices: [UInt16] = [
@@ -69,11 +75,11 @@ struct Quad {
 
   init(device: MTLDevice, scale: Float = 1) {
     vertices = vertices.map {
-      $0 * scale
+      Vertex(x: $0.x * scale, y: $0.y * scale, z: $0.z * scale)
     }
     guard let vertexBuffer = device.makeBuffer(
       bytes: &vertices,
-      length: MemoryLayout<Float>.stride * vertices.count,
+      length: MemoryLayout<Vertex>.stride * vertices.count,
       options: []) else {
       fatalError("Unable to create quad vertex buffer")
     }
@@ -97,4 +103,5 @@ struct Quad {
   }
 }
 
-// swiftlint:enable comma
+// swiftlint:enable identifier_name
+// swiftlint:enable colon

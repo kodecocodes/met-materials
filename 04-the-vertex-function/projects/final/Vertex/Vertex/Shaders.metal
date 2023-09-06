@@ -47,10 +47,10 @@ struct VertexOut {
 vertex VertexOut vertex_main(
   VertexIn in [[stage_in]],
   constant float &timer [[buffer(11)]]) {
-  VertexOut out {
-    .position = in.position,
-    .color = in.color,
-    .pointSize = 30
+    VertexOut out {
+      .position = in.position,
+      .color = in.color,
+      .pointSize = 30
     };
   return out;
 }

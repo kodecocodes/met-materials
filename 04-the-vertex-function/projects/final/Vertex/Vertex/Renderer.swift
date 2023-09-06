@@ -106,7 +106,6 @@ extension Renderer: MTKViewDelegate {
           descriptor: descriptor) else {
         return
     }
-
     timer += 0.005
     var currentTime = sin(timer)
     renderEncoder.setVertexBytes(
