@@ -1,15 +1,15 @@
-/// Copyright (c) 2022 Razeware LLC
-///
+///// Copyright (c) 2023 Kodeco Inc.
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -33,7 +33,6 @@
 import MetalKit
 
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable comma
 // swiftlint:disable function_body_length
 
 class Renderer: NSObject {
@@ -43,8 +42,10 @@ class Renderer: NSObject {
   var pipelineState: MTLRenderPipelineState!
 
   lazy var triangle: Triangle = {
-    Triangle(device: Renderer.device)
+    Triangle(device: Self.device)
   }()
+
+  var timer: Float = 0
 
   init(metalView: MTKView) {
     guard
@@ -52,18 +53,18 @@ class Renderer: NSObject {
       let commandQueue = device.makeCommandQueue() else {
         fatalError("GPU not available")
     }
-    Renderer.device = device
-    Renderer.commandQueue = commandQueue
+    Self.device = device
+    Self.commandQueue = commandQueue
     metalView.device = device
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
-    Renderer.library = library
+    Self.library = library
     let vertexFunction = library?.makeFunction(name: "vertex_main")
     let fragmentFunction =
       library?.makeFunction(name: "fragment_main")
 
-    // create the pipeline state
+    // create the pipeline state object
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -92,11 +93,12 @@ extension Renderer: MTKViewDelegate {
   func mtkView(
     _ view: MTKView,
     drawableSizeWillChange size: CGSize
-  ) { }
+  ) {
+  }
 
   func draw(in view: MTKView) {
     guard
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer(),
+      let commandBuffer = Self.commandQueue.makeCommandBuffer(),
       let descriptor = view.currentRenderPassDescriptor,
       let renderEncoder =
         commandBuffer.makeRenderCommandEncoder(
@@ -116,15 +118,10 @@ extension Renderer: MTKViewDelegate {
       &color,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
-    var translation = matrix_float4x4()
-    translation.columns.0 = [1, 0, 0, 0]
-    translation.columns.1 = [0, 1, 0, 0]
-    translation.columns.2 = [0, 0, 1, 0]
-    translation.columns.3 = [0, 0, 0, 1]
-    var matrix = translation
+    var position = simd_float3(0, 0, 0)
     renderEncoder.setVertexBytes(
-      &matrix,
-      length: MemoryLayout<matrix_float4x4>.stride,
+      &position,
+      length: MemoryLayout<SIMD3<Float>>.stride,
       index: 11)
     renderEncoder.drawIndexedPrimitives(
       type: .triangle,
@@ -139,38 +136,10 @@ extension Renderer: MTKViewDelegate {
       &color,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
-    let position = simd_float3(0.3, -0.4, 0)
-    translation.columns.3.x = position.x
-    translation.columns.3.y = position.y
-    translation.columns.3.z = position.z
-
-    // scale transform
-    let scaleX: Float = 1.2
-    let scaleY: Float = 0.5
-    let scaleMatrix = float4x4(
-      [scaleX, 0,   0,   0],
-      [0, scaleY,   0,   0],
-      [0,      0,   1,   0],
-      [0,      0,   0,   1])
-    _ = scaleMatrix  // remove warning for unused variable
-
-    // rotation transform
-    let angle = Float.pi / 2.0
-    let rotationMatrix = float4x4(
-      [cos(angle), -sin(angle), 0,    0],
-      [sin(angle),  cos(angle), 0,    0],
-      [0,           0,          1,    0],
-      [0,           0,          0,    1])
-
-    translation.columns.3.x = triangle.vertices[6]
-    translation.columns.3.y = triangle.vertices[7]
-    translation.columns.3.z = triangle.vertices[8]
-
-    matrix = translation * rotationMatrix * translation.inverse
-
+    position = simd_float3(0.3, -0.4, 0)
     renderEncoder.setVertexBytes(
-      &matrix,
-      length: MemoryLayout<matrix_float4x4>.stride,
+      &position,
+      length: MemoryLayout<SIMD3<Float>>.stride,
       index: 11)
     renderEncoder.drawIndexedPrimitives(
       type: .triangle,
@@ -187,3 +156,6 @@ extension Renderer: MTKViewDelegate {
     commandBuffer.commit()
   }
 }
+
+// swiftlint:enable implicitly_unwrapped_optional
+// swiftlint:enable function_body_length

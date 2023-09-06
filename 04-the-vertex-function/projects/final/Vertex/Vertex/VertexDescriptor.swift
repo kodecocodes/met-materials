@@ -39,7 +39,7 @@ extension MTLVertexDescriptor {
     vertexDescriptor.attributes[0].offset = 0
     vertexDescriptor.attributes[0].bufferIndex = 0
 
-    let stride = MemoryLayout<Float>.stride * 3
+    let stride = MemoryLayout<Vertex>.stride
     vertexDescriptor.layouts[0].stride = stride
 
     vertexDescriptor.attributes[1].format = .float3

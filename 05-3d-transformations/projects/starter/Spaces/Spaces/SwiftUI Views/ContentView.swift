@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ import SwiftUI
 
 let originalColor = Color(red: 0.8, green: 0.8, blue: 0.8)
 let size: CGFloat = 400
+
 struct ContentView: View {
   @State private var showGrid = true
 
@@ -82,39 +83,27 @@ struct Grid: View {
   var body: some View {
     ZStack {
       HStack {
-        ForEach(0..<Int(cellSize)) { _ in
+        ForEach(0..<Int(cellSize), id: \.self) { _ in
           Spacer()
           Divider()
         }
       }
       VStack {
-        ForEach(0..<Int(cellSize)) { _ in
+        ForEach(0..<Int(cellSize), id: \.self) { _ in
           Spacer()
           Divider()
         }
       }
-      HStack {
-        ZStack {
-          Divider()
-          Divider()
-          Divider()
-        }
-      }
-      VStack {
-        ZStack {
-          Divider()
-          Divider()
-          Divider()
-        }
-      }
+      Rectangle()
+        .frame(height: 1)
+        .frame(maxWidth: .infinity)
+      Rectangle()
+        .frame(width: 1)
+        .frame(maxHeight: .infinity)
     }
   }
 }
 
-struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    Group {
-      ContentView()
-    }
-  }
+#Preview {
+  ContentView()
 }

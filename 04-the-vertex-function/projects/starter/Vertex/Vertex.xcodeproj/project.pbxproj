@@ -60,9 +60,9 @@
 			children = (
 				824770E32AA7FA0B0095AB72 /* VertexApp.swift */,
 				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
+				824770F92AA804E20095AB72 /* Shaders.metal */,
 				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
 				824770FF2AA80C930095AB72 /* MetalView.swift */,
-				824770F92AA804E20095AB72 /* Shaders.metal */,
 				824770E72AA7FA0C0095AB72 /* Assets.xcassets */,
 				824770E92AA7FA0C0095AB72 /* Vertex.entitlements */,
 				824770EA2AA7FA0C0095AB72 /* Preview Content */,

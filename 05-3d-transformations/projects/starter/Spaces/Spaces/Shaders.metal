@@ -1,15 +1,15 @@
-/// Copyright (c) 2022 Razeware LLC
-///
+///// Copyright (c) 2023 Kodeco Inc.
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,67 +30,30 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
 
-struct MetalView: View {
-  @State private var renderer: Renderer?
-  @State private var metalView = MTKView()
+struct VertexIn {
+  float4 position [[attribute(0)]];
+};
 
-  var body: some View {
-    VStack {
-      MetalViewRepresentable(
-        renderer: renderer,
-        metalView: $metalView)
-        .onAppear {
-          renderer = Renderer(
-            metalView: metalView)
-        }
-    }
-  }
+struct VertexOut {
+  float4 position [[position]];
+};
+
+vertex VertexOut vertex_main(
+  VertexIn in [[stage_in]],
+  constant float3 &position [[buffer(11)]])
+{
+  float3 translation = in.position.xyz + position;
+  VertexOut out {
+    .position = float4(translation, 1)
+  };
+  return out;
 }
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-typealias MyMetalView = NSView
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-typealias MyMetalView = UIView
-#endif
-
-struct MetalViewRepresentable: ViewRepresentable {
-  let renderer: Renderer?
-  @Binding var metalView: MTKView
-
-  #if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    metalView
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-  #elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    metalView
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-  #endif
-
-  func makeMetalView(_ metalView: MyMetalView) {
-  }
-
-  func updateMetalView() {
-  }
-}
-
-struct MetalView_Previews: PreviewProvider {
-  static var previews: some View {
-    VStack {
-      MetalView()
-      Text("Metal View")
-    }
-  }
+fragment float4 fragment_main(
+  constant float4 &color [[buffer(0)]])
+{
+  return color;
 }

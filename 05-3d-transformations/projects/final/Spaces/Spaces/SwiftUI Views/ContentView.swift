@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,30 +30,80 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import SwiftUI
 
-struct VertexIn {
-  float4 position [[attribute(0)]];
-};
+let originalColor = Color(red: 0.8, green: 0.8, blue: 0.8)
+let size: CGFloat = 400
 
-struct VertexOut {
-  float4 position [[position]];
-};
+struct ContentView: View {
+  @State private var showGrid = true
 
-vertex VertexOut vertex_main(
-  VertexIn in [[stage_in]],
-  constant float3 &position [[buffer(11)]])
-{
-  float3 translation = in.position.xyz + position;
-  VertexOut out {
-    .position = float4(translation, 1)
-  };
-  return out;
+  var body: some View {
+    VStack(alignment: .leading) {
+      ZStack {
+        MetalView()
+          .border(Color.black, width: 2)
+        if showGrid {
+          Grid()
+        }
+      }
+      .frame(width: size, height: size)
+      ZStack(alignment: .top) {
+        Key()
+        Toggle("Show Grid", isOn: $showGrid)
+          .padding(.leading, 250)
+      }
+    }
+    .padding()
+  }
 }
 
-fragment float4 fragment_main(
-  constant float4 &color [[buffer(0)]])
-{
-  return color;
+struct Key: View {
+  var body: some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Rectangle()
+          .foregroundColor(originalColor)
+          .frame(width: 20, height: 20)
+        Text("Original triangle")
+      }
+      HStack {
+        Rectangle()
+          .foregroundColor(.red)
+          .frame(width: 20, height: 20)
+        Text("Transformed triangle")
+      }
+    }
+    .padding(0)
+  }
+}
+
+struct Grid: View {
+  var cellSize: CGFloat = size / 20
+  var body: some View {
+    ZStack {
+      HStack {
+        ForEach(0..<Int(cellSize), id: \.self) { _ in
+          Spacer()
+          Divider()
+        }
+      }
+      VStack {
+        ForEach(0..<Int(cellSize), id: \.self) { _ in
+          Spacer()
+          Divider()
+        }
+      }
+      Rectangle()
+        .frame(height: 1)
+        .frame(maxWidth: .infinity)
+      Rectangle()
+        .frame(width: 1)
+        .frame(maxHeight: .infinity)
+    }
+  }
+}
+
+#Preview {
+  ContentView()
 }

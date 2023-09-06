@@ -7,7 +7,7 @@
 
 ## Further reading
 
-[Apple - Understanding GPU Family 4](https://developer.apple.com/documentation/metal/gpu_features/understanding_gpu_family_4)
+[Tailor Your Apps for Apple GPUs](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering)
 
 [Render Hell 2.0](http://simonschreibt.de/gat/renderhell/)
 

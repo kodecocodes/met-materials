@@ -1,15 +1,15 @@
-/// Copyright (c) 2022 Razeware LLC
-///
+///// Copyright (c) 2023 Kodeco Inc.
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -31,16 +31,50 @@
 /// THE SOFTWARE.
 
 import MetalKit
+// swiftlint:disable identifier_name
+// swiftlint:disable colon
 
-extension MTLVertexDescriptor {
-  static var defaultLayout: MTLVertexDescriptor {
-    let vertexDescriptor = MTLVertexDescriptor()
-    vertexDescriptor.attributes[0].format = .float3
-    vertexDescriptor.attributes[0].offset = 0
-    vertexDescriptor.attributes[0].bufferIndex = 0
+struct Vertex {
+  var x: Float
+  var y: Float
+  var z: Float
+}
 
-    let stride = MemoryLayout<Float>.stride * 3
-    vertexDescriptor.layouts[0].stride = stride
-    return vertexDescriptor
+struct Triangle {
+  var vertices: [Vertex] = [
+    Vertex(x: -0.7, y:  0.8, z: 0),
+    Vertex(x: -0.7, y: -0.5, z: 0),
+    Vertex(x:  0.4, y:  0.1, z: 0)
+  ]
+
+  var indices: [UInt16] = [
+    0, 1, 2
+  ]
+
+  let vertexBuffer: MTLBuffer
+  let indexBuffer: MTLBuffer
+
+  init(device: MTLDevice, scale: Float = 1) {
+    vertices = vertices.map {
+      Vertex(x: $0.x * scale, y: $0.y * scale, z: $0.z * scale)
+    }
+    guard let vertexBuffer = device.makeBuffer(
+      bytes: &vertices,
+      length: MemoryLayout<Vertex>.stride * vertices.count,
+      options: []) else {
+      fatalError("Unable to create vertex buffer")
+    }
+    self.vertexBuffer = vertexBuffer
+
+    guard let indexBuffer = device.makeBuffer(
+      bytes: &indices,
+      length: MemoryLayout<UInt16>.stride * indices.count,
+      options: []) else {
+      fatalError("Unable to create index buffer")
+    }
+    self.indexBuffer = indexBuffer
   }
 }
+
+// swiftlint:enable identifier_name
+// swiftlint:enable colon

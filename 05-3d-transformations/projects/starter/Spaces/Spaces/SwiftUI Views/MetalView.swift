@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,40 +30,56 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import SwiftUI
 import MetalKit
 
-// swiftlint:disable collection_alignment
-// swiftlint:disable comma
-// swiftlint:disable indentation_width
+struct MetalView: View {
+  @State private var metalView = MTKView()
+  @State private var renderer: Renderer?
 
-struct Triangle {
-  var vertices: [Float] = [
-    -0.7,  0.8,  0,
-    -0.7, -0.5,  0,
-     0.4,  0.1,  0
-  ]
+  var body: some View {
+    MetalViewRepresentable(metalView: $metalView)
+      .onAppear {
+        renderer = Renderer(metalView: metalView)
+      }
+  }
+}
 
-  var indices: [UInt16] = [
-    0, 1, 2
-  ]
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
 
-  let vertexBuffer: MTLBuffer
-  let indexBuffer: MTLBuffer
+struct MetalViewRepresentable: ViewRepresentable {
+  @Binding var metalView: MTKView
 
-  init(device: MTLDevice) {
-    guard let vertexBuffer = device.makeBuffer(
-      bytes: &vertices,
-      length: MemoryLayout<Float>.stride * vertices.count,
-      options: []) else {
-      fatalError("Unable to create quad vertex buffer")
+#if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    metalView
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+#elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    metalView
+  }
+
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+#endif
+
+  func updateMetalView() {
+  }
+}
+
+struct MetalView_Previews: PreviewProvider {
+  static var previews: some View {
+    VStack {
+      MetalView()
+      Text("Metal View")
     }
-    self.vertexBuffer = vertexBuffer
-    guard let indexBuffer = device.makeBuffer(
-      bytes: &indices,
-      length: MemoryLayout<UInt16>.stride * indices.count,
-      options: []) else {
-      fatalError("Unable to create quad vertex buffer")
-    }
-    self.indexBuffer = indexBuffer
   }
 }
