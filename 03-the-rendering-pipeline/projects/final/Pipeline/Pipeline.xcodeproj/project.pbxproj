@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		824770E42AA7FA0B0095AB72 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E32AA7FA0B0095AB72 /* PipelineApp.swift */; };
-		824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E52AA7FA0B0095AB72 /* ContentView.swift */; };
-		824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770E72AA7FA0C0095AB72 /* Assets.xcassets */; };
-		824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */; };
-		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
-		824770FA2AA804E20095AB72 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 824770F92AA804E20095AB72 /* Shaders.metal */; };
-		824770FE2AA80C5B0095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FD2AA80C5B0095AB72 /* MetalView.swift */; };
+		82F264AB2AA9485B003EFA00 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264AA2AA9485B003EFA00 /* PipelineApp.swift */; };
+		82F264AD2AA9485B003EFA00 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264AC2AA9485B003EFA00 /* ContentView.swift */; };
+		82F264AF2AA9485B003EFA00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82F264AE2AA9485B003EFA00 /* Assets.xcassets */; };
+		82F264B32AA9485C003EFA00 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */; };
+		82F264BC2AA948F1003EFA00 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264BB2AA948F1003EFA00 /* MetalView.swift */; };
+		82F264BE2AA94A62003EFA00 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264BD2AA94A62003EFA00 /* Renderer.swift */; };
+		82F264C12AA94BA2003EFA00 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F264C02AA94BA2003EFA00 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		824770E02AA7FA0B0095AB72 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		824770E32AA7FA0B0095AB72 /* PipelineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineApp.swift; sourceTree = "<group>"; };
-		824770E52AA7FA0B0095AB72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		824770E72AA7FA0C0095AB72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		824770E92AA7FA0C0095AB72 /* Pipeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pipeline.entitlements; sourceTree = "<group>"; };
-		824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		824770F92AA804E20095AB72 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		824770FD2AA80C5B0095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		82F264A72AA9485B003EFA00 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82F264AA2AA9485B003EFA00 /* PipelineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineApp.swift; sourceTree = "<group>"; };
+		82F264AC2AA9485B003EFA00 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		82F264AE2AA9485B003EFA00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		82F264B02AA9485C003EFA00 /* Pipeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pipeline.entitlements; sourceTree = "<group>"; };
+		82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		82F264BB2AA948F1003EFA00 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		82F264BD2AA94A62003EFA00 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		82F264C02AA94BA2003EFA00 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		824770DD2AA7FA0B0095AB72 /* Frameworks */ = {
+		82F264A42AA9485B003EFA00 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,41 +39,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		824770D72AA7FA0B0095AB72 = {
+		82F2649E2AA9485B003EFA00 = {
 			isa = PBXGroup;
 			children = (
-				824770E22AA7FA0B0095AB72 /* Pipeline */,
-				824770E12AA7FA0B0095AB72 /* Products */,
+				82F264A92AA9485B003EFA00 /* Pipeline */,
+				82F264A82AA9485B003EFA00 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		824770E12AA7FA0B0095AB72 /* Products */ = {
+		82F264A82AA9485B003EFA00 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				824770E02AA7FA0B0095AB72 /* Pipeline.app */,
+				82F264A72AA9485B003EFA00 /* Pipeline.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		824770E22AA7FA0B0095AB72 /* Pipeline */ = {
+		82F264A92AA9485B003EFA00 /* Pipeline */ = {
 			isa = PBXGroup;
 			children = (
-				824770E32AA7FA0B0095AB72 /* PipelineApp.swift */,
-				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
-				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
-				824770FD2AA80C5B0095AB72 /* MetalView.swift */,
-				824770F92AA804E20095AB72 /* Shaders.metal */,
-				824770E72AA7FA0C0095AB72 /* Assets.xcassets */,
-				824770E92AA7FA0C0095AB72 /* Pipeline.entitlements */,
-				824770EA2AA7FA0C0095AB72 /* Preview Content */,
+				82F264AA2AA9485B003EFA00 /* PipelineApp.swift */,
+				82F264AC2AA9485B003EFA00 /* ContentView.swift */,
+				82F264BB2AA948F1003EFA00 /* MetalView.swift */,
+				82F264BD2AA94A62003EFA00 /* Renderer.swift */,
+				82F264C02AA94BA2003EFA00 /* Shaders.metal */,
+				82F264AE2AA9485B003EFA00 /* Assets.xcassets */,
+				82F264B02AA9485C003EFA00 /* Pipeline.entitlements */,
+				82F264B12AA9485C003EFA00 /* Preview Content */,
 			);
 			path = Pipeline;
 			sourceTree = "<group>";
 		};
-		824770EA2AA7FA0C0095AB72 /* Preview Content */ = {
+		82F264B12AA9485C003EFA00 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */,
+				82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -81,14 +81,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		824770DF2AA7FA0B0095AB72 /* Pipeline */ = {
+		82F264A62AA9485B003EFA00 /* Pipeline */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Pipeline" */;
+			buildConfigurationList = 82F264B62AA9485C003EFA00 /* Build configuration list for PBXNativeTarget "Pipeline" */;
 			buildPhases = (
-				824770F82AA801170095AB72 /* SwiftLint */,
-				824770DC2AA7FA0B0095AB72 /* Sources */,
-				824770DD2AA7FA0B0095AB72 /* Frameworks */,
-				824770DE2AA7FA0B0095AB72 /* Resources */,
+				82F264BF2AA94B3D003EFA00 /* SwiftLint */,
+				82F264A32AA9485B003EFA00 /* Sources */,
+				82F264A42AA9485B003EFA00 /* Frameworks */,
+				82F264A52AA9485B003EFA00 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -96,13 +96,13 @@
 			);
 			name = Pipeline;
 			productName = Pipeline;
-			productReference = 824770E02AA7FA0B0095AB72 /* Pipeline.app */;
+			productReference = 82F264A72AA9485B003EFA00 /* Pipeline.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		824770D82AA7FA0B0095AB72 /* Project object */ = {
+		82F2649F2AA9485B003EFA00 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
@@ -110,12 +110,12 @@
 				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = Kodeco;
 				TargetAttributes = {
-					824770DF2AA7FA0B0095AB72 = {
+					82F264A62AA9485B003EFA00 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = 824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Pipeline" */;
+			buildConfigurationList = 82F264A22AA9485B003EFA00 /* Build configuration list for PBXProject "Pipeline" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -123,30 +123,30 @@
 				en,
 				Base,
 			);
-			mainGroup = 824770D72AA7FA0B0095AB72;
-			productRefGroup = 824770E12AA7FA0B0095AB72 /* Products */;
+			mainGroup = 82F2649E2AA9485B003EFA00;
+			productRefGroup = 82F264A82AA9485B003EFA00 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				824770DF2AA7FA0B0095AB72 /* Pipeline */,
+				82F264A62AA9485B003EFA00 /* Pipeline */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		824770DE2AA7FA0B0095AB72 /* Resources */ = {
+		82F264A52AA9485B003EFA00 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */,
-				824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */,
+				82F264B32AA9485C003EFA00 /* Preview Assets.xcassets in Resources */,
+				82F264AF2AA9485B003EFA00 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		824770F82AA801170095AB72 /* SwiftLint */ = {
+		82F264BF2AA94B3D003EFA00 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -168,22 +168,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		824770DC2AA7FA0B0095AB72 /* Sources */ = {
+		82F264A32AA9485B003EFA00 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
-				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
-				824770FE2AA80C5B0095AB72 /* MetalView.swift in Sources */,
-				824770E42AA7FA0B0095AB72 /* PipelineApp.swift in Sources */,
-				824770FA2AA804E20095AB72 /* Shaders.metal in Sources */,
+				82F264BE2AA94A62003EFA00 /* Renderer.swift in Sources */,
+				82F264BC2AA948F1003EFA00 /* MetalView.swift in Sources */,
+				82F264AD2AA9485B003EFA00 /* ContentView.swift in Sources */,
+				82F264AB2AA9485B003EFA00 /* PipelineApp.swift in Sources */,
+				82F264C12AA94BA2003EFA00 /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		824770ED2AA7FA0C0095AB72 /* Debug */ = {
+		82F264B42AA9485C003EFA00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -220,7 +220,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -244,7 +244,7 @@
 			};
 			name = Debug;
 		};
-		824770EE2AA7FA0C0095AB72 /* Release */ = {
+		82F264B52AA9485C003EFA00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -281,7 +281,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -297,7 +297,7 @@
 			};
 			name = Release;
 		};
-		824770F02AA7FA0C0095AB72 /* Debug */ = {
+		82F264B72AA9485C003EFA00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -309,6 +309,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -335,7 +336,7 @@
 			};
 			name = Debug;
 		};
-		824770F12AA7FA0C0095AB72 /* Release */ = {
+		82F264B82AA9485C003EFA00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -347,6 +348,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -376,25 +378,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Pipeline" */ = {
+		82F264A22AA9485B003EFA00 /* Build configuration list for PBXProject "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770ED2AA7FA0C0095AB72 /* Debug */,
-				824770EE2AA7FA0C0095AB72 /* Release */,
+				82F264B42AA9485C003EFA00 /* Debug */,
+				82F264B52AA9485C003EFA00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
+		82F264B62AA9485C003EFA00 /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770F02AA7FA0C0095AB72 /* Debug */,
-				824770F12AA7FA0C0095AB72 /* Release */,
+				82F264B72AA9485C003EFA00 /* Debug */,
+				82F264B82AA9485C003EFA00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 824770D82AA7FA0B0095AB72 /* Project object */;
+	rootObject = 82F2649F2AA9485B003EFA00 /* Project object */;
 }
