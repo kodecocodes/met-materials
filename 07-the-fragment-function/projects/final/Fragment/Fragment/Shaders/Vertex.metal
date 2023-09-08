@@ -1,12 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2023 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the &quot;Software&quot;), to deal
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
@@ -27,12 +22,52 @@
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
 ///
-/// THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+#import "ShaderDefs.h"
+
+struct VertexIn {
+  float4 position [[attribute(0)]];
+  float3 normal [[attribute(1)]];
+};
+
+vertex VertexOut vertex_main(
+  VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(11)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  VertexOut out {
+    .position = position,
+    .normal = in.normal
+  };
+  return out;
+}
+
+constant float3 vertices[6] = {
+  float3(-1,  1,  0),    // triangle 1
+  float3( 1, -1,  0),
+  float3(-1, -1,  0),
+  float3(-1,  1,  0),    // triangle 2
+  float3( 1,  1,  0),
+  float3( 1, -1,  0)};
+
+vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
+{
+  float4 position = float4(vertices[vertexID], 1);
+  VertexOut out {
+    .position = position
+  };
+  return out;
+}
+
