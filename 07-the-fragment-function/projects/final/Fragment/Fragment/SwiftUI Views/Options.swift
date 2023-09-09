@@ -39,5 +39,5 @@ enum RenderChoice {
 
 @Observable
 class Options {
-  var renderChoice = RenderChoice.quad
+  var renderChoice = RenderChoice.train
 }
