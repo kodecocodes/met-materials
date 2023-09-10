@@ -40,7 +40,7 @@ class Model: Transformable {
   var name: String = "Untitled"
 
   init() {}
-  
+
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,

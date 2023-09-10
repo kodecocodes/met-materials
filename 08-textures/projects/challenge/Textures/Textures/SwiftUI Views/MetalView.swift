@@ -30,50 +30,57 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import SwiftUI
 import MetalKit
 
-// swiftlint:disable force_try
+struct MetalView: View {
+  @State private var metalView = MTKView()
+  @State private var renderer: Renderer?
 
-class Model: Transformable {
-  var transform = Transform()
-  var meshes: [Mesh] = []
-  var name: String = "Untitled"
-  var tiling: UInt32 = 1
-
-  init() {}
-
-  init(name: String) {
-    guard let assetURL = Bundle.main.url(
-      forResource: name,
-      withExtension: nil) else {
-      fatalError("Model: \(name) not found")
-    }
-
-    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: .defaultLayout,
-      bufferAllocator: allocator)
-    asset.loadTextures()
-    let (mdlMeshes, mtkMeshes) = try! MTKMesh.newMeshes(
-      asset: asset,
-      device: Renderer.device)
-    meshes = zip(mdlMeshes, mtkMeshes).map {
-      Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
-    }
-    self.name = name
-  }
-}
-
-extension Model {
-  func setTexture(name: String, type: TextureIndices) {
-    if let texture = TextureController.loadTexture(name: name) {
-      switch type {
-      case BaseColor:
-        meshes[0].submeshes[0].textures.baseColor = texture
-      default: break
+  var body: some View {
+    MetalViewRepresentable(
+      renderer: renderer,
+      metalView: $metalView)
+      .onAppear {
+        renderer = Renderer(metalView: metalView)
       }
-    }
   }
 }
-// swiftlint:enable force_try
+
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
+
+struct MetalViewRepresentable: ViewRepresentable {
+  let renderer: Renderer?
+  @Binding var metalView: MTKView
+
+#if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    metalView
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+#elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    metalView
+  }
+
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+#endif
+
+  func updateMetalView() {
+  }
+}
+
+#Preview {
+  VStack {
+    MetalView()
+    Text("Metal View")
+  }
+}
