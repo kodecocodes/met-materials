@@ -8,8 +8,6 @@ CC0 means Creative Commons CC0 License, which means that there is no copyright r
 
 [CC0Textures](https://ambientcg.com)
 
-[3DAssets.one](https://www.3dassets.one)
-
 [Pexels](https://www.pexels.com/photo-license/) - these photos are not public domain, but the site has a generous license.
 
 ### Chromaticity and color spaces
