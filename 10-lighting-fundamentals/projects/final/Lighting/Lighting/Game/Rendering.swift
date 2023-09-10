@@ -1,12 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2023 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the &quot;Software&quot;), to deal
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
@@ -27,12 +22,64 @@
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
 ///
-/// THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+// Rendering
+extension Model {
+  func render(
+    encoder: MTLRenderCommandEncoder,
+    uniforms vertex: Uniforms,
+    params fragment: Params
+  ) {
+    // make the structures mutable
+    var uniforms = vertex
+    var params = fragment
+    params.tiling = tiling
+    uniforms.modelMatrix = transform.modelMatrix
+    uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
+
+    encoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
+
+    encoder.setFragmentBytes(
+      &params,
+      length: MemoryLayout<Params>.stride,
+      index: ParamsBuffer.index)
+
+    for mesh in meshes {
+      for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
+        encoder.setVertexBuffer(
+          vertexBuffer,
+          offset: 0,
+          index: index)
+      }
+
+      for submesh in mesh.submeshes {
+
+        // set the fragment texture here
+
+        encoder.setFragmentTexture(
+          submesh.textures.baseColor,
+          index: BaseColor.index)
+
+        encoder.drawIndexedPrimitives(
+          type: .triangle,
+          indexCount: submesh.indexCount,
+          indexType: submesh.indexType,
+          indexBuffer: submesh.indexBuffer,
+          indexBufferOffset: submesh.indexBufferOffset
+        )
+      }
+    }
+  }
+}

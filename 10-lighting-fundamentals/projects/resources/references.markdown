@@ -1,6 +1,6 @@
 [Original 1975 Phong Reflection Model paper](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.330.4718&rank=1)
 
-[Scratchapixel](https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF)
+[Scratchapixel](https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF/phong-illumination-models-brdf.html)
 
 [Nvidia lighting tutorial](http://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter05.html)
 
