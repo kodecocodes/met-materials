@@ -87,7 +87,7 @@ class Renderer: NSObject {
       modelPipelineState =
         try device.makeRenderPipelineState(
           descriptor: pipelineDescriptor)
-    } catch let error {
+    } catch {
       fatalError(error.localizedDescription)
     }
     self.options = options

@@ -61,7 +61,7 @@ class Renderer: NSObject {
       allocator: allocator)
     do {
       mesh = try MTKMesh(mesh: mdlMesh, device: device)
-    } catch let error {
+    } catch {
       print(error.localizedDescription)
     }
     vertexBuffer = mesh.vertexBuffers[0].buffer
@@ -85,7 +85,7 @@ class Renderer: NSObject {
       pipelineState =
         try device.makeRenderPipelineState(
           descriptor: pipelineDescriptor)
-    } catch let error {
+    } catch {
       fatalError(error.localizedDescription)
     }
     super.init()

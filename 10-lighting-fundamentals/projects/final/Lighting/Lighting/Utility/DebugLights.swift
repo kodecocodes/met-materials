@@ -45,7 +45,7 @@ enum DebugLights {
     let pipelineState: MTLRenderPipelineState
     do {
       pipelineState = try Renderer.device.makeRenderPipelineState(descriptor: psoDescriptor)
-    } catch let error {
+    } catch {
       fatalError(error.localizedDescription)
     }
     return pipelineState
@@ -65,7 +65,7 @@ enum DebugLights {
       pipelineState = try Renderer.device.makeRenderPipelineState(
         descriptor: psoDescriptor
       )
-    } catch let error {
+    } catch {
       fatalError(error.localizedDescription)
     }
     return pipelineState

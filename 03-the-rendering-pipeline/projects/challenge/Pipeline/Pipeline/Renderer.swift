@@ -106,7 +106,7 @@ class Renderer: NSObject {
       pipelineState =
         try device.makeRenderPipelineState(
           descriptor: pipelineDescriptor)
-    } catch let error {
+    } catch {
       fatalError(error.localizedDescription)
     }
     super.init()
