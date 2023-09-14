@@ -16,8 +16,6 @@ Programming Vertex and Pixel Shaders 2004 by Wolfgang Engel. This is an older bo
 
 ### Guides
 
-[Physically-Based Rendering in glTF 2.0 by Khronos](https://github.com/KhronosGroup/glTF-WebGL-PBR)
-
 [Marmoset's Basic Theory of Physically-based Rendering](https://www.marmoset.co/posts/basic-theory-of-physically-based-rendering/)
 
 [The PBR Guide by Allegorithmic](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
