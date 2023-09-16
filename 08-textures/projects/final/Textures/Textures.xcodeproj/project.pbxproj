@@ -11,8 +11,6 @@
 		82133A392AAC046600D7C004 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A382AAC046600D7C004 /* Submesh.swift */; };
 		82133A3D2AAC1C6200D7C004 /* lowpoly-house.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 82133A3C2AAC1C6200D7C004 /* lowpoly-house.usdz */; };
 		822435492AAD5217005A93D6 /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822435482AAD5217005A93D6 /* Primitive.swift */; };
-		8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224354A2AAD5734005A93D6 /* TextureController.swift */; };
-		8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8224354C2AAD6044005A93D6 /* Textures.xcassets */; };
 		822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF5282AA865D2008CC2C8 /* MathLibrary.swift */; };
 		822EF52B2AA86608008CC2C8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52A2AA86608008CC2C8 /* Model.swift */; };
 		822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52E2AA86872008CC2C8 /* Rendering.swift */; };
@@ -24,6 +22,8 @@
 		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
 		824771002AA80C930095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FF2AA80C930095AB72 /* MetalView.swift */; };
 		824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */; };
+		824DFCE22AB531D9009AB3A2 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824DFCE12AB531D9009AB3A2 /* TextureController.swift */; };
+		824DFCE62AB53C55009AB3A2 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824DFCE52AB53C55009AB3A2 /* Textures.xcassets */; };
 		827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AD2AA8779800CE91D1 /* Vertex.metal */; };
 		827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AF2AA8779E00CE91D1 /* Fragment.metal */; };
 /* End PBXBuildFile section */
@@ -34,8 +34,6 @@
 		82133A382AAC046600D7C004 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		82133A3C2AAC1C6200D7C004 /* lowpoly-house.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "lowpoly-house.usdz"; sourceTree = "<group>"; };
 		822435482AAD5217005A93D6 /* Primitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
-		8224354A2AAD5734005A93D6 /* TextureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureController.swift; sourceTree = "<group>"; };
-		8224354C2AAD6044005A93D6 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
 		822EF5282AA865D2008CC2C8 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		822EF52A2AA86608008CC2C8 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		822EF52E2AA86872008CC2C8 /* Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
@@ -50,6 +48,8 @@
 		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		824770FF2AA80C930095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
+		824DFCE12AB531D9009AB3A2 /* TextureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureController.swift; sourceTree = "<group>"; };
+		824DFCE52AB53C55009AB3A2 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
 		827621AD2AA8779800CE91D1 /* Vertex.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Vertex.metal; sourceTree = "<group>"; };
 		827621AF2AA8779E00CE91D1 /* Fragment.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fragment.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,8 +114,8 @@
 				824770E32AA7FA0B0095AB72 /* TexturesApp.swift */,
 				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
 				822EF52E2AA86872008CC2C8 /* Rendering.swift */,
-				8224354A2AAD5734005A93D6 /* TextureController.swift */,
-				8224354C2AAD6044005A93D6 /* Textures.xcassets */,
+				824DFCE12AB531D9009AB3A2 /* TextureController.swift */,
+				824DFCE52AB53C55009AB3A2 /* Textures.xcassets */,
 				824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */,
 				822EF52A2AA86608008CC2C8 /* Model.swift */,
 				822435482AAD5217005A93D6 /* Primitive.swift */,
@@ -211,7 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82133A3D2AAC1C6200D7C004 /* lowpoly-house.usdz in Resources */,
-				8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */,
+				824DFCE62AB53C55009AB3A2 /* Textures.xcassets in Resources */,
 				824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */,
 				824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */,
 			);
@@ -249,7 +249,7 @@
 				822EF52B2AA86608008CC2C8 /* Model.swift in Sources */,
 				824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */,
 				822EF5342AA87342008CC2C8 /* Transform.swift in Sources */,
-				8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */,
+				824DFCE22AB531D9009AB3A2 /* TextureController.swift in Sources */,
 				822435492AAD5217005A93D6 /* Primitive.swift in Sources */,
 				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,

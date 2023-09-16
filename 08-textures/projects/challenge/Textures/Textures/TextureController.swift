@@ -35,22 +35,19 @@ import MetalKit
 enum TextureController {
   static var textures: [String: MTLTexture] = [:]
 
-  static func loadTexture(texture: MDLTexture) throws -> MTLTexture? {
-    // 1
+  static func loadTexture(texture: MDLTexture, name: String) -> MTLTexture? {
+    if let texture = textures[name] {
+      return texture
+    }
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    // 2
     let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
       [.origin: MTKTextureLoader.Origin.bottomLeft,
        .generateMipmaps: true]
-    // 3
     let texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
     print("loaded texture from USD file")
-    if texture != nil {
-      let filename = UUID().uuidString
-      textures[filename] = texture
-    }
+    textures[name] = texture
     return texture
   }
 
@@ -63,7 +60,8 @@ enum TextureController {
     texture = try? textureLoader.newTexture(
       name: name,
       scaleFactor: 1.0,
-      bundle: Bundle.main)
+      bundle: Bundle.main,
+      options: nil)
     if texture != nil {
       print("loaded texture: \(name)")
       textures[name] = texture
