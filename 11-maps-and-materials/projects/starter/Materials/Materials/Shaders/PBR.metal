@@ -45,10 +45,10 @@ float G1V(float nDotV, float k)
 float3 computeSpecular(
   constant Light *lights,
   constant Params &params,
-  float3 normal,
-  float3 viewDirection,
-  Material material)
+  Material material,
+  float3 normal)
 {
+  float3 viewDirection = normalize(params.cameraPosition);
   float3 specularTotal = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];

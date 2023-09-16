@@ -47,9 +47,8 @@ float3 phongLighting(
 float3 computeSpecular(
   constant Light *lights,
   constant Params &params,
-  float3 normal,
-  float3 viewDirection,
-  Material material);
+  Material material,
+  float3 normal);
 
 float3 computeDiffuse(
   constant Light *lights,

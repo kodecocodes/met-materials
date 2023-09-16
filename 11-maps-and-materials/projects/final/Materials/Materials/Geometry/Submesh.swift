@@ -65,7 +65,6 @@ private extension Submesh.Textures {
     roughness = material?.texture(type: .roughness)
     normal = material?.texture(type: .tangentSpaceNormal)
   }
-
 }
 
 private extension MDLMaterialProperty {

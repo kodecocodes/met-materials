@@ -86,7 +86,6 @@ extension MDLVertexDescriptor {
         bufferIndex: BitangentBuffer.index)
     vertexDescriptor.layouts[BitangentBuffer.index]
       = MDLVertexBufferLayout(stride: MemoryLayout<float3>.stride)
-
     return vertexDescriptor
   }
 }

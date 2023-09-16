@@ -48,14 +48,14 @@ fragment float4 fragment_main(
 {
   Material material = _material;
   constexpr sampler textureSampler(
-                                   filter::linear,
-                                   mip_filter::linear,
-                                   max_anisotropy(8),
-                                   address::repeat);
+    filter::linear,
+    mip_filter::linear,
+    max_anisotropy(8),
+    address::repeat);
   if (!is_null_texture(baseColorTexture)) {
     material.baseColor = baseColorTexture.sample(
-      textureSampler,
-      in.uv * params.tiling).rgb;
+    textureSampler,
+    in.uv * params.tiling).rgb;
   }
 
   if (!is_null_texture(roughnessTexture)) {
@@ -92,16 +92,14 @@ fragment float4 fragment_main(
   normal = normalize(normal);
 
   float3 diffuseColor =
-  computeDiffuse(lights, params, material, normal);
+    computeDiffuse(lights, params, material, normal);
 
-  float3 viewDirection = normalize(params.cameraPosition);
   float3 specularColor =
-  computeSpecular(
-    lights,
-    params,
-    normal,
-    viewDirection,
-    material);
+    computeSpecular(
+      lights,
+      params,
+      material,
+      normal);
 
   return float4(diffuseColor + specularColor, 1);
 }

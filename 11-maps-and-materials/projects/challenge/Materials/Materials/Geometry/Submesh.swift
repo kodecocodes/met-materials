@@ -105,6 +105,7 @@ private extension Material {
        metallic.type == .float {
       self.metallic = metallic.floatValue
     }
+    self.ambientOcclusion = 1
     if let ambientOcclusion = material?.property(with: .ambientOcclusion),
        ambientOcclusion.type == .float {
       self.ambientOcclusion = ambientOcclusion.floatValue
