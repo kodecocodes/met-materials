@@ -54,6 +54,7 @@ struct GameScene {
 
     drummer.rotation.y = Float.pi
     models = [drummer]
+    print(TextureController.textures.count)
   }
 
   mutating func update(size: CGSize) {
@@ -61,7 +62,6 @@ struct GameScene {
   }
 
   mutating func update(deltaTime: Float) {
-    print(camera.rotation)
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()

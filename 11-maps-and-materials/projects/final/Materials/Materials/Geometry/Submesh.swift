@@ -68,6 +68,12 @@ private extension Submesh.Textures {
 
 }
 
+private extension MDLMaterialProperty {
+  var textureName: String {
+    stringValue ?? UUID().uuidString
+  }
+}
+
 private extension MDLMaterial {
   func texture(type semantic: MDLMaterialSemantic) -> MTLTexture? {
     if let property = property(with: semantic),
@@ -75,21 +81,9 @@ private extension MDLMaterial {
        let mdlTexture = property.textureSamplerValue?.texture {
       return TextureController.loadTexture(
         texture: mdlTexture,
-        name: property.name)
+        name: property.textureName)
     }
     return nil
-  }
-}
-
-private extension MDLMaterialProperty {
-  var name: String {
-    let name: String
-    if let value = stringValue as? NSString {
-      name = String(value.lastPathComponent.dropLast())
-    } else {
-      name = UUID().uuidString
-    }
-    return name
   }
 }
 

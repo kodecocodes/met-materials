@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */; };
 		8201D1062AADBE6900F7DA0B /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1052AADBE6900F7DA0B /* Lighting.metal */; };
-		820E10EB2AB289F5008AF54E /* starter-cube.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 820E10E92AB289F5008AF54E /* starter-cube.usdz */; };
-		820E10EC2AB289F5008AF54E /* final-cube.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 820E10EA2AB289F5008AF54E /* final-cube.usdz */; };
 		820E10EE2AB28A2F008AF54E /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820E10ED2AB28A2F008AF54E /* PBR.metal */; };
 		820E10F72AB29E6B008AF54E /* starter-sphere.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 820E10F52AB29E6B008AF54E /* starter-sphere.usdz */; };
 		820E10F82AB29E6B008AF54E /* final-sphere.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 820E10F62AB29E6B008AF54E /* final-sphere.usdz */; };
@@ -46,8 +44,6 @@
 		8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
 		8201D1042AADBE4A00F7DA0B /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
 		8201D1052AADBE6900F7DA0B /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
-		820E10E92AB289F5008AF54E /* starter-cube.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "starter-cube.usdz"; sourceTree = "<group>"; };
-		820E10EA2AB289F5008AF54E /* final-cube.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "final-cube.usdz"; sourceTree = "<group>"; };
 		820E10ED2AB28A2F008AF54E /* PBR.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
 		820E10F52AB29E6B008AF54E /* starter-sphere.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "starter-sphere.usdz"; sourceTree = "<group>"; };
 		820E10F62AB29E6B008AF54E /* final-sphere.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "final-sphere.usdz"; sourceTree = "<group>"; };
@@ -109,8 +105,6 @@
 			children = (
 				820E10F62AB29E6B008AF54E /* final-sphere.usdz */,
 				820E10F52AB29E6B008AF54E /* starter-sphere.usdz */,
-				820E10E92AB289F5008AF54E /* starter-cube.usdz */,
-				820E10EA2AB289F5008AF54E /* final-cube.usdz */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -288,8 +282,6 @@
 			files = (
 				8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */,
 				824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */,
-				820E10EB2AB289F5008AF54E /* starter-cube.usdz in Resources */,
-				820E10EC2AB289F5008AF54E /* final-cube.usdz in Resources */,
 				820E10F72AB29E6B008AF54E /* starter-sphere.usdz in Resources */,
 				820E10F82AB29E6B008AF54E /* final-sphere.usdz in Resources */,
 				824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */,

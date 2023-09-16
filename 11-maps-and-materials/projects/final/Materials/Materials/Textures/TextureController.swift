@@ -60,7 +60,8 @@ enum TextureController {
     texture = try? textureLoader.newTexture(
       name: name,
       scaleFactor: 1.0,
-      bundle: Bundle.main)
+      bundle: Bundle.main,
+      options: nil)
     if texture != nil {
       print("loaded texture: \(name)")
       textures[name] = texture
