@@ -35,7 +35,6 @@ import MetalKit
 class GameController: NSObject {
   var scene: GameScene
   var renderer: Renderer
-//  var options = Options()
   var fps: Double = 0
   var deltaTime: Double = 0
   var lastTime: Double = CFAbsoluteTimeGetCurrent()

@@ -94,6 +94,7 @@ extension Renderer {
     _ view: MTKView,
     drawableSizeWillChange size: CGSize
   ) {
+    forwardRenderPass.resize(view: view, size: size)
   }
 
   func updateUniforms(scene: GameScene) {
