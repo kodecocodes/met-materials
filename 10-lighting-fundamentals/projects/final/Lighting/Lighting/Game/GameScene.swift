@@ -65,11 +65,9 @@ struct GameScene {
   mutating func update(deltaTime: Float) {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
-      camera.distance = 2.5
       camera.transform = Transform()
     }
     if input.keysPressed.contains(.two) {
-      camera.distance = 2.5
       camera.transform = defaultView
     }
     camera.update(deltaTime: deltaTime)

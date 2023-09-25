@@ -46,6 +46,7 @@ float3 phongLighting(
     float3 specularColor = 0;
     float materialShininess = 32;
     float3 materialSpecularColor = float3(1, 1, 1);
+
     for (uint i = 0; i < params.lightCount; i++) {
       Light light = lights[i];
       switch (light.type) {

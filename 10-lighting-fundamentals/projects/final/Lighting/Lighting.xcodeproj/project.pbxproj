@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */; };
-		8201D1062AADBE6900F7DA0B /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1052AADBE6900F7DA0B /* Lighting.metal */; };
 		82133A372AAC044B00D7C004 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A362AAC044B00D7C004 /* Mesh.swift */; };
 		82133A392AAC046600D7C004 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A382AAC046600D7C004 /* Submesh.swift */; };
 		8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224354A2AAD5734005A93D6 /* TextureController.swift */; };
@@ -37,12 +35,11 @@
 		8272AC4A2AADB776007301AB /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC482AADB776007301AB /* Transform.swift */; };
 		827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AD2AA8779800CE91D1 /* Vertex.metal */; };
 		827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AF2AA8779E00CE91D1 /* Fragment.metal */; };
+		828A9BCD2AC1905B00F6237F /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828A9BCC2AC1905B00F6237F /* SceneLighting.swift */; };
+		828A9BD02AC1933A00F6237F /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 828A9BCF2AC1933A00F6237F /* Lighting.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
-		8201D1042AADBE4A00F7DA0B /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
-		8201D1052AADBE6900F7DA0B /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
 		82133A352AAC005300D7C004 /* ShaderDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefs.h; sourceTree = "<group>"; };
 		82133A362AAC044B00D7C004 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		82133A382AAC046600D7C004 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
@@ -75,6 +72,9 @@
 		8272AC482AADB776007301AB /* Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		827621AD2AA8779800CE91D1 /* Vertex.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Vertex.metal; sourceTree = "<group>"; };
 		827621AF2AA8779E00CE91D1 /* Fragment.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fragment.metal; sourceTree = "<group>"; };
+		828A9BCC2AC1905B00F6237F /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
+		828A9BCE2AC1932400F6237F /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
+		828A9BCF2AC1933A00F6237F /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +114,8 @@
 				82133A352AAC005300D7C004 /* ShaderDefs.h */,
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
-				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
-				8201D1052AADBE6900F7DA0B /* Lighting.metal */,
+				828A9BCE2AC1932400F6237F /* Lighting.h */,
+				828A9BCF2AC1933A00F6237F /* Lighting.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 				8272AC3A2AAD96F9007301AB /* GameController.swift */,
 				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
 				8272AC2F2AAD8A19007301AB /* GameScene.swift */,
-				8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */,
+				828A9BCC2AC1905B00F6237F /* SceneLighting.swift */,
 				8272AC312AAD8C37007301AB /* Camera.swift */,
 				8272AC372AAD9381007301AB /* PlayerCamera.swift */,
 				822EF52E2AA86872008CC2C8 /* Rendering.swift */,
@@ -324,13 +324,13 @@
 				8272AC342AAD8E3A007301AB /* InputController.swift in Sources */,
 				8272AC422AADB6E9007301AB /* DebugLights.metal in Sources */,
 				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
-				8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */,
+				828A9BCD2AC1905B00F6237F /* SceneLighting.swift in Sources */,
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */,
 				82133A372AAC044B00D7C004 /* Mesh.swift in Sources */,
 				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
-				8201D1062AADBE6900F7DA0B /* Lighting.metal in Sources */,
+				828A9BD02AC1933A00F6237F /* Lighting.metal in Sources */,
 				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
 				827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */,
 				8272AC4A2AADB776007301AB /* Transform.swift in Sources */,
@@ -473,7 +473,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Lighting/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3E7TCD55JT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -512,7 +512,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Lighting/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3E7TCD55JT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
