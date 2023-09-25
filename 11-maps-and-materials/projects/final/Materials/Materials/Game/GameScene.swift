@@ -33,7 +33,7 @@
 import MetalKit
 
 struct GameScene {
-  lazy var cube: Model = {
+  lazy var sphere: Model = {
     Model(name: "final-sphere.usdz")
   }()
 
@@ -50,7 +50,7 @@ struct GameScene {
     camera.distance = 2
     camera.target = [0, 0, 0]
     camera.transform = defaultView
-    models = [cube]
+    models = [sphere]
   }
 
   mutating func update(size: CGSize) {

@@ -79,11 +79,7 @@ fragment float4 fragment_main(
     computeDiffuse(lights, params, material, normal);
 
   float3 specularColor =
-    computeSpecular(
-      lights,
-      params,
-      material,
-      normal);
+    computeSpecular(lights, params, material, normal);
 
   return float4(diffuseColor + specularColor, 1);
 }

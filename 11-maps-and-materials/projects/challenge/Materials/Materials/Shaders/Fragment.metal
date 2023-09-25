@@ -64,7 +64,7 @@ fragment float4 fragment_main(
       in.uv * params.tiling).r;
   }
 
-  if (!is_null_texture(roughnessTexture)) {
+  if (!is_null_texture(metallicTexture)) {
     material.metallic = metallicTexture.sample(
       textureSampler,
       in.uv * params.tiling).r;
@@ -95,11 +95,7 @@ fragment float4 fragment_main(
     computeDiffuse(lights, params, material, normal);
 
   float3 specularColor =
-    computeSpecular(
-      lights,
-      params,
-      material,
-      normal);
+    computeSpecular(lights, params, material, normal);
 
   return float4(diffuseColor + specularColor, 1);
 }
