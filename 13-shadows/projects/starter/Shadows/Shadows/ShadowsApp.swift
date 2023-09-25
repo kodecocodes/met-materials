@@ -37,7 +37,7 @@ struct ShadowsApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .navigationTitle("Render Passes")
+        .navigationTitle("Shadows")
     }
   }
 }

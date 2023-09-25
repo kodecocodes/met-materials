@@ -47,12 +47,7 @@ class Model: Transformable {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      let message = """
-      "MODEL IS NOT INCLUDED!
-       Download the drummer model from https://developer.apple.com/augmented-reality/quick-look/
-       and add it to your project
-      """
-      fatalError(message)
+      fatalError("Model \(name) not found")
     }
     self.objectId = objectId
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
