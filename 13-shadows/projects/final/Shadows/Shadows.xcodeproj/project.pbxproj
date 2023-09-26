@@ -17,8 +17,6 @@
 		821CA7F02AB7CD0F00F4F840 /* DebugModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821CA7EF2AB7CD0F00F4F840 /* DebugModel.swift */; };
 		8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224354A2AAD5734005A93D6 /* TextureController.swift */; };
 		8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8224354C2AAD6044005A93D6 /* Textures.xcassets */; };
-		8229D08B2ABBE35400F3BDDB /* ShadowRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8229D08A2ABBE35400F3BDDB /* ShadowRenderPass.swift */; };
-		8229D08D2ABBE4E300F3BDDB /* Shadow.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8229D08C2ABBE4E300F3BDDB /* Shadow.metal */; };
 		822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF5282AA865D2008CC2C8 /* MathLibrary.swift */; };
 		822EF52B2AA86608008CC2C8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52A2AA86608008CC2C8 /* Model.swift */; };
 		822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52E2AA86872008CC2C8 /* Rendering.swift */; };
@@ -46,6 +44,8 @@
 		8282C1C32AB5B7AF001A3850 /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */; };
 		8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C42AB5B7CD001A3850 /* Pipelines.swift */; };
 		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
+		82D0E9622AC2A3C800C9FE62 /* ShadowRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9612AC2A3C800C9FE62 /* ShadowRenderPass.swift */; };
+		82D0E9642AC2A46A00C9FE62 /* Shadow.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9632AC2A46A00C9FE62 /* Shadow.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +61,6 @@
 		821CA7EF2AB7CD0F00F4F840 /* DebugModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModel.swift; sourceTree = "<group>"; };
 		8224354A2AAD5734005A93D6 /* TextureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureController.swift; sourceTree = "<group>"; };
 		8224354C2AAD6044005A93D6 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
-		8229D08A2ABBE35400F3BDDB /* ShadowRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowRenderPass.swift; sourceTree = "<group>"; };
-		8229D08C2ABBE4E300F3BDDB /* Shadow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shadow.metal; sourceTree = "<group>"; };
 		822EF5282AA865D2008CC2C8 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		822EF52A2AA86608008CC2C8 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		822EF52E2AA86872008CC2C8 /* Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
@@ -93,6 +91,8 @@
 		8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRenderPass.swift; sourceTree = "<group>"; };
 		8282C1C42AB5B7CD001A3850 /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
 		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		82D0E9612AC2A3C800C9FE62 /* ShadowRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowRenderPass.swift; sourceTree = "<group>"; };
+		82D0E9632AC2A46A00C9FE62 /* Shadow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shadow.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +133,7 @@
 			children = (
 				822EF5322AA869E4008CC2C8 /* Common.h */,
 				82133A352AAC005300D7C004 /* ShaderDefs.h */,
-				8229D08C2ABBE4E300F3BDDB /* Shadow.metal */,
+				82D0E9632AC2A46A00C9FE62 /* Shadow.metal */,
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
 				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
@@ -244,10 +244,10 @@
 		82C5307D2AB5C37200398FB7 /* Render Passes */ = {
 			isa = PBXGroup;
 			children = (
-				8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */,
-				8229D08A2ABBE35400F3BDDB /* ShadowRenderPass.swift */,
-				8282C1C42AB5B7CD001A3850 /* Pipelines.swift */,
 				82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */,
+				82D0E9612AC2A3C800C9FE62 /* ShadowRenderPass.swift */,
+				8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */,
+				8282C1C42AB5B7CD001A3850 /* Pipelines.swift */,
 			);
 			path = "Render Passes";
 			sourceTree = "<group>";
@@ -377,12 +377,12 @@
 				821CA7EA2AB7CBF100F4F840 /* ShadowCamera.swift in Sources */,
 				8272AC362AAD901D007301AB /* Movement.swift in Sources */,
 				824770E42AA7FA0B0095AB72 /* ShadowsApp.swift in Sources */,
-				8229D08B2ABBE35400F3BDDB /* ShadowRenderPass.swift in Sources */,
+				82D0E9622AC2A3C800C9FE62 /* ShadowRenderPass.swift in Sources */,
 				827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */,
 				822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */,
 				821CA7EE2AB7CCE800F4F840 /* DebugCameraFrustum.metal in Sources */,
 				82133A392AAC046600D7C004 /* Submesh.swift in Sources */,
-				8229D08D2ABBE4E300F3BDDB /* Shadow.metal in Sources */,
+				82D0E9642AC2A46A00C9FE62 /* Shadow.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

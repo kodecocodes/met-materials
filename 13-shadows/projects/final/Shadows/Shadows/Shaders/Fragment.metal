@@ -65,7 +65,7 @@ fragment float4 fragment_main(
       in.uv * params.tiling).r;
   }
 
-  if (!is_null_texture(roughnessTexture)) {
+  if (!is_null_texture(metallicTexture)) {
     material.metallic = metallicTexture.sample(
       textureSampler,
       in.uv * params.tiling).r;
@@ -117,7 +117,6 @@ fragment float4 fragment_main(
     address::clamp_to_edge,
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
-  // 4
   if (shadowPosition.z > shadow_sample + 0.001) {
     diffuseColor *= 0.5;
   }
