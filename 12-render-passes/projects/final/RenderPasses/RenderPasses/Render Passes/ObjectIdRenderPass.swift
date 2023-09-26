@@ -36,9 +36,10 @@ struct ObjectIdRenderPass: RenderPass {
   let label = "Object ID Render Pass"
   var descriptor: MTLRenderPassDescriptor?
   var pipelineState: MTLRenderPipelineState
+  var depthStencilState: MTLDepthStencilState?
+
   var idTexture: MTLTexture?
   var depthTexture: MTLTexture?
-  var depthStencilState: MTLDepthStencilState?
 
   init() {
     pipelineState = PipelineStates.createObjectIdPSO()

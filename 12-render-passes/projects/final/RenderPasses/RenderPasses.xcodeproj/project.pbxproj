@@ -39,9 +39,9 @@
 		827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AF2AA8779E00CE91D1 /* Fragment.metal */; };
 		8282C1C32AB5B7AF001A3850 /* ForwardRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */; };
 		8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C42AB5B7CD001A3850 /* Pipelines.swift */; };
-		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
-		82C530812AB5C51F00398FB7 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C530802AB5C51F00398FB7 /* ObjectIdRenderPass.swift */; };
-		82C530832AB5C60700398FB7 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82C530822AB5C60700398FB7 /* ObjectId.metal */; };
+		8297A4A32AC26640000F45F5 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297A4A22AC26640000F45F5 /* RenderPass.swift */; };
+		8297A4A52AC2669E000F45F5 /* ObjectIdRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297A4A42AC2669E000F45F5 /* ObjectIdRenderPass.swift */; };
+		8297A4A72AC26754000F45F5 /* ObjectId.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8297A4A62AC26754000F45F5 /* ObjectId.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,9 +82,9 @@
 		827621AF2AA8779E00CE91D1 /* Fragment.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fragment.metal; sourceTree = "<group>"; };
 		8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRenderPass.swift; sourceTree = "<group>"; };
 		8282C1C42AB5B7CD001A3850 /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
-		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
-		82C530802AB5C51F00398FB7 /* ObjectIdRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectIdRenderPass.swift; sourceTree = "<group>"; };
-		82C530822AB5C60700398FB7 /* ObjectId.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ObjectId.metal; sourceTree = "<group>"; };
+		8297A4A22AC26640000F45F5 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		8297A4A42AC2669E000F45F5 /* ObjectIdRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectIdRenderPass.swift; sourceTree = "<group>"; };
+		8297A4A62AC26754000F45F5 /* ObjectId.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ObjectId.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,9 +124,9 @@
 				82133A352AAC005300D7C004 /* ShaderDefs.h */,
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
+				8297A4A62AC26754000F45F5 /* ObjectId.metal */,
 				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
 				820E10ED2AB28A2F008AF54E /* PBR.metal */,
-				82C530822AB5C60700398FB7 /* ObjectId.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -232,10 +232,10 @@
 		82C5307D2AB5C37200398FB7 /* Render Passes */ = {
 			isa = PBXGroup;
 			children = (
+				8297A4A22AC26640000F45F5 /* RenderPass.swift */,
 				8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */,
+				8297A4A42AC2669E000F45F5 /* ObjectIdRenderPass.swift */,
 				8282C1C42AB5B7CD001A3850 /* Pipelines.swift */,
-				82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */,
-				82C530802AB5C51F00398FB7 /* ObjectIdRenderPass.swift */,
 			);
 			path = "Render Passes";
 			sourceTree = "<group>";
@@ -347,14 +347,14 @@
 				8282C1C32AB5B7AF001A3850 /* ForwardRenderPass.swift in Sources */,
 				8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */,
 				8272AC342AAD8E3A007301AB /* InputController.swift in Sources */,
-				82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */,
+				8297A4A32AC26640000F45F5 /* RenderPass.swift in Sources */,
 				8272AC422AADB6E9007301AB /* DebugLights.metal in Sources */,
 				8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */,
 				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
 				8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */,
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
-				82C530832AB5C60700398FB7 /* ObjectId.metal in Sources */,
+				8297A4A72AC26754000F45F5 /* ObjectId.metal in Sources */,
 				8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */,
 				82133A372AAC044B00D7C004 /* Mesh.swift in Sources */,
 				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
@@ -365,7 +365,7 @@
 				824770E42AA7FA0B0095AB72 /* RenderPassesApp.swift in Sources */,
 				827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */,
 				822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */,
-				82C530812AB5C51F00398FB7 /* ObjectIdRenderPass.swift in Sources */,
+				8297A4A52AC2669E000F45F5 /* ObjectIdRenderPass.swift in Sources */,
 				82133A392AAC046600D7C004 /* Submesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
