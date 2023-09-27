@@ -93,6 +93,7 @@ struct GBufferRenderPass: RenderPass {
     }
     descriptor?.depthAttachment.texture = depthTexture
     descriptor?.depthAttachment.storeAction = .dontCare
+
     guard let descriptor = descriptor,
     let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(

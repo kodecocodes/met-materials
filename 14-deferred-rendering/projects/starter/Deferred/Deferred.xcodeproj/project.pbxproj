@@ -45,6 +45,7 @@
 		8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C42AB5B7CD001A3850 /* Pipelines.swift */; };
 		82C087812ABE5FE9005F7245 /* Diffuse.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82C087802ABE5FE9005F7245 /* Diffuse.metal */; };
 		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
+		82D0E9662AC3AF6C00C9FE62 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */; };
 		82E5D27F2ABC2FE8000D3F89 /* GBufferRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */; };
 		82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2802ABC31B4000D3F89 /* Options.swift */; };
 		82E5D2832ABC31E1000D3F89 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2822ABC31E1000D3F89 /* RadioButton.swift */; };
@@ -94,6 +95,7 @@
 		8282C1C42AB5B7CD001A3850 /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
 		82C087802ABE5FE9005F7245 /* Diffuse.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Diffuse.metal; sourceTree = "<group>"; };
 		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
 		82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBufferRenderPass.swift; sourceTree = "<group>"; };
 		82E5D2802ABC31B4000D3F89 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		82E5D2822ABC31E1000D3F89 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
 				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
+				82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */,
 				82C087802ABE5FE9005F7245 /* Diffuse.metal */,
 				820E10ED2AB28A2F008AF54E /* Specular.metal */,
 			);
@@ -360,6 +363,7 @@
 				824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */,
 				821CA7F02AB7CD0F00F4F840 /* DebugModel.swift in Sources */,
 				82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */,
+				82D0E9662AC3AF6C00C9FE62 /* Lighting.metal in Sources */,
 				8272AC492AADB776007301AB /* Primitive.swift in Sources */,
 				8272AC322AAD8C37007301AB /* Camera.swift in Sources */,
 				8272AC302AAD8A19007301AB /* GameScene.swift in Sources */,

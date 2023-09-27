@@ -118,7 +118,6 @@ enum PipelineStates {
     attachment?.sourceAlphaBlendFactor = .one
     return createPSO(descriptor: pipelineDescriptor)
   }
-
 }
 
 extension MTLRenderPipelineDescriptor {

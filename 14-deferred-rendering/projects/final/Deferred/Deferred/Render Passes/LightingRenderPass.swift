@@ -83,7 +83,6 @@ struct LightingRenderPass: RenderPass {
       &uniforms,
       length: MemoryLayout<Uniforms>.stride,
       index: UniformsBuffer.index)
-
     renderEncoder.setFragmentTexture(
       albedoTexture,
       index: BaseColor.index)
@@ -98,6 +97,7 @@ struct LightingRenderPass: RenderPass {
       renderEncoder: renderEncoder,
       scene: scene,
       params: params)
+
     drawPointLight(
       renderEncoder: renderEncoder,
       scene: scene,

@@ -97,7 +97,6 @@ fragment float4 fragment_deferredSun(
   return float4(color, 1);
 }
 
-
 struct PointLightIn {
   float4 position [[attribute(Position)]];
 };
@@ -135,7 +134,6 @@ fragment float4 fragment_pointLight(
   uint2 coords = uint2(in.position.xy);
   float3 normal = normalTexture.read(coords).xyz;
   float3 worldPosition = positionTexture.read(coords).xyz;
-
   Material material {
     .baseColor = 1
   };

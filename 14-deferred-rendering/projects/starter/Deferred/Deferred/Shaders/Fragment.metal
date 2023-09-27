@@ -65,7 +65,7 @@ fragment float4 fragment_main(
       in.uv * params.tiling).r;
   }
 
-  if (!is_null_texture(roughnessTexture)) {
+  if (!is_null_texture(metallicTexture)) {
     material.metallic = metallicTexture.sample(
       textureSampler,
       in.uv * params.tiling).r;

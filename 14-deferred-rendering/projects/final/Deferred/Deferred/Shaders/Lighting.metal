@@ -34,35 +34,55 @@
 using namespace metal;
 #import "Lighting.h"
 
-float3 computeDiffuse(
-  constant Light *lights,
-  float3 fragmentWorldPosition,
-  constant Params &params,
-  Material material,
-  float3 normal)
+float3 calculateSun(
+  Light light,
+  float3 normal,
+  Params params,
+  Material material)
 {
-  float3 diffuseTotal = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    switch (light.type) {
-      case Sun: {
-        diffuseTotal += calculateSun(light, normal, params, material);
-        break;
-      }
-      case Point: {
-        diffuseTotal += calculatePoint(light, fragmentWorldPosition, normal, material);
-        break;
-      }
-      case Spot: { // not yet implemented
-        break;
-      }
-      case Ambient: {  // not needed in PBR / Image-based lighting
-        break;
-      }
-      case unused: {
-        break;
-      }
-    }
-  }
-  return diffuseTotal;
+  float3 lightDirection = normalize(light.position);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
+  return diffuse * nDotL * material.ambientOcclusion;
 }
+
+float3 calculatePoint(
+  Light light,
+  float3 fragmentWorldPosition,
+  float3 normal,
+  Material material)
+{
+  float d = distance(light.position, fragmentWorldPosition);
+  float3 lightDirection = normalize(light.position - fragmentWorldPosition);
+
+  float attenuation = 1.0 / (light.attenuation.x +
+      light.attenuation.y * d + light.attenuation.z * d * d);
+  //attenuation = 1.0 / (light.attenuation.x + light.attenuation.y * d);
+  float diffuseIntensity =
+      saturate(dot(normal, lightDirection));
+  float3 color = light.color * material.baseColor * diffuseIntensity;
+  color *= attenuation;
+  if (color.r + color.g + color.b < 0.01) {
+    color = 0;
+  }
+  return color;
+}
+
+float calculateShadow(
+  float4 shadowPosition,
+  depth2d<float> shadowTexture)
+{
+  // shadow calculation
+  float3 position
+    = shadowPosition.xyz / shadowPosition.w;
+  float2 xy = position.xy;
+  xy = xy * 0.5 + 0.5;
+  xy.y = 1 - xy.y;
+  constexpr sampler s(
+    coord::normalized, filter::nearest,
+    address::clamp_to_edge,
+    compare_func:: less);
+  float shadow_sample = shadowTexture.sample(s, xy);
+  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
+}
+
