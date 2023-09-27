@@ -77,8 +77,7 @@ fragment float4 fragment_deferredSun(
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
   texture2d<float> albedoTexture [[texture(BaseColor)]],
-  texture2d<float> normalTexture [[texture(NormalTexture)]],
-  texture2d<float> positionTexture [[texture(NormalTexture + 1)]])
+  texture2d<float> normalTexture [[texture(NormalTexture)]])
 {
   uint2 coord = uint2(in.position.xy);
   float4 albedo = albedoTexture.read(coord);
