@@ -118,7 +118,8 @@ struct TiledDeferredRenderPass: RenderPass {
     depthTexture = Self.makeTexture(
       size: size,
       pixelFormat: .depth32Float_stencil8,
-      label: "Depth and Stencil Texture")
+      label: "Depth and Stencil Texture",
+      storageMode: .memoryless)
   }
 
   func draw(
@@ -151,7 +152,7 @@ struct TiledDeferredRenderPass: RenderPass {
     descriptor.depthAttachment.texture = depthTexture
     descriptor.depthAttachment.storeAction = .dontCare
     descriptor.stencilAttachment.texture = depthTexture
-    descriptor.stencilAttachment.storeAction = .store
+    descriptor.stencilAttachment.storeAction = .dontCare
 
     guard let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(

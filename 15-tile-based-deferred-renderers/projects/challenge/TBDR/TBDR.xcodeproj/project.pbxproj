@@ -48,6 +48,7 @@
 		82AD8FA52AC114A60036F10C /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AD8FA42AC114A60036F10C /* LightingRenderPass.swift */; };
 		82C087812ABE5FE9005F7245 /* Diffuse.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82C087802ABE5FE9005F7245 /* Diffuse.metal */; };
 		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
+		82D0E96C2AC3BCF200C9FE62 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E96B2AC3BCF200C9FE62 /* Lighting.metal */; };
 		82E5D27F2ABC2FE8000D3F89 /* GBufferRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */; };
 		82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2802ABC31B4000D3F89 /* Options.swift */; };
 		82E5D2832ABC31E1000D3F89 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2822ABC31E1000D3F89 /* RadioButton.swift */; };
@@ -100,6 +101,7 @@
 		82AD8FA42AC114A60036F10C /* LightingRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingRenderPass.swift; sourceTree = "<group>"; };
 		82C087802ABE5FE9005F7245 /* Diffuse.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Diffuse.metal; sourceTree = "<group>"; };
 		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		82D0E96B2AC3BCF200C9FE62 /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
 		82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBufferRenderPass.swift; sourceTree = "<group>"; };
 		82E5D2802ABC31B4000D3F89 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		82E5D2822ABC31E1000D3F89 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
 				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
+				82D0E96B2AC3BCF200C9FE62 /* Lighting.metal */,
 				82C087802ABE5FE9005F7245 /* Diffuse.metal */,
 				820E10ED2AB28A2F008AF54E /* Specular.metal */,
 				82AD8FA22AC114230036F10C /* Deferred.metal */,
@@ -385,6 +388,7 @@
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */,
+				82D0E96C2AC3BCF200C9FE62 /* Lighting.metal in Sources */,
 				82133A372AAC044B00D7C004 /* Mesh.swift in Sources */,
 				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
 				82E5D2832ABC31E1000D3F89 /* RadioButton.swift in Sources */,

@@ -96,7 +96,6 @@ fragment float4 fragment_deferredSun(
   return float4(color, 1);
 }
 
-
 struct PointLightIn {
   float4 position [[attribute(Position)]];
 };
