@@ -2,7 +2,7 @@
 
 [The Apple GPU](https://dougallj.github.io/applegpu/) and [Documentation]( https://dougallj.github.io/applegpu/docs.html)
 
-The Warrior is part of a collection of models supplied by [Quaternius](https://www.patreon.com/quaternius). The license is public domain.
+The Garden Gnome is from [Poly Haven](https://polyhaven.com/a/garden_gnome). The license is [public domain](https://polyhaven.com/license).
 
 License:
 CC0 1.0 Universal (CC0 1.0) 
