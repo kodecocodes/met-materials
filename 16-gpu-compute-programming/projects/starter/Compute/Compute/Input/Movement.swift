@@ -30,59 +30,57 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
+import Foundation
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material)
-{
-  float3 lightDirection = normalize(light.position);
-  float nDotL = saturate(dot(normal, lightDirection));
-  float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-  return diffuse * nDotL * material.ambientOcclusion * light.color;
+enum Settings {
+  static var rotationSpeed: Float { 2.0 }
+  static var translationSpeed: Float { 3.0 }
+  static var mouseScrollSensitivity: Float { 0.1 }
+  static var mousePanSensitivity: Float { 0.008 }
+  static var touchZoomSensitivity: Float { 10 }
 }
 
-float3 calculatePoint(
-  Light light,
-  float3 fragmentWorldPosition,
-  float3 normal,
-  Material material)
-{
-  float d = distance(light.position, fragmentWorldPosition);
-  float3 lightDirection = normalize(light.position - fragmentWorldPosition);
+protocol Movement where Self: Transformable {
+}
 
-  float attenuation = 1.0 / (light.attenuation.x +
-      light.attenuation.y * d + light.attenuation.z * d * d);
-  //attenuation = 1.0 / (light.attenuation.x + light.attenuation.y * d);
-  float diffuseIntensity =
-      saturate(dot(normal, lightDirection));
-  float3 color = light.color * material.baseColor * diffuseIntensity;
-  color *= attenuation;
-  if (color.r + color.g + color.b < 0.01) {
-    color = 0;
+extension Movement {
+  var forwardVector: float3 {
+    normalize([sin(rotation.y), 0, cos(rotation.y)])
   }
-  return color;
-}
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
-  float2 xy = position.xy;
-  xy = xy * 0.5 + 0.5;
-  xy.y = 1 - xy.y;
-  constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
-}
+  var rightVector: float3 {
+    [forwardVector.z, forwardVector.y, -forwardVector.x]
+  }
 
+  func updateInput(deltaTime: Float) -> Transform {
+    var transform = Transform()
+    let rotationAmount = deltaTime * Settings.rotationSpeed
+    let input = InputController.shared
+    if input.keysPressed.contains(.leftArrow) {
+      transform.rotation.y -= rotationAmount
+    }
+    if input.keysPressed.contains(.rightArrow) {
+      transform.rotation.y += rotationAmount
+    }
+    var direction: float3 = .zero
+    if input.keysPressed.contains(.keyW) {
+      direction.z += 1
+    }
+    if input.keysPressed.contains(.keyS) {
+      direction.z -= 1
+    }
+    if input.keysPressed.contains(.keyA) {
+      direction.x -= 1
+    }
+    if input.keysPressed.contains(.keyD) {
+      direction.x += 1
+    }
+    let translationAmount = deltaTime * Settings.translationSpeed
+    if direction != .zero {
+      direction = normalize(direction)
+      transform.position += (direction.z * forwardVector
+        + direction.x * rightVector) * translationAmount
+    }
+    return transform
+  }
+}

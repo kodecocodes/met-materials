@@ -43,7 +43,7 @@ float3 calculateSun(
   float3 lightDirection = normalize(light.position);
   float nDotL = saturate(dot(normal, lightDirection));
   float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-  return diffuse * nDotL * material.ambientOcclusion;
+  return diffuse * nDotL * material.ambientOcclusion * light.color;
 }
 
 float3 calculatePoint(

@@ -30,59 +30,88 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
+#ifndef Common_h
+#define Common_h
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material)
-{
-  float3 lightDirection = normalize(light.position);
-  float nDotL = saturate(dot(normal, lightDirection));
-  float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-  return diffuse * nDotL * material.ambientOcclusion * light.color;
-}
+#import <simd/simd.h>
 
-float3 calculatePoint(
-  Light light,
-  float3 fragmentWorldPosition,
-  float3 normal,
-  Material material)
-{
-  float d = distance(light.position, fragmentWorldPosition);
-  float3 lightDirection = normalize(light.position - fragmentWorldPosition);
+typedef struct {
+  matrix_float4x4 modelMatrix;
+  matrix_float4x4 viewMatrix;
+  matrix_float4x4 projectionMatrix;
+  matrix_float3x3 normalMatrix;
+} Uniforms;
 
-  float attenuation = 1.0 / (light.attenuation.x +
-      light.attenuation.y * d + light.attenuation.z * d * d);
-  //attenuation = 1.0 / (light.attenuation.x + light.attenuation.y * d);
-  float diffuseIntensity =
-      saturate(dot(normal, lightDirection));
-  float3 color = light.color * material.baseColor * diffuseIntensity;
-  color *= attenuation;
-  if (color.r + color.g + color.b < 0.01) {
-    color = 0;
-  }
-  return color;
-}
+typedef struct {
+  uint width;
+  uint height;
+  uint tiling;
+  uint lightCount;
+  vector_float3 cameraPosition;
+  float scaleFactor;
+} Params;
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
-  float2 xy = position.xy;
-  xy = xy * 0.5 + 0.5;
-  xy.y = 1 - xy.y;
-  constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
-}
+typedef enum {
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  TangentBuffer = 2,
+  BitangentBuffer = 3,
+  UniformsBuffer = 11,
+  ParamsBuffer = 12,
+  LightBuffer = 13,
+  MaterialBuffer = 14,
+  ColorBuffer = 20
+} BufferIndices;
 
+typedef enum {
+  Position = 0,
+  Normal = 1,
+  UV = 2,
+  Tangent = 3,
+  Bitangent = 4
+} Attributes;
+
+typedef enum {
+  BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  ShadowTexture = 11,
+  PositionTexture = 12
+} TextureIndices;
+
+typedef enum {
+  unused = 0,
+  Sun = 1,
+  Spot = 2,
+  Point = 3,
+  Ambient = 4
+} LightType;
+
+typedef struct {
+  LightType type;
+  vector_float3 position;
+  vector_float3 color;
+  vector_float3 specularColor;
+  float radius;
+  vector_float3 attenuation;
+  float coneAngle;
+  vector_float3 coneDirection;
+  float coneAttenuation;
+} Light;
+
+typedef struct {
+  vector_float3 baseColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+} Material;
+
+typedef enum {
+  RenderTargetAlbedo = 1,
+  RenderTargetNormal = 2,
+  RenderTargetPosition = 3
+} RenderTargetIndices;
+
+#endif /* Common_h */

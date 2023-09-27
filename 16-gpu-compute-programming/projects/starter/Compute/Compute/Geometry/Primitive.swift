@@ -30,59 +30,54 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
+import MetalKit
+// swiftlint:disable force_try
 
-float3 calculateSun(
-  Light light,
-  float3 normal,
-  Params params,
-  Material material)
-{
-  float3 lightDirection = normalize(light.position);
-  float nDotL = saturate(dot(normal, lightDirection));
-  float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-  return diffuse * nDotL * material.ambientOcclusion * light.color;
+enum Primitive {
+  case plane, sphere, icosahedron
 }
 
-float3 calculatePoint(
-  Light light,
-  float3 fragmentWorldPosition,
-  float3 normal,
-  Material material)
-{
-  float d = distance(light.position, fragmentWorldPosition);
-  float3 lightDirection = normalize(light.position - fragmentWorldPosition);
+extension Model {
+  convenience init(name: String, primitiveType: Primitive) {
+    let mdlMesh = Self.createMesh(primitiveType: primitiveType)
+    mdlMesh.vertexDescriptor = MDLVertexDescriptor.defaultLayout
+    mdlMesh.addTangentBasis(
+      forTextureCoordinateAttributeNamed:
+        MDLVertexAttributeTextureCoordinate,
+      tangentAttributeNamed: MDLVertexAttributeTangent,
+      bitangentAttributeNamed: MDLVertexAttributeBitangent)
 
-  float attenuation = 1.0 / (light.attenuation.x +
-      light.attenuation.y * d + light.attenuation.z * d * d);
-  //attenuation = 1.0 / (light.attenuation.x + light.attenuation.y * d);
-  float diffuseIntensity =
-      saturate(dot(normal, lightDirection));
-  float3 color = light.color * material.baseColor * diffuseIntensity;
-  color *= attenuation;
-  if (color.r + color.g + color.b < 0.01) {
-    color = 0;
+    let mtkMesh = try! MTKMesh(mesh: mdlMesh, device: Renderer.device)
+    let mesh = Mesh(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
+    self.init()
+    self.meshes = [mesh]
+    self.name = name
   }
-  return color;
+
+  static func createMesh(primitiveType: Primitive) -> MDLMesh {
+    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
+    switch primitiveType {
+    case .icosahedron:
+      return MDLMesh(
+        icosahedronWithExtent: [1, 1, 1],
+        inwardNormals: false,
+        geometryType: .triangles,
+        allocator: allocator)
+    case .plane:
+      return MDLMesh(
+        planeWithExtent: [1, 1, 1],
+        segments: [4, 4],
+        geometryType: .triangles,
+        allocator: allocator)
+    case .sphere:
+      return MDLMesh(
+        sphereWithExtent: [1, 1, 1],
+        segments: [30, 30],
+        inwardNormals: false,
+        geometryType: .triangles,
+        allocator: allocator)
+    }
+  }
 }
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
-  float2 xy = position.xy;
-  xy = xy * 0.5 + 0.5;
-  xy.y = 1 - xy.y;
-  constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
-}
-
+// swiftlint:enable force_try
