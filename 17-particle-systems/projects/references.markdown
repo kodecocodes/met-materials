@@ -12,8 +12,6 @@
 
 [OpenGL-Tutorial - Particles](http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/)
 
-[OGLdev - Particle System using Transform Feedback](http://ogldev.atspace.co.uk/www/tutorial28/tutorial28.html)
-
 
 
 
