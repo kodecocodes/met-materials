@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */; };
+		8203AC0E2AC4F6E600589DF1 /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8203AC0D2AC4F6E600589DF1 /* Deferred.metal */; };
+		8203AC102AC4F76D00589DF1 /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8203AC0F2AC4F76D00589DF1 /* LightingRenderPass.swift */; };
 		820E10EE2AB28A2F008AF54E /* Specular.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820E10ED2AB28A2F008AF54E /* Specular.metal */; };
 		82133A372AAC044B00D7C004 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A362AAC044B00D7C004 /* Mesh.swift */; };
 		82133A392AAC046600D7C004 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A382AAC046600D7C004 /* Submesh.swift */; };
@@ -46,8 +48,6 @@
 		82C087812ABE5FE9005F7245 /* Diffuse.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82C087802ABE5FE9005F7245 /* Diffuse.metal */; };
 		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
 		82D0E9662AC3AF6C00C9FE62 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */; };
-		82D0E9682AC3B52200C9FE62 /* Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9672AC3B52200C9FE62 /* Deferred.metal */; };
-		82D0E96A2AC3B5E100C9FE62 /* LightingRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9692AC3B5E100C9FE62 /* LightingRenderPass.swift */; };
 		82E5D27F2ABC2FE8000D3F89 /* GBufferRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */; };
 		82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2802ABC31B4000D3F89 /* Options.swift */; };
 		82E5D2832ABC31E1000D3F89 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2822ABC31E1000D3F89 /* RadioButton.swift */; };
@@ -56,6 +56,8 @@
 /* Begin PBXFileReference section */
 		8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
 		8201D1042AADBE4A00F7DA0B /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
+		8203AC0D2AC4F6E600589DF1 /* Deferred.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Deferred.metal; sourceTree = "<group>"; };
+		8203AC0F2AC4F76D00589DF1 /* LightingRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingRenderPass.swift; sourceTree = "<group>"; };
 		820E10ED2AB28A2F008AF54E /* Specular.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Specular.metal; sourceTree = "<group>"; };
 		82133A352AAC005300D7C004 /* ShaderDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefs.h; sourceTree = "<group>"; };
 		82133A362AAC044B00D7C004 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
@@ -98,8 +100,6 @@
 		82C087802ABE5FE9005F7245 /* Diffuse.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Diffuse.metal; sourceTree = "<group>"; };
 		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
-		82D0E9672AC3B52200C9FE62 /* Deferred.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Deferred.metal; sourceTree = "<group>"; };
-		82D0E9692AC3B5E100C9FE62 /* LightingRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingRenderPass.swift; sourceTree = "<group>"; };
 		82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBufferRenderPass.swift; sourceTree = "<group>"; };
 		82E5D2802ABC31B4000D3F89 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		82E5D2822ABC31E1000D3F89 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				82D0E9652AC3AF6C00C9FE62 /* Lighting.metal */,
 				82C087802ABE5FE9005F7245 /* Diffuse.metal */,
 				820E10ED2AB28A2F008AF54E /* Specular.metal */,
-				82D0E9672AC3B52200C9FE62 /* Deferred.metal */,
+				8203AC0D2AC4F6E600589DF1 /* Deferred.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -257,10 +257,10 @@
 		82C5307D2AB5C37200398FB7 /* Render Passes */ = {
 			isa = PBXGroup;
 			children = (
+				8229D08A2ABBE35400F3BDDB /* ShadowRenderPass.swift */,
 				8282C1C22AB5B7AF001A3850 /* ForwardRenderPass.swift */,
 				82E5D27E2ABC2FE8000D3F89 /* GBufferRenderPass.swift */,
-				8229D08A2ABBE35400F3BDDB /* ShadowRenderPass.swift */,
-				82D0E9692AC3B5E100C9FE62 /* LightingRenderPass.swift */,
+				8203AC0F2AC4F76D00589DF1 /* LightingRenderPass.swift */,
 				8282C1C42AB5B7CD001A3850 /* Pipelines.swift */,
 				82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */,
 			);
@@ -386,7 +386,7 @@
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */,
 				82133A372AAC044B00D7C004 /* Mesh.swift in Sources */,
-				82D0E9682AC3B52200C9FE62 /* Deferred.metal in Sources */,
+				8203AC0E2AC4F6E600589DF1 /* Deferred.metal in Sources */,
 				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
 				82E5D2832ABC31E1000D3F89 /* RadioButton.swift in Sources */,
 				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
@@ -397,7 +397,7 @@
 				824770E42AA7FA0B0095AB72 /* DeferredApp.swift in Sources */,
 				8229D08B2ABBE35400F3BDDB /* ShadowRenderPass.swift in Sources */,
 				827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */,
-				82D0E96A2AC3B5E100C9FE62 /* LightingRenderPass.swift in Sources */,
+				8203AC102AC4F76D00589DF1 /* LightingRenderPass.swift in Sources */,
 				822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */,
 				82133A392AAC046600D7C004 /* Submesh.swift in Sources */,
 				82C087812ABE5FE9005F7245 /* Diffuse.metal in Sources */,
@@ -533,8 +533,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Deferred/Deferred.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -560,7 +558,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Deferred;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -575,8 +572,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Deferred/Deferred.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -602,7 +597,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Deferred;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
