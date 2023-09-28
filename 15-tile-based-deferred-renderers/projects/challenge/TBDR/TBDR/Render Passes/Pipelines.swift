@@ -86,7 +86,6 @@ enum PipelineStates {
         = colorPixelFormat
     }
     pipelineDescriptor.setGBufferPixelFormats()
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.depthAttachmentPixelFormat
       = .depth32Float_stencil8
     pipelineDescriptor.stencilAttachmentPixelFormat
@@ -110,7 +109,6 @@ enum PipelineStates {
     if tiled {
       pipelineDescriptor.setGBufferPixelFormats()
     }
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.depthAttachmentPixelFormat
       = .depth32Float_stencil8
     pipelineDescriptor.stencilAttachmentPixelFormat
@@ -132,7 +130,6 @@ enum PipelineStates {
     if tiled {
       pipelineDescriptor.setGBufferPixelFormats()
     }
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.depthAttachmentPixelFormat
       = .depth32Float_stencil8
     pipelineDescriptor.stencilAttachmentPixelFormat
