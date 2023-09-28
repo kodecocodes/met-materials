@@ -89,14 +89,6 @@ class Renderer: NSObject {
     params.scaleFactor = Float(UIScreen.main.scale)
 #endif
   }
-
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
 }
 
 extension Renderer {
