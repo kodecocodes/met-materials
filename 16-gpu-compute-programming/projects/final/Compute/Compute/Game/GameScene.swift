@@ -53,8 +53,7 @@ struct GameScene {
     camera.target = [0, 0.3, 0]
     camera.distance = 0.5
     models = [gnome]
-//    gnome.convertMesh()
-    convertMesh(gnome)
+    gnome.convertMesh()
   }
 
   mutating func update(size: CGSize) {
