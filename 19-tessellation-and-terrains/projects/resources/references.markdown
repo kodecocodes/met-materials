@@ -4,9 +4,9 @@
 
 ### Bezier surfaces
 
-[A Primer on Bezier Curves (2d) by Pomax](https://pomax.github.io/bezierinfo/)
+[The Beauty of Bézier Curves by Freya Holmér](https://youtu.be/aVwxzDHniEw?si=y3Swz7oHRU_koISc)
 
-[Bezier Curves and Surfaces](https://www.scratchapixel.com/lessons/advanced-rendering/bezier-curve-rendering-utah-teapot/bezier-surface)
+[A Primer on Bezier Curves (2d) by Pomax](https://pomax.github.io/bezierinfo/)
 
 [Visualizing Parametric Equations with K3DSurf](http://k3dsurf.sourceforge.net)
 
