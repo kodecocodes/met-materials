@@ -33,12 +33,16 @@
 import simd
 import CoreGraphics
 
-// Math Library v4.00
+// Math Library v4.01
 // Note: Matrices are column-major
 
 // swiftlint:disable type_name
 // swiftlint:disable identifier_name
 // swiftlint:disable comma
+
+// release note 4.01
+// fixed float4x4.scaling(float:)
+// it used to divide w by the scaling factor
 
 typealias float2 = SIMD2<Float>
 typealias float3 = SIMD3<Float>
@@ -80,8 +84,7 @@ extension float4x4 {
   }
 
   init(scaling: Float) {
-    self = matrix_identity_float4x4
-    columns.3.w = 1 / scaling
+    self = .init(scaling: [scaling, scaling, scaling])
   }
 
   // MARK: - Rotate

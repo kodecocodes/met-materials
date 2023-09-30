@@ -178,7 +178,7 @@ kernel void boids(
        || predator.position.y > output.get_height()) {
     predator.velocity.y *= -1;
   }
-  predator.position += predator.velocity * 2;
+  predator.position += predator.velocity * 2.0;
   boids[0] = predator;
 
   uint2 location = uint2(position);

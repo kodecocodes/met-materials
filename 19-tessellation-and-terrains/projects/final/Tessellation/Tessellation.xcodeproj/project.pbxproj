@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820CC5AA2AC7D38A0005BEF7 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820CC5A92AC7D38A0005BEF7 /* Tessellation.metal */; };
 		822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF5282AA865D2008CC2C8 /* MathLibrary.swift */; };
 		824172572AC65C1400CB2A91 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824172562AC65C1400CB2A91 /* Quad.swift */; };
 		8241725A2AC65C5400CB2A91 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824172592AC65C5400CB2A91 /* TextureController.swift */; };
@@ -17,7 +18,6 @@
 		824172652AC65D4600CB2A91 /* IndexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824172642AC65D4600CB2A91 /* IndexExtensions.swift */; };
 		824172672AC65E4300CB2A91 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824172662AC65E4300CB2A91 /* OptionsView.swift */; };
 		824172692AC65E6B00CB2A91 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 824172682AC65E6B00CB2A91 /* Shaders.metal */; };
-		8241726B2AC6613800CB2A91 /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8241726A2AC6613800CB2A91 /* Tessellation.metal */; };
 		824770E42AA7FA0B0095AB72 /* TessellationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E32AA7FA0B0095AB72 /* TessellationApp.swift */; };
 		824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E52AA7FA0B0095AB72 /* ContentView.swift */; };
 		824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770E72AA7FA0C0095AB72 /* Assets.xcassets */; };
@@ -29,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		820CC5A92AC7D38A0005BEF7 /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 		822EF5282AA865D2008CC2C8 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		822EF5322AA869E4008CC2C8 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		824172562AC65C1400CB2A91 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		824172642AC65D4600CB2A91 /* IndexExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexExtensions.swift; sourceTree = "<group>"; };
 		824172662AC65E4300CB2A91 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		824172682AC65E6B00CB2A91 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		8241726A2AC6613800CB2A91 /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 		824770E02AA7FA0B0095AB72 /* Tessellation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tessellation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		824770E32AA7FA0B0095AB72 /* TessellationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TessellationApp.swift; sourceTree = "<group>"; };
 		824770E52AA7FA0B0095AB72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			children = (
 				822EF5322AA869E4008CC2C8 /* Common.h */,
 				824172682AC65E6B00CB2A91 /* Shaders.metal */,
-				8241726A2AC6613800CB2A91 /* Tessellation.metal */,
+				820CC5A92AC7D38A0005BEF7 /* Tessellation.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -261,7 +261,7 @@
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				824172692AC65E6B00CB2A91 /* Shaders.metal in Sources */,
-				8241726B2AC6613800CB2A91 /* Tessellation.metal in Sources */,
+				820CC5AA2AC7D38A0005BEF7 /* Tessellation.metal in Sources */,
 				824172572AC65C1400CB2A91 /* Quad.swift in Sources */,
 				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
 				8241725F2AC65C9F00CB2A91 /* InputController.swift in Sources */,
