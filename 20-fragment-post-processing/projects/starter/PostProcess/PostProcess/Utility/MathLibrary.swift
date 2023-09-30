@@ -84,7 +84,6 @@ extension float4x4 {
   }
 
   init(scaling: Float) {
-    self = matrix_identity_float4x4
     self = .init(scaling: [scaling, scaling, scaling])
   }
 
