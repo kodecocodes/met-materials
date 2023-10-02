@@ -3,40 +3,23 @@
 [Adobe: The PBR Guide - Part 1](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
 [Adobe: The PBR Guide - Part 2](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-2)
 
-[SIGGRAPH University - Introduction to "Physically Based Shading in Theory and Practice" by Naty Hoffman](https://youtu.be/j-A0mwsJRmk)
-
+[SIGGRAPH University - Physics and Math of Shading" by Naty Hoffman](https://youtu.be/j-A0mwsJRmk)
 
 ## Create your own skybox textures
 
-### 1. Find a texture
+1. Find an equirectangular environment map. This is a texture which has the full 360º view projected onto it. 
 
-Find an equirectangular environment map. This is a texture which has the full 360º view projected onto it. 
-
-**Sources of environment maps:**
+A good source of environment maps:
 
 [https://polyhaven.com/hdris](https://polyhaven.com/hdris) 100% free and licenced CC0
 
-[http://www.hdrlabs.com/sibl/archive.html](http://www.hdrlabs.com/sibl/archive.html) free, but licenced as Creative Commons Attribution-Noncommercial-Share Alike 3.0.
+2. Upload the image to [https://matheowis.github.io/HDRI-to-CubeMap/](https://matheowis.github.io/HDRI-to-CubeMap/)
 
-**Using your own pictures:**
+3. Choose the layout that downloads six separate .png files.
 
-Download [Google StreetView app](https://itunes.apple.com/us/app/google-street-view/id904418768?mt=8). Find an uncrowded place such as a park or the beach and use the app to create the 360º image.
+4. Click Process and then Save.
 
-### 2. Convert the texture to a jpg
-
-If you're converting a hdri, conversion loses the high dynamic range values, so you can use the result as a sky texture, but it is not good for lighting. (hdr files contain rgb values higher than 1.0)
-
-You can convert hdris using Preview, however in an app such as Affinity Photo, you can do tone mapping to bring the high dynamic range into the jpg's low dynamic range. 
-
-### 3. Extract six square textures from the map
-
-Upload the image to: [https://jaxry.github.io/panorama-to-cubemap/](https://jaxry.github.io/panorama-to-cubemap/), convert and download the six cube faces.
-
-Alternatively, to convert on your own computer, go to: [https://aerotwist.com/tutorials/create-your-own-environment-maps/](https://aerotwist.com/tutorials/create-your-own-environment-maps/) and download from the **CONVERT TO CUBE** section the Blender file. This Blender file will convert an equirectangular file called **environment.jpg**. Follow the instructions in that section to create the six images. These will have numbered file names, but the page describes which number equates to which cube face.
-
-### 4. Import the texture
-
-In your project, create a cube texture in the asset catalog, and drag the six images into their appropriate locations.
+5. In your project, create a cube texture in the asset catalog, and drag the six images into their appropriate locations.
 
 ## Epic Games and rendering in Fortnite
 

@@ -1,16 +1,20 @@
-// For license, see Resources/License.txt
-
-import Cocoa
+import SwiftUI
 import PlaygroundSupport
 
-// Setup Metal
-let device = MTLCreateSystemDefaultDevice()!
-let frame = NSRect(x: 0, y: 0, width: 800, height: 800)
-var metalViewFrame = frame
-metalViewFrame.origin.y = 200
-metalViewFrame.size.height = 600
-let metalView = MetalView(frame: metalViewFrame, device: device)
-let view = SlidersView(frame: frame, metalView: metalView)
-view.addSubview(metalView)
-PlaygroundPage.current.liveView = view
-metalView.renderer = Renderer(metalView: metalView)
+struct ContentView: View {
+  @State var options = Options()
+
+  var body: some View {
+    VStack {
+      MetalView(options: options)
+        .border(Color.black, width: 2)
+        .frame(width: 500, height: 500)
+      SlidersView(options: options)
+    }
+  }
+}
+
+let view = ContentView()
+let hostingVC = UIHostingController(rootView: view)
+PlaygroundPage.current.liveView = hostingVC
+

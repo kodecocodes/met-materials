@@ -12,7 +12,6 @@
 		826D68A61FD91D5F00F993DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 826D68A51FD91D5F00F993DC /* Assets.xcassets */; };
 		826D68A91FD91D5F00F993DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 826D68A71FD91D5F00F993DC /* Main.storyboard */; };
 		826D68B21FD91DF200F993DC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D68B11FD91DF200F993DC /* Extensions.swift */; };
-		82A94B481FDC9B73001F5912 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 82A94B471FDC9B73001F5912 /* License.txt */; };
 		CD9C909221044138009479FA /* negx.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9C908C21044137009479FA /* negx.png */; };
 		CD9C909321044138009479FA /* posz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9C908D21044137009479FA /* posz.png */; };
 		CD9C909421044138009479FA /* negz.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9C908E21044137009479FA /* negz.png */; };
@@ -32,7 +31,6 @@
 		826D68AB1FD91D5F00F993DC /* Specular.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Specular.entitlements; sourceTree = "<group>"; };
 		826D68B11FD91DF200F993DC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		826D68B51FD9222F00F993DC /* Notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Notes.md; sourceTree = "<group>"; };
-		82A94B471FDC9B73001F5912 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		CD9C908C21044137009479FA /* negx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = negx.png; sourceTree = "<group>"; };
 		CD9C908D21044137009479FA /* posz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = posz.png; sourceTree = "<group>"; };
 		CD9C908E21044137009479FA /* negz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = negz.png; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 				826D68A11FD91D5F00F993DC /* AppDelegate.swift */,
 				826D68A31FD91D5F00F993DC /* ViewController.swift */,
 				826D68B11FD91DF200F993DC /* Extensions.swift */,
-				82A94B471FDC9B73001F5912 /* License.txt */,
 				CDF5DC5021055AF000472532 /* BRDF.metal */,
 				CD72BEFE20EEFF0A00130486 /* Sky Images */,
 				826D68A51FD91D5F00F993DC /* Assets.xcassets */,
@@ -164,7 +161,6 @@
 				CD9C909321044138009479FA /* posz.png in Resources */,
 				826D68A61FD91D5F00F993DC /* Assets.xcassets in Resources */,
 				CD9C909621044138009479FA /* negy.png in Resources */,
-				82A94B481FDC9B73001F5912 /* License.txt in Resources */,
 				CD9C909421044138009479FA /* negz.png in Resources */,
 				CD9C909221044138009479FA /* negx.png in Resources */,
 				CD9C909721044138009479FA /* posy.png in Resources */,
@@ -322,7 +318,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Specular/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Specular;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Specular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -338,7 +334,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Specular/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Specular;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Specular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

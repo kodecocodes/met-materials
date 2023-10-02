@@ -1,52 +1,105 @@
+///// Copyright (c) 2023 Kodeco Inc.
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+///
+/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+/// distribute, sublicense, create a derivative work, and/or sell copies of the
+/// Software in any work that is designed, intended, or marketed for pedagogical or
+/// instructional purposes related to programming, coding, application development,
+/// or information technology.  Permission for such use, copying, modification,
+/// merger, publication, distribution, sublicensing, creation of derivative works,
+/// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+
+import SwiftUI
 import MetalKit
 
-public class MetalView: MTKView {
-  public var renderer: Renderer?
-  
+public struct MetalView: View {
+  let options: Options
+  @State private var metalView = MTKView()
+  @State private var previousTranslation = CGSize.zero
+  @State private var previousScroll: CGFloat = 1
+  @State private var renderer: Renderer?
 
-  public required init(coder: NSCoder) {
-    fatalError()
-  }
-  public override init(frame: NSRect, device: MTLDevice?) {
-    super.init(frame: frame, device: device)
-    let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
-    addGestureRecognizer(pan)
-    let click = NSClickGestureRecognizer(target: self, action: #selector(handleClick(gesture:)))
-    addGestureRecognizer(click)
-  }
-  
-  @objc public func handlePan(gesture: NSPanGestureRecognizer) {
-    let translation = gesture.translation(in: self)
-    renderer?.rotateUsing(translation: translation)
-    gesture.setTranslation(.zero, in: self)
-  }
-  
-  public override func scrollWheel(with event: NSEvent) {
-    renderer?.zoomUsing(delta: event.deltaY)
-  }
-  
-  @objc public func handleClick(gesture: NSClickGestureRecognizer) {
-    guard let renderer = renderer else { return }
-    renderer.isWireframe = !renderer.isWireframe
-  }
-  
-  @objc public func turbiditySliderChanged(sender: NSSlider) {
-    print("Turbidity: ", sender.floatValue)
-    renderer?.skyboxSettings.turbidity = sender.floatValue
-  }
-  
-  @objc public func sunElevationSliderChanged(sender: NSSlider) {
-    print("Sun elevation: ", sender.floatValue)
-    renderer?.skyboxSettings.sunElevation = sender.floatValue
+  public init(options: Options) {
+    self.options = options
   }
 
-  @objc public func scatteringSliderChanged(sender: NSSlider) {
-    print("Upper atmosphere scattering: ", sender.floatValue)
-    renderer?.skyboxSettings.upperAtmosphereScattering = sender.floatValue
+  public var body: some View {
+    MetalViewRepresentable(
+      metalView: $metalView)
+    .onAppear {
+      renderer = Renderer(
+        metalView: metalView,
+        options: options)
+    }
+    .gesture(DragGesture(minimumDistance: 0)
+      .onChanged { value in
+        InputController.shared.touchLocation = value.location
+        InputController.shared.touchDelta = CGSize(
+          width: value.translation.width - previousTranslation.width,
+          height: value.translation.height - previousTranslation.height)
+        previousTranslation = value.translation
+        // if the user drags, cancel the tap touch
+        if abs(value.translation.width) > 1 ||
+            abs(value.translation.height) > 1 {
+          InputController.shared.touchLocation = nil
+        }
+      }
+      .onEnded {_ in
+        previousTranslation = .zero
+      })
+    .gesture(MagnificationGesture()
+      .onChanged { value in
+        let scroll = value - previousScroll
+        InputController.shared.mouseScroll.x = Float(scroll)
+        * Settings.touchZoomSensitivity
+        previousScroll = value
+      }
+      .onEnded {_ in
+        previousScroll = 1
+      })
+  }
+}
+typealias ViewRepresentable = UIViewRepresentable
+
+public struct MetalViewRepresentable: ViewRepresentable {
+  @Binding var metalView: MTKView
+
+  public func makeUIView(context: Context) -> MTKView {
+    metalView
   }
 
-  @objc public func albedoSliderChanged(sender: NSSlider) {
-    print("Ground albedo: ", sender.floatValue)
-    renderer?.skyboxSettings.groundAlbedo = sender.floatValue
+  public func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+
+  func updateMetalView() {
+  }
+}
+
+#Preview {
+  VStack {
+    MetalView(options: Options())
+    Text("Metal View")
   }
 }

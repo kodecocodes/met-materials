@@ -1,4 +1,4 @@
-/// Copyright (c) 2022 Razeware LLC
+///// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import Cocoa
 // Thanks to Stack Overflow
 // https://stackoverflow.com/a/45042611/359578
 
-public extension NSImage {
+extension NSImage {
   func writePNG(to url: URL) {
     print("saving to \(url)")
     guard let data = tiffRepresentation,
