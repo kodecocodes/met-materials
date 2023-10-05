@@ -34,7 +34,7 @@ import MetalKit
 
 struct GameScene {
   lazy var ball: Model = {
-    Model(name: "robot_walk_idle.usdz")
+    Model(name: "beachball.usdz")
   }()
   lazy var ground: Model = {
     var model = Model(name: "ground", primitiveType: .plane)
@@ -59,8 +59,6 @@ struct GameScene {
   init() {
     camera.transform = defaultView
     camera.far = 20
-    ball.scale = 0.1
-    ball.rotation.y = .pi
     models = [ball, ground]
   }
 
