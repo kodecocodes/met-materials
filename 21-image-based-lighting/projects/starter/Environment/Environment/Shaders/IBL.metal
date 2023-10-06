@@ -90,24 +90,6 @@ fragment float4 fragment_IBL(
   }
   normal = normalize(normal);
 
-  // compute the diffuse
-  float3 diffuseColor =
-    computeDiffuse(lights, params, material, normal);
-
-  // compute the specular
-  float3 specularColor =
-    computeSpecular(
-      lights,
-      params,
-      material,
-      normal);
-
-  // calculate the shadow
-  float shadow = calculateShadow(in.shadowPosition, shadowTexture);
-  diffuseColor *= shadow;
-
-  // the final result
-  float4 color =
-    float4(diffuseColor + specularColor, material.opacity);
+  float4 color = float4(material.baseColor, 1);
   return color;
 }

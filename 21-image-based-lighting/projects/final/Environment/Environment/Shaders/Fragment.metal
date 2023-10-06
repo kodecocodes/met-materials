@@ -131,5 +131,5 @@ float calculateShadow(
     address::clamp_to_edge,
     compare_func:: less);
   float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
+  return (position.z > shadow_sample + 0.005) ? 0.5 : 1;
 }
