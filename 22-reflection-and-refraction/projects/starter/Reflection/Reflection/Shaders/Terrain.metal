@@ -72,7 +72,7 @@ fragment float4 fragment_terrain(
   float maxIntensity = 1;
   float minIntensity = 0.2;
   diffuseIntensity = diffuseIntensity * (maxIntensity - minIntensity) + minIntensity;
-//  color *= diffuseIntensity;
+  color *= diffuseIntensity;
   color *= calculateShadow(in.shadowPosition, shadowTexture);
   return color;
 }

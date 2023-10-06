@@ -71,7 +71,7 @@ struct GameScene {
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()
       camera.transform.rotation.x = -.pi / 2
-      camera.transform.position = [0, 30, 0]
+      camera.transform.position = [4, 30, 22]
       input.keysPressed.remove(.one)
     }
     if input.keysPressed.contains(.two) {
