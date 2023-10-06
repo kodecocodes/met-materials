@@ -37,15 +37,19 @@ struct OptionsView: View {
   @Bindable var options: Options
 
   var body: some View {
-    VStack(alignment: .leading) {
-      Toggle("Alpha Testing", isOn: $options.alphaTesting)
-      Toggle("Scissor Testing", isOn: $options.scissorTesting)
-      Toggle("Alpha Blending", isOn: $options.alphaBlending)
-      Toggle("Antialiasing", isOn: $options.antialiasing)
-      Toggle("Fog", isOn: $options.fog)
+    HStack {
+      VStack(alignment: .leading) {
+        Toggle("Alpha Testing", isOn: $options.alphaTesting)
+        Toggle("Scissor Testing", isOn: $options.scissorTesting)
+        Toggle("Alpha Blending", isOn: $options.alphaBlending)
+        Toggle("Antialiasing", isOn: $options.antialiasing)
+        Toggle("Fog", isOn: $options.fog)
+      }
+      .padding()
+      .foregroundColor(.black)
+      Spacer()
     }
-    .padding(.top)
-    .frame(width: 150)
+    .frame(width: 200)
   }
 }
 

@@ -69,7 +69,6 @@ fragment float4 fragment_main(
   Material material = _material;
 
   if (!is_null_texture(baseColorTexture)) {
-
     float4 color = baseColorTexture.sample(
       textureSampler,
       in.uv * params.tiling);
