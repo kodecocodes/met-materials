@@ -38,7 +38,6 @@ struct TransformComponent {
   var currentTransform: float4x4 = .identity
 
   init(
-    transform: MDLTransformComponent,
     object: MDLObject,
     startTime: TimeInterval,
     endTime: TimeInterval

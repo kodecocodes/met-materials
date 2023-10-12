@@ -33,6 +33,7 @@
 import MetalKit
 
 struct GameScene {
+  lazy var beachball = Beachball(model: ball)
   lazy var ball: Model = {
     Model(name: "beachball.usdz")
   }()
@@ -44,8 +45,6 @@ struct GameScene {
     model.rotation.z = Float(270).degreesToRadians
     return model
   }()
-
-  lazy var beachball = Beachball(model: ball)
 
   var models: [Model] = []
   var camera = PlayerCamera()

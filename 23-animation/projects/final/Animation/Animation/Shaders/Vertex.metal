@@ -55,7 +55,5 @@ vertex VertexOut vertex_main(
       uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
       * uniforms.modelMatrix * in.position
   };
-  out.clip_distance[0] =
-    dot(uniforms.modelMatrix * in.position, uniforms.clipPlane);
   return out;
 }

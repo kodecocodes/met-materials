@@ -51,7 +51,6 @@ struct VertexOut {
   float3 worldTangent;
   float3 worldBitangent;
   float4 shadowPosition;
-  float clip_distance [[clip_distance]] [1];
 };
 
 struct FragmentIn {

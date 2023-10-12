@@ -35,6 +35,5 @@ import Observation
 
 @Observable
 class Options {
-  // disable alphaBlending to turn off transparency render
   var alphaBlending = true
 }

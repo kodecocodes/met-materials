@@ -38,9 +38,7 @@ import MetalKit
 struct Mesh {
   var vertexBuffers: [MTLBuffer]
   var submeshes: [Submesh]
-}
 
-extension Mesh {
   init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
     var vertexBuffers: [MTLBuffer] = []
     for mtkMeshBuffer in mtkMesh.vertexBuffers {

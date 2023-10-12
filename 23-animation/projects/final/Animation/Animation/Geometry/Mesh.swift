@@ -47,19 +47,15 @@ struct Mesh {
     endTime: TimeInterval
   ) {
     self.init(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
-    if let mdlMeshTransform = mdlMesh.transform {
+
+    if mdlMesh.transform != nil {
       transform = TransformComponent(
-        transform: mdlMeshTransform,
         object: mdlMesh,
         startTime: startTime,
         endTime: endTime)
-    } else {
-      transform = nil
     }
   }
-}
 
-extension Mesh {
   init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
     var vertexBuffers: [MTLBuffer] = []
     for mtkMeshBuffer in mtkMesh.vertexBuffers {

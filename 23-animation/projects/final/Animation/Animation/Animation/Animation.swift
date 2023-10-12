@@ -55,7 +55,6 @@ struct Animation {
       !repeatAnimation {
       return lastKeyframe.value
     }
-
     currentTime = fmod(currentTime, lastKeyframe.time)
     let keyFramePairs = translations.indices.dropFirst().map {
       (previous: translations[$0 - 1], next: translations[$0])
