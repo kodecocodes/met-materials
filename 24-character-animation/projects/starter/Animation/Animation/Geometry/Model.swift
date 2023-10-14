@@ -39,7 +39,6 @@ class Model: Transformable {
   var meshes: [Mesh] = []
   var name: String = "Untitled"
   var tiling: UInt32 = 1
-  var hasTransparency = false
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
@@ -82,9 +81,6 @@ class Model: Transformable {
         endTime: asset.endTime)
     }
     self.name = name
-    hasTransparency = meshes.contains { mesh in
-      mesh.submeshes.contains { $0.transparency }
-    }
     boundingBox = asset.boundingBox
   }
 

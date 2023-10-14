@@ -39,7 +39,6 @@ class Model: Transformable {
   var meshes: [Mesh] = []
   var name: String = "Untitled"
   var tiling: UInt32 = 1
-  var hasTransparency = false
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
@@ -86,9 +85,6 @@ class Model: Transformable {
         endTime: asset.endTime)
     }
     self.name = name
-    hasTransparency = meshes.contains { mesh in
-      mesh.submeshes.contains { $0.transparency }
-    }
     boundingBox = asset.boundingBox
 
     // load animated characters
@@ -121,14 +117,14 @@ class Model: Transformable {
   }
 
   func loadAnimations(asset: MDLAsset) {
-   let assetAnimations = asset.animations.objects.compactMap {
-     $0 as? MDLPackedJointAnimation
-   }
-     for assetAnimation in assetAnimations {
-       let animationClip = AnimationClip(animation: assetAnimation)
-       animationClips[assetAnimation.name] = animationClip
-   }
- }
+    let assetAnimations = asset.animations.objects.compactMap {
+      $0 as? MDLPackedJointAnimation
+    }
+    for assetAnimation in assetAnimations {
+      let animationClip = AnimationClip(animation: assetAnimation)
+      animationClips[assetAnimation.name] = animationClip
+    }
+  }
 
   func update(deltaTime: Float) {
     currentTime += deltaTime
@@ -142,11 +138,11 @@ class Model: Transformable {
     }
 
     for index in 0..<meshes.count {
-       var mesh = meshes[index]
-       mesh.transform?.getCurrentTransform(at: currentTime)
-       mesh.skin?.updatePalette(skeleton: skeleton)
-       meshes[index] = mesh
-     }
+      var mesh = meshes[index]
+      mesh.transform?.getCurrentTransform(at: currentTime)
+      mesh.skin?.updatePalette(skeleton: skeleton)
+      meshes[index] = mesh
+    }
   }
 }
 

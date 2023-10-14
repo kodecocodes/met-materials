@@ -37,14 +37,10 @@ struct ForwardRenderPass: RenderPass {
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState
-  var transparentPSO: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-
-  weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createForwardPSO()
-    transparentPSO = PipelineStates.createForwardTransparentPSO()
     depthStencilState = Self.buildDepthStencilState()
   }
 
@@ -72,10 +68,6 @@ struct ForwardRenderPass: RenderPass {
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
-    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-
-    var params = params
-    params.transparency = false
 
     for model in scene.models {
       model.render(
@@ -83,24 +75,6 @@ struct ForwardRenderPass: RenderPass {
         uniforms: uniforms,
         params: params)
     }
-
-    // transparent mesh
-    renderEncoder.pushDebugGroup("Transparency")
-    let models = scene.models.filter {
-      $0.hasTransparency
-    }
-    params.transparency = true
-    if params.alphaBlending {
-      renderEncoder.setRenderPipelineState(transparentPSO)
-    }
-    for model in models {
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-    }
-    renderEncoder.popDebugGroup()
-
     renderEncoder.endEncoding()
   }
 }

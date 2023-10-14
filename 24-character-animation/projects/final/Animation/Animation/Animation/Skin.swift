@@ -42,20 +42,20 @@ struct Skin {
     jointPaths = animationBindComponent.jointPaths ?? skeleton.jointPaths
     skinToSkeletonMap = skeleton.mapJoints(from: jointPaths)
 
-    let bufferSize = skeleton.jointPaths.count * MemoryLayout<float4x4>.stride
+    let bufferSize = jointPaths.count * MemoryLayout<float4x4>.stride
     jointMatrixPaletteBuffer = Renderer.device.makeBuffer(length: bufferSize)!
   }
 
   func updatePalette(skeleton: Skeleton?) {
-      guard let skeletonPose = skeleton?.currentPose
-        else { return }
-      var palettePointer = jointMatrixPaletteBuffer.contents().bindMemory(
-        to: float4x4.self,
-        capacity: jointPaths.count)
-      for index in 0..<jointPaths.count {
-        let skinIndex = skinToSkeletonMap[index]
-        palettePointer.pointee = skeletonPose[skinIndex]
-        palettePointer = palettePointer.advanced(by: 1)
-      }
+    guard let skeletonPose = skeleton?.currentPose
+      else { return }
+    var palettePointer = jointMatrixPaletteBuffer.contents().bindMemory(
+      to: float4x4.self,
+      capacity: jointPaths.count)
+    for index in 0..<jointPaths.count {
+      let skinIndex = skinToSkeletonMap[index]
+      palettePointer.pointee = skeletonPose[skinIndex]
+      palettePointer = palettePointer.advanced(by: 1)
     }
+  }
 }

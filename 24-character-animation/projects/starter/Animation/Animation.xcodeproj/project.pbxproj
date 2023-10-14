@@ -40,7 +40,6 @@
 		82916AB52ACE2B3000768A01 /* TransformComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82916AB42ACE2B3000768A01 /* TransformComponent.swift */; };
 		82A0AC232AC793000001585C /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A0AC222AC793000001585C /* Options.swift */; };
 		82C5307F2AB5C4CB00398FB7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */; };
-		82D0E9642AC2A46A00C9FE62 /* Shadow.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E9632AC2A46A00C9FE62 /* Shadow.metal */; };
 		82D93AD12ACE509C00FDBF59 /* ground-backdrop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 82D93AD02ACE509C00FDBF59 /* ground-backdrop.usdz */; };
 		82D93AD32ACE573300FDBF59 /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AD22ACE573300FDBF59 /* AnimationClip.swift */; };
 		82D93AD72ACE576300FDBF59 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AD62ACE576300FDBF59 /* Skeleton.swift */; };
@@ -86,7 +85,6 @@
 		82A0AC1F2AC683350001585C /* stdbool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdbool.h; sourceTree = "<group>"; };
 		82A0AC222AC793000001585C /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		82C5307E2AB5C4CB00398FB7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
-		82D0E9632AC2A46A00C9FE62 /* Shadow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shadow.metal; sourceTree = "<group>"; };
 		82D93AD02ACE509C00FDBF59 /* ground-backdrop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "ground-backdrop.usdz"; sourceTree = "<group>"; };
 		82D93AD22ACE573300FDBF59 /* AnimationClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClip.swift; sourceTree = "<group>"; };
 		82D93AD62ACE576300FDBF59 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 			children = (
 				822EF5322AA869E4008CC2C8 /* Common.h */,
 				82133A352AAC005300D7C004 /* ShaderDefs.h */,
-				82D0E9632AC2A46A00C9FE62 /* Shadow.metal */,
 				827621AD2AA8779800CE91D1 /* Vertex.metal */,
 				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
 				82A0AC1F2AC683350001585C /* stdbool.h */,
@@ -383,7 +380,6 @@
 				827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */,
 				822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */,
 				82133A392AAC046600D7C004 /* Submesh.swift in Sources */,
-				82D0E9642AC2A46A00C9FE62 /* Shadow.metal in Sources */,
 				82916AB32ACE290200768A01 /* Animation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

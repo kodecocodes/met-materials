@@ -35,10 +35,6 @@ using namespace metal;
 #import "Common.h"
 #import "ShaderDefs.h"
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
 fragment float4 fragment_main(
   constant Params &params [[buffer(ParamsBuffer)]],
   FragmentIn in [[stage_in]],
@@ -49,8 +45,7 @@ fragment float4 fragment_main(
   texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
-  texture2d<float> opacityTexture [[texture(OpacityTexture)]],
-  depth2d<float> shadowTexture [[texture(ShadowTexture)]])
+  texture2d<float> opacityTexture [[texture(OpacityTexture)]])
 {
   // Load the materials from textures
   constexpr sampler textureSampler(
@@ -84,24 +79,5 @@ fragment float4 fragment_main(
   nDotL = 0.8 + (nDotL) * (1.0 - 0.8) / 1.0;
   float3 diffuse = float3(material.baseColor);
   float3 color = diffuse * nDotL * light.color;
-  // color *= calculateShadow(in.shadowPosition, shadowTexture);
   return float4(color, 1);
-}
-
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
-  float2 xy = position.xy;
-  xy = xy * 0.5 + 0.5;
-  xy.y = 1 - xy.y;
-  constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.7 : 1;
 }

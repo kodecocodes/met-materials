@@ -26,3 +26,4 @@
 ## USD
 
 [Pixar's USD documenation](https://graphics.pixar.com/usd/docs/index.html)
+[OpenUSD Skeleton Schema](https://openusd.org/dev/api/usd_skel_page_front.html)

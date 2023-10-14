@@ -42,7 +42,7 @@ struct Skin {
     jointPaths = animationBindComponent.jointPaths ?? skeleton.jointPaths
     skinToSkeletonMap = skeleton.mapJoints(from: jointPaths)
 
-    let bufferSize = skeleton.jointPaths.count * MemoryLayout<float4x4>.stride
+    let bufferSize = jointPaths.count * MemoryLayout<float4x4>.stride
     jointMatrixPaletteBuffer = Renderer.device.makeBuffer(length: bufferSize)!
   }
 }

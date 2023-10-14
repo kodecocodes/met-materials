@@ -133,6 +133,7 @@ extension Renderer {
     }
     commandBuffer.present(drawable)
     commandBuffer.commit()
+    commandBuffer.waitUntilCompleted()
   }
 }
 
