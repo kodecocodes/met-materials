@@ -6,7 +6,7 @@
 
 [modeling with distance functions](http://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
 
-[Random Noise](https://www.raywenderlich.com/70208/opengl-es-pixel-shaders-tutorial)
+[Random Noise](https://www.kodeco.com/2323-opengl-es-pixel-shaders-tutorial)
 
 [NUBIS: REALTIME VOLUMETRIC CLOUDSCAPES IN A NUTSHELL](https://www.guerrilla-games.com/read/nubis-realtime-volumetric-cloudscapes-in-a-nutshell)
 
