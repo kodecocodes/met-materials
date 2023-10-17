@@ -32,6 +32,8 @@
 
 import MetalKit
 
+// swiftlint:disable function_body_length
+
 enum TextureController {
   static var textureIndex: [String: Int] = [:]
   static var textures: [MTLTexture] = []
@@ -172,3 +174,4 @@ enum TextureController {
     return texture
   }
 }
+// swiftlint:enable function_body_length
