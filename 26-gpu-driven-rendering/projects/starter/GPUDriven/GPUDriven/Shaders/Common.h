@@ -1,12 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2023 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the &quot;Software&quot;), to deal
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
@@ -27,12 +22,66 @@
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
 ///
-/// THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+#ifndef Common_h
+#define Common_h
+
+#import <simd/simd.h>
+
+typedef struct {
+  matrix_float4x4 modelMatrix;
+  matrix_float4x4 viewMatrix;
+  matrix_float4x4 projectionMatrix;
+  matrix_float3x3 normalMatrix;
+} Uniforms;
+
+typedef struct {
+  uint tiling;
+} Params;
+
+typedef enum {
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  UniformsBuffer = 11,
+  ParamsBuffer = 12,
+  ModelsBuffer = 13,
+  ModelParamsBuffer = 14,
+  MaterialBuffer = 15,
+  ICBBuffer = 16,
+  DrawArgumentsBuffer = 17
+} BufferIndices;
+
+typedef enum {
+  Position = 0,
+  Normal = 1,
+  UV = 2,
+} Attributes;
+
+typedef enum {
+  BaseColor = 0,
+} TextureIndices;
+
+typedef enum {
+  unused = 0,
+  Sun = 1,
+  Spot = 2,
+  Point = 3,
+  Ambient = 4
+} LightType;
+
+typedef struct {
+  vector_float3 baseColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+  float opacity;
+} Material;
+
+#endif /* Common_h */
