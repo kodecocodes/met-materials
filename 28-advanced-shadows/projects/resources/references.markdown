@@ -9,7 +9,7 @@
 
 ### Shadow Volumes
 
-[GPU Gems. Chapter 9, Efficient Shadow Volume Rendering](http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch09.html)
+[GPU Gems. Chapter 9, Efficient Shadow Volume Rendering](https://developer.nvidia.com/gpugems/gpugems/part-ii-lighting-and-shadows/chapter-9-efficient-shadow-volume-rendering)
 
 [Stencil Shadow Volume](https://ogldev.org/www/tutorial40/tutorial40.html)
 
