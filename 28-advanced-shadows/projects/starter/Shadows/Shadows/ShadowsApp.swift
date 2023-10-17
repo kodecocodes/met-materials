@@ -33,7 +33,7 @@
 import SwiftUI
 
 @main
-struct CloudsApp: App {
+struct ShadowsApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()

@@ -33,11 +33,11 @@
 import SwiftUI
 
 @main
-struct ShadowsApp: App {
+struct AdvancedLightingApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .navigationTitle("Advanced Shadows")
+        .navigationTitle("Advanced Lighting")
     }
   }
 }
