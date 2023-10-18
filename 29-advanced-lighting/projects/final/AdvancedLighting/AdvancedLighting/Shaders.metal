@@ -102,23 +102,6 @@ float3 getNormal(Ray ray) {
   return normalize(n);
 }
 
-float ao(float3 pos, float3 n) {
-  float eps = 0.01;
-  pos += n * eps * 2.0;
-  float occlusion = 0.0;
-  for (float i = 1.0; i < 10.0; i++) {
-    float dist = distToScene(Ray{pos, float3(0)}).x;
-    float coneWidth = 2.0 * eps;
-    float occlusionAmount = max(coneWidth - dist, 0.0);
-    float occlusionFactor = occlusionAmount / coneWidth;
-    occlusionFactor *= 1.0 - (i / 10.0);
-    occlusion = max(occlusion, occlusionFactor);
-    eps *= 2.0;
-    pos += n * eps;
-  }
-  return max(0.0, 1.0 - occlusion);
-}
-
 Camera setupCam(float3 pos, float3 target, float fov, float2 uv, float width) {
   uv *= fov;
   float3 cw = normalize (target - pos);
@@ -163,7 +146,6 @@ kernel void compute(
   Camera cam = setupCam(camPos, float3(0.0), 1.25, uv, float(width));
   float3 col = float3(0.9);
   float eps = 0.01;
-  bool hit = false;
   bool inside = false;
   for (int i = 0; i < 300; i++) {
     float2 dist = distToScene(cam.ray);
@@ -171,7 +153,6 @@ kernel void compute(
     float closestObject = dist.y;
     if (dist.x < eps) {
       float3 normal = getNormal(cam.ray) * (inside ? -1.0 : 1.0);
-      hit = true;
       if (closestObject == PlaneObj) {
         float2 pos = cam.ray.origin.xz;
         pos *= 0.1;
