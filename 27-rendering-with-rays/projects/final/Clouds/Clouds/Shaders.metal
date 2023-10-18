@@ -81,13 +81,11 @@ float randomNoise(float2 p) {
 }
 
 float smoothNoise(float2 p) {
-  // 1
   float2 north = float2(p.x, p.y + 1.0);
   float2 east = float2(p.x + 1.0, p.y);
   float2 south = float2(p.x, p.y - 1.0);
   float2 west = float2(p.x - 1.0, p.y);
   float2 center = float2(p.x, p.y);
-  // 2
   float sum = 0.0;
   sum += randomNoise(north) / 8.0;
   sum += randomNoise(east) / 8.0;
@@ -98,12 +96,10 @@ float smoothNoise(float2 p) {
 }
 
 float interpolatedNoise(float2 p) {
-  // 1
   float q11 = smoothNoise(float2(floor(p.x), floor(p.y)));
   float q12 = smoothNoise(float2(floor(p.x), ceil(p.y)));
   float q21 = smoothNoise(float2(ceil(p.x), floor(p.y)));
   float q22 = smoothNoise(float2(ceil(p.x), ceil(p.y)));
-  // 2
   float2 ss = smoothstep(0.0, 1.0, fract(p));
   float r1 = mix(q11, q21, ss.x);
   float r2 = mix(q12, q22, ss.x);
@@ -111,13 +107,10 @@ float interpolatedNoise(float2 p) {
 }
 
 float fbm(float2 uv, float steps) {
-  // 1
   float sum = 0;
   float amplitude = 0.8;
   for(int i = 0; i < steps; ++i) {
-    // 2
     sum += interpolatedNoise(uv) * amplitude;
-    // 3
     uv += uv * 1.2;
     amplitude *= 0.4;
   }
@@ -136,22 +129,21 @@ kernel void compute(
   float4 color = float4(0.41, 0.61, 0.86, 1.0);
 
   // Edit start
+
   float tiles = 4.0;
   float2 noise = uv;
   noise.x += time * 0.1;
   noise *= tiles;
   float3 clouds = float3(fbm(noise, tiles));
   color = float4(clouds, 1);
-  // 1
+
   float3 land = float3(0.3, 0.2, 0.2);
   float3 sky = float3(0.4, 0.6, 0.8);
   clouds *= sky * 3.0;
-  // 2
   uv.y = -uv.y;
   Ray ray = Ray(float3(0.0, 4.0, -12.0),
                 normalize(float3(uv, 1.0)));
   Plane plane = Plane(0.0);
-  // 3
   for (int i = 0.0; i < 100.0; i++) {
     float distance = distanceToScene(ray, plane);
     if (distance < 0.001) {
@@ -161,6 +153,8 @@ kernel void compute(
     ray.origin += ray.direction * distance;
   }
   color = float4(clouds, 1);
+
   // Edit end
+
   output.write(color, gid);
 }
