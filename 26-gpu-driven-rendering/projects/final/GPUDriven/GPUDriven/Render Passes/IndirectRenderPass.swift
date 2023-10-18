@@ -83,34 +83,11 @@ struct IndirectRenderPass: RenderPass {
     icbEncoder.setIndirectCommandBuffer(icb, index: 0)
   }
 
-  mutating func initializeUniforms(_ models: [Model]) {
-    let bufferLength = MemoryLayout<Uniforms>.stride
-    uniformsBuffer =
-      Renderer.device.makeBuffer(length: bufferLength, options: [])
-    uniformsBuffer.label = "Uniforms"
-
-    var modelParams: [ModelParams] = models.map { model in
-      var modelParams = ModelParams()
-      modelParams.modelMatrix = model.transform.modelMatrix
-      modelParams.normalMatrix = modelParams.modelMatrix.upperLeft
-      modelParams.tiling = model.tiling
-      return modelParams
-    }
-    modelParamsBuffer = Renderer.device.makeBuffer(
-      bytes: &modelParams,
-      length: MemoryLayout<ModelParams>.stride * models.count,
-      options: [])
-    modelParamsBuffer.label = "Model Transforms Array"
-  }
-
   mutating func initializeModels(_ models: [Model]) {
-    // 1
     let encoder = icbComputeFunction.makeArgumentEncoder(
       bufferIndex: ModelsBuffer.index)
-    // 2
     modelsBuffer = Renderer.device.makeBuffer(
       length: encoder.encodedLength * models.count, options: [])
-    // 3
     for (index, model) in models.enumerated() {
       let mesh = model.meshes[0]
       let submesh = mesh.submeshes[0]
@@ -154,6 +131,26 @@ struct IndirectRenderPass: RenderPass {
     }
   }
 
+  mutating func initializeUniforms(_ models: [Model]) {
+    let bufferLength = MemoryLayout<Uniforms>.stride
+    uniformsBuffer =
+      Renderer.device.makeBuffer(length: bufferLength, options: [])
+    uniformsBuffer.label = "Uniforms"
+
+    var modelParams: [ModelParams] = models.map { model in
+      var modelParams = ModelParams()
+      modelParams.modelMatrix = model.transform.modelMatrix
+      modelParams.normalMatrix = modelParams.modelMatrix.upperLeft
+      modelParams.tiling = model.tiling
+      return modelParams
+    }
+    modelParamsBuffer = Renderer.device.makeBuffer(
+      bytes: &modelParams,
+      length: MemoryLayout<ModelParams>.stride * models.count,
+      options: [])
+    modelParamsBuffer.label = "Model Transforms Array"
+  }
+
   mutating func resize(view: MTKView, size: CGSize) {
   }
 
@@ -169,8 +166,12 @@ struct IndirectRenderPass: RenderPass {
   ) {
     encoder.pushDebugGroup("Using resources")
     encoder.useResource(icb, usage: .write)
-    encoder.useResource(uniformsBuffer, usage: .read)
-    encoder.useResource(modelParamsBuffer, usage: .read)
+    encoder.useResource(
+      uniformsBuffer,
+      usage: .read)
+    encoder.useResource(
+      modelParamsBuffer,
+      usage: .read)
     if let heap = TextureController.heap {
       encoder.useHeap(heap)
     }
@@ -178,9 +179,11 @@ struct IndirectRenderPass: RenderPass {
       let mesh = model.meshes[0]
       let submesh = mesh.submeshes[0]
       encoder.useResource(
-        mesh.vertexBuffers[VertexBuffer.index], usage: .read)
+        mesh.vertexBuffers[VertexBuffer.index],
+        usage: .read)
       encoder.useResource(
-        mesh.vertexBuffers[UVBuffer.index], usage: .read)
+        mesh.vertexBuffers[UVBuffer.index],
+        usage: .read)
       encoder.useResource(
         submesh.indexBuffer, usage: .read)
       encoder.useResource(

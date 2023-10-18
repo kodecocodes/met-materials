@@ -8,6 +8,8 @@ Videos:
 [Go bindless with Metal 3](https://developer.apple.com/wwdc22/10101)
 
 Sample code:
+[Modern Rendering with Metal](https://developer.apple.com/documentation/metal/metal_sample_code_library/modern_rendering_with_metal)
+
 [Managing groups of resources with argument buffers](https://developer.apple.com/documentation/metal/buffers/managing_groups_of_resources_with_argument_buffers)
 [Using Argument Buffers with Resource Heaps](https://developer.apple.com/documentation/metal/buffers/using_argument_buffers_with_resource_heaps/)
 [Encoding Argument Buffers on the GPU](https://developer.apple.com/documentation/metal/buffers/encoding_argument_buffers_on_the_gpu/)

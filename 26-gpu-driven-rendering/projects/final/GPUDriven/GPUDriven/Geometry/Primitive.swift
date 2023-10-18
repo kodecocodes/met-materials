@@ -76,7 +76,6 @@ extension Model {
         allocator: allocator)
     }
   }
-
 }
 
 // swiftlint:enable force_try

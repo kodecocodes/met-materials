@@ -40,7 +40,7 @@ class Model: Transformable {
   var name: String = "Untitled"
   var tiling: UInt32 = 1
 
-  init() { }
+  init() {}
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(

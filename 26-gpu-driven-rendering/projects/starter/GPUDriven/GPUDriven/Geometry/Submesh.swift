@@ -59,7 +59,6 @@ extension Submesh {
     indexBufferOffset = mtkSubmesh.indexBuffer.offset
     textures = Textures(material: mdlSubmesh.material)
     material = Material(material: mdlSubmesh.material)
-    initializeMaterials()
   }
 
   mutating func initializeMaterials() {
