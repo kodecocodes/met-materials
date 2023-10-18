@@ -34,6 +34,7 @@
 #define Common_h
 
 #import <simd/simd.h>
+#import "stdbool.h"
 
 typedef struct {
   matrix_float4x4 modelMatrix;
@@ -43,30 +44,73 @@ typedef struct {
 } Uniforms;
 
 typedef struct {
+  uint width;
+  uint height;
   uint tiling;
+  uint lightCount;
+  vector_float3 cameraPosition;
+  bool alphaTesting;
+  bool alphaBlending;
 } Params;
 
 typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
+  PositionBuffer = 0,
+  NormalBuffer = 1,
+  UVBuffer = 2,
+  WeightsBuffer = 3,
   UniformsBuffer = 11,
   ParamsBuffer = 12,
-  ModelsBuffer = 13,
-  ModelParamsBuffer = 14,
-  MaterialBuffer = 15,
-  ICBBuffer = 16,
-  DrawArgumentsBuffer = 17
+  LightBuffer = 13,
+  MaterialBuffer = 14,
+  JointMatrixBuffer = 15,
+  ModelParamsBuffer = 16,
+  DrawArgumentsBuffer = 17,
+  ModelsArrayBuffer = 18,
+  ICBBuffer = 19,
+  SubmeshesArrayBuffer = 20
 } BufferIndices;
 
 typedef enum {
   Position = 0,
   Normal = 1,
   UV = 2,
+  Joints = 3,
+  Weights = 4
 } Attributes;
 
 typedef enum {
   BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  OpacityTexture = 5,
+  ShadowTexture = 10,
+  SkyboxTexture = 11,
+  SkyboxDiffuseTexture = 12,
+  BRDFLutTexture = 13,
+  MiscTexture = 31
 } TextureIndices;
+
+typedef enum {
+  unused = 0,
+  Sun = 1,
+  Spot = 2,
+  Point = 3,
+  Ambient = 4
+} LightType;
+
+typedef struct {
+  LightType type;
+  vector_float3 position;
+  vector_float3 color;
+  vector_float3 specularColor;
+  float radius;
+  vector_float3 attenuation;
+  float coneAngle;
+  vector_float3 coneDirection;
+  float coneAttenuation;
+} Light;
 
 typedef struct {
   vector_float3 baseColor;

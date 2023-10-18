@@ -1,12 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>FILEHEADER</key>
-	<string>/// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2023 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the &quot;Software&quot;), to deal
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
@@ -27,12 +22,52 @@
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
 ///
-/// THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.</string>
-</dict>
-</plist>
+/// THE SOFTWARE.
+
+import MetalKit
+
+// swiftlint:disable force_unwrapping
+// swiftlint:disable force_cast
+
+struct Mesh {
+  var vertexBuffers: [MTLBuffer]
+  var submeshes: [Submesh]
+  var transform: TransformComponent?
+  var skin: Skin?
+
+  init(
+    mdlMesh: MDLMesh,
+    mtkMesh: MTKMesh,
+    startTime: TimeInterval,
+    endTime: TimeInterval
+  ) {
+    self.init(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
+
+    if mdlMesh.transform != nil {
+      transform = TransformComponent(
+        object: mdlMesh,
+        startTime: startTime,
+        endTime: endTime)
+    }
+  }
+
+  init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
+    var vertexBuffers: [MTLBuffer] = []
+    for mtkMeshBuffer in mtkMesh.vertexBuffers {
+      vertexBuffers.append(mtkMeshBuffer.buffer)
+    }
+    self.vertexBuffers = vertexBuffers
+    submeshes = zip(mdlMesh.submeshes!, mtkMesh.submeshes).map { mesh in
+      Submesh(mdlSubmesh: mesh.0 as! MDLSubmesh, mtkSubmesh: mesh.1)
+    }
+  }
+}
+
+// swiftlint:enable force_unwrapping
+// swiftlint:enable force_cast

@@ -68,14 +68,6 @@ typedef enum {
   BaseColor = 0,
 } TextureIndices;
 
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
 typedef struct {
   vector_float3 baseColor;
   float roughness;

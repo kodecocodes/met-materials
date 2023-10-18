@@ -1,15 +1,15 @@
 ///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,56 +30,68 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
+struct ForwardRenderPass: RenderPass {
+  let label = "Forward Render Pass"
+  var descriptor: MTLRenderPassDescriptor?
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-} Uniforms;
+  var pipelineState: MTLRenderPipelineState
 
-typedef struct {
-  uint tiling;
-} Params;
+  let depthStencilState: MTLDepthStencilState?
+  weak var shadowTexture: MTLTexture?
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelsBuffer = 13,
-  ModelParamsBuffer = 14,
-  MaterialBuffer = 15,
-  ICBBuffer = 16,
-  DrawArgumentsBuffer = 17
-} BufferIndices;
+  init() {
+    pipelineState = PipelineStates.createForwardPSO()
+    depthStencilState = Self.buildDepthStencilState()
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+  mutating func resize(view: MTKView, size: CGSize) {
+  }
 
-typedef enum {
-  BaseColor = 0,
-} TextureIndices;
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  ) {
+    descriptor?.colorAttachments[0].loadAction = .load
+    descriptor?.depthAttachment.loadAction = .load
+    var params = params
+    params.alphaTesting = true
+    guard let descriptor = descriptor,
+      let renderEncoder =
+      commandBuffer.makeRenderCommandEncoder(
+        descriptor: descriptor) else {
+      return
+    }
+    if let heap = TextureController.heap {
+      renderEncoder.useHeap(heap, stages: .fragment)
+    }
 
-typedef struct {
-  vector_float3 baseColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float opacity;
-} Material;
+    renderEncoder.label = label
+    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.setRenderPipelineState(pipelineState)
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float3x3 normalMatrix;
-  uint tiling;
-} ModelParams;
+    renderEncoder.setFragmentBuffer(
+      scene.lighting.lightsBuffer,
+      offset: 0,
+      index: LightBuffer.index)
+    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+    var uniforms = uniforms
+    renderEncoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
 
-#endif /* Common_h */
+    renderEncoder.setFragmentBytes(
+      &params,
+      length: MemoryLayout<Params>.stride,
+      index: ParamsBuffer.index)
+    params.alphaTesting = true
+    for model in scene.models {
+      model.render(encoder: renderEncoder)
+    }
+    renderEncoder.endEncoding()
+  }
+}
