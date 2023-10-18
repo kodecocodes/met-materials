@@ -38,6 +38,35 @@ struct Rectangle {
   float2 size;
 };
 
+struct Ray {
+  float3 origin;
+  float3 direction;
+};
+
+struct Sphere {
+  float3 center;
+  float radius;
+};
+
+struct Plane {
+  float yCoord;
+};
+
+struct Light {
+  float3 position;
+};
+
+struct Box {
+  float3 center;
+  float size;
+};
+
+struct Camera {
+  float3 position;
+  Ray ray{float3(0), float3(0)};
+  float rayDivergence;
+};
+
 float distanceToRectangle(float2 point, Rectangle rectangle) {
   float2 distances =
       abs(point - rectangle.center) - rectangle.size / 2;
@@ -74,35 +103,6 @@ float getShadow(float2 point, float2 lightPos) {
   }
   return 1.0;
 }
-
-struct Ray {
-  float3 origin;
-  float3 direction;
-};
-
-struct Sphere {
-  float3 center;
-  float radius;
-};
-
-struct Plane {
-  float yCoord;
-};
-
-struct Light {
-  float3 position;
-};
-
-struct Box {
-  float3 center;
-  float size;
-};
-
-struct Camera {
-  float3 position;
-  Ray ray{float3(0), float3(0)};
-  float rayDivergence;
-};
 
 float distToSphere(Ray ray, Sphere s) {
   return length(ray.origin - s.center) - s.radius;
@@ -198,7 +198,6 @@ float ao(float3 pos, float3 n) {
     eps *= 2.0;
     pos += n * eps;
   }
-  // 10
   return max(0.0, 1.0 - occlusion);
 }
 
@@ -251,7 +250,7 @@ kernel void compute(
     col = col * o;
   }
   color = float4(col, 1.0);
+
   // Edit end
   output.write(color, gid);
 }
-
