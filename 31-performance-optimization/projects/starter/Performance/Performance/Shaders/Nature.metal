@@ -53,7 +53,8 @@ vertex VertexOut vertex_nature(
   constant VertexIn *in [[buffer(0)]],
   uint vertexID [[vertex_id]],
   constant int &vertexCount [[buffer(1)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant Uniforms *uniforms [[buffer(UniformsBuffer)]],
+  constant ModelTransform *model [[buffer(ModelTransformBuffer)]],
   constant NatureInstance *instances [[buffer(InstancesBuffer)]],
   uint instanceID [[instance_id]])
 {
@@ -65,11 +66,11 @@ vertex VertexOut vertex_nature(
   float4 position = float4(vertexIn.position, 1);
   float3 normal = vertexIn.normal;
 
-  out.position = uniforms.projectionMatrix * uniforms.viewMatrix
-  * uniforms.modelMatrix * instance.modelMatrix * position;
-  out.worldPosition = (uniforms.modelMatrix * position
+  out.position = uniforms->projectionMatrix * uniforms->viewMatrix
+  * model->modelMatrix * instance.modelMatrix * position;
+  out.worldPosition = (model->modelMatrix * position
                        * instance.modelMatrix).xyz;
-  out.worldNormal = uniforms.normalMatrix * instance.normalMatrix * normal;
+  out.worldNormal = model->normalMatrix * instance.normalMatrix * normal;
   out.uv = vertexIn.uv;
   out.textureID = instance.textureID;
   return out;
@@ -100,7 +101,8 @@ vertex float4 vertex_nature_depth(
   constant VertexIn *in [[buffer(0)]],
   uint vertexID [[vertex_id]],
   constant int &vertexCount [[buffer(1)]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant Uniforms *uniforms [[buffer(UniformsBuffer)]],
+  constant ModelTransform *model [[buffer(ModelTransformBuffer)]],
   constant NatureInstance *instances [[buffer(InstancesBuffer)]],
   uint instanceID [[instance_id]])
 {
@@ -110,7 +112,7 @@ vertex float4 vertex_nature_depth(
 
   float4 position = float4(vertexIn.position, 1);
 
-  position = uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
-  * uniforms.modelMatrix * instance.modelMatrix * position;
+  position = uniforms->shadowProjectionMatrix * uniforms->shadowViewMatrix
+  * model->modelMatrix * instance.modelMatrix * position;
   return position;
 }

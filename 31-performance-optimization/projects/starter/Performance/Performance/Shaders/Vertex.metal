@@ -39,7 +39,8 @@ constant bool hasSkeleton [[function_constant(0)]];
 
 vertex VertexOut vertex_main(
   const VertexIn in [[stage_in]],
-  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant Uniforms *uniforms [[buffer(UniformsBuffer)]],
+  constant ModelTransform *model [[buffer(ModelTransformBuffer)]],
   constant float4x4 *jointMatrices [[
     buffer(JointBuffer),
     function_constant(hasSkeleton)]])
@@ -62,16 +63,16 @@ vertex VertexOut vertex_main(
         weights.w * (jointMatrices[joints.w] * normal);
   }
   VertexOut out {
-    .position = uniforms.projectionMatrix * uniforms.viewMatrix
-                  * uniforms.modelMatrix * position,
+    .position = uniforms->projectionMatrix * uniforms->viewMatrix
+                  * model->modelMatrix * position,
     .uv = in.uv,
-    .worldPosition = (uniforms.modelMatrix * position).xyz,
-    .worldNormal = uniforms.normalMatrix * normal.xyz,
+    .worldPosition = (model->modelMatrix * position).xyz,
+    .worldNormal = model->normalMatrix * normal.xyz,
     .worldTangent = 0,
     .worldBitangent = 0,
     .shadowPosition =
-      uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
-      * uniforms.modelMatrix * position
+      uniforms->shadowProjectionMatrix * uniforms->shadowViewMatrix
+      * model->modelMatrix * position
   };
   return out;
 }

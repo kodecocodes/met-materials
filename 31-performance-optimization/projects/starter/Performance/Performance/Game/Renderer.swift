@@ -34,11 +34,15 @@ import MetalKit
 
 // swiftlint:disable implicitly_unwrapped_optional
 
+let maxFramesInFlight = 1
+
 enum RenderState {
   case shadowPass, mainPass
 }
 
 class Renderer: NSObject {
+  static var currentFrameIndex = 0  // marks the current frame
+
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
@@ -47,8 +51,8 @@ class Renderer: NSObject {
 
   let options: Options
 
-  var uniforms = Uniforms()
   var params = Params()
+  var uniformsBuffers: [MTLBuffer]
 
   var forwardRenderPass: ForwardRenderPass
   var shadowRenderPass: ShadowRenderPass
@@ -77,6 +81,9 @@ class Renderer: NSObject {
     natureRenderPass = NatureRenderPass()
     skyboxRenderPass = SkyboxRenderPass()
 
+    uniformsBuffers = (0..<maxFramesInFlight).map { _ in
+      Renderer.device.makeBuffer(length: MemoryLayout<Uniforms>.stride)!
+    }
     self.options = options
     super.init()
     metalView.clearColor = MTLClearColor(
@@ -139,6 +146,9 @@ extension Renderer {
   func updateUniforms(scene: GameScene) {
     params.alphaBlending = options.alphaBlending
 
+    let pointer = uniformsBuffers[Self.currentFrameIndex]
+      .contents().bindMemory(to: Uniforms.self, capacity: 1)
+    var uniforms = pointer.pointee
     uniforms.viewMatrix = scene.camera.viewMatrix
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
@@ -153,6 +163,7 @@ extension Renderer {
       eye: shadowCamera.position,
       center: shadowCamera.center,
       up: [0, 1, 0])
+    pointer.pointee = uniforms
   }
 
   func draw(scene: GameScene, in view: MTKView) {
@@ -163,11 +174,12 @@ extension Renderer {
     }
 
     updateUniforms(scene: scene)
+    let uniformsBuffer = uniformsBuffers[Self.currentFrameIndex]
 
     shadowRenderPass.draw(
       commandBuffer: commandBuffer,
       scene: scene,
-      uniforms: uniforms,
+      uniformsBuffer: uniformsBuffer,
       params: params)
 
     forwardRenderPass.shadowTexture = shadowRenderPass.shadowTexture
@@ -176,33 +188,32 @@ extension Renderer {
     forwardRenderPass.draw(
       commandBuffer: commandBuffer,
       scene: scene,
-      uniforms: uniforms,
+      uniformsBuffer: uniformsBuffer,
       params: params)
 
     natureRenderPass.descriptor = descriptor
     natureRenderPass.draw(
       commandBuffer: commandBuffer,
       scene: scene,
-      uniforms: uniforms,
+      uniformsBuffer: uniformsBuffer,
+      params: params)
+
+    // Post processing without processing the skybox
+     bloom.postProcess(view: view, commandBuffer: commandBuffer)
+
+    skyboxRenderPass.descriptor = descriptor
+    skyboxRenderPass.draw(
+      commandBuffer: commandBuffer,
+      scene: scene,
+      uniformsBuffer: uniformsBuffer,
       params: params)
 
     guard let drawable = view.currentDrawable else {
       return
     }
 
-    // Post processing without processing the skybox
-    bloom.postProcess(view: view, commandBuffer: commandBuffer)
-
-    skyboxRenderPass.descriptor = descriptor
-    skyboxRenderPass.draw(
-      commandBuffer: commandBuffer,
-      scene: scene,
-      uniforms: uniforms,
-      params: params)
-
     commandBuffer.present(drawable)
     commandBuffer.commit()
   }
 }
-
 // swiftlint:enable implicitly_unwrapped_optional
