@@ -37,7 +37,7 @@ class Renderer: NSObject, MTKViewDelegate {
 
   var device: MTLDevice!
   var queue: MTLCommandQueue!
-  var texIn: MTLTexture!
+  var inputImage: MTLTexture!
 
   init(metalView: MTKView) {
     device = MTLCreateSystemDefaultDevice()!
@@ -46,7 +46,7 @@ class Renderer: NSObject, MTKViewDelegate {
     let url = Bundle.main.url(
       forResource: "fruit.jpg", withExtension: "")!
     do {
-      texIn = try textureLoader.newTexture(
+      inputImage = try textureLoader.newTexture(
         URL: url, options: [:])
     } catch {
       fatalError(error.localizedDescription)
@@ -63,7 +63,7 @@ class Renderer: NSObject, MTKViewDelegate {
     let shader = MPSImageSobel(device: device)
     shader.encode(
       commandBuffer: commandBuffer,
-      sourceTexture: texIn,
+      sourceTexture: inputImage,
       destinationTexture: drawable.texture)
     commandBuffer.present(drawable)
     commandBuffer.commit()
