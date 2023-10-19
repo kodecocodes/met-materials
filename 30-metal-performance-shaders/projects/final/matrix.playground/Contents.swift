@@ -8,27 +8,23 @@ let size = 4
 let count = size * size
 
 func createMPSMatrix(withRepeatingValue: Float) -> MPSMatrix {
-  // 1
   let rowBytes = MPSMatrixDescriptor.rowBytes(
     forColumns: size,
     dataType: .float32)
-  // 2
   let array = [Float](
     repeating: withRepeatingValue,
     count: count)
-  // 3
   guard let buffer = device.makeBuffer(
     bytes: array,
     length: size * rowBytes,
     options: [])
   else { fatalError() }
-  // 4
   let matrixDescriptor = MPSMatrixDescriptor(
     rows: size,
     columns: size,
     rowBytes: rowBytes,
     dataType: .float32)
-                                             
+
   return MPSMatrix(buffer: buffer, descriptor: matrixDescriptor)
 }
 
@@ -58,13 +54,11 @@ multiplicationKernel.encode(
 commandBuffer.commit()
 commandBuffer.waitUntilCompleted()
 
-// 1
 let contents = C.data.contents()
 let pointer = contents.bindMemory(
   to: Float.self,
   capacity: count)
-// 2
+
 (0..<count).map {
   pointer.advanced(by: $0).pointee
 }
-
