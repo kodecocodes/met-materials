@@ -74,6 +74,7 @@ struct NatureRenderPass: RenderPass {
       offset: 0,
       index: LightBuffer.index)
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+    renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
 
     for nature in scene.nature {
       nature.render(

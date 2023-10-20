@@ -58,15 +58,15 @@ struct GameScene {
   var defaultDistance: Float = 20
   var defaultView: Transform {
     Transform(
-      position: [-2.82, 7.23, 22.65],
-      rotation: [-0.16, 3.05, 0])
+      position: [-0.96, 12.0, 24.23],
+      rotation: [-0.41, 3.14, 0])
   }
   var lighting = SceneLighting()
   let skybox: Skybox?
 
   init() {
     skybox = Skybox(textureName: "sky")
-    camera.target = [-1, 4, 3]
+    camera.target = [-1, 4, 6]
     camera.distance = defaultDistance
     camera.transform = defaultView
     camera.far = 1000
@@ -115,15 +115,19 @@ struct GameScene {
     // Load Nature
     let textureNames = ["rock1-color", "rock2-color", "rock3-color"]
     let morphTargetNames = ["rock1", "rock2", "rock3"]
-    var rocks = Nature(
+    let rocks = Nature(
       name: "Rocks",
       instanceCount: count,
       textureNames: textureNames,
       morphTargetNames: morphTargetNames)
     for index in 0..<count {
       var transform = Transform()
-      transform.position.x = .random(in: -16..<(-5))
-      transform.position.z = .random(in: 6..<16)
+      transform.position.x = .random(in: -19..<(-10))
+      transform.position.z = .random(in: 0..<10)
+      transform.rotation.y = .random(in: -Float.pi..<Float.pi)
+
+      transform.position.x = .random(in: -15..<(0))
+      transform.position.z = .random(in: 10..<16)
       transform.rotation.y = .random(in: -Float.pi..<Float.pi)
       let textureID = Int.random(in: 0..<textureNames.count)
       let morphTargetID = Int.random(in: 0..<morphTargetNames.count)
@@ -133,7 +137,7 @@ struct GameScene {
         textureID: textureID,
         morphTargetID: morphTargetID)
     }
-    rocks.rotation.y = Float(-10).degreesToRadians
+//    rocks.rotation.y = Float(20).degreesToRadians
     return rocks
   }
 

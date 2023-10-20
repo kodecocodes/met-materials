@@ -134,7 +134,6 @@ struct Skybox {
       mesh.vertexBuffers[0].buffer,
       offset: 0,
       index: 0)
-    encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
     let submesh = mesh.submeshes[0]
 
     encoder.setFragmentTexture(

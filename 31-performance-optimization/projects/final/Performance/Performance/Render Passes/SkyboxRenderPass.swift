@@ -45,6 +45,7 @@ struct SkyboxRenderPass: RenderPass {
     uniformsBuffer: MTLBuffer,
     params: Params
   ) {
+    descriptor?.depthAttachment.storeAction = .dontCare
     descriptor?.colorAttachments[0].loadAction = .load
     descriptor?.depthAttachment.loadAction = .load
     guard let descriptor = descriptor,
@@ -58,6 +59,7 @@ struct SkyboxRenderPass: RenderPass {
     if Renderer.cullFaces {
       renderEncoder.setCullMode(.back)
     }
+    renderEncoder .setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
 
     scene.skybox?.render(
       encoder: renderEncoder,

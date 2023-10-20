@@ -68,6 +68,7 @@ struct ForwardRenderPass: RenderPass {
       encoder.setRenderPipelineState(transparentPSO)
     }
     encoder.setCullMode(.none)
+
     for model in models {
       model.render(
         encoder: encoder,
@@ -98,6 +99,7 @@ struct ForwardRenderPass: RenderPass {
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
 
     var lights = scene.lighting.lights
     renderEncoder.setFragmentBytes(

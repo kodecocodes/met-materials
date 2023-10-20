@@ -106,6 +106,7 @@ class Nature: Transformable {
     let bufferLength = mesh.vertexBuffers[0].buffer.length
     vertexBuffer =
       Renderer.device.makeBuffer(length: bufferLength * morphTargetNames.count)!
+    vertexBuffer.label = "\(name) vertex buffer"
     let layout = mesh.vertexDescriptor.layouts[0] as! MDLVertexBufferLayout
     vertexCount = bufferLength / layout.stride
 
@@ -162,6 +163,7 @@ class Nature: Transformable {
         options: []) else {
         fatalError("Failed to create instance buffer")
     }
+    instanceBuffer.label = "Instance Buffer"
     return instanceBuffer
   }
 
@@ -211,7 +213,6 @@ class Nature: Transformable {
     pointer.pointee.normalMatrix = float3x3(normalFrom4x4: transform.modelMatrix)
     encoder.setVertexBuffer(
       modelTransformBuffers[index], offset: 0, index: ModelTransformBuffer.index)
-    encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
     let pipelineState = renderState == .mainPass ?
       pipelineState : shadowPipelineState
     encoder.setRenderPipelineState(pipelineState)

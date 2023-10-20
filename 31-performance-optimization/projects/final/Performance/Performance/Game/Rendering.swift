@@ -100,7 +100,6 @@ extension Model {
     pointer.pointee.modelMatrix =
       transform.modelMatrix * currentLocalTransform
     pointer.pointee.normalMatrix = pointer.pointee.modelMatrix.upperLeft
-    encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
     encoder.setVertexBuffer(
       modelTransformBuffers[index],
       offset: 0, index: ModelTransformBuffer.index)

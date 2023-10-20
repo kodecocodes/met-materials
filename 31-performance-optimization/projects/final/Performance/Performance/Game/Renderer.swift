@@ -167,17 +167,18 @@ extension Renderer {
       center: shadowCamera.center,
       up: [0, 1, 0])
     pointer.pointee = uniforms
-    Self.currentFrameIndex =
-      (Self.currentFrameIndex + 1) % maxFramesInFlight
   }
 
   func draw(scene: GameScene, in view: MTKView) {
-    _ = semaphore.wait(timeout: .distantFuture)
     guard
       let commandBuffer = Self.commandQueue.makeCommandBuffer(),
       let descriptor = view.currentRenderPassDescriptor else {
         return
     }
+    _ = semaphore.wait(timeout: .distantFuture)
+    Self.currentFrameIndex =
+      (Self.currentFrameIndex + 1) % maxFramesInFlight
+
     updateUniforms(scene: scene)
     let uniformsBuffer = uniformsBuffers[Self.currentFrameIndex]
 

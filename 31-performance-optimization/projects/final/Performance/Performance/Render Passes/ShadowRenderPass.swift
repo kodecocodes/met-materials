@@ -76,6 +76,7 @@ struct ShadowRenderPass: RenderPass {
     if Renderer.cullFaces {
       renderEncoder.setCullMode(.front)
     }
+    renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: UniformsBuffer.index)
 
     for model in scene.models {
       model.render(

@@ -106,6 +106,7 @@ class Nature: Transformable {
     let bufferLength = mesh.vertexBuffers[0].buffer.length
     vertexBuffer =
       Renderer.device.makeBuffer(length: bufferLength * morphTargetNames.count)!
+    vertexBuffer.label = "\(name) vertex buffer"
     let layout = mesh.vertexDescriptor.layouts[0] as! MDLVertexBufferLayout
     vertexCount = bufferLength / layout.stride
 
@@ -162,6 +163,7 @@ class Nature: Transformable {
         options: []) else {
         fatalError("Failed to create instance buffer")
     }
+    instanceBuffer.label = "Instance Buffer"
     return instanceBuffer
   }
 
