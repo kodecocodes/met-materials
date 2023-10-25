@@ -38,7 +38,6 @@ struct ContentView: View {
     VStack {
       MetalView(options: options)
         .border(Color.black, width: 2)
-        .frame(width: 500, height: 350)
       SlidersView(options: options)
     }
     .padding()

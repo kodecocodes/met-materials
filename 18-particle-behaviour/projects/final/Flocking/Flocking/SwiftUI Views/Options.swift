@@ -45,7 +45,7 @@ class Options {
   var minSpeed: Float = 4.0
   var maxSpeed: Float = 9
   var predatorSpeed: Float = 10
-  var neighborRadius: Float = 200
+  var neighborRadius: Float = 400
   var separationRadius: Float = 20
   var predatorRadius: Float = 140
   var predatorSeek: Float = 500
