@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820028352AE5E080003BAEE5 /* SlidersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820028342AE5E080003BAEE5 /* SlidersView.swift */; };
+		8200283B2AE5EF81003BAEE5 /* Helper.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8200283A2AE5EF81003BAEE5 /* Helper.metal */; };
 		822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF5282AA865D2008CC2C8 /* MathLibrary.swift */; };
 		824770E42AA7FA0B0095AB72 /* FlockingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E32AA7FA0B0095AB72 /* FlockingApp.swift */; };
 		824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E52AA7FA0B0095AB72 /* ContentView.swift */; };
@@ -14,16 +16,15 @@
 		824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */; };
 		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
 		824771002AA80C930095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FF2AA80C930095AB72 /* MetalView.swift */; };
-		8272AC302AAD8A19007301AB /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC2F2AAD8A19007301AB /* GameScene.swift */; };
-		8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC3A2AAD96F9007301AB /* GameController.swift */; };
-		8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8282C1C42AB5B7CD001A3850 /* Pipelines.swift */; };
-		82CFF46B2AC6425400A37420 /* FlockingPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFF46A2AC6425400A37420 /* FlockingPass.swift */; };
 		82CFF46D2AC6427B00A37420 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFF46C2AC6427B00A37420 /* Emitter.swift */; };
 		82CFF46F2AC642C200A37420 /* Flocking.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82CFF46E2AC642C200A37420 /* Flocking.metal */; };
 		82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5D2802ABC31B4000D3F89 /* Options.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		820028342AE5E080003BAEE5 /* SlidersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidersView.swift; sourceTree = "<group>"; };
+		820028392AE5EF7A003BAEE5 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		8200283A2AE5EF81003BAEE5 /* Helper.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Helper.metal; sourceTree = "<group>"; };
 		822EF5282AA865D2008CC2C8 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		822EF5322AA869E4008CC2C8 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		824770E02AA7FA0B0095AB72 /* Flocking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flocking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,10 +35,6 @@
 		824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		824770FF2AA80C930095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
-		8272AC2F2AAD8A19007301AB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		8272AC3A2AAD96F9007301AB /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
-		8282C1C42AB5B7CD001A3850 /* Pipelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipelines.swift; sourceTree = "<group>"; };
-		82CFF46A2AC6425400A37420 /* FlockingPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlockingPass.swift; sourceTree = "<group>"; };
 		82CFF46C2AC6427B00A37420 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
 		82CFF46E2AC642C200A37420 /* Flocking.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Flocking.metal; sourceTree = "<group>"; };
 		82E5D2802ABC31B4000D3F89 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
@@ -62,15 +59,6 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		822EF5302AA869C0008CC2C8 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				822EF5322AA869E4008CC2C8 /* Common.h */,
-				82CFF46E2AC642C200A37420 /* Flocking.metal */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
 		824770D72AA7FA0B0095AB72 = {
 			isa = PBXGroup;
 			children = (
@@ -90,10 +78,13 @@
 		824770E22AA7FA0B0095AB72 /* Flocking */ = {
 			isa = PBXGroup;
 			children = (
+				82CFF46E2AC642C200A37420 /* Flocking.metal */,
+				82CFF46C2AC6427B00A37420 /* Emitter.swift */,
+				822EF5322AA869E4008CC2C8 /* Common.h */,
+				820028392AE5EF7A003BAEE5 /* Helper.h */,
+				8200283A2AE5EF81003BAEE5 /* Helper.metal */,
+				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
 				824770E32AA7FA0B0095AB72 /* FlockingApp.swift */,
-				8272AC392AAD96EA007301AB /* Game */,
-				82CFF4692AC6424100A37420 /* Flocking */,
-				822EF5302AA869C0008CC2C8 /* Shaders */,
 				822EF52C2AA866FF008CC2C8 /* Utility */,
 				82A254542AA83E870054837F /* SwiftUI Views */,
 				824770E72AA7FA0C0095AB72 /* Assets.xcassets */,
@@ -111,34 +102,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		8272AC392AAD96EA007301AB /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				8272AC3A2AAD96F9007301AB /* GameController.swift */,
-				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
-				8272AC2F2AAD8A19007301AB /* GameScene.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
 		82A254542AA83E870054837F /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
 				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
 				824770FF2AA80C930095AB72 /* MetalView.swift */,
 				82E5D2802ABC31B4000D3F89 /* Options.swift */,
+				820028342AE5E080003BAEE5 /* SlidersView.swift */,
 			);
 			path = "SwiftUI Views";
-			sourceTree = "<group>";
-		};
-		82CFF4692AC6424100A37420 /* Flocking */ = {
-			isa = PBXGroup;
-			children = (
-				82CFF46A2AC6425400A37420 /* FlockingPass.swift */,
-				82CFF46C2AC6427B00A37420 /* Emitter.swift */,
-				8282C1C42AB5B7CD001A3850 /* Pipelines.swift */,
-			);
-			path = Flocking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,17 +208,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				82E5D2812ABC31B4000D3F89 /* Options.swift in Sources */,
-				8272AC302AAD8A19007301AB /* GameScene.swift in Sources */,
-				8282C1C52AB5B7CD001A3850 /* Pipelines.swift in Sources */,
+				8200283B2AE5EF81003BAEE5 /* Helper.metal in Sources */,
 				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
 				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
 				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
 				82CFF46F2AC642C200A37420 /* Flocking.metal in Sources */,
-				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
 				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
 				82CFF46D2AC6427B00A37420 /* Emitter.swift in Sources */,
+				820028352AE5E080003BAEE5 /* SlidersView.swift in Sources */,
 				824770E42AA7FA0B0095AB72 /* FlockingApp.swift in Sources */,
-				82CFF46B2AC6425400A37420 /* FlockingPass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +281,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = Flocking/Shaders/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Flocking/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -367,7 +337,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = Flocking/Shaders/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Flocking/Common.h;
 			};
 			name = Release;
 		};

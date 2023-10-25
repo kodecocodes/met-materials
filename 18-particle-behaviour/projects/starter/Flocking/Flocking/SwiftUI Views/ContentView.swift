@@ -34,17 +34,14 @@ import SwiftUI
 
 struct ContentView: View {
   @State var options = Options()
-
   var body: some View {
-    VStack(alignment: .leading) {
-      ZStack {
-        VStack {
-          MetalView(options: options)
-            .border(Color.black, width: 2)
-        }
-      }
+    VStack {
+      MetalView(options: options)
+        .border(Color.black, width: 2)
+      SlidersView(options: options)
     }
     .padding()
+    .frame(minWidth: 800)
   }
 }
 

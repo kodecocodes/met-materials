@@ -30,43 +30,20 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-// swiftlint:disable force_unwrapping
+#ifndef Helper_h
+#define Helper_h
+#include "Common.h"
+// If the position is off the screen,
+// wrap the position to the opposite edge
+float2 wrapPosition(float2 position, float2 size);
 
-struct Particle {
-  var position: float2
-  var velocity: float2
-}
+// If the position is off the screen,
+// reflect the position at the edge
+Boid bounceBoid(
+  float2 position,
+  float2 velocity,
+  float2 size);
 
-struct Emitter {
-  var particleBuffer: MTLBuffer
 
-  init(
-    particleCount: Int,
-    size: CGSize
-  ) {
-    let bufferSize = MemoryLayout<Particle>.stride * particleCount
-    particleBuffer = Renderer.device.makeBuffer(length: bufferSize)!
-    var pointer = particleBuffer.contents()
-      .bindMemory(to: Particle.self, capacity: particleCount)
 
-    for _ in 0..<particleCount {
-      let width = random(Int(size.width) / 2) + Float(size.width) / Float(4)
-      let height = random(Int(size.height) / 2) + Float(size.height) / Float(4)
-      let position = float2(width, height)
-      pointer.pointee.position = position
-      let velocity: float2 = [
-        Float.random(in: -5...5),
-        Float.random(in: -5...5)
-      ]
-      pointer.pointee.velocity = velocity
-      pointer = pointer.advanced(by: 1)
-    }
-  }
-
-  func random(_ max: Int) -> Float {
-    guard max > 0 else { return 0 }
-    return Float.random(in: 0..<Float(max))
-  }
-}
-// swiftlint:enable force_unwrapping
+#endif /* Helper_h */

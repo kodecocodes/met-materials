@@ -30,20 +30,32 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Helper.h"
 
-enum PipelineStates {
-  static func createComputePSO(function: String)
-    -> MTLComputePipelineState {
-    guard let kernel = Renderer.library.makeFunction(name: function)
-    else { fatalError("Unable to create \(function) PSO") }
-    let pipelineState: MTLComputePipelineState
-    do {
-      pipelineState =
-      try Renderer.device.makeComputePipelineState(function: kernel)
-    } catch {
-      fatalError(error.localizedDescription)
-    }
-    return pipelineState
+kernel void flocking(
+  texture2d<half, access::write> output [[texture(0)]],
+  device Boid *boids [[buffer(0)]],
+  constant Params &params [[buffer(1)]],
+  uint id [[thread_position_in_grid]])
+{
+  Boid boid = boids[id];
+  float2 position = boid.position;
+
+  // flocking code here
+
+  half4 color = half4(1.0);
+  if (id == 0) {
+    color = half4(1, 0, 0, 1);
   }
+  uint2 location = uint2(position);
+  output.write(color, location);
+}
+
+kernel void clearScreen(
+  texture2d<half, access::write> output [[texture(0)]],
+  uint2 id [[thread_position_in_grid]])
+{
+  output.write(half4(0.0, 0.0, 0.0, 1.0), id);
 }

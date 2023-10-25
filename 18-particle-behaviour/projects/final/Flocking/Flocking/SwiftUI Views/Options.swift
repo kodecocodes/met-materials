@@ -30,9 +30,31 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
 import Observation
+import MetalKit
 
 @Observable
 class Options {
+
+  init() {}
+
+  var cohesionStrength: Float = 0.002
+  var separationStrength: Float = 0.085
+  var alignmentStrength: Float = 0.05
+  var predatorStrength: Float = 0.02
+  var minSpeed: Float = 4.0
+  var maxSpeed: Float = 9
+  var predatorSpeed: Float = 10
+  var neighborRadius: Float = 200
+  var separationRadius: Float = 20
+  var predatorRadius: Float = 140
+  var predatorSeek: Float = 500
+  var particleCount: Int = 50
+  var particles: Float = 50 {
+    didSet {
+      particleCount = Int(particles)
+      rebuildEmitter = true
+    }
+  }
+  var rebuildEmitter = false
 }

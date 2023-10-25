@@ -30,61 +30,30 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#ifndef Common_h
+#define Common_h
 
-// swiftlint:disable implicitly_unwrapped_optional
+#import <simd/simd.h>
 
-class Renderer: NSObject {
-  static var device: MTLDevice!
-  static var commandQueue: MTLCommandQueue!
-  static var library: MTLLibrary!
-  var options: Options
+struct Particle {
+  vector_float2 position;
+  vector_float2 velocity;
+};
 
-  var flockingPass: FlockingPass
+typedef struct Particle Boid;
 
-  init(metalView: MTKView, options: Options) {
-    guard
-      let device = MTLCreateSystemDefaultDevice(),
-      let commandQueue = device.makeCommandQueue() else {
-        fatalError("GPU not available")
-    }
-    Renderer.device = device
-    Renderer.commandQueue = commandQueue
-    metalView.device = device
-
-    // create the shader function library
-    let library = device.makeDefaultLibrary()
-    Self.library = library
-    self.options = options
-    flockingPass = FlockingPass()
-    super.init()
-    metalView.clearColor = MTLClearColor(
-      red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-    metalView.depthStencilPixelFormat = .depth32Float
-    mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
-    metalView.framebufferOnly = false
-  }
-}
-
-extension Renderer {
-  func mtkView(
-    _ view: MTKView,
-    drawableSizeWillChange size: CGSize
-  ) {
-    flockingPass.resize(view: view, size: size)
-  }
-
-  func draw(scene: GameScene, in view: MTKView) {
-    guard
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
-      else { return }
-
-    flockingPass.draw(in: view, commandBuffer: commandBuffer)
-    guard let drawable = view.currentDrawable else {
-      return
-    }
-    commandBuffer.present(drawable)
-    commandBuffer.commit()
-  }
-}
-// swiftlint:enable implicitly_unwrapped_optional
+struct Params {
+  float cohesionStrength;
+  float separationStrength;
+  float alignmentStrength;
+  float predatorStrength;
+  float minSpeed;
+  float maxSpeed;
+  float predatorSpeed;
+  float neighborRadius;
+  float separationRadius;
+  float predatorRadius;
+  float predatorSeek;
+  uint particleCount;
+};
+#endif /* Common_h */

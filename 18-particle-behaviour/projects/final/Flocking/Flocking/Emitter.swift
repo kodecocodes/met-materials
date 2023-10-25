@@ -33,27 +33,32 @@
 import MetalKit
 // swiftlint:disable force_unwrapping
 
-struct Particle {
-  var position: float2
-}
-
 struct Emitter {
-  var particleBuffer: MTLBuffer
+  var particleBuffer: MTLBuffer!
 
   init(
-    particleCount: Int,
-    size: CGSize
+    options: Options,
+    size: CGSize,
+    device: MTLDevice
   ) {
-    let bufferSize = MemoryLayout<Particle>.stride * particleCount
-    particleBuffer = Renderer.device.makeBuffer(length: bufferSize)!
-    var pointer = particleBuffer.contents()
-      .bindMemory(to: Particle.self, capacity: particleCount)
-
-    for _ in 0..<particleCount {
-      let width = random(Int(size.width) / 2) + Float(size.width) / Float(4)
-      let height = random(Int(size.height) / 2) + Float(size.height) / Float(4)
-      let position = float2(width, height)
+    let bufferSize = MemoryLayout<Particle>.stride * options.particleCount
+    particleBuffer = device.makeBuffer(length: bufferSize)
+    var pointer = particleBuffer.contents().bindMemory(
+      to: Particle.self,
+      capacity: options.particleCount)
+    pointer.pointee.velocity = float2(options.predatorSpeed, options.predatorSpeed)
+    pointer.pointee.position = float2(
+      random(Int(size.width)),
+      random(Int(size.height)))
+    pointer = pointer.advanced(by: 1)
+    for _ in 1..<options.particleCount {
+      let xPosition = random(Int(size.width))
+      let yPosition = random(Int(size.height))
+      let position = float2(xPosition, yPosition)
       pointer.pointee.position = position
+      let range: ClosedRange<Float> = -options.maxSpeed...options.maxSpeed
+      let velocity = float2(Float.random(in: range), Float.random(in: range))
+      pointer.pointee.velocity = velocity
       pointer = pointer.advanced(by: 1)
     }
   }

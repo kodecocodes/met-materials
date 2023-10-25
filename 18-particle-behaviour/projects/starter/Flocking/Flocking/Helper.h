@@ -30,12 +30,20 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import CoreGraphics
+#ifndef Helper_h
+#define Helper_h
+#include "Common.h"
+// If the position is off the screen,
+// wrap the position to the opposite edge
+float2 wrapPosition(float2 position, float2 size);
 
-struct GameScene {
-  mutating func update(size: CGSize) {
-  }
+// If the position is off the screen,
+// reflect the position at the edge
+Boid bounceBoid(
+  float2 position,
+  float2 velocity,
+  float2 size);
 
-  mutating func update(deltaTime: Float) {
-  }
-}
+
+
+#endif /* Helper_h */
