@@ -20,15 +20,12 @@ let mdlMesh = MDLMesh(
   allocator: allocator)
 
 // begin export code
-// 1
 let asset = MDLAsset()
 asset.add(mdlMesh)
-// 2
 let fileExtension = "usda"
 guard MDLAsset.canExportFileExtension(fileExtension) else {
   fatalError("Can't export a .\(fileExtension) format")
 }
-// 3
 do {
   let url = playgroundSharedDataDirectory
     .appendingPathComponent("primitive.\(fileExtension)")
