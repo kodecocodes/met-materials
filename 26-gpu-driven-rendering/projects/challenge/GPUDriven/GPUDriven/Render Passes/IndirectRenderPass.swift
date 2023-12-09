@@ -268,6 +268,7 @@ struct IndirectRenderPass: RenderPass {
       commandBuffer.makeRenderCommandEncoder(descriptor: descriptor!) else {
         return
     }
+    renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.executeCommandsInBuffer(icb, range: 0..<drawCount)
     renderEncoder.endEncoding()
