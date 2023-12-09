@@ -1,4 +1,4 @@
-# Chapter 18 Further Reading
+# Chapter 27 Further Reading
 
 [Peter Shirley's Ray Tracing in One Weekend Book Series](https://raytracing.github.io)
 
