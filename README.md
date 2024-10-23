@@ -1,5 +1,8 @@
 # Metal by Tutorials: Materials
 
+NOTE: Some samples have been modified to compile with XCode 16.
+
+
 This repo contains all the downloadable materials and projects associated with the **[Metal by Tutorials](https://www.kodeco.com/books/metal-by-tutorials)** from [Kodeco](https://www.kodeco.com).
 
 Each edition has its own branch, named `editions/[EDITION]`. The default branch for this repo is for the most recent edition.

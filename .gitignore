@@ -287,3 +287,6 @@ DerivedData/
 
 ## Gcc Patch
 /*.gcno
+
+# vscode
+/**/.vscode/

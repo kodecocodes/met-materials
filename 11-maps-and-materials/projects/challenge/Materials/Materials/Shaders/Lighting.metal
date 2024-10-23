@@ -68,7 +68,7 @@ float3 phongLighting(
           }
           break;
         }
-        case Point: {
+        case Point_: {
           float d = distance(light.position, position);
           float3 lightDirection = normalize(light.position - position);
           float attenuation = 1.0 / (light.attenuation.x +

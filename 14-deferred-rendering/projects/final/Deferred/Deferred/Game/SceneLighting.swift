@@ -93,7 +93,7 @@ struct SceneLighting {
     var lights: [Light] = []
     for _ in 0..<count {
       var light = Self.buildDefaultLight()
-      light.type = Point
+      light.type = Point_
       let x = Float.random(in: min.x...max.x)
       let y = Float.random(in: min.y...max.y)
       let z = Float.random(in: min.z...max.z)

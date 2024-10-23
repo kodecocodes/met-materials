@@ -49,7 +49,7 @@ float3 computeDiffuse(
         diffuseTotal += calculateSun(light, normal, params, material);
         break;
       }
-      case Point: {
+      case Point_: {
         diffuseTotal += calculatePoint(light, fragmentWorldPosition, normal, material);
         break;
       }

@@ -75,7 +75,7 @@ enum DebugLights {
     encoder.label = "Debug lights"
     for light in lights {
       switch light.type {
-      case Point:
+      case Point_:
         debugDrawPoint(
           encoder: encoder,
           uniforms: uniforms,

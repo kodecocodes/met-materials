@@ -35,6 +35,10 @@
 
 #import <simd/simd.h>
 
+#ifndef __METAL_VERSION__
+#import <Foundation/Foundation.h>
+#endif
+
 typedef struct {
   matrix_float4x4 modelMatrix;
   matrix_float4x4 viewMatrix;
