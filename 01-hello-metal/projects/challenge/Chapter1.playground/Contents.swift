@@ -5,25 +5,24 @@ guard let device = MTLCreateSystemDefaultDevice() else {
   fatalError("GPU is not supported")
 }
 
-let frame = CGRect(x: 0, y: 0, width: 600, height: 600)
+let frame = CGRect(x: 0, y: 0, width: 500, height: 500)
 let view = MTKView(frame: frame, device: device)
-view.clearColor = MTLClearColor(
-  red: 1, green: 1, blue: 0.8, alpha: 1)
+view.clearColor
+  = MTLClearColor(red: 1, green: 1, blue: 0.8, alpha: 1)
+PlaygroundPage.current.liveView = view
 
 let allocator = MTKMeshBufferAllocator(device: device)
 let mdlMesh = MDLMesh(
   sphereWithExtent: [0.2, 0.75, 0.2],
-  segments: [100, 100],
+  segments: [30, 30],
   inwardNormals: false,
   geometryType: .triangles,
   allocator: allocator)
 let mesh = try MTKMesh(mesh: mdlMesh, device: device)
 
-guard let commandQueue = device.makeCommandQueue() else {
-  fatalError("Could not create a command queue")
-}
+let commandQueue = device.makeCommandQueue()!
 
-let shader = """
+let shaders = """
 #include <metal_stdlib>
 using namespace metal;
 
@@ -40,7 +39,7 @@ fragment float4 fragment_main() {
 }
 """
 
-let library = try device.makeLibrary(source: shader, options: nil)
+let library = try device.makeLibrary(source: shaders, options: nil)
 let vertexFunction = library.makeFunction(name: "vertex_main")
 let fragmentFunction = library.makeFunction(name: "fragment_main")
 
@@ -83,5 +82,3 @@ guard let drawable = view.currentDrawable else {
 }
 commandBuffer.present(drawable)
 commandBuffer.commit()
-
-PlaygroundPage.current.liveView = view
