@@ -3,35 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		824770E42AA7FA0B0095AB72 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E32AA7FA0B0095AB72 /* PipelineApp.swift */; };
-		824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E52AA7FA0B0095AB72 /* ContentView.swift */; };
-		824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770E72AA7FA0C0095AB72 /* Assets.xcassets */; };
-		824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */; };
-		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
-		824770FA2AA804E20095AB72 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 824770F92AA804E20095AB72 /* Shaders.metal */; };
-		824770FC2AA8089E0095AB72 /* train.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 824770FB2AA8089E0095AB72 /* train.usdz */; };
-		824771002AA80C930095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FF2AA80C930095AB72 /* MetalView.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		824770E02AA7FA0B0095AB72 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		824770E32AA7FA0B0095AB72 /* PipelineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineApp.swift; sourceTree = "<group>"; };
-		824770E52AA7FA0B0095AB72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		824770E72AA7FA0C0095AB72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		824770E92AA7FA0C0095AB72 /* Pipeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pipeline.entitlements; sourceTree = "<group>"; };
-		824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		824770F92AA804E20095AB72 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		824770FB2AA8089E0095AB72 /* train.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = train.usdz; sourceTree = "<group>"; };
-		824770FF2AA80C930095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		8239F8642E08ECF100E0B7FE /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8239F8662E08ECF100E0B7FE /* Pipeline */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Pipeline;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		824770DD2AA7FA0B0095AB72 /* Frameworks */ = {
+		8239F8612E08ECF100E0B7FE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,116 +29,94 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		824770D72AA7FA0B0095AB72 = {
+		8239F85B2E08ECF100E0B7FE = {
 			isa = PBXGroup;
 			children = (
-				824770E22AA7FA0B0095AB72 /* Pipeline */,
-				824770E12AA7FA0B0095AB72 /* Products */,
+				8239F8662E08ECF100E0B7FE /* Pipeline */,
+				8239F8652E08ECF100E0B7FE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		824770E12AA7FA0B0095AB72 /* Products */ = {
+		8239F8652E08ECF100E0B7FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				824770E02AA7FA0B0095AB72 /* Pipeline.app */,
+				8239F8642E08ECF100E0B7FE /* Pipeline.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		824770E22AA7FA0B0095AB72 /* Pipeline */ = {
-			isa = PBXGroup;
-			children = (
-				824770E32AA7FA0B0095AB72 /* PipelineApp.swift */,
-				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
-				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
-				824770FF2AA80C930095AB72 /* MetalView.swift */,
-				824770F92AA804E20095AB72 /* Shaders.metal */,
-				824770FB2AA8089E0095AB72 /* train.usdz */,
-				824770E72AA7FA0C0095AB72 /* Assets.xcassets */,
-				824770E92AA7FA0C0095AB72 /* Pipeline.entitlements */,
-				824770EA2AA7FA0C0095AB72 /* Preview Content */,
-			);
-			path = Pipeline;
-			sourceTree = "<group>";
-		};
-		824770EA2AA7FA0C0095AB72 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		824770DF2AA7FA0B0095AB72 /* Pipeline */ = {
+		8239F8632E08ECF100E0B7FE /* Pipeline */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Pipeline" */;
+			buildConfigurationList = 8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */;
 			buildPhases = (
-				824770F82AA801170095AB72 /* SwiftLint */,
-				824770DC2AA7FA0B0095AB72 /* Sources */,
-				824770DD2AA7FA0B0095AB72 /* Frameworks */,
-				824770DE2AA7FA0B0095AB72 /* Resources */,
+				8239F8602E08ECF100E0B7FE /* Sources */,
+				8239F87C2E08F76000E0B7FE /* SwiftLint */,
+				8239F8612E08ECF100E0B7FE /* Frameworks */,
+				8239F8622E08ECF100E0B7FE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				8239F8662E08ECF100E0B7FE /* Pipeline */,
+			);
 			name = Pipeline;
+			packageProductDependencies = (
+			);
 			productName = Pipeline;
-			productReference = 824770E02AA7FA0B0095AB72 /* Pipeline.app */;
+			productReference = 8239F8642E08ECF100E0B7FE /* Pipeline.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		824770D82AA7FA0B0095AB72 /* Project object */ = {
+		8239F85C2E08ECF100E0B7FE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = Kodeco;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					824770DF2AA7FA0B0095AB72 = {
-						CreatedOnToolsVersion = 15.0;
+					8239F8632E08ECF100E0B7FE = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
-			buildConfigurationList = 824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Pipeline" */;
-			compatibilityVersion = "Xcode 15.0";
+			buildConfigurationList = 8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 824770D72AA7FA0B0095AB72;
-			productRefGroup = 824770E12AA7FA0B0095AB72 /* Products */;
+			mainGroup = 8239F85B2E08ECF100E0B7FE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8239F8652E08ECF100E0B7FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				824770DF2AA7FA0B0095AB72 /* Pipeline */,
+				8239F8632E08ECF100E0B7FE /* Pipeline */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		824770DE2AA7FA0B0095AB72 /* Resources */ = {
+		8239F8622E08ECF100E0B7FE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */,
-				824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */,
-				824770FC2AA8089E0095AB72 /* train.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		824770F82AA801170095AB72 /* SwiftLint */ = {
+		8239F87C2E08F76000E0B7FE /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -168,26 +134,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		824770DC2AA7FA0B0095AB72 /* Sources */ = {
+		8239F8602E08ECF100E0B7FE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
-				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
-				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
-				824770E42AA7FA0B0095AB72 /* PipelineApp.swift in Sources */,
-				824770FA2AA804E20095AB72 /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		824770ED2AA7FA0C0095AB72 /* Debug */ = {
+		8239F86D2E08ECF200E0B7FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -221,11 +183,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -249,7 +210,7 @@
 			};
 			name = Debug;
 		};
-		824770EE2AA7FA0C0095AB72 /* Release */ = {
+		8239F86E2E08ECF200E0B7FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -283,11 +244,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -303,19 +263,17 @@
 			};
 			name = Release;
 		};
-		824770F02AA7FA0C0095AB72 /* Debug */ = {
+		8239F8702E08ECF200E0B7FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Pipeline/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -327,34 +285,37 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Pipeline;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Pipeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
-		824770F12AA7FA0C0095AB72 /* Release */ = {
+		8239F8712E08ECF200E0B7FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Pipeline/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -366,43 +327,48 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Pipeline;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Pipeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Pipeline" */ = {
+		8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770ED2AA7FA0C0095AB72 /* Debug */,
-				824770EE2AA7FA0C0095AB72 /* Release */,
+				8239F86D2E08ECF200E0B7FE /* Debug */,
+				8239F86E2E08ECF200E0B7FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
+		8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770F02AA7FA0C0095AB72 /* Debug */,
-				824770F12AA7FA0C0095AB72 /* Release */,
+				8239F8702E08ECF200E0B7FE /* Debug */,
+				8239F8712E08ECF200E0B7FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 824770D82AA7FA0B0095AB72 /* Project object */;
+	rootObject = 8239F85C2E08ECF100E0B7FE /* Project object */;
 }

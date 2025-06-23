@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
+
+// swiftlint:disable implicitly_unwrapped_optional
 
 import MetalKit
 
@@ -64,6 +66,7 @@ class Renderer: NSObject {
     } catch {
       print(error.localizedDescription)
     }
+
     vertexBuffer = mesh.vertexBuffers[0].buffer
 
     // create the shader function library
@@ -88,6 +91,7 @@ class Renderer: NSObject {
     } catch {
       fatalError(error.localizedDescription)
     }
+
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 1.0,
@@ -114,6 +118,7 @@ extension Renderer: MTKViewDelegate {
           descriptor: descriptor) else {
         return
     }
+
     renderEncoder.setRenderPipelineState(pipelineState)
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
     for submesh in mesh.submeshes {
@@ -133,3 +138,5 @@ extension Renderer: MTKViewDelegate {
     commandBuffer.commit()
   }
 }
+
+// swiftlint:enable implicitly_unwrapped_optional

@@ -3,33 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		82F264AB2AA9485B003EFA00 /* PipelineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264AA2AA9485B003EFA00 /* PipelineApp.swift */; };
-		82F264AD2AA9485B003EFA00 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264AC2AA9485B003EFA00 /* ContentView.swift */; };
-		82F264AF2AA9485B003EFA00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82F264AE2AA9485B003EFA00 /* Assets.xcassets */; };
-		82F264B32AA9485C003EFA00 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */; };
-		82F264BC2AA948F1003EFA00 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264BB2AA948F1003EFA00 /* MetalView.swift */; };
-		82F264BE2AA94A62003EFA00 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F264BD2AA94A62003EFA00 /* Renderer.swift */; };
-		82F264C12AA94BA2003EFA00 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 82F264C02AA94BA2003EFA00 /* Shaders.metal */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		82F264A72AA9485B003EFA00 /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		82F264AA2AA9485B003EFA00 /* PipelineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineApp.swift; sourceTree = "<group>"; };
-		82F264AC2AA9485B003EFA00 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		82F264AE2AA9485B003EFA00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		82F264B02AA9485C003EFA00 /* Pipeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pipeline.entitlements; sourceTree = "<group>"; };
-		82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		82F264BB2AA948F1003EFA00 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
-		82F264BD2AA94A62003EFA00 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		82F264C02AA94BA2003EFA00 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		8239F8642E08ECF100E0B7FE /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8239F8662E08ECF100E0B7FE /* Pipeline */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Pipeline;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		82F264A42AA9485B003EFA00 /* Frameworks */ = {
+		8239F8612E08ECF100E0B7FE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,114 +29,94 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		82F2649E2AA9485B003EFA00 = {
+		8239F85B2E08ECF100E0B7FE = {
 			isa = PBXGroup;
 			children = (
-				82F264A92AA9485B003EFA00 /* Pipeline */,
-				82F264A82AA9485B003EFA00 /* Products */,
+				8239F8662E08ECF100E0B7FE /* Pipeline */,
+				8239F8652E08ECF100E0B7FE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		82F264A82AA9485B003EFA00 /* Products */ = {
+		8239F8652E08ECF100E0B7FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				82F264A72AA9485B003EFA00 /* Pipeline.app */,
+				8239F8642E08ECF100E0B7FE /* Pipeline.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		82F264A92AA9485B003EFA00 /* Pipeline */ = {
-			isa = PBXGroup;
-			children = (
-				82F264AA2AA9485B003EFA00 /* PipelineApp.swift */,
-				82F264AC2AA9485B003EFA00 /* ContentView.swift */,
-				82F264BB2AA948F1003EFA00 /* MetalView.swift */,
-				82F264BD2AA94A62003EFA00 /* Renderer.swift */,
-				82F264C02AA94BA2003EFA00 /* Shaders.metal */,
-				82F264AE2AA9485B003EFA00 /* Assets.xcassets */,
-				82F264B02AA9485C003EFA00 /* Pipeline.entitlements */,
-				82F264B12AA9485C003EFA00 /* Preview Content */,
-			);
-			path = Pipeline;
-			sourceTree = "<group>";
-		};
-		82F264B12AA9485C003EFA00 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				82F264B22AA9485C003EFA00 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		82F264A62AA9485B003EFA00 /* Pipeline */ = {
+		8239F8632E08ECF100E0B7FE /* Pipeline */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 82F264B62AA9485C003EFA00 /* Build configuration list for PBXNativeTarget "Pipeline" */;
+			buildConfigurationList = 8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */;
 			buildPhases = (
-				82F264BF2AA94B3D003EFA00 /* SwiftLint */,
-				82F264A32AA9485B003EFA00 /* Sources */,
-				82F264A42AA9485B003EFA00 /* Frameworks */,
-				82F264A52AA9485B003EFA00 /* Resources */,
+				8239F8602E08ECF100E0B7FE /* Sources */,
+				8239F87C2E08F76000E0B7FE /* SwiftLint */,
+				8239F8612E08ECF100E0B7FE /* Frameworks */,
+				8239F8622E08ECF100E0B7FE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				8239F8662E08ECF100E0B7FE /* Pipeline */,
+			);
 			name = Pipeline;
+			packageProductDependencies = (
+			);
 			productName = Pipeline;
-			productReference = 82F264A72AA9485B003EFA00 /* Pipeline.app */;
+			productReference = 8239F8642E08ECF100E0B7FE /* Pipeline.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		82F2649F2AA9485B003EFA00 /* Project object */ = {
+		8239F85C2E08ECF100E0B7FE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = Kodeco;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					82F264A62AA9485B003EFA00 = {
-						CreatedOnToolsVersion = 15.0;
+					8239F8632E08ECF100E0B7FE = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
-			buildConfigurationList = 82F264A22AA9485B003EFA00 /* Build configuration list for PBXProject "Pipeline" */;
-			compatibilityVersion = "Xcode 15.0";
+			buildConfigurationList = 8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 82F2649E2AA9485B003EFA00;
-			productRefGroup = 82F264A82AA9485B003EFA00 /* Products */;
+			mainGroup = 8239F85B2E08ECF100E0B7FE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8239F8652E08ECF100E0B7FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				82F264A62AA9485B003EFA00 /* Pipeline */,
+				8239F8632E08ECF100E0B7FE /* Pipeline */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		82F264A52AA9485B003EFA00 /* Resources */ = {
+		8239F8622E08ECF100E0B7FE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82F264B32AA9485C003EFA00 /* Preview Assets.xcassets in Resources */,
-				82F264AF2AA9485B003EFA00 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		82F264BF2AA94B3D003EFA00 /* SwiftLint */ = {
+		8239F87C2E08F76000E0B7FE /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -164,26 +134,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		82F264A32AA9485B003EFA00 /* Sources */ = {
+		8239F8602E08ECF100E0B7FE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82F264BE2AA94A62003EFA00 /* Renderer.swift in Sources */,
-				82F264BC2AA948F1003EFA00 /* MetalView.swift in Sources */,
-				82F264AD2AA9485B003EFA00 /* ContentView.swift in Sources */,
-				82F264AB2AA9485B003EFA00 /* PipelineApp.swift in Sources */,
-				82F264C12AA94BA2003EFA00 /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		82F264B42AA9485C003EFA00 /* Debug */ = {
+		8239F86D2E08ECF200E0B7FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -244,7 +210,7 @@
 			};
 			name = Debug;
 		};
-		82F264B52AA9485C003EFA00 /* Release */ = {
+		8239F86E2E08ECF200E0B7FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -297,19 +263,17 @@
 			};
 			name = Release;
 		};
-		82F264B72AA9485C003EFA00 /* Debug */ = {
+		8239F8702E08ECF200E0B7FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Pipeline/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -321,34 +285,37 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Pipeline;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Pipeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
-		82F264B82AA9485C003EFA00 /* Release */ = {
+		8239F8712E08ECF200E0B7FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pipeline/Pipeline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Pipeline/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -360,43 +327,48 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Pipeline;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Pipeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		82F264A22AA9485B003EFA00 /* Build configuration list for PBXProject "Pipeline" */ = {
+		8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				82F264B42AA9485C003EFA00 /* Debug */,
-				82F264B52AA9485C003EFA00 /* Release */,
+				8239F86D2E08ECF200E0B7FE /* Debug */,
+				8239F86E2E08ECF200E0B7FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		82F264B62AA9485C003EFA00 /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
+		8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				82F264B72AA9485C003EFA00 /* Debug */,
-				82F264B82AA9485C003EFA00 /* Release */,
+				8239F8702E08ECF200E0B7FE /* Debug */,
+				8239F8712E08ECF200E0B7FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 82F2649F2AA9485B003EFA00 /* Project object */;
+	rootObject = 8239F85C2E08ECF100E0B7FE /* Project object */;
 }

@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco LLC
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,11 +30,10 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable function_body_length
 // swiftlint:disable force_cast
+
+import MetalKit
 
 class Renderer: NSObject {
   static var device: MTLDevice!
@@ -54,38 +53,7 @@ class Renderer: NSObject {
     Self.commandQueue = commandQueue
     metalView.device = device
 
-    // load the train model
-    let allocator = MTKMeshBufferAllocator(device: device)
-    guard let assetURL = Bundle.main.url(
-      forResource: "train",
-      withExtension: "usdz") else {
-      fatalError("Model not found")
-    }
-
-    let vertexDescriptor = MTLVertexDescriptor()
-    vertexDescriptor.attributes[0].format = .float3
-    vertexDescriptor.attributes[0].offset = 0
-    vertexDescriptor.attributes[0].bufferIndex = 0
-    vertexDescriptor.layouts[0].stride =
-      MemoryLayout<SIMD3<Float>>.stride
-    let meshDescriptor =
-      MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
-    (meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
-      MDLVertexAttributePosition
-
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: meshDescriptor,
-      bufferAllocator: allocator)
-    let mdlMesh =
-      asset.childObjects(of: MDLMesh.self).first as! MDLMesh
-    do {
-      mesh = try MTKMesh(mesh: mdlMesh, device: device)
-    } catch {
-      fatalError("Mesh not loaded")
-    }
-
-    vertexBuffer = mesh.vertexBuffers[0].buffer
+    // create the mesh
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
@@ -93,6 +61,15 @@ class Renderer: NSObject {
     let vertexFunction = library?.makeFunction(name: "vertex_main")
     let fragmentFunction =
       library?.makeFunction(name: "fragment_main")
+
+    let mdlMesh = Self.loadTrain()
+    do {
+      mesh = try MTKMesh(mesh: mdlMesh, device: Self.device)
+    } catch {
+      print(error.localizedDescription)
+    }
+
+    vertexBuffer = mesh.vertexBuffers[0].buffer
 
     // create the pipeline state object
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -109,6 +86,7 @@ class Renderer: NSObject {
     } catch {
       fatalError(error.localizedDescription)
     }
+
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 1.0,
@@ -116,6 +94,33 @@ class Renderer: NSObject {
       blue: 0.8,
       alpha: 1.0)
     metalView.delegate = self
+  }
+
+  static func loadTrain() -> MDLMesh {
+    let allocator = MTKMeshBufferAllocator(device: Self.device)
+    guard let assetURL = Bundle.main.url(
+      forResource: "train",
+      withExtension: "usdz") else {
+      fatalError("Train model not found")
+    }
+
+    let vertexDescriptor = MTLVertexDescriptor()
+    vertexDescriptor.attributes[0].format = .float3
+    vertexDescriptor.attributes[0].offset = 0
+    vertexDescriptor.attributes[0].bufferIndex = 0
+
+    vertexDescriptor.layouts[0].stride =
+      MemoryLayout<SIMD3<Float>>.stride
+    let meshDescriptor =
+      MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
+    (meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
+      MDLVertexAttributePosition
+
+    let asset = MDLAsset(
+      url: assetURL,
+      vertexDescriptor: meshDescriptor,
+      bufferAllocator: allocator)
+    return asset.childObjects(of: MDLMesh.self).first as! MDLMesh
   }
 }
 
@@ -135,6 +140,7 @@ extension Renderer: MTKViewDelegate {
           descriptor: descriptor) else {
         return
     }
+
     renderEncoder.setRenderPipelineState(pipelineState)
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
     for submesh in mesh.submeshes {
@@ -156,5 +162,4 @@ extension Renderer: MTKViewDelegate {
 }
 
 // swiftlint:enable implicitly_unwrapped_optional
-// swiftlint:enable function_body_length
 // swiftlint:enable force_cast
