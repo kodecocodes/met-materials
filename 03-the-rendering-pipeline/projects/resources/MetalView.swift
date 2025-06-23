@@ -45,12 +45,12 @@ typealias ViewRepresentable = UIViewRepresentable
 
 struct MetalView: ViewRepresentable {
   let view = MTKView()
-  
+
   func makeCoordinator() -> Renderer {
     let renderer = Renderer(metalView: view)
     return renderer
   }
-  
+
 #if os(macOS)
   func makeNSView(context: Context) -> some NSView {
     makeMetalView()
@@ -71,7 +71,7 @@ struct MetalView: ViewRepresentable {
   func makeMetalView() -> MTKView {
     view
   }
-  
+
   func updateMetalView() {
   }
 }
