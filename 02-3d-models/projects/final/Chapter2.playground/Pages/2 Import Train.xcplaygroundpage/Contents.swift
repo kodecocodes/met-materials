@@ -5,27 +5,45 @@ guard let device = MTLCreateSystemDefaultDevice() else {
   fatalError("GPU is not supported")
 }
 
-let frame = CGRect(x: 0, y: 0, width: 600, height: 600)
+let frame = CGRect(x: 0, y: 0, width: 500, height: 500)
 let view = MTKView(frame: frame, device: device)
-view.clearColor = MTLClearColor(red: 1,
-  green: 1, blue: 0.8, alpha: 1)
+view.clearColor
+  = MTLClearColor(red: 1, green: 1, blue: 0.8, alpha: 1)
+PlaygroundPage.current.liveView = view
 
 let allocator = MTKMeshBufferAllocator(device: device)
-let mdlMesh = MDLMesh(
-  coneWithExtent: [1, 1, 1],
-  segments: [10, 10],
-  inwardNormals: false,
-  cap: true,
-  geometryType: .triangles,
-  allocator: allocator)
+
+guard let assetURL = Bundle.main.url(
+  forResource: "train",
+  withExtension: "usdz") else {
+  fatalError()
+}
+
+let vertexDescriptor = MTLVertexDescriptor()
+vertexDescriptor.attributes[0].format = .float3
+vertexDescriptor.attributes[0].offset = 0
+vertexDescriptor.attributes[0].bufferIndex = 0
+
+vertexDescriptor.layouts[0].stride =
+  MemoryLayout<SIMD3<Float>>.stride
+let meshDescriptor =
+  MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
+(meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
+  MDLVertexAttributePosition
+
+let asset = MDLAsset(
+  url: assetURL,
+  vertexDescriptor: meshDescriptor,
+  bufferAllocator: allocator)
+let mdlMesh =
+  asset.childObjects(of: MDLMesh.self).first as! MDLMesh
 
 let mesh = try MTKMesh(mesh: mdlMesh, device: device)
 
-guard let commandQueue = device.makeCommandQueue() else {
-  fatalError("Could not create a command queue")
-}
 
-let shader = """
+let commandQueue = device.makeCommandQueue()!
+
+let shaders = """
 #include <metal_stdlib>
 using namespace metal;
 
@@ -34,7 +52,9 @@ struct VertexIn {
 };
 
 vertex float4 vertex_main(const VertexIn vertex_in [[stage_in]]) {
-  return vertex_in.position;
+float4 position = vertex_in.position;
+position.y -= 1.0;
+return position;
 }
 
 fragment float4 fragment_main() {
@@ -42,7 +62,7 @@ fragment float4 fragment_main() {
 }
 """
 
-let library = try device.makeLibrary(source: shader, options: nil)
+let library = try device.makeLibrary(source: shaders, options: nil)
 let vertexFunction = library.makeFunction(name: "vertex_main")
 let fragmentFunction = library.makeFunction(name: "fragment_main")
 
@@ -69,15 +89,15 @@ renderEncoder.setVertexBuffer(
   mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
 renderEncoder.setTriangleFillMode(.lines)
 
-guard let submesh = mesh.submeshes.first else {
-  fatalError()
+for submesh in mesh.submeshes {
+  renderEncoder.drawIndexedPrimitives(
+    type: .triangle,
+    indexCount: submesh.indexCount,
+    indexType: submesh.indexType,
+    indexBuffer: submesh.indexBuffer.buffer,
+    indexBufferOffset: submesh.indexBuffer.offset
+  )
 }
-renderEncoder.drawIndexedPrimitives(
-  type: .triangle,
-  indexCount: submesh.indexCount,
-  indexType: submesh.indexType,
-  indexBuffer: submesh.indexBuffer.buffer,
-  indexBufferOffset: 0)
 
 renderEncoder.endEncoding()
 guard let drawable = view.currentDrawable else {
@@ -85,5 +105,3 @@ guard let drawable = view.currentDrawable else {
 }
 commandBuffer.present(drawable)
 commandBuffer.commit()
-
-PlaygroundPage.current.liveView = view
