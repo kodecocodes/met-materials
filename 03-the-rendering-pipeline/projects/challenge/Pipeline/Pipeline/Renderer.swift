@@ -1,4 +1,4 @@
-///// Copyright (c) 2025 Kodeco LLC
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -53,8 +53,6 @@ class Renderer: NSObject {
     Self.commandQueue = commandQueue
     metalView.device = device
 
-    // create the mesh
-
     // create the shader function library
     let library = device.makeDefaultLibrary()
     Self.library = library
@@ -62,6 +60,7 @@ class Renderer: NSObject {
     let fragmentFunction =
       library?.makeFunction(name: "fragment_main")
 
+    // create the mesh
     let mdlMesh = Self.loadTrain()
     do {
       mesh = try MTKMesh(mesh: mdlMesh, device: Self.device)

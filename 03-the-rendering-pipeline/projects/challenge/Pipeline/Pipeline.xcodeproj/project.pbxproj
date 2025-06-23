@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		8239F8642E08ECF100E0B7FE /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82ECEA9F2E0A15AD008ACD5E /* Pipeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pipeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		8239F8662E08ECF100E0B7FE /* Pipeline */ = {
+		82ECEAA12E0A15AD008ACD5E /* Pipeline */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Pipeline;
 			sourceTree = "<group>";
@@ -19,7 +19,7 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8239F8612E08ECF100E0B7FE /* Frameworks */ = {
+		82ECEA9C2E0A15AD008ACD5E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -29,18 +29,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8239F85B2E08ECF100E0B7FE = {
+		82ECEA962E0A15AD008ACD5E = {
 			isa = PBXGroup;
 			children = (
-				8239F8662E08ECF100E0B7FE /* Pipeline */,
-				8239F8652E08ECF100E0B7FE /* Products */,
+				82ECEAA12E0A15AD008ACD5E /* Pipeline */,
+				82ECEAA02E0A15AD008ACD5E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8239F8652E08ECF100E0B7FE /* Products */ = {
+		82ECEAA02E0A15AD008ACD5E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8239F8642E08ECF100E0B7FE /* Pipeline.app */,
+				82ECEA9F2E0A15AD008ACD5E /* Pipeline.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,65 +48,65 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8239F8632E08ECF100E0B7FE /* Pipeline */ = {
+		82ECEA9E2E0A15AD008ACD5E /* Pipeline */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */;
+			buildConfigurationList = 82ECEAAA2E0A15AE008ACD5E /* Build configuration list for PBXNativeTarget "Pipeline" */;
 			buildPhases = (
-				8239F8602E08ECF100E0B7FE /* Sources */,
-				8239F87C2E08F76000E0B7FE /* SwiftLint */,
-				8239F8612E08ECF100E0B7FE /* Frameworks */,
-				8239F8622E08ECF100E0B7FE /* Resources */,
+				82ECEA9B2E0A15AD008ACD5E /* Sources */,
+				82ECEAC72E0A17B8008ACD5E /* SwiftLint */,
+				82ECEA9C2E0A15AD008ACD5E /* Frameworks */,
+				82ECEA9D2E0A15AD008ACD5E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				8239F8662E08ECF100E0B7FE /* Pipeline */,
+				82ECEAA12E0A15AD008ACD5E /* Pipeline */,
 			);
 			name = Pipeline;
 			packageProductDependencies = (
 			);
 			productName = Pipeline;
-			productReference = 8239F8642E08ECF100E0B7FE /* Pipeline.app */;
+			productReference = 82ECEA9F2E0A15AD008ACD5E /* Pipeline.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8239F85C2E08ECF100E0B7FE /* Project object */ = {
+		82ECEA972E0A15AD008ACD5E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					8239F8632E08ECF100E0B7FE = {
+					82ECEA9E2E0A15AD008ACD5E = {
 						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
-			buildConfigurationList = 8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */;
+			buildConfigurationList = 82ECEA9A2E0A15AD008ACD5E /* Build configuration list for PBXProject "Pipeline" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 8239F85B2E08ECF100E0B7FE;
+			mainGroup = 82ECEA962E0A15AD008ACD5E;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 8239F8652E08ECF100E0B7FE /* Products */;
+			productRefGroup = 82ECEAA02E0A15AD008ACD5E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8239F8632E08ECF100E0B7FE /* Pipeline */,
+				82ECEA9E2E0A15AD008ACD5E /* Pipeline */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8239F8622E08ECF100E0B7FE /* Resources */ = {
+		82ECEA9D2E0A15AD008ACD5E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -116,7 +116,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8239F87C2E08F76000E0B7FE /* SwiftLint */ = {
+		82ECEAC72E0A17B8008ACD5E /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -139,7 +139,7 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8239F8602E08ECF100E0B7FE /* Sources */ = {
+		82ECEA9B2E0A15AD008ACD5E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -149,7 +149,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		8239F86D2E08ECF200E0B7FE /* Debug */ = {
+		82ECEAA82E0A15AE008ACD5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -210,7 +210,7 @@
 			};
 			name = Debug;
 		};
-		8239F86E2E08ECF200E0B7FE /* Release */ = {
+		82ECEAA92E0A15AE008ACD5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -263,7 +263,7 @@
 			};
 			name = Release;
 		};
-		8239F8702E08ECF200E0B7FE /* Debug */ = {
+		82ECEAAB2E0A15AE008ACD5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -305,7 +305,7 @@
 			};
 			name = Debug;
 		};
-		8239F8712E08ECF200E0B7FE /* Release */ = {
+		82ECEAAC2E0A15AE008ACD5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -350,25 +350,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8239F85F2E08ECF100E0B7FE /* Build configuration list for PBXProject "Pipeline" */ = {
+		82ECEA9A2E0A15AD008ACD5E /* Build configuration list for PBXProject "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8239F86D2E08ECF200E0B7FE /* Debug */,
-				8239F86E2E08ECF200E0B7FE /* Release */,
+				82ECEAA82E0A15AE008ACD5E /* Debug */,
+				82ECEAA92E0A15AE008ACD5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8239F86F2E08ECF200E0B7FE /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
+		82ECEAAA2E0A15AE008ACD5E /* Build configuration list for PBXNativeTarget "Pipeline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8239F8702E08ECF200E0B7FE /* Debug */,
-				8239F8712E08ECF200E0B7FE /* Release */,
+				82ECEAAB2E0A15AE008ACD5E /* Debug */,
+				82ECEAAC2E0A15AE008ACD5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8239F85C2E08ECF100E0B7FE /* Project object */;
+	rootObject = 82ECEA972E0A15AD008ACD5E /* Project object */;
 }
