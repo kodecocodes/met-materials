@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,15 +30,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable function_body_length
+
+import MetalKit
 
 class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
+  var mesh: MTKMesh!
+  var vertexBuffer: MTLBuffer!
   var pipelineState: MTLRenderPipelineState!
 
   lazy var triangle: Triangle = {
@@ -105,7 +106,6 @@ extension Renderer: MTKViewDelegate {
           descriptor: descriptor) else {
         return
     }
-
     renderEncoder.setRenderPipelineState(pipelineState)
     renderEncoder.setVertexBuffer(
       triangle.vertexBuffer,
@@ -113,9 +113,9 @@ extension Renderer: MTKViewDelegate {
       index: 0)
 
     // draw the untransformed triangle in light gray
-    var color: simd_float4 = [0.8, 0.8, 0.8, 1]
+    var grayColor: simd_float4 = [0.8, 0.8, 0.8, 1]
     renderEncoder.setFragmentBytes(
-      &color,
+      &grayColor,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
     var position = simd_float3(0, 0, 0)
@@ -131,9 +131,9 @@ extension Renderer: MTKViewDelegate {
       indexBufferOffset: 0)
 
     // draw the new triangle in red
-    color = [1, 0, 0, 1]
+    var redColor: simd_float4 = [1, 0, 0, 1]
     renderEncoder.setFragmentBytes(
-      &color,
+      &redColor,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
     position = simd_float3(0.3, -0.4, 0)
@@ -158,4 +158,3 @@ extension Renderer: MTKViewDelegate {
 }
 
 // swiftlint:enable implicitly_unwrapped_optional
-// swiftlint:enable function_body_length
