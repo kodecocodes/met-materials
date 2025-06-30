@@ -37,6 +37,7 @@ struct PipelineApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .navigationTitle("The Rendering Pipeline")
     }
   }
 }
