@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,17 +32,12 @@
 
 import SwiftUI
 
-let size: CGFloat = 400
-
 struct ContentView: View {
-  @State private var showGrid = true
-
   var body: some View {
     VStack(alignment: .leading) {
-        MetalView()
-          .border(Color.black, width: 2)
+      MetalView()
+        .border(Color.black, width: 2)
     }
-    .frame(height: size)
     .padding()
   }
 }
