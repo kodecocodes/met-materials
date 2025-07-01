@@ -118,9 +118,9 @@ extension Renderer: MTKViewDelegate {
       &grayColor,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
-    var position = simd_float3(0, 0, 0)
+    var originalPosition = simd_float3(0, 0, 0)
     renderEncoder.setVertexBytes(
-      &position,
+      &originalPosition,
       length: MemoryLayout<SIMD3<Float>>.stride,
       index: 11)
     renderEncoder.drawIndexedPrimitives(
@@ -136,9 +136,9 @@ extension Renderer: MTKViewDelegate {
       &redColor,
       length: MemoryLayout<SIMD4<Float>>.stride,
       index: 0)
-    position = simd_float3(0.3, -0.4, 0)
+    var newPosition = simd_float3(0.3, -0.4, 0)
     renderEncoder.setVertexBytes(
-      &position,
+      &newPosition,
       length: MemoryLayout<SIMD3<Float>>.stride,
       index: 11)
     renderEncoder.drawIndexedPrimitives(
