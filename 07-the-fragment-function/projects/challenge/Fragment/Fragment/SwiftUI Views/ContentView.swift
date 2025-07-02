@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,6 @@ let size: CGFloat = 400
 
 struct ContentView: View {
   @State var options = Options()
-  @State private var showGrid = true
 
   var body: some View {
     VStack {
@@ -53,7 +52,6 @@ struct ContentView: View {
       .containerRelativeFrame(.horizontal) { width, _ in
         return width * 0.6
       }
-
     }
     .padding()
   }

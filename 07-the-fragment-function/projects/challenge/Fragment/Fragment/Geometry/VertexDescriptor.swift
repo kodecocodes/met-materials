@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,33 +32,43 @@
 
 import MetalKit
 
-class Model: Transformable {
-  var transform = Transform()
-  let mesh: MTKMesh
-  let name: String
+extension MTLVertexDescriptor {
+  static var defaultLayout: MTLVertexDescriptor? {
+    MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
+  }
+}
 
-  init(device: MTLDevice, name: String) {
-    guard let assetURL = Bundle.main.url(
-      forResource: name,
-      withExtension: nil) else {
-      fatalError("Model: \(name) not found")
-    }
+extension MDLVertexDescriptor {
+  static var defaultLayout: MDLVertexDescriptor {
+    let vertexDescriptor = MDLVertexDescriptor()
+    var offset = 0
+    vertexDescriptor.attributes[Position.index] = MDLVertexAttribute(
+      name: MDLVertexAttributePosition,
+      format: .float3,
+      offset: 0,
+      bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
 
-    let allocator = MTKMeshBufferAllocator(device: device)
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: .defaultLayout,
-      bufferAllocator: allocator)
-    if let mdlMesh =
-      asset.childObjects(of: MDLMesh.self).first as? MDLMesh {
-      do {
-        mesh = try MTKMesh(mesh: mdlMesh, device: device)
-      } catch {
-        fatalError("Failed to load mesh")
-      }
-    } else {
-      fatalError("No mesh available")
-    }
-    self.name = name
+    vertexDescriptor.attributes[Normal.index] = MDLVertexAttribute(
+      name: MDLVertexAttributeNormal,
+      format: .float3,
+      offset: offset,
+      bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
+
+    vertexDescriptor.layouts[VertexBuffer.index] = MDLVertexBufferLayout(stride: offset)
+    return vertexDescriptor
+  }
+}
+
+extension BufferIndices {
+  var index: Int {
+    return Int(self.rawValue)
+  }
+}
+
+extension Attributes {
+  var index: Int {
+    return Int(self.rawValue)
   }
 }

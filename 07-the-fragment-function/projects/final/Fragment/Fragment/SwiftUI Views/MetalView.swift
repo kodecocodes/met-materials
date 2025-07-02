@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,45 +33,31 @@
 import SwiftUI
 import MetalKit
 
-struct MetalView: View {
-  let options: Options
-  @State private var metalView = MTKView()
-  @State private var renderer: Renderer?
-
-  var body: some View {
-    MetalViewRepresentable(
-      renderer: renderer,
-      metalView: $metalView,
-      options: options)
-      .onAppear {
-        renderer = Renderer(
-          metalView: metalView,
-          options: options)
-      }
-  }
-}
-
 #if os(macOS)
 typealias ViewRepresentable = NSViewRepresentable
 #elseif os(iOS)
 typealias ViewRepresentable = UIViewRepresentable
 #endif
 
-struct MetalViewRepresentable: ViewRepresentable {
-  let renderer: Renderer?
-  @Binding var metalView: MTKView
+struct MetalView: ViewRepresentable {
   let options: Options
+  let view = MTKView()
+
+  func makeCoordinator() -> Renderer {
+    let renderer = Renderer(metalView: view, options: options)
+    return renderer
+  }
 
 #if os(macOS)
   func makeNSView(context: Context) -> some NSView {
-    metalView
+    makeMetalView()
   }
   func updateNSView(_ uiView: NSViewType, context: Context) {
     updateMetalView()
   }
 #elseif os(iOS)
   func makeUIView(context: Context) -> MTKView {
-    metalView
+    makeMetalView()
   }
 
   func updateUIView(_ uiView: MTKView, context: Context) {
@@ -79,14 +65,18 @@ struct MetalViewRepresentable: ViewRepresentable {
   }
 #endif
 
+  func makeMetalView() -> MTKView {
+    view
+  }
+
   func updateMetalView() {
-    renderer?.options = options
   }
 }
 
 #Preview {
   VStack {
     MetalView(options: Options())
-    Text("Metal View")
+      .border(.black, width: 2.0)
+      .padding()
   }
 }

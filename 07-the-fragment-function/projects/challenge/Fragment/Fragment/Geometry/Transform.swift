@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,35 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
 
-class Model: Transformable {
-  var transform = Transform()
-  let mesh: MTKMesh
-  let name: String
+struct Transform {
+  var position: float3 = [0, 0, 0]
+  var rotation: float3 = [0, 0, 0]
+  var scale: Float = 1
+}
 
-  init(device: MTLDevice, name: String) {
-    guard let assetURL = Bundle.main.url(
-      forResource: name,
-      withExtension: nil) else {
-      fatalError("Model: \(name) not found")
-    }
+extension Transform {
+  var modelMatrix: matrix_float4x4 {
+    let translation = float4x4(translation: position)
+    let rotation = float4x4(rotation: rotation)
+    let scale = float4x4(scaling: scale)
+    let modelMatrix = translation * rotation * scale
+    return modelMatrix
+  }
+}
 
-    let allocator = MTKMeshBufferAllocator(device: device)
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: .defaultLayout,
-      bufferAllocator: allocator)
-    if let mdlMesh =
-      asset.childObjects(of: MDLMesh.self).first as? MDLMesh {
-      do {
-        mesh = try MTKMesh(mesh: mdlMesh, device: device)
-      } catch {
-        fatalError("Failed to load mesh")
-      }
-    } else {
-      fatalError("No mesh available")
-    }
-    self.name = name
+protocol Transformable {
+  var transform: Transform { get set }
+}
+
+extension Transformable {
+  var position: float3 {
+    get { transform.position }
+    set { transform.position = newValue }
+  }
+  var rotation: float3 {
+    get { transform.rotation }
+    set { transform.rotation = newValue }
+  }
+  var scale: Float {
+    get { transform.scale }
+    set { transform.scale = newValue }
   }
 }
