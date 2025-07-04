@@ -30,18 +30,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+#import "ShaderDefs.h"
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
-    }
-    .padding()
-  }
-}
-
-#Preview {
-  ContentView()
+vertex VertexOut vertex_main(
+  VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
+{
+  float4 position =
+    uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * in.position;
+  VertexOut out {
+    .position = position,
+    .normal = in.normal,
+    .uv = in.uv
+  };
+  return out;
 }

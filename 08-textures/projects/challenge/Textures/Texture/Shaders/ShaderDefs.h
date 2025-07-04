@@ -30,18 +30,17 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+#include <metal_stdlib>
+using namespace metal;
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
-    }
-    .padding()
-  }
-}
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+};
 
-#Preview {
-  ContentView()
-}
+struct VertexOut {
+  float4 position [[position]];
+  float3 normal;
+  float2 uv;
+};

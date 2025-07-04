@@ -30,18 +30,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+#import "ShaderDefs.h"
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
-    }
-    .padding()
-  }
-}
-
-#Preview {
-  ContentView()
+fragment float4 fragment_main(
+  constant Params &params [[buffer(ParamsBuffer)]],
+  VertexOut in [[stage_in]],
+  texture2d<float> baseColorTexture [[texture(BaseColor)]])
+{
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear,
+    max_anisotropy(8));
+  float3 baseColor = baseColorTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
+  
+  return float4(baseColor, 1);
 }

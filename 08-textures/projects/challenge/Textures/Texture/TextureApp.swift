@@ -32,16 +32,12 @@
 
 import SwiftUI
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
+@main
+struct TextureApp: App {
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+        .navigationTitle("Textures")
     }
-    .padding()
   }
-}
-
-#Preview {
-  ContentView()
 }

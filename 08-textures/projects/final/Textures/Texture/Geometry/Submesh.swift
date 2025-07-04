@@ -30,18 +30,58 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import MetalKit
+import CoreImage
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
-    }
-    .padding()
+struct Submesh {
+  let indexCount: Int
+  let indexType: MTLIndexType
+  let indexBuffer: MTLBuffer
+  let indexBufferOffset: Int
+
+  struct Textures {
+    var baseColor: MTLTexture?
+  }
+  var textures: Textures
+}
+
+extension Submesh {
+  init(mdlSubmesh: MDLSubmesh, mtkSubmesh: MTKSubmesh) {
+    indexCount = mtkSubmesh.indexCount
+    indexType = mtkSubmesh.indexType
+    indexBuffer = mtkSubmesh.indexBuffer.buffer
+    indexBufferOffset = mtkSubmesh.indexBuffer.offset
+    textures = Textures(material: mdlSubmesh.material)
   }
 }
 
-#Preview {
-  ContentView()
+private extension Submesh.Textures {
+  init(material: MDLMaterial?) {
+    baseColor = material?.texture(type: .baseColor)
+  }
+}
+
+private extension MDLMaterialProperty {
+  var textureName: String {
+    stringValue ?? UUID().uuidString
+  }
+}
+
+private extension MDLMaterial {
+  func texture(type semantic: MDLMaterialSemantic) -> MTLTexture? {
+    if let property = property(with: semantic),
+    property.type == .texture,
+    let mdlTexture = property.textureSamplerValue?.texture {
+      var texture = TextureController.loadTexture(
+        texture: mdlTexture,
+        name: property.textureName)
+      if semantic == .baseColor {
+        texture = texture?.convertUSDBaseColorTosRGB(
+          device: Renderer.device,
+          mipmapped: true)
+      }
+      return texture
+    }
+    return nil
+  }
 }

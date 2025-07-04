@@ -30,18 +30,26 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+// swiftlint:disable force_unwrapping
+// swiftlint:disable force_cast
 
-struct ContentView: View {
-  var body: some View {
-    VStack {
-      MetalView()
-        .border(Color.black, width: 2)
+import MetalKit
+
+struct Mesh {
+  var vertexBuffers: [MTLBuffer]
+  var submeshes: [Submesh]
+}
+
+extension Mesh {
+  init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
+    vertexBuffers = mtkMesh.vertexBuffers.map {
+      $0.buffer
     }
-    .padding()
+    submeshes = zip(mdlMesh.submeshes!, mtkMesh.submeshes).map { mesh in
+      Submesh(mdlSubmesh: mesh.0 as! MDLSubmesh, mtkSubmesh: mesh.1)
+    }
   }
 }
 
-#Preview {
-  ContentView()
-}
+// swiftlint:enable force_unwrapping
+// swiftlint:enable force_cast
