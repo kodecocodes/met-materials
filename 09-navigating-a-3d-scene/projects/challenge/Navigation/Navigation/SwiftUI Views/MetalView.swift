@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,74 +33,40 @@
 import SwiftUI
 import MetalKit
 
-struct MetalView: View {
-  @State private var metalView = MTKView()
-  @State private var renderer: Renderer?
-  @State private var previousTranslation = CGSize.zero
-  @State private var previousScroll: CGFloat = 1
-
-  var body: some View {
-    MetalViewRepresentable(
-      renderer: renderer,
-      metalView: $metalView)
-      .onAppear {
-        renderer = Renderer(metalView: metalView)
-      }
-      .gesture(DragGesture(minimumDistance: 0)
-        .onChanged { value in
-          InputController.shared.touchLocation = value.location
-          InputController.shared.touchDelta = CGSize(
-            width: value.translation.width - previousTranslation.width,
-            height: value.translation.height - previousTranslation.height)
-          previousTranslation = value.translation
-          // if the user drags, cancel the tap touch
-          if abs(value.translation.width) > 1 ||
-            abs(value.translation.height) > 1 {
-            InputController.shared.touchLocation = nil
-          }
-        }
-        .onEnded {_ in
-          previousTranslation = .zero
-        })
-      .gesture(MagnificationGesture()
-        .onChanged { value in
-          let scroll = value - previousScroll
-          InputController.shared.mouseScroll.x = Float(scroll)
-            * Settings.touchZoomSensitivity
-          previousScroll = value
-        }
-        .onEnded {_ in
-          previousScroll = 1
-        })
-  }
-}
-
 #if os(macOS)
 typealias ViewRepresentable = NSViewRepresentable
 #elseif os(iOS)
 typealias ViewRepresentable = UIViewRepresentable
 #endif
 
-struct MetalViewRepresentable: ViewRepresentable {
-  let renderer: Renderer?
-  @Binding var metalView: MTKView
+struct MetalView: ViewRepresentable {
+  let view = MTKView()
+
+  func makeCoordinator() -> Renderer {
+    let renderer = Renderer(metalView: view)
+    return renderer
+  }
 
 #if os(macOS)
   func makeNSView(context: Context) -> some NSView {
-    metalView
+    makeMetalView()
   }
   func updateNSView(_ uiView: NSViewType, context: Context) {
     updateMetalView()
   }
 #elseif os(iOS)
   func makeUIView(context: Context) -> MTKView {
-    metalView
+    makeMetalView()
   }
 
   func updateUIView(_ uiView: MTKView, context: Context) {
     updateMetalView()
   }
 #endif
+
+  func makeMetalView() -> MTKView {
+    view
+  }
 
   func updateMetalView() {
   }
@@ -109,6 +75,7 @@ struct MetalViewRepresentable: ViewRepresentable {
 #Preview {
   VStack {
     MetalView()
-    Text("Metal View")
+      .border(.black, width: 2.0)
+      .padding()
   }
 }
