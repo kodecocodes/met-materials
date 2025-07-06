@@ -30,14 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import CoreImage
+import MetalKit
 
-@main
-struct LightingApp: App {
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
-        .navigationTitle("Lighting Fundamentals")
+extension MTLTexture {
+  /// Converts an MTLTexture that is tagged linear, but contains sRGB data.
+  ///
+  /// This method corrects the base color texture loaded by Model I/O
+  /// from USD files.
+  ///
+  /// - Parameters:
+  ///   - device: The GPU device
+  /// - Returns: The converted MTLTexture in sRGB format
+  func convertUSDBaseColorTosRGB(device: MTLDevice, mipmapped: Bool = false) -> MTLTexture? {
+    let ciContext = CIContext(mtlDevice: device)
+    guard let inputColorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+      let ciImage = CIImage(
+        mtlTexture: self,
+        options: [.colorSpace: inputColorSpace]) else {
+      return nil
     }
+    let decodedImage = ciImage.applyingFilter(
+      "CIGammaAdjust",
+      parameters: ["inputPower": 2.2])
+    let desc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: .bgra8Unorm_srgb,
+      width: width,
+      height: height,
+      mipmapped: mipmapped
+    )
+    desc.usage = [.shaderRead, .shaderWrite, .renderTarget]
+    guard let outputTexture = device.makeTexture(descriptor: desc) else {
+      return nil
+    }
+    ciContext.render(
+      decodedImage,
+      to: outputTexture,
+      commandBuffer: nil,
+      bounds: decodedImage.extent,
+      colorSpace: inputColorSpace) // <- this tells Core Image to re-encode to sRGB
+
+    // Generate mipmaps using blit encoder
+    if let commandQueue = device.makeCommandQueue(),
+      let commandBuffer = commandQueue.makeCommandBuffer(),
+      let blitEncoder = commandBuffer.makeBlitCommandEncoder() {
+      blitEncoder.generateMipmaps(for: outputTexture)
+      blitEncoder.endEncoding()
+      commandBuffer.commit()
+      commandBuffer.waitUntilCompleted()
+    }
+    return outputTexture
   }
 }

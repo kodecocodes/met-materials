@@ -37,7 +37,7 @@ struct NavigationApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .navigationTitle("Textures")
+        .navigationTitle("Navigating a 3D Scene")
     }
   }
 }

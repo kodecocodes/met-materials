@@ -13,3 +13,5 @@
 Fundamentals of Computer Graphics, Fourth Edition - Steve Marschner, Peter Shirley
 
 3D Graphics for Game Programming - JungHyun Han
+
+Physically Based Rendering, Fourth Edition - Matt Pharr, Wenzel Jakob, Greg Humphreys: [free online](https://www.pbrt.org)
