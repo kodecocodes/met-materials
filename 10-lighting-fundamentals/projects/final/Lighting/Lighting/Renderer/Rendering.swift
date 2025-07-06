@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,57 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import MetalKit
 
-enum Settings {
-  static var rotationSpeed: Float { 2.0 }
-  static var translationSpeed: Float { 3.0 }
-  static var mouseScrollSensitivity: Float { 0.1 }
-  static var mousePanSensitivity: Float { 0.008 }
-  static var touchZoomSensitivity: Float { 10 }
-}
+// Rendering
+extension Model {
+  func render(
+    encoder: MTLRenderCommandEncoder,
+    uniforms vertex: Uniforms,
+    params fragment: Params
+  ) {
+    // make the structures mutable
+    var uniforms = vertex
+    var params = fragment
 
-protocol Movement where Self: Transformable {
-}
+    params.tiling = tiling
+    uniforms.modelMatrix = transform.modelMatrix
+    uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
 
-extension Movement {
-  var forwardVector: float3 {
-    normalize([sin(rotation.y), 0, cos(rotation.y)])
-  }
+    encoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index)
 
-  var rightVector: float3 {
-    [forwardVector.z, forwardVector.y, -forwardVector.x]
-  }
+    encoder.setFragmentBytes(
+      &params,
+      length: MemoryLayout<Params>.stride,
+      index: ParamsBuffer.index)
 
-  func updateInput(deltaTime: Float) -> Transform {
-    var transform = Transform()
-    let rotationAmount = deltaTime * Settings.rotationSpeed
-    let input = InputController.shared
-    if input.keysPressed.contains(.leftArrow) {
-      transform.rotation.y -= rotationAmount
+    for mesh in meshes {
+      for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
+        encoder.setVertexBuffer(
+          vertexBuffer,
+          offset: 0,
+          index: index)
+      }
+
+      for submesh in mesh.submeshes {
+        // set the fragment texture here
+        encoder.setFragmentTexture(
+          submesh.textures.baseColor,
+          index: BaseColor.index)
+
+        encoder.drawIndexedPrimitives(
+          type: .triangle,
+          indexCount: submesh.indexCount,
+          indexType: submesh.indexType,
+          indexBuffer: submesh.indexBuffer,
+          indexBufferOffset: submesh.indexBufferOffset
+        )
+      }
     }
-    if input.keysPressed.contains(.rightArrow) {
-      transform.rotation.y += rotationAmount
-    }
-    var direction: float3 = .zero
-    if input.keysPressed.contains(.keyW) {
-      direction.z += 1
-    }
-    if input.keysPressed.contains(.keyS) {
-      direction.z -= 1
-    }
-    if input.keysPressed.contains(.keyA) {
-      direction.x -= 1
-    }
-    if input.keysPressed.contains(.keyD) {
-      direction.x += 1
-    }
-    let translationAmount = deltaTime * Settings.translationSpeed
-    if direction != .zero {
-      direction = normalize(direction)
-      transform.position += (direction.z * forwardVector
-        + direction.x * rightVector) * translationAmount
-    }
-    return transform
   }
 }

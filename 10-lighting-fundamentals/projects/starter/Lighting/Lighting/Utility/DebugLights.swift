@@ -41,7 +41,7 @@ enum DebugLights {
     let psoDescriptor = MTLRenderPipelineDescriptor()
     psoDescriptor.vertexFunction = vertexFunction
     psoDescriptor.fragmentFunction = fragmentFunction
-    psoDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+    psoDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
     psoDescriptor.depthAttachmentPixelFormat = .depth32Float
     let pipelineState: MTLRenderPipelineState
     do {
@@ -59,7 +59,7 @@ enum DebugLights {
     let psoDescriptor = MTLRenderPipelineDescriptor()
     psoDescriptor.vertexFunction = vertexFunction
     psoDescriptor.fragmentFunction = fragmentFunction
-    psoDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+    psoDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
     psoDescriptor.depthAttachmentPixelFormat = .depth32Float
     let pipelineState: MTLRenderPipelineState
     do {

@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -41,7 +41,7 @@ struct SceneLighting {
 
   let ambientLight: Light = {
     var light = Self.buildDefaultLight()
-    light.color = [0.05, 0.1, 0]
+    light.color = [0.05, 0.2, 0]
     light.type = Ambient
     return light
   }()
@@ -51,7 +51,7 @@ struct SceneLighting {
     light.type = Point
     light.position = [-0.8, 0.76, -0.18]
     light.color = [1, 0, 0]
-    light.attenuation = [0.5, 2, 1]
+    light.attenuation = [0.2, 0.8, 1.0]
     return light
   }()
 
@@ -60,10 +60,10 @@ struct SceneLighting {
     light.type = Spot
     light.position = [-0.64, 0.64, -1.07]
     light.color = [1, 0, 1]
-    light.attenuation = [1, 0.5, 0]
+    light.attenuation = [0.2, 0.4, 0.2]
     light.coneAngle = Float(40).degreesToRadians
     light.coneDirection = [0.5, -0.7, 1]
-    light.coneAttenuation = 8
+    light.coneAttenuation = 20
     return light
   }()
 
