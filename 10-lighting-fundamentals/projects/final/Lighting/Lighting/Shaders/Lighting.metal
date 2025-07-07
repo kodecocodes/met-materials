@@ -52,13 +52,13 @@ float3 phongLighting(
     float3 surfaceColor = light.color * light.intensity * baseColor;
     switch (light.type) {
       case Sun: {
-        float3 lightDirection = normalize(-light.position);
+        float3 lightDirection = normalize(light.position);
         float diffuseIntensity =
-          saturate(-dot(lightDirection, normal));
+          saturate(dot(lightDirection, normal));
         diffuseColor += surfaceColor * diffuseIntensity;
         if (diffuseIntensity > 0) {
           float3 reflection =
-              reflect(lightDirection, normal);
+              reflect(-lightDirection, normal);
           float3 viewDirection =
               normalize(params.cameraPosition - position);
           float specularIntensity =
