@@ -80,6 +80,7 @@ typedef struct {
   LightType type;
   vector_float3 position;
   vector_float3 color;
+  float intensity;
   vector_float3 specularColor;
   float radius;
   vector_float3 attenuation;

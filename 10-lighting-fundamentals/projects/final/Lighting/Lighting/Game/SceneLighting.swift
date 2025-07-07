@@ -80,6 +80,7 @@ struct SceneLighting {
     var light = Light()
     light.position = [0, 0, 0]
     light.color = [1, 1, 1]
+    light.intensity = 1.0
     light.specularColor = [0.6, 0.6, 0.6]
     light.attenuation = [1, 0, 0]
     light.type = Sun

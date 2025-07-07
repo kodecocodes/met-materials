@@ -49,15 +49,16 @@ float3 phongLighting(
   float3 specularColor = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
+    float3 surfaceColor = light.color * light.intensity * baseColor;
     switch (light.type) {
       case Sun: {
-        float3 lightDirection = normalize(light.position);
+        float3 lightDirection = normalize(-light.position);
         float diffuseIntensity =
-          saturate(dot(lightDirection, normal));
-        diffuseColor += light.color * baseColor * diffuseIntensity;
+          saturate(-dot(lightDirection, normal));
+        diffuseColor += surfaceColor * diffuseIntensity;
         if (diffuseIntensity > 0) {
           float3 reflection =
-              reflect(-lightDirection, normal);
+              reflect(lightDirection, normal);
           float3 viewDirection =
               normalize(params.cameraPosition - position);
           float specularIntensity =
@@ -77,7 +78,7 @@ float3 phongLighting(
 
         float diffuseIntensity =
             saturate(dot(lightDirection, normal));
-        float3 color = light.color * baseColor * diffuseIntensity;
+        float3 color = surfaceColor * diffuseIntensity;
         color *= attenuation;
         diffuseColor += color;
         break;
@@ -93,7 +94,7 @@ float3 phongLighting(
           attenuation *= pow(spotResult, light.coneAttenuation);
           float diffuseIntensity =
                    saturate(dot(lightDirection, normal));
-          float3 color = light.color * baseColor * diffuseIntensity;
+          float3 color = surfaceColor * diffuseIntensity;
           color *= attenuation;
           diffuseColor += color;
         }
