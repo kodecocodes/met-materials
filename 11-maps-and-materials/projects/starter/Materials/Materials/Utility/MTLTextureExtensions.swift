@@ -30,52 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import CoreImage
 import MetalKit
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-#endif
+extension MTLTexture {
+  /// Converts an MTLTexture that is tagged linear, but contains sRGB data.
+  ///
+  /// This method corrects the base color texture loaded by Model I/O
+  /// from USD files.
+  ///
+  /// - Parameters:
+  ///   - device: The GPU device
+  /// - Returns: The converted MTLTexture in sRGB format
+  func convertUSDBaseColorTosRGB(device: MTLDevice, mipmapped: Bool = false) -> MTLTexture? {
+    let ciContext = CIContext(mtlDevice: device)
+    guard let inputColorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+      let ciImage = CIImage(
+        mtlTexture: self,
+        options: [.colorSpace: inputColorSpace]) else {
+      return nil
+    }
+    let decodedImage = ciImage.applyingFilter(
+      "CIGammaAdjust",
+      parameters: ["inputPower": 2.2])
+    let desc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: .bgra8Unorm_srgb,
+      width: width,
+      height: height,
+      mipmapped: mipmapped
+    )
+    desc.usage = [.shaderRead, .shaderWrite, .renderTarget]
+    guard let outputTexture = device.makeTexture(descriptor: desc) else {
+      return nil
+    }
+    ciContext.render(
+      decodedImage,
+      to: outputTexture,
+      commandBuffer: nil,
+      bounds: decodedImage.extent,
+      colorSpace: inputColorSpace) // <- this tells Core Image to re-encode to sRGB
 
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(metalView: view)
-    return gameController
-  }
-
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
-  }
-
-  func updateMetalView() {
-  }
-}
-
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
+    // Generate mipmaps using blit encoder
+    if let commandQueue = device.makeCommandQueue(),
+      let commandBuffer = commandQueue.makeCommandBuffer(),
+      let blitEncoder = commandBuffer.makeBlitCommandEncoder() {
+      blitEncoder.generateMipmaps(for: outputTexture)
+      blitEncoder.endEncoding()
+      commandBuffer.commit()
+      commandBuffer.waitUntilCompleted()
+    }
+    return outputTexture
   }
 }

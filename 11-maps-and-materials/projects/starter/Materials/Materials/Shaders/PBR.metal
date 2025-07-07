@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -46,9 +46,10 @@ float3 computeSpecular(
   constant Light *lights,
   constant Params &params,
   Material material,
-  float3 normal)
+  float3 normal,
+  float3 worldPosition)
 {
-  float3 viewDirection = normalize(params.cameraPosition);
+  float3 viewDirection = normalize(params.cameraPosition - worldPosition);
   float3 specularTotal = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
@@ -82,12 +83,13 @@ float3 computeSpecular(
     float k = alpha / 2.0f;
     vis = G1V(nDotL, k) * G1V(nDotV, k);
 
-    float3 specular = nDotL * D * F * vis;
+    float3 specular = nDotL * D * F * vis * light.color;
     specularTotal += specular;
   }
   return specularTotal;
 }
 
+constant float PI = 3.14159;
 // diffuse
 float3 computeDiffuse(
   constant Light *lights,
@@ -100,8 +102,9 @@ float3 computeDiffuse(
     Light light = lights[i];
     float3 lightDirection = normalize(light.position);
     float nDotL = saturate(dot(normal, lightDirection));
-    float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-    diffuseTotal += diffuse * nDotL * material.ambientOcclusion;
+    float3 surfaceColor = (material.baseColor / PI) * light.color * light.intensity;
+    float3 diffuse = surfaceColor * (1.0 - material.metallic) * nDotL;
+    diffuseTotal += diffuse * material.ambientOcclusion;
   }
   return diffuseTotal;
 }
