@@ -70,5 +70,3 @@ fragment float4 fragment_debug_line(
 {
   return float4(color ,1);
 }
-
-

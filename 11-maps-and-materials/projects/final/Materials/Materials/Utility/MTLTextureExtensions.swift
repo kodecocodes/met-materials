@@ -30,65 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import CoreImage
 import MetalKit
 
-extension MTLVertexDescriptor {
-  static var defaultLayout: MTLVertexDescriptor? {
-    MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
-  }
-}
+extension MTLTexture {
+  /// Converts an MTLTexture that is tagged linear, but contains sRGB data.
+  ///
+  /// This method corrects the base color texture loaded by Model I/O
+  /// from USD files.
+  ///
+  /// - Parameters:
+  ///   - device: The GPU device
+  /// - Returns: The converted MTLTexture in sRGB format
+  func convertUSDBaseColorTosRGB(device: MTLDevice, mipmapped: Bool = false) -> MTLTexture? {
+    let ciContext = CIContext(mtlDevice: device)
+    guard let inputColorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+      let ciImage = CIImage(
+        mtlTexture: self,
+        options: [.colorSpace: inputColorSpace]) else {
+      return nil
+    }
+    let decodedImage = ciImage.applyingFilter(
+      "CIGammaAdjust",
+      parameters: ["inputPower": 2.2])
+    let desc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: .bgra8Unorm_srgb,
+      width: width,
+      height: height,
+      mipmapped: mipmapped
+    )
+    desc.usage = [.shaderRead, .shaderWrite, .renderTarget]
+    guard let outputTexture = device.makeTexture(descriptor: desc) else {
+      return nil
+    }
+    ciContext.render(
+      decodedImage,
+      to: outputTexture,
+      commandBuffer: nil,
+      bounds: decodedImage.extent,
+      colorSpace: inputColorSpace) // <- this tells Core Image to re-encode to sRGB
 
-extension MDLVertexDescriptor {
-  static var defaultLayout: MDLVertexDescriptor {
-    let vertexDescriptor = MDLVertexDescriptor()
-
-    // Position and Normal
-    var offset = 0
-    vertexDescriptor.attributes[Position.index] = MDLVertexAttribute(
-      name: MDLVertexAttributePosition,
-      format: .float3,
-      offset: 0,
-      bufferIndex: VertexBuffer.index)
-    offset += MemoryLayout<float3>.stride
-
-    vertexDescriptor.attributes[Normal.index] = MDLVertexAttribute(
-      name: MDLVertexAttributeNormal,
-      format: .float3,
-      offset: offset,
-      bufferIndex: VertexBuffer.index)
-    offset += MemoryLayout<float3>.stride
-    vertexDescriptor.layouts[VertexBuffer.index]
-      = MDLVertexBufferLayout(stride: offset)
-
-    // UVs
-    vertexDescriptor.attributes[UV.index] = MDLVertexAttribute(
-      name: MDLVertexAttributeTextureCoordinate,
-      format: .float2,
-      offset: 0,
-      bufferIndex: UVBuffer.index)
-    vertexDescriptor.layouts[UVBuffer.index]
-      = MDLVertexBufferLayout(stride: MemoryLayout<float2>.stride)
-
-    // Tangents and Bitangents
-
-    return vertexDescriptor
-  }
-}
-
-extension Attributes {
-  var index: Int {
-    return Int(self.rawValue)
-  }
-}
-
-extension BufferIndices {
-  var index: Int {
-    return Int(self.rawValue)
-  }
-}
-
-extension TextureIndices {
-  var index: Int {
-    return Int(self.rawValue)
+    // Generate mipmaps using blit encoder
+    if let commandQueue = device.makeCommandQueue(),
+      let commandBuffer = commandQueue.makeCommandBuffer(),
+      let blitEncoder = commandBuffer.makeBlitCommandEncoder() {
+      blitEncoder.generateMipmaps(for: outputTexture)
+      blitEncoder.endEncoding()
+      commandBuffer.commit()
+      commandBuffer.waitUntilCompleted()
+    }
+    return outputTexture
   }
 }

@@ -56,6 +56,11 @@ float3 computeDiffuse(
   constant Params &params,
   Material material,
   float3 normal);
+ 
+float3 computeAmbient(
+  constant Light *lights,
+  constant Params &params,
+  Material material);
 */
 
 #endif /* Lighting_h */

@@ -10,7 +10,7 @@
 
 ### Books
 
-[(Free online version) Physically Based Rendering, Third Edition: From Theory to Implementation 2016 by Matt Pharr, Wenzel Jakob, Greg Humphreys](http://www.pbr-book.org)
+[(Free online version) Physically Based Rendering, Fourth Edition: From Theory to Implementation 2023 by Matt Pharr, Wenzel Jakob, Greg Humphreys](http://www.pbr-book.org)
 
 Programming Vertex and Pixel Shaders 2004 by Wolfgang Engel. This is an older book, but the section on Advanced Reflectance Algorithms is an approachable introduction to the various reflection models and distribution functions. He describes several of these in detail with many diagrams.
 
@@ -43,3 +43,7 @@ Programming Vertex and Pixel Shaders 2004 by Wolfgang Engel. This is an older bo
 ### Videos
 
 [Physics and Math of Shading by Naty Hoffman. SIGGRAPH 2015](https://youtu.be/j-A0mwsJRmk)
+
+## More Lighting
+
+[The Hitchhiker's Guide to Digital Colour](https://hg2dc.com)

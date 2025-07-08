@@ -46,8 +46,8 @@ struct SceneLighting {
 
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
-    light.position = [1.8, 2.2, -2.9]
-    light.color = float3(repeating: 1)
+    light.position = [1, 5, -3]
+    light.color = float3(repeating: 1.0)
     light.intensity = 0.8
     return light
   }()

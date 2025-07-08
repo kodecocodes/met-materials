@@ -53,6 +53,7 @@ float3 computeSpecular(
   float3 specularTotal = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
+    if (light.type != Sun) { continue; };
     float3 lightDirection = normalize(light.position);
     float3 F0 = mix(0.04, material.baseColor, material.metallic);
     // add a small amount of bias so that you can
@@ -83,13 +84,12 @@ float3 computeSpecular(
     float k = alpha / 2.0f;
     vis = G1V(nDotL, k) * G1V(nDotV, k);
 
-    float3 specular = nDotL * D * F * vis * light.color;
+    float3 specular = nDotL * D * F * vis * light.specularColor;
     specularTotal += specular;
   }
   return specularTotal;
 }
 
-constant float PI = 3.14159;
 // diffuse
 float3 computeDiffuse(
   constant Light *lights,
@@ -100,12 +100,28 @@ float3 computeDiffuse(
   float3 diffuseTotal = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
+    if (light.type != Sun) { continue; }
     float3 lightDirection = normalize(light.position);
     float nDotL = saturate(dot(normal, lightDirection));
-    float3 surfaceColor = (material.baseColor / PI) * light.color * light.intensity;
+    float3 surfaceColor = material.baseColor * light.color * light.intensity;
     float3 diffuse = surfaceColor * (1.0 - material.metallic) * nDotL;
     diffuseTotal += diffuse * material.ambientOcclusion;
   }
   return diffuseTotal;
+}
+
+float3 computeAmbient(
+  constant Light *lights,
+  constant Params &params,
+  Material material)
+{
+  float3 ambient = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type != Ambient) { continue; }
+    float3 surfaceColor = light.color * light.intensity * material.baseColor;
+    ambient += surfaceColor;
+  }
+  return ambient;
 }
 */
