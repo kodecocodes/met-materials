@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ struct SceneLighting {
     var light = Light()
     light.position = [0, 0, 0]
     light.color = float3(repeating: 1.0)
+    light.intensity = 1
     light.specularColor = float3(repeating: 0.6)
     light.attenuation = [1, 0, 0]
     light.type = Sun
@@ -45,35 +46,31 @@ struct SceneLighting {
 
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
-    light.position = [1.8, 2.2, -2.9]
-    light.color = float3(repeating: 1)
+    light.position = [3, 2, 3]
+    light.color = float3(repeating: 1.0)
+    light.intensity = 1.2
     return light
   }()
 
   let fillLight: Light = {
     var light = Self.buildDefaultLight()
-    light.position = [-5, 1, -3]
-    light.color = float3(repeating: 0.6)
+    light.position = [-3, 0, 1]
+    light.color = float3(repeating: 1.0)
+    light.intensity = 0.4
     return light
   }()
 
-  let rearLightLeft: Light = {
+  let ambientLight: Light = {
     var light = Self.buildDefaultLight()
-    light.position = [-5, 1, 5]
-    light.color = float3(repeating: 0.4)
-    return light
-  }()
-
-  let rearLightRight: Light = {
-    var light = Self.buildDefaultLight()
-    light.position = [5, 1, 5]
-    light.color = float3(repeating: 0.4)
+    light.type = Ambient
+    light.color = float3(repeating: 1.0)
+    light.intensity = 0.2
     return light
   }()
 
   var lights: [Light] = []
 
   init() {
-    lights = [sunlight, fillLight, rearLightLeft, rearLightRight]
+    lights = [sunlight, fillLight, ambientLight]
   }
 }

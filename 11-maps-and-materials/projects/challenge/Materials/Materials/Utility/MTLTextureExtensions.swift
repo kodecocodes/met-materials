@@ -30,67 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-// swiftlint:disable force_try
-
+import CoreImage
 import MetalKit
 
-class Model: Transformable {
-  var transform = Transform()
-  var meshes: [Mesh] = []
-  var name: String = "Untitled"
-  var tiling: UInt32 = 1
-
-  init() {}
-
-  init(name: String) {
-    guard let assetURL = Bundle.main.url(
-      forResource: name,
-      withExtension: nil) else {
-      let message = """
-        "MODEL IS NOT INCLUDED!
-        Download the drummer model from https://developer.apple.com/augmented-reality/quick-look/
-        and add it to your project
-      """
-      fatalError(message)
+extension MTLTexture {
+  /// Converts an MTLTexture that is tagged linear, but contains sRGB data.
+  ///
+  /// This method corrects the base color texture loaded by Model I/O
+  /// from USD files.
+  ///
+  /// - Parameters:
+  ///   - device: The GPU device
+  /// - Returns: The converted MTLTexture in sRGB format
+  func convertUSDBaseColorTosRGB(device: MTLDevice, mipmapped: Bool = false) -> MTLTexture? {
+    let ciContext = CIContext(mtlDevice: device)
+    guard let inputColorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+      let ciImage = CIImage(
+        mtlTexture: self,
+        options: [.colorSpace: inputColorSpace]) else {
+      return nil
     }
+    let decodedImage = ciImage.applyingFilter(
+      "CIGammaAdjust",
+      parameters: ["inputPower": 2.2])
+    let desc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: .bgra8Unorm_srgb,
+      width: width,
+      height: height,
+      mipmapped: mipmapped
+    )
+    desc.usage = [.shaderRead, .shaderWrite, .renderTarget]
+    guard let outputTexture = device.makeTexture(descriptor: desc) else {
+      return nil
+    }
+    ciContext.render(
+      decodedImage,
+      to: outputTexture,
+      commandBuffer: nil,
+      bounds: decodedImage.extent,
+      colorSpace: inputColorSpace) // <- this tells Core Image to re-encode to sRGB
 
-    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: .defaultLayout,
-      bufferAllocator: allocator)
-    asset.loadTextures()
-    var mtkMeshes: [MTKMesh] = []
-    let mdlMeshes =
-      asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
-    _ = mdlMeshes.map { mdlMesh in
-      mdlMesh.addTangentBasis(
-        forTextureCoordinateAttributeNamed:
-          MDLVertexAttributeTextureCoordinate,
-        tangentAttributeNamed: MDLVertexAttributeTangent,
-        bitangentAttributeNamed: MDLVertexAttributeBitangent)
-      mtkMeshes.append(
-        try! MTKMesh(
-          mesh: mdlMesh,
-          device: Renderer.device))
+    // Generate mipmaps using blit encoder
+    if let commandQueue = device.makeCommandQueue(),
+      let commandBuffer = commandQueue.makeCommandBuffer(),
+      let blitEncoder = commandBuffer.makeBlitCommandEncoder() {
+      blitEncoder.generateMipmaps(for: outputTexture)
+      blitEncoder.endEncoding()
+      commandBuffer.commit()
+      commandBuffer.waitUntilCompleted()
     }
-    meshes = zip(mdlMeshes, mtkMeshes).map {
-      Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
-    }
-    self.name = name
+    return outputTexture
   }
 }
-
-extension Model {
-  func setTexture(name: String, type: TextureIndices) {
-    if let texture = TextureController.loadTexture(name: name) {
-      switch type {
-      case BaseColor:
-        meshes[0].submeshes[0].textures.baseColor = texture
-      default: break
-      }
-    }
-  }
-}
-
-// swiftlint:enable force_try

@@ -3,80 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */; };
-		8201D1062AADBE6900F7DA0B /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8201D1052AADBE6900F7DA0B /* Lighting.metal */; };
-		820E10EE2AB28A2F008AF54E /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 820E10ED2AB28A2F008AF54E /* PBR.metal */; };
-		82133A372AAC044B00D7C004 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A362AAC044B00D7C004 /* Mesh.swift */; };
-		82133A392AAC046600D7C004 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82133A382AAC046600D7C004 /* Submesh.swift */; };
-		8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224354A2AAD5734005A93D6 /* TextureController.swift */; };
-		8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8224354C2AAD6044005A93D6 /* Textures.xcassets */; };
-		822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF5282AA865D2008CC2C8 /* MathLibrary.swift */; };
-		822EF52B2AA86608008CC2C8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52A2AA86608008CC2C8 /* Model.swift */; };
-		822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EF52E2AA86872008CC2C8 /* Rendering.swift */; };
-		824770E42AA7FA0B0095AB72 /* MaterialsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E32AA7FA0B0095AB72 /* MaterialsApp.swift */; };
-		824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770E52AA7FA0B0095AB72 /* ContentView.swift */; };
-		824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770E72AA7FA0C0095AB72 /* Assets.xcassets */; };
-		824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */; };
-		824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770F62AA7FDDA0095AB72 /* Renderer.swift */; };
-		824771002AA80C930095AB72 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824770FF2AA80C930095AB72 /* MetalView.swift */; };
-		824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */; };
-		8272AC302AAD8A19007301AB /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC2F2AAD8A19007301AB /* GameScene.swift */; };
-		8272AC322AAD8C37007301AB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC312AAD8C37007301AB /* Camera.swift */; };
-		8272AC342AAD8E3A007301AB /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC332AAD8E3A007301AB /* InputController.swift */; };
-		8272AC362AAD901D007301AB /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC352AAD901D007301AB /* Movement.swift */; };
-		8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC372AAD9381007301AB /* PlayerCamera.swift */; };
-		8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC3A2AAD96F9007301AB /* GameController.swift */; };
-		8272AC422AADB6E9007301AB /* DebugLights.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC402AADB6E9007301AB /* DebugLights.metal */; };
-		8272AC432AADB6E9007301AB /* DebugLights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC412AADB6E9007301AB /* DebugLights.swift */; };
-		8272AC492AADB776007301AB /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC472AADB776007301AB /* Primitive.swift */; };
-		8272AC4A2AADB776007301AB /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8272AC482AADB776007301AB /* Transform.swift */; };
-		827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AD2AA8779800CE91D1 /* Vertex.metal */; };
-		827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */ = {isa = PBXBuildFile; fileRef = 827621AF2AA8779E00CE91D1 /* Fragment.metal */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLighting.swift; sourceTree = "<group>"; };
-		8201D1042AADBE4A00F7DA0B /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
-		8201D1052AADBE6900F7DA0B /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
-		820E10ED2AB28A2F008AF54E /* PBR.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
-		82133A352AAC005300D7C004 /* ShaderDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefs.h; sourceTree = "<group>"; };
-		82133A362AAC044B00D7C004 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
-		82133A382AAC046600D7C004 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
-		8224354A2AAD5734005A93D6 /* TextureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureController.swift; sourceTree = "<group>"; };
-		8224354C2AAD6044005A93D6 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
-		822EF5282AA865D2008CC2C8 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
-		822EF52A2AA86608008CC2C8 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		822EF52E2AA86872008CC2C8 /* Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
-		822EF5322AA869E4008CC2C8 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		824770E02AA7FA0B0095AB72 /* Materials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Materials.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		824770E32AA7FA0B0095AB72 /* MaterialsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsApp.swift; sourceTree = "<group>"; };
-		824770E52AA7FA0B0095AB72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		824770E72AA7FA0C0095AB72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		824770E92AA7FA0C0095AB72 /* Materials.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Materials.entitlements; sourceTree = "<group>"; };
-		824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		824770F62AA7FDDA0095AB72 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		824770FF2AA80C930095AB72 /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
-		824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
-		8272AC2F2AAD8A19007301AB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		8272AC312AAD8C37007301AB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		8272AC332AAD8E3A007301AB /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
-		8272AC352AAD901D007301AB /* Movement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
-		8272AC372AAD9381007301AB /* PlayerCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCamera.swift; sourceTree = "<group>"; };
-		8272AC3A2AAD96F9007301AB /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
-		8272AC402AADB6E9007301AB /* DebugLights.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = DebugLights.metal; sourceTree = "<group>"; };
-		8272AC412AADB6E9007301AB /* DebugLights.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugLights.swift; sourceTree = "<group>"; };
-		8272AC472AADB776007301AB /* Primitive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
-		8272AC482AADB776007301AB /* Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
-		827621AD2AA8779800CE91D1 /* Vertex.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Vertex.metal; sourceTree = "<group>"; };
-		827621AF2AA8779E00CE91D1 /* Fragment.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Fragment.metal; sourceTree = "<group>"; };
+		82ECEA9F2E0A15AD008ACD5E /* Materials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Materials.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		82ECEAA12E0A15AD008ACD5E /* Materials */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Materials;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		824770DD2AA7FA0B0095AB72 /* Frameworks */ = {
+		82ECEA9C2E0A15AD008ACD5E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -86,204 +29,94 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		822EF52C2AA866FF008CC2C8 /* Utility */ = {
+		82ECEA962E0A15AD008ACD5E = {
 			isa = PBXGroup;
 			children = (
-				822EF5282AA865D2008CC2C8 /* MathLibrary.swift */,
-				8272AC402AADB6E9007301AB /* DebugLights.metal */,
-				8272AC412AADB6E9007301AB /* DebugLights.swift */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
-		822EF52D2AA86709008CC2C8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		822EF5302AA869C0008CC2C8 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				822EF5322AA869E4008CC2C8 /* Common.h */,
-				82133A352AAC005300D7C004 /* ShaderDefs.h */,
-				827621AD2AA8779800CE91D1 /* Vertex.metal */,
-				827621AF2AA8779E00CE91D1 /* Fragment.metal */,
-				8201D1042AADBE4A00F7DA0B /* Lighting.h */,
-				8201D1052AADBE6900F7DA0B /* Lighting.metal */,
-				820E10ED2AB28A2F008AF54E /* PBR.metal */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
-		824770D72AA7FA0B0095AB72 = {
-			isa = PBXGroup;
-			children = (
-				824770E22AA7FA0B0095AB72 /* Materials */,
-				824770E12AA7FA0B0095AB72 /* Products */,
+				82ECEAA12E0A15AD008ACD5E /* Materials */,
+				82ECEAA02E0A15AD008ACD5E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		824770E12AA7FA0B0095AB72 /* Products */ = {
+		82ECEAA02E0A15AD008ACD5E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				824770E02AA7FA0B0095AB72 /* Materials.app */,
+				82ECEA9F2E0A15AD008ACD5E /* Materials.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		824770E22AA7FA0B0095AB72 /* Materials */ = {
-			isa = PBXGroup;
-			children = (
-				824770E32AA7FA0B0095AB72 /* MaterialsApp.swift */,
-				8272AC392AAD96EA007301AB /* Game */,
-				8272AC442AADB73D007301AB /* Input */,
-				8272AC452AADB745007301AB /* Textures */,
-				8272AC462AADB751007301AB /* Geometry */,
-				822EF5302AA869C0008CC2C8 /* Shaders */,
-				822EF52C2AA866FF008CC2C8 /* Utility */,
-				822EF52D2AA86709008CC2C8 /* Models */,
-				82A254542AA83E870054837F /* SwiftUI Views */,
-				824770E72AA7FA0C0095AB72 /* Assets.xcassets */,
-				824770E92AA7FA0C0095AB72 /* Materials.entitlements */,
-				824770EA2AA7FA0C0095AB72 /* Preview Content */,
-			);
-			path = Materials;
-			sourceTree = "<group>";
-		};
-		824770EA2AA7FA0C0095AB72 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				824770EB2AA7FA0C0095AB72 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		8272AC392AAD96EA007301AB /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				8272AC3A2AAD96F9007301AB /* GameController.swift */,
-				824770F62AA7FDDA0095AB72 /* Renderer.swift */,
-				8272AC2F2AAD8A19007301AB /* GameScene.swift */,
-				8201D1022AADBA4E00F7DA0B /* SceneLighting.swift */,
-				8272AC312AAD8C37007301AB /* Camera.swift */,
-				8272AC372AAD9381007301AB /* PlayerCamera.swift */,
-				822EF52E2AA86872008CC2C8 /* Rendering.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		8272AC442AADB73D007301AB /* Input */ = {
-			isa = PBXGroup;
-			children = (
-				8272AC332AAD8E3A007301AB /* InputController.swift */,
-				8272AC352AAD901D007301AB /* Movement.swift */,
-			);
-			path = Input;
-			sourceTree = "<group>";
-		};
-		8272AC452AADB745007301AB /* Textures */ = {
-			isa = PBXGroup;
-			children = (
-				8224354A2AAD5734005A93D6 /* TextureController.swift */,
-				8224354C2AAD6044005A93D6 /* Textures.xcassets */,
-			);
-			path = Textures;
-			sourceTree = "<group>";
-		};
-		8272AC462AADB751007301AB /* Geometry */ = {
-			isa = PBXGroup;
-			children = (
-				824A1AF12AA83518009BCA63 /* VertexDescriptor.swift */,
-				822EF52A2AA86608008CC2C8 /* Model.swift */,
-				8272AC472AADB776007301AB /* Primitive.swift */,
-				8272AC482AADB776007301AB /* Transform.swift */,
-				82133A362AAC044B00D7C004 /* Mesh.swift */,
-				82133A382AAC046600D7C004 /* Submesh.swift */,
-			);
-			path = Geometry;
-			sourceTree = "<group>";
-		};
-		82A254542AA83E870054837F /* SwiftUI Views */ = {
-			isa = PBXGroup;
-			children = (
-				824770E52AA7FA0B0095AB72 /* ContentView.swift */,
-				824770FF2AA80C930095AB72 /* MetalView.swift */,
-			);
-			path = "SwiftUI Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		824770DF2AA7FA0B0095AB72 /* Materials */ = {
+		82ECEA9E2E0A15AD008ACD5E /* Materials */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Materials" */;
+			buildConfigurationList = 82ECEAAA2E0A15AE008ACD5E /* Build configuration list for PBXNativeTarget "Materials" */;
 			buildPhases = (
-				824770F82AA801170095AB72 /* SwiftLint */,
-				824770DC2AA7FA0B0095AB72 /* Sources */,
-				824770DD2AA7FA0B0095AB72 /* Frameworks */,
-				824770DE2AA7FA0B0095AB72 /* Resources */,
+				82ECEA9B2E0A15AD008ACD5E /* Sources */,
+				82ECEAC72E0A17B8008ACD5E /* SwiftLint */,
+				82ECEA9C2E0A15AD008ACD5E /* Frameworks */,
+				82ECEA9D2E0A15AD008ACD5E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				82ECEAA12E0A15AD008ACD5E /* Materials */,
+			);
 			name = Materials;
+			packageProductDependencies = (
+			);
 			productName = Pipeline;
-			productReference = 824770E02AA7FA0B0095AB72 /* Materials.app */;
+			productReference = 82ECEA9F2E0A15AD008ACD5E /* Materials.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		824770D82AA7FA0B0095AB72 /* Project object */ = {
+		82ECEA972E0A15AD008ACD5E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = Kodeco;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					824770DF2AA7FA0B0095AB72 = {
-						CreatedOnToolsVersion = 15.0;
+					82ECEA9E2E0A15AD008ACD5E = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
-			buildConfigurationList = 824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Materials" */;
-			compatibilityVersion = "Xcode 15.0";
+			buildConfigurationList = 82ECEA9A2E0A15AD008ACD5E /* Build configuration list for PBXProject "Materials" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 824770D72AA7FA0B0095AB72;
-			productRefGroup = 824770E12AA7FA0B0095AB72 /* Products */;
+			mainGroup = 82ECEA962E0A15AD008ACD5E;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 82ECEAA02E0A15AD008ACD5E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				824770DF2AA7FA0B0095AB72 /* Materials */,
+				82ECEA9E2E0A15AD008ACD5E /* Materials */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		824770DE2AA7FA0B0095AB72 /* Resources */ = {
+		82ECEA9D2E0A15AD008ACD5E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8224354D2AAD6044005A93D6 /* Textures.xcassets in Resources */,
-				824770EC2AA7FA0C0095AB72 /* Preview Assets.xcassets in Resources */,
-				824770E82AA7FA0C0095AB72 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		824770F82AA801170095AB72 /* SwiftLint */ = {
+		82ECEAC72E0A17B8008ACD5E /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -301,47 +134,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		824770DC2AA7FA0B0095AB72 /* Sources */ = {
+		82ECEA9B2E0A15AD008ACD5E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				822EF52B2AA86608008CC2C8 /* Model.swift in Sources */,
-				8272AC432AADB6E9007301AB /* DebugLights.swift in Sources */,
-				824A1AF22AA83518009BCA63 /* VertexDescriptor.swift in Sources */,
-				8272AC492AADB776007301AB /* Primitive.swift in Sources */,
-				8272AC322AAD8C37007301AB /* Camera.swift in Sources */,
-				8272AC302AAD8A19007301AB /* GameScene.swift in Sources */,
-				820E10EE2AB28A2F008AF54E /* PBR.metal in Sources */,
-				8224354B2AAD5734005A93D6 /* TextureController.swift in Sources */,
-				8272AC342AAD8E3A007301AB /* InputController.swift in Sources */,
-				8272AC422AADB6E9007301AB /* DebugLights.metal in Sources */,
-				824770F72AA7FDDA0095AB72 /* Renderer.swift in Sources */,
-				8201D1032AADBA4E00F7DA0B /* SceneLighting.swift in Sources */,
-				822EF5292AA865D2008CC2C8 /* MathLibrary.swift in Sources */,
-				824770E62AA7FA0B0095AB72 /* ContentView.swift in Sources */,
-				8272AC382AAD9381007301AB /* PlayerCamera.swift in Sources */,
-				82133A372AAC044B00D7C004 /* Mesh.swift in Sources */,
-				8272AC3B2AAD96F9007301AB /* GameController.swift in Sources */,
-				8201D1062AADBE6900F7DA0B /* Lighting.metal in Sources */,
-				824771002AA80C930095AB72 /* MetalView.swift in Sources */,
-				827621B02AA8779E00CE91D1 /* Fragment.metal in Sources */,
-				8272AC4A2AADB776007301AB /* Transform.swift in Sources */,
-				8272AC362AAD901D007301AB /* Movement.swift in Sources */,
-				824770E42AA7FA0B0095AB72 /* MaterialsApp.swift in Sources */,
-				827621AE2AA8779800CE91D1 /* Vertex.metal in Sources */,
-				822EF52F2AA86872008CC2C8 /* Rendering.swift in Sources */,
-				82133A392AAC046600D7C004 /* Submesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		824770ED2AA7FA0C0095AB72 /* Debug */ = {
+		82ECEAA82E0A15AE008ACD5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -375,11 +183,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -399,12 +206,12 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = Materials/Shaders/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Spaces/Shaders/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		824770EE2AA7FA0C0095AB72 /* Release */ = {
+		82ECEAA92E0A15AE008ACD5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -438,11 +245,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -455,23 +261,22 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = Materials/Shaders/Common.h;
+				SWIFT_OBJC_BRIDGING_HEADER = Spaces/Shaders/Common.h;
 			};
 			name = Release;
 		};
-		824770F02AA7FA0C0095AB72 /* Debug */ = {
+		82ECEAAB2E0A15AE008ACD5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Materials/Materials.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Materials/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -483,34 +288,40 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Materials;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Materials;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Materials/Shaders/Common.h;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
-		824770F12AA7FA0C0095AB72 /* Release */ = {
+		82ECEAAC2E0A15AE008ACD5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Materials/Materials.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Materials/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -522,43 +333,50 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kodeco.Materials;
+				PRODUCT_BUNDLE_IDENTIFIER = Kodeco.Materials;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Materials/Shaders/Common.h;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		824770DB2AA7FA0B0095AB72 /* Build configuration list for PBXProject "Materials" */ = {
+		82ECEA9A2E0A15AD008ACD5E /* Build configuration list for PBXProject "Materials" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770ED2AA7FA0C0095AB72 /* Debug */,
-				824770EE2AA7FA0C0095AB72 /* Release */,
+				82ECEAA82E0A15AE008ACD5E /* Debug */,
+				82ECEAA92E0A15AE008ACD5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		824770EF2AA7FA0C0095AB72 /* Build configuration list for PBXNativeTarget "Materials" */ = {
+		82ECEAAA2E0A15AE008ACD5E /* Build configuration list for PBXNativeTarget "Materials" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				824770F02AA7FA0C0095AB72 /* Debug */,
-				824770F12AA7FA0C0095AB72 /* Release */,
+				82ECEAAB2E0A15AE008ACD5E /* Debug */,
+				82ECEAAC2E0A15AE008ACD5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 824770D82AA7FA0B0095AB72 /* Project object */;
+	rootObject = 82ECEA972E0A15AD008ACD5E /* Project object */;
 }

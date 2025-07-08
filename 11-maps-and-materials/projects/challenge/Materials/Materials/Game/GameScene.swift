@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,30 +31,27 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   lazy var drummer: Model = {
-    Model(name: "toy_drummer_idle.usdz")
+    Model(name: "toy_drummer.usdz")
   }()
 
   var models: [Model] = []
   var camera = ArcballCamera()
 
   var defaultView: Transform {
-    Transform(rotation: [-0.17, 13.2, 0.0])
+    Transform(rotation: [-0.1, 9.8, 0.0])
   }
 
   let lighting = SceneLighting()
 
   init() {
-    camera.distance = 7
-    camera.target = [0, 3.3, 0]
+    camera.distance = 14
+    camera.target = [0, 7, 0]
     camera.transform = defaultView
-    drummer.scale = 0.5
-
-    drummer.rotation.y = Float.pi
     models = [drummer]
-    print(TextureController.textures.count)
   }
 
   mutating func update(size: CGSize) {
@@ -64,11 +61,15 @@ struct GameScene {
   mutating func update(deltaTime: Float) {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
+      camera.distance = 14
       camera.transform = Transform()
+      camera.rotation.y = .pi
     }
     if input.keysPressed.contains(.two) {
+      camera.distance = 14
       camera.transform = defaultView
     }
+    print(camera.rotation)
     camera.update(deltaTime: deltaTime)
   }
 }
