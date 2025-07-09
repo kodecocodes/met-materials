@@ -75,10 +75,10 @@ private extension MDLMaterial {
       var texture = TextureController.loadTexture(
         texture: mdlTexture,
         name: property.textureName)
-      if semantic == .baseColor {
-        texture = texture?.convertUSDBaseColorTosRGB(
-          device: Renderer.device,
-          mipmapped: true)
+      if semantic == .baseColor,
+        texture?.pixelFormat == .rgba8Unorm {
+        texture = texture?.makeTextureView(pixelFormat: .rgba8Unorm_srgb)
+        TextureController.textures[property.textureName] = texture
       }
       return texture
     }

@@ -77,7 +77,6 @@ fragment float4 fragment_main(
       in.worldNormal) * normal;
   }
   normal = normalize(normal);
-  
   float3 diffuseColor = computeDiffuse(
     lights, params, material, normal);
   float3 specularColor = computeSpecular(
