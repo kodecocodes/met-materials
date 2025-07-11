@@ -31,7 +31,6 @@
 /// THE SOFTWARE.
 
 import MetalKit
-import CoreImage
 
 enum TextureController {
   static var textures: [String: MTLTexture] = [:]

@@ -31,7 +31,6 @@
 /// THE SOFTWARE.
 
 import MetalKit
-import CoreImage
 
 struct Submesh {
   let indexCount: Int
