@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,60 +30,59 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
+import GameController
 
-struct ForwardRenderPass {
-  let label = "Forward Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
+enum Settings {
+  static var rotationSpeed: Float { 2.0 }
+  static var translationSpeed: Float { 3.0 }
+  static var mouseScrollSensitivity: Float { 0.1 }
+  static var mousePanSensitivity: Float { 0.008 }
+  static var touchZoomSensitivity: Float { 10 }
+}
 
-  var pipelineState: MTLRenderPipelineState
-  let depthStencilState: MTLDepthStencilState?
+protocol Movement where Self: Transformable {
+}
 
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    depthStencilState = Self.buildDepthStencilState()
+extension Movement {
+  var forwardVector: float3 {
+    normalize([sin(rotation.y), 0, cos(rotation.y)])
   }
 
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+  var rightVector: float3 {
+    [forwardVector.z, forwardVector.y, -forwardVector.x]
   }
 
-  mutating func resize(view: MTKView, size: CGSize) {
-  }
-
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  ) {
-    guard let descriptor = descriptor,
-    let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(
-        descriptor: descriptor) else {
-      return
+  func updateInput(deltaTime: Float) -> Transform {
+    var transform = Transform()
+    let rotationAmount = deltaTime * Settings.rotationSpeed
+    let input = InputController.shared
+    if input.keysPressed.contains(.leftArrow) {
+      transform.rotation.y -= rotationAmount
     }
-    renderEncoder.label = label
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-
-    var lights = scene.lighting.lights
-    renderEncoder.setFragmentBytes(
-      &lights,
-      length: MemoryLayout<Light>.stride * lights.count,
-      index: LightBuffer.index)
-
-    for model in scene.models {
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
+    if input.keysPressed.contains(.rightArrow) {
+      transform.rotation.y += rotationAmount
     }
-    renderEncoder.endEncoding()
+
+    var direction: float3 = .zero
+    if input.keysPressed.contains(.keyW) {
+      direction.z += 1
+    }
+    if input.keysPressed.contains(.keyS) {
+      direction.z -= 1
+    }
+    if input.keysPressed.contains(.keyA) {
+      direction.x -= 1
+    }
+    if input.keysPressed.contains(.keyD) {
+      direction.x += 1
+    }
+    let translationAmount = deltaTime * Settings.translationSpeed
+    if direction != .zero {
+      direction = normalize(direction)
+      transform.position += (direction.z * forwardVector
+        + direction.x * rightVector) * translationAmount
+    }
+    return transform
   }
 }

@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,20 +32,21 @@
 
 #include <metal_stdlib>
 using namespace metal;
+
 #import "Lighting.h"
 #import "ShaderDefs.h"
 
 fragment float4 fragment_main(
   constant Params &params [[buffer(ParamsBuffer)]],
-  VertexOut in [[stage_in]],
   constant Light *lights [[buffer(LightBuffer)]],
+  VertexOut in [[stage_in]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
   texture2d<float> normalTexture [[texture(NormalTexture)]],
   texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
-  texture2d<uint> idTexture [[texture(11)]])
+  texture2d<uint32_t> idTexture [[texture(11)]])
 {
   Material material = _material;
   constexpr sampler textureSampler(
@@ -65,24 +66,12 @@ fragment float4 fragment_main(
       params.touchY * params.scaleFactor);
     uint objectID = idTexture.read(coord).r;
     if (params.objectId != 0 && objectID == params.objectId) {
-      material.baseColor = float3(0.9, 0.5, 0);
+      material.baseColor = float3(1.0, 0.4, 0);
     }
   }
 
   if (!is_null_texture(roughnessTexture)) {
     material.roughness = roughnessTexture.sample(
-      textureSampler,
-      in.uv * params.tiling).r;
-  }
-
-  if (!is_null_texture(metallicTexture)) {
-    material.metallic = metallicTexture.sample(
-      textureSampler,
-      in.uv * params.tiling).r;
-  }
-
-  if (!is_null_texture(aoTexture)) {
-    material.ambientOcclusion = aoTexture.sample(
       textureSampler,
       in.uv * params.tiling).r;
   }
@@ -101,16 +90,23 @@ fragment float4 fragment_main(
       in.worldNormal) * normal;
   }
   normal = normalize(normal);
+  
+  if (!is_null_texture(metallicTexture)) {
+    material.metallic = metallicTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
+  if (!is_null_texture(aoTexture)) {
+    material.ambientOcclusion = aoTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
 
-  float3 diffuseColor =
-    computeDiffuse(lights, params, material, normal);
-
-  float3 specularColor =
-    computeSpecular(
-      lights,
-      params,
-      material,
-      normal);
-
-  return float4(diffuseColor + specularColor, 1);
+  float3 diffuseColor = computeDiffuse(
+    lights, params, material, normal);
+  float3 specularColor = computeSpecular(
+    lights, params, material, normal, in.worldPosition);
+  float3 ambientColor = computeAmbient(
+    lights, params, material);
+  return float4(diffuseColor + specularColor + ambientColor, 1);
 }

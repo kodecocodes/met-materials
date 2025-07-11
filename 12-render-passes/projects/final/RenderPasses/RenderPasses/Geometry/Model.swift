@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable force_try
+
+import MetalKit
 
 class Model: Transformable {
   var transform = Transform()
@@ -41,13 +41,13 @@ class Model: Transformable {
   var tiling: UInt32 = 1
   var objectId: UInt32 = 0
 
-  init() { }
+  init() {}
 
   init(name: String, objectId: UInt32 = 0) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      fatalError("Model \(name) not found")
+      fatalError("Model \(name) not found!")
     }
     self.objectId = objectId
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
@@ -88,4 +88,5 @@ extension Model {
     }
   }
 }
+
 // swiftlint:enable force_try

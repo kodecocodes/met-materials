@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -84,7 +84,7 @@ struct ArcballCamera: Camera {
       far: far,
       aspect: aspect)
   }
-  let minDistance: Float = 0.0
+  let minDistance: Float = 0.01
   let maxDistance: Float = 20
   var target: float3 = [0, 0, 0]
   var distance: Float = 2.5
@@ -94,13 +94,7 @@ struct ArcballCamera: Camera {
   }
 
   var viewMatrix: float4x4 {
-    let matrix: float4x4
-    if target == position {
-      matrix = (float4x4(translation: target) * float4x4(rotationYXZ: rotation)).inverse
-    } else {
-      matrix = float4x4(eye: position, center: target, up: [0, 1, 0])
-    }
-    return matrix
+    float4x4(eye: position, target: target, up: [0, 1, 0])
   }
 
   mutating func update(deltaTime: Float) {
@@ -155,7 +149,9 @@ struct OrthographicCamera: Camera, Movement {
     let transform = updateInput(deltaTime: deltaTime)
     position += transform.position
     let input = InputController.shared
-    let zoom = input.mouseScroll.x + input.mouseScroll.y
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    let zoom = input.mouseScroll.x * scrollSensitivity
+      + input.mouseScroll.y * scrollSensitivity
     viewSize -= CGFloat(zoom)
     input.mouseScroll = .zero
   }
