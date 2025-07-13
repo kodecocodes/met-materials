@@ -33,8 +33,6 @@
 import Foundation
 import MetalKit
 
-// swiftlint:disable function_body_length
-
 enum DebugCameraFrustum {
   static var forwardVectorBuffer: MTLBuffer?
   static var frustumMesh: [float3] = []
@@ -140,7 +138,7 @@ enum DebugCameraFrustum {
     var camera = camera
     var debugString: String
     if camera is ArcballCamera {
-      color = float3(0, 1, 1)
+      color = float3(0, 0, 1)
       debugString = "Camera"
     } else {
       color = float3(1, 1, 0)
@@ -158,8 +156,8 @@ enum DebugCameraFrustum {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = Renderer.viewDepthPixelFormat
     var pipelineState: MTLRenderPipelineState
     do {
       pipelineState =
@@ -212,8 +210,8 @@ enum DebugCameraFrustum {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = Renderer.viewDepthPixelFormat
     pipelineDescriptor.vertexDescriptor = sphereVertexDescriptor
     var pipelineState: MTLRenderPipelineState
     do {
@@ -268,4 +266,3 @@ private extension MDLVertexDescriptor {
     return vertexDescriptor
   }()
 }
-// swiftlint:enable function_body_length

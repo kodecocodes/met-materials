@@ -58,20 +58,4 @@ enum PipelineStates {
       MTLVertexDescriptor.defaultLayout
     return createPSO(descriptor: pipelineDescriptor)
   }
-
-  static func createObjectIdPSO() -> MTLRenderPipelineState {
-    let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    let vertexFunction =
-      Renderer.library?.makeFunction(name: "vertex_main")
-    let fragmentFunction =
-      Renderer.library?.makeFunction(name: "fragment_objectId")
-    pipelineDescriptor.vertexFunction = vertexFunction
-    pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .r32Uint
-    pipelineDescriptor.depthAttachmentPixelFormat =
-      Renderer.viewDepthPixelFormat
-    pipelineDescriptor.vertexDescriptor =
-      MTLVertexDescriptor.defaultLayout
-    return Self.createPSO(descriptor: pipelineDescriptor)
-  }
 }

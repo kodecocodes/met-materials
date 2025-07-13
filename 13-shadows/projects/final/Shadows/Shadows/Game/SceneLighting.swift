@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ struct SceneLighting {
     var light = Light()
     light.position = [0, 0, 0]
     light.color = float3(repeating: 1.0)
+    light.intensity = 1.0
     light.specularColor = float3(repeating: 0.6)
     light.attenuation = [1, 0, 0]
     light.type = Sun
@@ -45,14 +46,21 @@ struct SceneLighting {
 
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
-    light.position = [3, 3, -2] * 0.8
-    light.color = float3(repeating: 1)
+    light.position = [3, 3, -2]
+    light.intensity = 0.9
+    return light
+  }()
+
+  let ambientLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Ambient
+    light.intensity = 0.3
     return light
   }()
 
   var lights: [Light] = []
 
   init() {
-    lights = [sunlight]
+    lights = [sunlight, ambientLight]
   }
 }

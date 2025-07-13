@@ -34,7 +34,6 @@ import MetalKit
 import GameController
 
 struct GameScene {
-  static var objectId: UInt32 = 1
   lazy var train: Model = {
     Model(name: "train.usdz")
   }()

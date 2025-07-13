@@ -30,52 +30,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
-import MetalKit
+import CoreGraphics
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-#endif
+struct OrthographicCamera: Camera, Movement {
+  var transform = Transform()
+  var aspect: CGFloat = 1
+  var viewSize: CGFloat = 10
+  var near: Float = 0.1
+  var far: Float = 100
+  var center = float3.zero
 
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(metalView: view)
-    return gameController
+  var viewMatrix: float4x4 {
+    (float4x4(translation: position) *
+    float4x4(rotation: rotation)).inverse
   }
 
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
+  var projectionMatrix: float4x4 {
+    let rect = CGRect(
+      x: -viewSize * aspect * 0.5,
+      y: viewSize * 0.5,
+      width: viewSize * aspect,
+      height: viewSize)
+    return float4x4(orthographic: rect, near: near, far: far)
   }
 
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
+  mutating func update(size: CGSize) {
+    aspect = size.width / size.height
   }
 
-  func updateMetalView() {
-  }
-}
-
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
+  mutating func update(deltaTime: Float) {
+    let transform = updateInput(deltaTime: deltaTime)
+    position += transform.position
+    let input = InputController.shared
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    let zoom = input.mouseScroll.x * scrollSensitivity
+      + input.mouseScroll.y * scrollSensitivity
+    viewSize -= CGFloat(zoom)
+    input.mouseScroll = .zero
   }
 }

@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   lazy var train: Model = {
@@ -50,7 +51,7 @@ struct GameScene {
     var ground = Model(name: "ground", primitiveType: .plane)
     ground.scale = 40
     ground.rotation.z = Float(270).degreesToRadians
-    ground.meshes[0].submeshes[0].material.baseColor = [0.9, 0.9, 0.9]
+    ground.meshes[0].submeshes[0].material.baseColor = [0.6, 0.6, 0.6]
     return ground
   }()
 
@@ -67,8 +68,8 @@ struct GameScene {
 
   var defaultView: Transform {
     Transform(
-      position: [3.2, 3.1, 1.0],
-      rotation: [-0.6, 10.7, 0.0])
+      position: [2.2, 2.4, -3],
+      rotation: [-0.36, 12.0, 0.0])
   }
 
   var lighting = SceneLighting()
@@ -87,9 +88,9 @@ struct GameScene {
     camera.transform = defaultView
     camera.target = [0, 1, 0]
     camera.distance = 4
-    treefir1.position = [-1, 0, 2.5]
-    treefir2.position = [-3, 0, -2]
-    treefir3.position = [1.5, 0, -0.5]
+    treefir1.position = [0.5, 0, 2.5]
+    treefir2.position = [-0.8, 0, -1.8]
+    treefir3.position = [2, 0, -0.5]
     models = [treefir1, treefir2, treefir3, train, ground]
   }
 
@@ -112,7 +113,7 @@ struct GameScene {
   mutating func updateInput() {
     let input = InputController.shared
     if input.keysPressed.contains(.one) ||
-        input.keysPressed.contains(.two) {
+      input.keysPressed.contains(.two) {
       camera.distance = 4
       if let mainCamera = debugMainCamera {
         camera = mainCamera

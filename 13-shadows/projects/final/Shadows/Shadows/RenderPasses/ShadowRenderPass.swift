@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,19 +32,24 @@
 
 import MetalKit
 
-struct ForwardRenderPass: RenderPass {
-  let label = "Forward Render Pass"
+struct ShadowRenderPass: RenderPass {
+  let label: String = "Shadow Render Pass"
   var descriptor: MTLRenderPassDescriptor?
-
+    = MTLRenderPassDescriptor()
+  var depthStencilState: MTLDepthStencilState?
+    = Self.buildDepthStencilState()
   var pipelineState: MTLRenderPipelineState
-  let depthStencilState: MTLDepthStencilState?
+  var shadowTexture: MTLTexture?
 
-  weak var shadowTexture: MTLTexture?
-
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    depthStencilState = Self.buildDepthStencilState()
+  init() {
+    pipelineState =
+      PipelineStates.createShadowPSO()
+    shadowTexture = Self.makeTexture(
+      size: CGSize(
+      width: 2048,
+      height: 2048),
+      pixelFormat: Renderer.viewDepthPixelFormat,
+    label: "Shadow Depth Texture")
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
@@ -56,52 +61,26 @@ struct ForwardRenderPass: RenderPass {
     uniforms: Uniforms,
     params: Params
   ) {
-    guard let descriptor = descriptor,
-    let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(
-        descriptor: descriptor) else {
+    guard let descriptor = descriptor else { return }
+    descriptor.depthAttachment.texture = shadowTexture
+    descriptor.depthAttachment.loadAction = .clear
+    descriptor.depthAttachment.storeAction = .store
+
+    guard let renderEncoder =
+      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
     }
-    renderEncoder.label = label
+    renderEncoder.label = "Shadow Encoder"
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
-
-    var lights = scene.lighting.lights
-    renderEncoder.setFragmentBytes(
-      &lights,
-      length: MemoryLayout<Light>.stride * lights.count,
-      index: LightBuffer.index)
-
-    renderEncoder.setFragmentTexture(shadowTexture, index: 15)
-
     for model in scene.models {
+      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
+      renderEncoder.popDebugGroup()
     }
-
-    // Debugging sun position
-    var scene = scene
-    DebugModel.debugDrawModel(
-      renderEncoder: renderEncoder,
-      uniforms: uniforms,
-      model: scene.sun,
-      color: [0.9, 0.8, 0.2])
-    // End Debugging
-
-    /* draw lines to indicate the direction of the sun
-    DebugLights.draw(
-      lights: scene.lighting.lights,
-      encoder: renderEncoder,
-      uniforms: uniforms)
-    */
-
-    DebugCameraFrustum.draw(
-      encoder: renderEncoder,
-      scene: scene,
-      uniforms: uniforms)
-
     renderEncoder.endEncoding()
   }
 }

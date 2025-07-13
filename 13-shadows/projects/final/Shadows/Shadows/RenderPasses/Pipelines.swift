@@ -30,52 +30,43 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
 import MetalKit
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-#endif
-
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(metalView: view)
-    return gameController
+enum PipelineStates {
+  static func createPSO(descriptor: MTLRenderPipelineDescriptor)
+  -> MTLRenderPipelineState {
+    let pipelineState: MTLRenderPipelineState
+    do {
+      pipelineState =
+      try Renderer.device.makeRenderPipelineState(
+        descriptor: descriptor)
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
   }
 
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
+  static func createForwardPSO() -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_main")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = Renderer.viewDepthPixelFormat
+    pipelineDescriptor.vertexDescriptor =
+    MTLVertexDescriptor.defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
   }
 
-  func updateMetalView() {
-  }
-}
-
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
+  static func createShadowPSO() -> MTLRenderPipelineState {
+    let vertexFunction =
+    Renderer.library?.makeFunction(name: "vertex_depth")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor = .defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
   }
 }
