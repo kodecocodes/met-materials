@@ -40,8 +40,8 @@ enum DebugModel {
     let psoDescriptor = MTLRenderPipelineDescriptor()
     psoDescriptor.vertexFunction = vertexFunction
     psoDescriptor.fragmentFunction = fragmentFunction
-    psoDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-    psoDescriptor.depthAttachmentPixelFormat = .depth32Float
+    psoDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorPixelFormat
+    psoDescriptor.depthAttachmentPixelFormat = Renderer.viewDepthPixelFormat
     psoDescriptor.vertexDescriptor = .defaultLayout
     let pipelineState: MTLRenderPipelineState
     do {

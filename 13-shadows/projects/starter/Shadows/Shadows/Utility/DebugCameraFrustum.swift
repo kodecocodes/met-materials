@@ -33,8 +33,6 @@
 import Foundation
 import MetalKit
 
-// swiftlint:disable function_body_length
-
 enum DebugCameraFrustum {
   static var forwardVectorBuffer: MTLBuffer?
   static var frustumMesh: [float3] = []
@@ -268,4 +266,3 @@ private extension MDLVertexDescriptor {
     return vertexDescriptor
   }()
 }
-// swiftlint:enable function_body_length

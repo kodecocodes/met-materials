@@ -30,52 +30,68 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
-import MetalKit
+import GameController
 
+class InputController {
+  struct Point {
+    var x: Float
+    var y: Float
+    static let zero = Point(x: 0, y: 0)
+  }
+
+  static let shared = InputController()
+
+  var keysPressed: Set<GCKeyCode> = []
+  var leftMouseDown = false
+  var mouseDelta = Point.zero
+  var mouseScroll = Point.zero
+  var touchLocation: CGPoint?
+  var touchDelta: CGSize? {
+    didSet {
+      touchDelta?.height *= -1
+      if let delta = touchDelta {
+        mouseDelta = Point(x: Float(delta.width), y: Float(delta.height))
+      }
+      leftMouseDown = touchDelta != nil
+    }
+  }
+
+  private init() {
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: .GCKeyboardDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let keyboard = notification.object as? GCKeyboard
+          keyboard?.keyboardInput?.keyChangedHandler
+            = { _, _, keyCode, pressed in
+          if pressed {
+            self.keysPressed.insert(keyCode)
+          } else {
+            self.keysPressed.remove(keyCode)
+          }
+        }
+    }
 #if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
+  NSEvent.addLocalMonitorForEvents(
+    matching: [.keyUp, .keyDown]) { _ in nil }
 #endif
 
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(metalView: view)
-    return gameController
+  center.addObserver(
+    forName: .GCMouseDidConnect,
+    object: nil,
+    queue: nil) { notification in
+      let mouse = notification.object as? GCMouse
+      mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
+        self.leftMouseDown = pressed
+      }
+      mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
+        self.mouseDelta = Point(x: deltaX, y: deltaY)
+      }
+      mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
+        self.mouseScroll.x = xValue
+        self.mouseScroll.y = yValue
+      }
   }
-
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
-  }
-
-  func updateMetalView() {
-  }
-}
-
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
   }
 }

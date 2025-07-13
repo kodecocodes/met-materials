@@ -30,52 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+
 import MetalKit
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-#endif
-
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(metalView: view)
-    return gameController
-  }
-
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
-  }
-
-  func updateMetalView() {
-  }
+protocol RenderPass {
+  var label: String { get }
+  var descriptor: MTLRenderPassDescriptor? { get set }
+  mutating func resize(view: MTKView, size: CGSize)
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  )
 }
 
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
+extension RenderPass {
+  static func buildDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .less
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(
+      descriptor: descriptor)
+  }
+
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc =
+      MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat: pixelFormat,
+        width: width,
+        height: height,
+        mipmapped: false)
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture =
+      Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
   }
 }
