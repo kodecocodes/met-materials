@@ -1,4 +1,4 @@
-//// Copyright (c) 2025 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,25 +29,12 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
-/*
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
 
+import Foundation
 
-float3 computeAmbient(
-  constant Light *lights,
-  constant Params &params,
-  Material material)
-{
-  float3 ambient = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    if (light.type != Ambient) { continue; }
-    float3 surfaceColor = light.color * light.intensity * material.baseColor;
-    ambient += surfaceColor;
-  }
-  return ambient;
+protocol Camera: Transformable {
+  var projectionMatrix: float4x4 { get }
+  var viewMatrix: float4x4 { get }
+  mutating func update(size: CGSize)
+  mutating func update(deltaTime: Float)
 }
-
-*/

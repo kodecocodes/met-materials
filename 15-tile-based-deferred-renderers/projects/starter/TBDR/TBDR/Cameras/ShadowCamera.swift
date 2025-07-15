@@ -86,7 +86,7 @@ extension Camera {
     let halfWidth = halfHeight * aspect
     let matrix = float4x4(
       eye: camera.position,
-      center: camera.center,
+      target: camera.center,
       up: [0, 1, 0])
     return calculatePlanePoints(
       matrix: matrix,
