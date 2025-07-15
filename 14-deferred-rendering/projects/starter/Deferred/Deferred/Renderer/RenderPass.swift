@@ -30,84 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
 
-#import <simd/simd.h>
+import MetalKit
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-  matrix_float4x4 shadowProjectionMatrix;
-  matrix_float4x4 shadowViewMatrix;
-} Uniforms;
+protocol RenderPass {
+  var label: String { get }
+  var descriptor: MTLRenderPassDescriptor? { get set }
+  mutating func resize(view: MTKView, size: CGSize)
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  )
+}
 
-typedef struct {
-  uint32_t width;
-  uint32_t height;
-  uint32_t tiling;
-  uint32_t lightCount;
-  vector_float3 cameraPosition;
-  float scaleFactor;
-} Params;
+extension RenderPass {
+  static func buildDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .less
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(
+      descriptor: descriptor)
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  TangentBuffer = 2,
-  BitangentBuffer = 3,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Tangent = 3,
-  Bitangent = 4
-} Attributes;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4,
-  ShadowTexture = 11
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  LightType type;
-  vector_float3 position;
-  vector_float3 color;
-  float intensity;
-  vector_float3 specularColor;
-  float radius;
-  vector_float3 attenuation;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-} Material;
-
-#endif /* Common_h */
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc =
+      MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat: pixelFormat,
+        width: width,
+        height: height,
+        mipmapped: false)
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture =
+      Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
+  }
+}

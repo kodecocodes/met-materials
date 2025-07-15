@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -29,58 +29,37 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
+/// 
+import Foundation
 
-import MetalKit
-
-struct ShadowRenderPass: RenderPass {
-  let label: String = "Shadow Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
-    = MTLRenderPassDescriptor()
-  var depthStencilState: MTLDepthStencilState?
-    = Self.buildDepthStencilState()
-  var pipelineState: MTLRenderPipelineState
-  var shadowTexture: MTLTexture?
-
-  init() {
-    pipelineState =
-      PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
-      size: CGSize(
-      width: 2048,
-      height: 2048),
-    pixelFormat: .depth32Float,
-    label: "Shadow Depth Texture")
+struct FPCamera: Camera {
+  var transform = Transform()
+  var aspect: Float = 1.0
+  var fov = Float(70).degreesToRadians
+  var near: Float = 0.1
+  var far: Float = 100
+  var projectionMatrix: float4x4 {
+    float4x4(
+      projectionFov: fov,
+      near: near,
+      far: far,
+      aspect: aspect)
   }
 
-  mutating func resize(view: MTKView, size: CGSize) {
+  mutating func update(size: CGSize) {
+    aspect = Float(size.width / size.height)
   }
 
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  ) {
-    guard let descriptor = descriptor else { return }
-    descriptor.depthAttachment.texture = shadowTexture
-    descriptor.depthAttachment.loadAction = .clear
-    descriptor.depthAttachment.storeAction = .store
+  var viewMatrix: float4x4 {
+    (float4x4(translation: position) *
+    float4x4(rotation: rotation)).inverse
+  }
 
-    guard let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = "Shadow Encoder"
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
-    }
-    renderEncoder.endEncoding()
+  mutating func update(deltaTime: Float) {
+    let transform = updateInput(deltaTime: deltaTime)
+    rotation += transform.rotation
+    position += transform.position
   }
 }
+
+extension FPCamera: Movement { }

@@ -30,84 +30,63 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-#import <simd/simd.h>
+float G1V(float nDotV, float k)
+{
+  return 1.0f / (nDotV * (1.0f - k) + k);
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-  matrix_float4x4 shadowProjectionMatrix;
-  matrix_float4x4 shadowViewMatrix;
-} Uniforms;
+// specular optimized-ggx
+// AUTHOR John Hable. Released into the public domain
+float3 computeSpecular(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+  float3 specularTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type != Sun) { continue; };
+    float3 lightDirection = normalize(light.position);
+    float3 F0 = mix(0.04, material.baseColor, material.metallic);
+    // add a small amount of bias so that you can
+    // see the shininess when roughness is zero
+    float bias = 0.01;
+    float roughness = material.roughness + bias;
+    float alpha = roughness * roughness;
+    float3 halfVector = normalize(viewDirection + lightDirection);
+    float nDotL = saturate(dot(normal, lightDirection));
+    float nDotV = saturate(dot(normal, viewDirection));
+    float nDotH = saturate(dot(normal, halfVector));
+    float lDotH = saturate(dot(lightDirection, halfVector));
 
-typedef struct {
-  uint32_t width;
-  uint32_t height;
-  uint32_t tiling;
-  uint32_t lightCount;
-  vector_float3 cameraPosition;
-  float scaleFactor;
-} Params;
+    float3 F;
+    float D, vis;
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  TangentBuffer = 2,
-  BitangentBuffer = 3,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20
-} BufferIndices;
+    // Distribution
+    float alphaSqr = alpha * alpha;
+    float pi = 3.14159f;
+    float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
+    D = alphaSqr / (pi * denom * denom);
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Tangent = 3,
-  Bitangent = 4
-} Attributes;
+    // Fresnel
+    float lDotH5 = pow(1.0 - lDotH, 5);
+    F = F0 + (1.0 - F0) * lDotH5;
 
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4,
-  ShadowTexture = 11
-} TextureIndices;
+    // V
+    float k = alpha / 2.0f;
+    vis = G1V(nDotL, k) * G1V(nDotV, k);
 
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
+    float3 specular = nDotL * D * F * vis * light.specularColor;
+    specularTotal += specular;
+  }
+  return specularTotal;
+}
 
-typedef struct {
-  LightType type;
-  vector_float3 position;
-  vector_float3 color;
-  float intensity;
-  vector_float3 specularColor;
-  float radius;
-  vector_float3 attenuation;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
 
-typedef struct {
-  vector_float3 baseColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-} Material;
-
-#endif /* Common_h */

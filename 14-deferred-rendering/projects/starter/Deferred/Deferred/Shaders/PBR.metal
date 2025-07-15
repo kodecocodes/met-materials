@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+//// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,58 +29,25 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
+/*
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-import MetalKit
 
-struct GBufferRenderPass: RenderPass {
-  let label = "G-buffer Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
-
-  var pipelineState: MTLRenderPipelineState
-  let depthStencilState: MTLDepthStencilState?
-  weak var shadowTexture: MTLTexture?
-
-  init(view: MTKView) {
-    pipelineState = PipelineStates.createGBufferPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    depthStencilState = Self.buildDepthStencilState()
+float3 computeAmbient(
+  constant Light *lights,
+  constant Params &params,
+  Material material)
+{
+  float3 ambient = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type != Ambient) { continue; }
+    float3 surfaceColor = light.color * light.intensity * material.baseColor;
+    ambient += surfaceColor;
   }
-
-  mutating func resize(view: MTKView, size: CGSize) {
-  }
-
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  ) {
-    guard let descriptor = descriptor,
-    let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(
-        descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = label
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-
-    renderEncoder.setFragmentBuffer(
-      scene.lighting.lightsBuffer,
-      offset: 0,
-      index: LightBuffer.index)
-
-    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
-    }
-
-    renderEncoder.endEncoding()
-  }
+  return ambient;
 }
+
+*/
