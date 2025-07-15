@@ -57,5 +57,3 @@ float3 computeSpecular(
   }
   return specularTotal;
 }
-
-

@@ -67,4 +67,3 @@ float3 computeDiffuse(
   }
   return diffuseTotal;
 }
-

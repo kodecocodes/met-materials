@@ -127,7 +127,7 @@ struct SceneLighting {
   }
 
   static func createOnePointLight() -> [Light] {
-    var pointLights = Self.createPointLights(count: 1, min: [0, 0.6, -0.4], max: [0, 0.6, -0.4])
+    var pointLights = Self.createPointLights(count: 1, min: [0.7, 0.3, -1.1], max: [0.7, 0.3, -1.1])
     pointLights[0].color = [1, 0, 0]
     pointLights[0].intensity = 2.0
     pointLights[0].attenuation = [1, 4, 10]

@@ -92,16 +92,16 @@ fragment float4 fragment_deferredSun(
     .roughness = 0.5
   };
 
-  float3 color = 0;
+  float3 diffuse = 0;
+  float3 specular = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
-    float3 diffuse = calculateSunDiffuse(light, normal, params, material);
+    diffuse += calculateSunDiffuse(light, normal, params, material);
     float3 viewDirection = normalize(params.cameraPosition - worldPosition);
-    float3 specular = calculateSunSpecular(light, material, viewDirection, normal);
-    color += diffuse + specular;
+    specular += calculateSunSpecular(light, material, viewDirection, normal);
   }
-  color *= albedo.a;
-  return float4(color, 1);
+  diffuse *= albedo.a;
+  return float4(diffuse + specular, 1);
 }
 
 struct PointLightIn {
