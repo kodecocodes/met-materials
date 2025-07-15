@@ -46,11 +46,11 @@ float3 computeDiffuse(
     Light light = lights[i];
     switch (light.type) {
       case Sun: {
-        diffuseTotal += calculateSun(light, normal, params, material);
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
         break;
       }
       case Point: {
-        diffuseTotal += calculatePoint(light, normal, material, worldPosition);
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
         break;
       }
       case Spot: {      // not yet implemented
@@ -67,4 +67,3 @@ float3 computeDiffuse(
   }
   return diffuseTotal;
 }
-

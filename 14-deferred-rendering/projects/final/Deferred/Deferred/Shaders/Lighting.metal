@@ -35,7 +35,7 @@ using namespace metal;
 
 #import "Lighting.h"
 
-float3 calculateSun(
+float3 calculateSunDiffuse(
   Light light,
   float3 normal,
   Params params,
@@ -48,7 +48,7 @@ float3 calculateSun(
   return diffuse * material.ambientOcclusion;
 }
 
-float3 calculatePoint(
+float3 calculatePointDiffuse(
   Light light,
   float3 normal,
   Material material,
@@ -89,3 +89,47 @@ float calculateShadow(
   return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
 }
 
+float G1V(float nDotV, float k)
+{
+  return 1.0f / (nDotV * (1.0f - k) + k);
+}
+
+float3 calculateSunSpecular(
+  Light light,
+  Material material,
+  float3 viewDirection,
+  float3 normal)
+{
+  float3 lightDirection = normalize(light.position);
+  float3 F0 = mix(0.04, material.baseColor, material.metallic);
+  // add a small amount of bias so that you can
+  // see the shininess when roughness is zero
+  float bias = 0.01;
+  float roughness = material.roughness + bias;
+  float alpha = roughness * roughness;
+  float3 halfVector = normalize(viewDirection + lightDirection);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float nDotV = saturate(dot(normal, viewDirection));
+  float nDotH = saturate(dot(normal, halfVector));
+  float lDotH = saturate(dot(lightDirection, halfVector));
+
+  float3 F;
+  float D, vis;
+
+  // Distribution
+  float alphaSqr = alpha * alpha;
+  float pi = 3.14159f;
+  float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
+  D = alphaSqr / (pi * denom * denom);
+
+  // Fresnel
+  float lDotH5 = pow(1.0 - lDotH, 5);
+  F = F0 + (1.0 - F0) * lDotH5;
+
+  // V
+  float k = alpha / 2.0f;
+  vis = G1V(nDotL, k) * G1V(nDotV, k);
+
+  float3 specular = nDotL * D * F * vis * light.specularColor;
+  return specular;
+}

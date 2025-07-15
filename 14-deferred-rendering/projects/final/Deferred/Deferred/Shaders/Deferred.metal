@@ -77,20 +77,28 @@ fragment float4 fragment_deferredSun(
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
   texture2d<float> albedoTexture [[texture(BaseColor)]],
-  texture2d<float> normalTexture [[texture(NormalTexture)]])
+  texture2d<float> normalTexture [[texture(NormalTexture)]],
+  texture2d<float> positionTexture
+    [[texture(NormalTexture + 1)]])
 {
-  uint2 coord = uint2(in.position.xy);
-  float4 albedo = albedoTexture.read(coord);
-  float3 normal = normalTexture.read(coord).xyz;
+  uint2 coords = uint2(in.position.xy);
+  float4 albedo = albedoTexture.read(coords);
+  float3 normal = normalTexture.read(coords).xyz;
+  float3 worldPosition = positionTexture.read(coords).xyz;
+
   Material material {
     .baseColor = albedo.xyz,
-    .ambientOcclusion = 1.0
+    .ambientOcclusion = 1.0,
+    .roughness = 0.5
   };
 
   float3 color = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
-    color += calculateSun(light, normal, params, material);
+    float3 diffuse = calculateSunDiffuse(light, normal, params, material);
+    float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+    float3 specular = calculateSunSpecular(light, material, viewDirection, normal);
+    color += diffuse + specular;
   }
   color *= albedo.a;
   return float4(color, 1);
@@ -137,7 +145,7 @@ fragment float4 fragment_pointLight(
     .baseColor = 1
   };
   Light light = lights[in.instanceId];
-  float3 color = calculatePoint(
+  float3 color = calculatePointDiffuse(
     light,
     normal,
     material,

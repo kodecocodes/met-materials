@@ -39,13 +39,19 @@ float calculateShadow(
   float4 shadowPosition,
   depth2d<float> shadowTexture);
 
-float3 calculateSun(
+float3 calculateSunDiffuse(
   Light light,
   float3 normal,
   Params params,
   Material material);
 
-float3 calculatePoint(
+float3 calculateSunSpecular(
+  Light light,
+  Material material,
+  float3 viewDirection,
+  float3 normal);
+
+float3 calculatePointDiffuse(
   Light light,
   float3 normal,
   Material material,
