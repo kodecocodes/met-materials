@@ -30,57 +30,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import CoreGraphics
 
-struct ShadowRenderPass: RenderPass {
-  let label: String = "Shadow Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
-    = MTLRenderPassDescriptor()
-  var depthStencilState: MTLDepthStencilState?
-    = Self.buildDepthStencilState()
-  var pipelineState: MTLRenderPipelineState
-  var shadowTexture: MTLTexture?
+struct OrthographicCamera: Camera, Movement {
+  var transform = Transform()
+  var aspect: CGFloat = 1
+  var viewSize: CGFloat = 10
+  var near: Float = 0.1
+  var far: Float = 100
+  var center = float3.zero
 
-  init() {
-    pipelineState =
-      PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
-      size: CGSize(
-      width: 2048,
-      height: 2048),
-      pixelFormat: Renderer.viewDepthPixelFormat,
-    label: "Shadow Depth Texture")
+  var viewMatrix: float4x4 {
+    (float4x4(translation: position) *
+    float4x4(rotation: rotation)).inverse
   }
 
-  mutating func resize(view: MTKView, size: CGSize) {
+  var projectionMatrix: float4x4 {
+    let rect = CGRect(
+      x: -viewSize * aspect * 0.5,
+      y: viewSize * 0.5,
+      width: viewSize * aspect,
+      height: viewSize)
+    return float4x4(orthographic: rect, near: near, far: far)
   }
 
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  ) {
-    guard let descriptor = descriptor else { return }
-    descriptor.depthAttachment.texture = shadowTexture
-    descriptor.depthAttachment.loadAction = .clear
-    descriptor.depthAttachment.storeAction = .store
+  mutating func update(size: CGSize) {
+    aspect = size.width / size.height
+  }
 
-    guard let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = "Shadow Encoder"
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
-    }
-    renderEncoder.endEncoding()
+  mutating func update(deltaTime: Float) {
+    let transform = updateInput(deltaTime: deltaTime)
+    position += transform.position
+    let input = InputController.shared
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    let zoom = input.mouseScroll.x * scrollSensitivity
+      + input.mouseScroll.y * scrollSensitivity
+    viewSize -= CGFloat(zoom)
+    input.mouseScroll = .zero
   }
 }

@@ -100,6 +100,7 @@ extension Renderer {
   ) {
     shadowRenderPass.resize(view: view, size: size)
     forwardRenderPass.resize(view: view, size: size)
+    gBufferRenderPass.resize(view: view, size: size)
     params.width = UInt32(size.width)
     params.height = UInt32(size.height)
     params.scaleFactor = Float(Self.scaleFactor)

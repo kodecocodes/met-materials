@@ -30,57 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+
 import MetalKit
 
-struct ShadowRenderPass: RenderPass {
-  let label: String = "Shadow Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
-    = MTLRenderPassDescriptor()
-  var depthStencilState: MTLDepthStencilState?
-    = Self.buildDepthStencilState()
-  var pipelineState: MTLRenderPipelineState
-  var shadowTexture: MTLTexture?
-
-  init() {
-    pipelineState =
-      PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
-      size: CGSize(
-      width: 2048,
-      height: 2048),
-      pixelFormat: Renderer.viewDepthPixelFormat,
-    label: "Shadow Depth Texture")
-  }
-
-  mutating func resize(view: MTKView, size: CGSize) {
-  }
-
+protocol RenderPass {
+  var label: String { get }
+  var descriptor: MTLRenderPassDescriptor? { get set }
+  mutating func resize(view: MTKView, size: CGSize)
   func draw(
     commandBuffer: MTLCommandBuffer,
     scene: GameScene,
     uniforms: Uniforms,
     params: Params
-  ) {
-    guard let descriptor = descriptor else { return }
-    descriptor.depthAttachment.texture = shadowTexture
-    descriptor.depthAttachment.loadAction = .clear
-    descriptor.depthAttachment.storeAction = .store
+  )
+}
 
-    guard let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = "Shadow Encoder"
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
-    }
-    renderEncoder.endEncoding()
+extension RenderPass {
+  static func buildDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .less
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(
+      descriptor: descriptor)
+  }
+
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc =
+      MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat: pixelFormat,
+        width: width,
+        height: height,
+        mipmapped: false)
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture =
+      Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
   }
 }

@@ -30,57 +30,68 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import GameController
 
-struct ShadowRenderPass: RenderPass {
-  let label: String = "Shadow Render Pass"
-  var descriptor: MTLRenderPassDescriptor?
-    = MTLRenderPassDescriptor()
-  var depthStencilState: MTLDepthStencilState?
-    = Self.buildDepthStencilState()
-  var pipelineState: MTLRenderPipelineState
-  var shadowTexture: MTLTexture?
-
-  init() {
-    pipelineState =
-      PipelineStates.createShadowPSO()
-    shadowTexture = Self.makeTexture(
-      size: CGSize(
-      width: 2048,
-      height: 2048),
-      pixelFormat: Renderer.viewDepthPixelFormat,
-    label: "Shadow Depth Texture")
+class InputController {
+  struct Point {
+    var x: Float
+    var y: Float
+    static let zero = Point(x: 0, y: 0)
   }
 
-  mutating func resize(view: MTKView, size: CGSize) {
+  static let shared = InputController()
+
+  var keysPressed: Set<GCKeyCode> = []
+  var leftMouseDown = false
+  var mouseDelta = Point.zero
+  var mouseScroll = Point.zero
+  var touchLocation: CGPoint?
+  var touchDelta: CGSize? {
+    didSet {
+      touchDelta?.height *= -1
+      if let delta = touchDelta {
+        mouseDelta = Point(x: Float(delta.width), y: Float(delta.height))
+      }
+      leftMouseDown = touchDelta != nil
+    }
   }
 
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  ) {
-    guard let descriptor = descriptor else { return }
-    descriptor.depthAttachment.texture = shadowTexture
-    descriptor.depthAttachment.loadAction = .clear
-    descriptor.depthAttachment.storeAction = .store
+  private init() {
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: .GCKeyboardDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let keyboard = notification.object as? GCKeyboard
+          keyboard?.keyboardInput?.keyChangedHandler
+            = { _, _, keyCode, pressed in
+          if pressed {
+            self.keysPressed.insert(keyCode)
+          } else {
+            self.keysPressed.remove(keyCode)
+          }
+        }
+    }
+#if os(macOS)
+  NSEvent.addLocalMonitorForEvents(
+    matching: [.keyUp, .keyDown]) { _ in nil }
+#endif
 
-    guard let renderEncoder =
-      commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.label = "Shadow Encoder"
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(pipelineState)
-    for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
-      model.render(
-        encoder: renderEncoder,
-        uniforms: uniforms,
-        params: params)
-      renderEncoder.popDebugGroup()
-    }
-    renderEncoder.endEncoding()
+  center.addObserver(
+    forName: .GCMouseDidConnect,
+    object: nil,
+    queue: nil) { notification in
+      let mouse = notification.object as? GCMouse
+      mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
+        self.leftMouseDown = pressed
+      }
+      mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
+        self.mouseDelta = Point(x: deltaX, y: deltaY)
+      }
+      mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
+        self.mouseScroll.x = xValue
+        self.mouseScroll.y = yValue
+      }
+  }
   }
 }

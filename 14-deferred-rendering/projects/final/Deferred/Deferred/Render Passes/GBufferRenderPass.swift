@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+
 import MetalKit
 
 struct GBufferRenderPass: RenderPass {
@@ -46,8 +47,7 @@ struct GBufferRenderPass: RenderPass {
   var depthTexture: MTLTexture?
 
   init(view: MTKView) {
-    pipelineState = PipelineStates.createGBufferPSO(
-      colorPixelFormat: view.colorPixelFormat)
+    pipelineState = PipelineStates.createGBufferPSO()
     depthStencilState = Self.buildDepthStencilState()
     descriptor = MTLRenderPassDescriptor()
   }
@@ -103,7 +103,6 @@ struct GBufferRenderPass: RenderPass {
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
-
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
     for model in scene.models {

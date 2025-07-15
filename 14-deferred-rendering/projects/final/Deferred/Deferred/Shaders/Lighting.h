@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -47,22 +47,28 @@ float3 calculateSun(
 
 float3 calculatePoint(
   Light light,
-  float3 fragmentWorldPosition,
   float3 normal,
-  Material material);
+  Material material,
+  float3 worldPosition);
 
 // PBR functions
 float3 computeSpecular(
   constant Light *lights,
   constant Params &params,
   Material material,
-  float3 normal);
+  float3 normal,
+  float3 worldPosition);
 
 float3 computeDiffuse(
   constant Light *lights,
-  float3 fragmentWorldPosition,
   constant Params &params,
   Material material,
-  float3 normal);
+  float3 normal,
+  float3 worldPosition);
+ 
+float3 computeAmbient(
+  constant Light *lights,
+  constant Params &params,
+  Material material);
 
 #endif /* Lighting_h */
