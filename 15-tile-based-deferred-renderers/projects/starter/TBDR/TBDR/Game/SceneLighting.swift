@@ -77,7 +77,7 @@ struct SceneLighting {
   var sunBuffer: MTLBuffer
   var pointBuffer: MTLBuffer
 
-  let pointLightsCount = 30
+  let pointLightsCount = 40
 
   init() {
     sunLights = [sunlight, rimlight, fillLight]

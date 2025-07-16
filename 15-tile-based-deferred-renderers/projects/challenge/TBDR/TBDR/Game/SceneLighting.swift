@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,17 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
-///
-import MetalKit
+
 // swiftlint:disable force_unwrapping
-// swiftlint:disable identifier_name
+
+import MetalKit
 
 struct SceneLighting {
   static func buildDefaultLight() -> Light {
     var light = Light()
     light.position = [0, 0, 0]
     light.color = float3(repeating: 1.0)
+    light.intensity = 1.0
     light.specularColor = float3(repeating: 0.6)
     light.attenuation = [1, 0, 0]
     light.type = Sun
@@ -48,23 +49,42 @@ struct SceneLighting {
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
     light.position = [3, 3, -2]
-    light.color = float3(repeating: 1)
+    light.color = [1.0, 0.94, 0.86]
+    light.intensity = 0.6
     return light
   }()
 
-  var lights: [Light]
+  let rimlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [2, 4, 3]
+    light.color = [0.86, 0.9, 1.0]
+    light.intensity = 0.2
+    return light
+  }()
+
+  let fillLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [-2, 2, -3]
+    light.color = [0.94, 0.96, 1.0]
+    light.intensity = 0.2
+    return light
+  }()
+
+  var lights: [Light] = []
   var sunLights: [Light]
   var pointLights: [Light]
   var lightsBuffer: MTLBuffer
   var sunBuffer: MTLBuffer
   var pointBuffer: MTLBuffer
 
+  let pointLightsCount = 40
+
   init() {
-    sunLights = [sunlight]
+    sunLights = [sunlight, rimlight, fillLight]
     pointLights = Self.createPointLights(
-      count: 40,
-      min: [-3, 0.1, -5],
-      max: [3, 0.3, 5])
+      count: pointLightsCount,
+      min: [-6, 0.1, -6],
+      max: [6, 0.3, 6])
     lights = sunLights + pointLights
     lightsBuffer = Self.createBuffer(lights: lights)
     sunBuffer = Self.createBuffer(lights: sunLights)
@@ -99,6 +119,7 @@ struct SceneLighting {
       let z = Float.random(in: min.z...max.z)
       light.position = [x, y, z]
       light.color = colors[Int.random(in: 0..<colors.count)]
+      light.intensity = 3.0
       light.attenuation = [0.2, 10, 50]
       lights.append(light)
     }
@@ -106,11 +127,11 @@ struct SceneLighting {
   }
 
   static func createOnePointLight() -> [Light] {
-    var pointLights = Self.createPointLights(count: 1, min: [0, 0.6, -0.4], max: [0, 0.6, -0.4])
+    var pointLights = Self.createPointLights(count: 1, min: [0.7, 0.3, -1.1], max: [0.7, 0.3, -1.1])
     pointLights[0].color = [1, 0, 0]
+    pointLights[0].intensity = 2.0
     pointLights[0].attenuation = [1, 4, 10]
     return pointLights
   }
 }
-// swiftlint:enable identifier_name
 // swiftlint:enable force_unwrapping

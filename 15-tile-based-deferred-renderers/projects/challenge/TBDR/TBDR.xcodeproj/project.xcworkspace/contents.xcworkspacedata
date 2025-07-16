@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/caroline/Documents/Kodeco/Metal Book/V4/Metal Materials/15-tile-based-deferred-renderers/projects/starter/TBDR/TBDR.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

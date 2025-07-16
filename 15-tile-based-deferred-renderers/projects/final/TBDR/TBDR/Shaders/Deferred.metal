@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -77,23 +77,30 @@ fragment float4 fragment_deferredSun(
   constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
   texture2d<float> albedoTexture [[texture(BaseColor)]],
-  texture2d<float> normalTexture [[texture(NormalTexture)]])
+  texture2d<float> normalTexture [[texture(NormalTexture)]],
+  texture2d<float> positionTexture [[texture(PositionTexture)]])
 {
-  uint2 coord = uint2(in.position.xy);
-  float4 albedo = albedoTexture.read(coord);
-  float3 normal = normalTexture.read(coord).xyz;
+  uint2 coords = uint2(in.position.xy);
+  float4 albedo = albedoTexture.read(coords);
+  float3 normal = normalTexture.read(coords).xyz;
+  float3 worldPosition = positionTexture.read(coords).xyz;
+
   Material material {
     .baseColor = albedo.xyz,
-    .ambientOcclusion = 1.0
+    .ambientOcclusion = 1.0,
+    .roughness = 0.5
   };
 
-  float3 color = 0;
+  float3 diffuse = 0;
+  float3 specular = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
-    color += calculateSun(light, normal, params, material);
+    diffuse += calculateSunDiffuse(light, normal, params, material);
+    float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+    specular += calculateSunSpecular(light, material, viewDirection, normal);
   }
-  color *= albedo.a;
-  return float4(color, 1);
+  diffuse *= albedo.a;
+  return float4(diffuse + specular, 1);
 }
 
 struct PointLightIn {
@@ -132,21 +139,19 @@ fragment float4 fragment_pointLight(
   uint2 coords = uint2(in.position.xy);
   float3 normal = normalTexture.read(coords).xyz;
   float3 worldPosition = positionTexture.read(coords).xyz;
-
   Material material {
     .baseColor = 1
   };
   Light light = lights[in.instanceId];
-  float3 color = calculatePoint(
+  float3 color = calculatePointDiffuse(
     light,
-    worldPosition,
     normal,
-    material);
-  color *= 0.5;
+    material,
+    worldPosition);
+  color *= 0.3;
   return float4(color, 1);
 }
 
-// MARK:- Tile-based Deferred Rendering
 fragment float4 fragment_tiled_deferredSun(
   VertexOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
@@ -155,38 +160,43 @@ fragment float4 fragment_tiled_deferredSun(
 {
   float4 albedo = gBuffer.albedo;
   float3 normal = gBuffer.normal.xyz;
+  float3 worldPosition = gBuffer.position.xyz;
+
   Material material {
     .baseColor = albedo.xyz,
-    .ambientOcclusion = 1.0
+    .ambientOcclusion = 1.0,
+    .roughness = 0.5
   };
 
-  float3 color = 0;
+  float3 diffuse = 0;
+  float3 specular = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
-    color += calculateSun(light, normal, params, material);
+    diffuse += calculateSunDiffuse(light, normal, params, material);
+    float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+    specular += calculateSunSpecular(light, material, viewDirection, normal);
   }
-  color *= albedo.a;
-  return float4(color, 1);
+  diffuse *= albedo.a;
+  return float4(diffuse + specular, 1);
 }
 
 fragment float4 fragment_tiled_pointLight(
   PointLightOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
-  constant Light *lights [[buffer(LightBuffer)]],
-  GBufferOut gBuffer)
+  GBufferOut gBuffer,
+  constant Light *lights [[buffer(LightBuffer)]])
 {
   float3 normal = gBuffer.normal.xyz;
   float3 worldPosition = gBuffer.position.xyz;
-
   Material material {
     .baseColor = 1
   };
   Light light = lights[in.instanceId];
-  float3 color = calculatePoint(
+  float3 color = calculatePointDiffuse(
     light,
-    worldPosition,
     normal,
-    material);
-  color *= 0.5;
+    material,
+    worldPosition);
+  color *= 0.3;
   return float4(color, 1);
 }

@@ -86,7 +86,8 @@ enum PipelineStates {
 
   static func createSunLightPSO(tiled: Bool = false) -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_quad")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_deferredSun")
+    let fragment = tiled ? "fragment_tiled_deferredSun" : "fragment_deferredSun"
+    let fragmentFunction = Renderer.library?.makeFunction(name: fragment)
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -97,7 +98,8 @@ enum PipelineStates {
 
   static func createPointLightPSO(tiled: Bool = false) -> MTLRenderPipelineState {
     let vertexFunction = Renderer.library?.makeFunction(name: "vertex_pointLight")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_pointLight")
+    let fragment = tiled ? "fragment_tiled_pointLight" : "fragment_pointLight"
+    let fragmentFunction = Renderer.library?.makeFunction(name: fragment)
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
