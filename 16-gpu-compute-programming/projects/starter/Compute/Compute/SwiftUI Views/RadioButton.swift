@@ -30,43 +30,44 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
 
-enum TextureController {
-  static var textures: [String: MTLTexture] = [:]
+import SwiftUI
 
-  static func loadTexture(texture: MDLTexture, name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
+struct RadioButton: View {
+  let label: String
+  let options: [String]
+  let action: (_ checked: Int) -> Void
+  @State var checked: Int = 0
+  var body: some View {
+    VStack(alignment: .trailing) {
+      ForEach(0..<options.count, id: \.self) { index in
+        HStack {
+          Text(options[index])
+          if index == checked {
+            Image(systemName: "smallcircle.filled.circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          } else {
+            Image(systemName: "circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          }
+        }
+      }
     }
-    let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
-      .origin: MTKTextureLoader.Origin.bottomLeft,
-      .generateMipmaps: true
-    ]
-    let texture = try? textureLoader.newTexture(
-      texture: texture,
-      options: textureLoaderOptions)
-    print("loaded texture from USD file")
-    textures[name] = texture
-    return texture
   }
+}
 
-  static func loadTexture(name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
-    }
-    let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let texture: MTLTexture?
-    texture = try? textureLoader.newTexture(
-      name: name,
-      scaleFactor: Renderer.scaleFactor,
-      bundle: Bundle.main,
-      options: nil)
-    if texture != nil {
-      print("loaded texture: \(name)")
-      textures[name] = texture
-    }
-    return texture
+struct RadioButton_Previews: PreviewProvider {
+  static var previews: some View {
+    RadioButton(
+      label: "Options:",
+      options: ["on", "off"]) { _ in }
   }
 }

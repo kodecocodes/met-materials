@@ -30,43 +30,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-enum TextureController {
-  static var textures: [String: MTLTexture] = [:]
-
-  static func loadTexture(texture: MDLTexture, name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 diffuseTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case Sun: {
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
+        break;
+      }
+      case Point: {
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
+        break;
+      }
+      case Spot: {      // not yet implemented
+        break;
+      }
+      case Ambient: {   // not needed for PBR lighting
+        break;
+      }
+      case unused: {
+        break;
+      }
     }
-    let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
-      .origin: MTKTextureLoader.Origin.bottomLeft,
-      .generateMipmaps: true
-    ]
-    let texture = try? textureLoader.newTexture(
-      texture: texture,
-      options: textureLoaderOptions)
-    print("loaded texture from USD file")
-    textures[name] = texture
-    return texture
+    if (light.type != Sun) { continue; }
   }
-
-  static func loadTexture(name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
-    }
-    let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let texture: MTLTexture?
-    texture = try? textureLoader.newTexture(
-      name: name,
-      scaleFactor: Renderer.scaleFactor,
-      bundle: Bundle.main,
-      options: nil)
-    if texture != nil {
-      print("loaded texture: \(name)")
-      textures[name] = texture
-    }
-    return texture
-  }
+  return diffuseTotal;
 }

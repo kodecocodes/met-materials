@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/caroline/Documents/Kodeco/Metal Book/V4/Metal Materials/16-gpu-compute-programming/projects/starter/Compute/Compute.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

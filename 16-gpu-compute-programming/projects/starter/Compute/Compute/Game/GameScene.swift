@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   lazy var gnome: Model = {
@@ -67,13 +68,14 @@ struct GameScene {
   mutating func updateInput() {
     let input = InputController.shared
     if input.keysPressed.contains(.one) ||
-        input.keysPressed.contains(.two) {
+      input.keysPressed.contains(.two) {
       camera.distance = 0.5
     }
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()
     }
     if input.keysPressed.contains(.two) {
+      camera.distance = 0.5
       camera.transform = defaultView
     }
     input.keysPressed.removeAll()

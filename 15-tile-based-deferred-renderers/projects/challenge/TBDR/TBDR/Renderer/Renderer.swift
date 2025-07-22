@@ -99,9 +99,9 @@ class Renderer: NSObject {
       blue: 1.0,
       alpha: 1.0)
     metalView.depthStencilPixelFormat = .depth32Float
-//    mtkView(
-//      metalView,
-//      drawableSizeWillChange: metalView.drawableSize)
+    mtkView(
+      metalView,
+      drawableSizeWillChange: metalView.drawableSize)
   }
 }
 
