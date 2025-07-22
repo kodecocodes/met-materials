@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,9 +32,10 @@
 
 #include <metal_stdlib>
 using namespace metal;
+
 #import "Lighting.h"
 
-float3 calculateSun(
+float3 calculateSunDiffuse(
   Light light,
   float3 normal,
   Params params,
@@ -42,25 +43,27 @@ float3 calculateSun(
 {
   float3 lightDirection = normalize(light.position);
   float nDotL = saturate(dot(normal, lightDirection));
-  float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-  return diffuse * nDotL * material.ambientOcclusion * light.color;
+  float3 surfaceColor = material.baseColor * light.color * light.intensity;
+  float3 diffuse = surfaceColor * (1.0 - material.metallic) * nDotL;
+  return diffuse * material.ambientOcclusion;
 }
 
-float3 calculatePoint(
+float3 calculatePointDiffuse(
   Light light,
-  float3 fragmentWorldPosition,
   float3 normal,
-  Material material)
+  Material material,
+  float3 worldPosition)
 {
-  float d = distance(light.position, fragmentWorldPosition);
-  float3 lightDirection = normalize(light.position - fragmentWorldPosition);
-
+  
+  float d = distance(light.position, worldPosition);
+  float3 lightDirection = normalize(light.position - worldPosition);
   float attenuation = 1.0 / (light.attenuation.x +
       light.attenuation.y * d + light.attenuation.z * d * d);
-  //attenuation = 1.0 / (light.attenuation.x + light.attenuation.y * d);
+
   float diffuseIntensity =
-      saturate(dot(normal, lightDirection));
-  float3 color = light.color * material.baseColor * diffuseIntensity;
+      saturate(dot(lightDirection, normal));
+  float3 surfaceColor = material.baseColor * light.color * light.intensity;
+  float3 color = surfaceColor * diffuseIntensity;
   color *= attenuation;
   if (color.r + color.g + color.b < 0.01) {
     color = 0;
@@ -86,3 +89,47 @@ float calculateShadow(
   return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
 }
 
+float G1V(float nDotV, float k)
+{
+  return 1.0f / (nDotV * (1.0f - k) + k);
+}
+
+float3 calculateSunSpecular(
+  Light light,
+  Material material,
+  float3 viewDirection,
+  float3 normal)
+{
+  float3 lightDirection = normalize(light.position);
+  float3 F0 = mix(0.04, material.baseColor, material.metallic);
+  // add a small amount of bias so that you can
+  // see the shininess when roughness is zero
+  float bias = 0.01;
+  float roughness = material.roughness + bias;
+  float alpha = roughness * roughness;
+  float3 halfVector = normalize(viewDirection + lightDirection);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float nDotV = saturate(dot(normal, viewDirection));
+  float nDotH = saturate(dot(normal, halfVector));
+  float lDotH = saturate(dot(lightDirection, halfVector));
+
+  float3 F;
+  float D, vis;
+
+  // Distribution
+  float alphaSqr = alpha * alpha;
+  float pi = 3.14159f;
+  float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
+  D = alphaSqr / (pi * denom * denom);
+
+  // Fresnel
+  float lDotH5 = pow(1.0 - lDotH, 5);
+  F = F0 + (1.0 - F0) * lDotH5;
+
+  // V
+  float k = alpha / 2.0f;
+  vis = G1V(nDotL, k) * G1V(nDotV, k);
+
+  float3 specular = nDotL * D * F * vis * light.specularColor;
+  return specular;
+}

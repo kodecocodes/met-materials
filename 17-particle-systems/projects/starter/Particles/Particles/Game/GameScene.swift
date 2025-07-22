@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   var models: [Model] = []
@@ -38,8 +39,10 @@ struct GameScene {
   var lighting = SceneLighting()
 
   mutating func update(size: CGSize) {
+    camera.update(size: size)
   }
 
   mutating func update(deltaTime: Float) {
+    camera.update(deltaTime: deltaTime)
   }
 }
