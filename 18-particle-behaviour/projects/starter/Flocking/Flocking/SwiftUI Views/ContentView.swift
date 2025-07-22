@@ -42,6 +42,7 @@ struct ContentView: View {
       SlidersView(options: options)
     }
     .padding()
+    .frame(minWidth: 800)
   }
 }
 

@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ import SwiftUI
 
 struct ContentView: View {
   @State var options = Options()
+
   var body: some View {
     VStack {
       MetalView(options: options)
