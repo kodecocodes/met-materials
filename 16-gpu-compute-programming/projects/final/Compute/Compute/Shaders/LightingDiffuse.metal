@@ -30,96 +30,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-#import <simd/simd.h>
-
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-  matrix_float3x3 normalMatrix;
-  matrix_float4x4 shadowProjectionMatrix;
-  matrix_float4x4 shadowViewMatrix;
-} Uniforms;
-
-typedef struct {
-  uint32_t width;
-  uint32_t height;
-  uint32_t tiling;
-  uint32_t lightCount;
-  vector_float3 cameraPosition;
-  float scaleFactor;
-} Params;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  TangentBuffer = 2,
-  BitangentBuffer = 3,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  LightBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-  Tangent = 3,
-  Bitangent = 4
-} Attributes;
-
-typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4,
-  ShadowTexture = 11,
-  PositionTexture = 12
-} TextureIndices;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} LightType;
-
-typedef struct {
-  LightType type;
-  vector_float3 position;
-  vector_float3 color;
-  float intensity;
-  vector_float3 specularColor;
-  float radius;
-  vector_float3 attenuation;
-  float coneAngle;
-  vector_float3 coneDirection;
-  float coneAttenuation;
-} Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-} Material;
-
-typedef enum {
-  RenderTargetAlbedo = 1,
-  RenderTargetNormal = 2,
-  RenderTargetPosition = 3
-} RenderTargetIndices;
-
-struct VertexLayout {
-  vector_float3 position;
-  vector_float3 normal;
-};
-
-#endif /* Common_h */
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 diffuseTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case Sun: {
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
+        break;
+      }
+      case Point: {
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
+        break;
+      }
+      case Spot: {      // not yet implemented
+        break;
+      }
+      case Ambient: {   // not needed for PBR lighting
+        break;
+      }
+      case unused: {
+        break;
+      }
+    }
+    if (light.type != Sun) { continue; }
+  }
+  return diffuseTotal;
+}
