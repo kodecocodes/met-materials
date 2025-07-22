@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,46 +32,30 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#include "Helper.h"
+#import "Helper.h"
 
-float2 wrapPosition(float2 position, float2 size) {
-  float width = size.x;
-  float height = size.y;
-  float2 newPosition = position;
-  if (position.x < 0) {
-    newPosition.x = width;
-  } else if (position.x > width) {
-    newPosition.x = 0;
+kernel void flocking(
+  texture2d<half, access::write> output [[texture(0)]],
+  device Boid *boids [[buffer(0)]],
+  constant Params &params [[buffer(1)]],
+  uint id [[thread_position_in_grid]])
+{
+  Boid boid = boids[id];
+  float2 position = boid.position;
+
+  // flocking code here
+
+  half4 color = half4(1.0);
+  if (id == 0) {
+    color = half4(1, 0, 0, 1);
   }
-  if (position.y < 0) {
-    newPosition.y = height;
-  } else if (position.y > height) {
-    newPosition.y = 0;
-  }
-  return newPosition;
+  uint2 location = uint2(position);
+  output.write(color, location);
 }
 
-Boid bounceBoid(float2 position, float2 velocity, float2 size) {
-  float2 newPosition = position;
-  float2 newVelocity = velocity;
-  float width = size.x;
-  float height = size.y;
-  if (position.x < 0 || position.x > width) {
-    newVelocity.x *= -1;
-    if (position.x < 0) {
-      newPosition.x = 25;
-    } else if (position.x > width) {
-      newPosition.x = width - 25;
-    }
-  }
-  if (position.y < 0 || position.y > height) {
-    newVelocity.y *= -1;
-    if (position.y < 0) {
-      newPosition.y = 25;
-    } else if (position.y > height) {
-      newPosition.y = height - 25;
-    }
-  }
-  return Boid { newPosition, newVelocity };
+kernel void clearScreen(
+  texture2d<half, access::write> output [[texture(0)]],
+  uint2 id [[thread_position_in_grid]])
+{
+  output.write(half4(0.0, 0.0, 0.0, 1.0), id);
 }
-

@@ -30,6 +30,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+// swiftlint:disable force_unwrapping
+
 import MetalKit
 
 struct FireworksEmitter {
@@ -72,3 +74,4 @@ struct FireworksEmitter {
     }
   }
 }
+// swiftlint:enable force_unwrapping

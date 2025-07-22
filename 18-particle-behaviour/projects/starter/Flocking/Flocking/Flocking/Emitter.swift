@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,20 +30,44 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Helper_h
-#define Helper_h
-#include "Common.h"
-// If the position is off the screen,
-// wrap the position to the opposite edge
-float2 wrapPosition(float2 position, float2 size);
+// swiftlint:disable implicitly_unwrapped_optional
 
-// If the position is off the screen,
-// reflect the position at the edge
-Boid bounceBoid(
-  float2 position,
-  float2 velocity,
-  float2 size);
+import MetalKit
 
+struct Emitter {
+  var particleBuffer: MTLBuffer!
 
+  init(
+    options: Options,
+    size: CGSize,
+    device: MTLDevice
+  ) {
+    let bufferSize = MemoryLayout<Particle>.stride * options.particleCount
+    particleBuffer = device.makeBuffer(length: bufferSize)
+    var pointer = particleBuffer.contents().bindMemory(
+      to: Particle.self,
+      capacity: options.particleCount)
+    pointer.pointee.velocity = float2(options.predatorSpeed, options.predatorSpeed)
+    pointer.pointee.position = float2(
+      random(Int(size.width)),
+      random(Int(size.height)))
+    pointer = pointer.advanced(by: 1)
+    for _ in 1..<options.particleCount {
+      let xPosition = random(Int(size.width))
+      let yPosition = random(Int(size.height))
+      let position = float2(xPosition, yPosition)
+      pointer.pointee.position = position
+      let range: ClosedRange<Float> = -options.maxSpeed...options.maxSpeed
+      let velocity = float2(Float.random(in: range), Float.random(in: range))
+      pointer.pointee.velocity = velocity
+      pointer = pointer.advanced(by: 1)
+    }
+  }
 
-#endif /* Helper_h */
+  func random(_ max: Int) -> Float {
+    guard max > 0 else { return 0 }
+    return Float.random(in: 0..<Float(max))
+  }
+}
+
+// swiftlint:enable implicitly_unwrapped_optional
