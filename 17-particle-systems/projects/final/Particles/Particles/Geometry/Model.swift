@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable force_try
+
+import MetalKit
 
 class Model: Transformable {
   var transform = Transform()
@@ -40,13 +40,13 @@ class Model: Transformable {
   var name: String = "Untitled"
   var tiling: UInt32 = 1
 
-  init() { }
+  init() {}
 
-  init(name: String) {
+  init(name: String, objectId: UInt32 = 0) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      fatalError("Model \(name) not found")
+      fatalError("Model \(name) not found!")
     }
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
     let asset = MDLAsset(
@@ -73,57 +73,6 @@ class Model: Transformable {
     }
     self.name = name
   }
-
-  func convertMesh() {
-    guard let commandBuffer =
-      Renderer.commandQueue.makeCommandBuffer(),
-      let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        else { return }
-    let startTime = CFAbsoluteTimeGetCurrent()
-    let pipelineState: MTLComputePipelineState
-    do {
-      guard let kernelFunction =
-        Renderer.library.makeFunction(name: "convert_mesh") else {
-          fatalError("Failed to create kernel function")
-        }
-      pipelineState = try
-        Renderer.device.makeComputePipelineState(
-          function: kernelFunction)
-    } catch {
-      fatalError(error.localizedDescription)
-    }
-    computeEncoder.setComputePipelineState(pipelineState)
-
-    let totalBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<Int>.stride,
-      options: [])
-    let vertexTotal = totalBuffer?.contents().bindMemory(to: Int.self, capacity: 1)
-    vertexTotal?.pointee = 0
-    computeEncoder.setBuffer(totalBuffer, offset: 0, index: 1)
-
-    for mesh in meshes {
-      let vertexBuffer = mesh.vertexBuffers[VertexBuffer.index]
-      computeEncoder.setBuffer(vertexBuffer, offset: 0, index: 0)
-      let vertexCount = vertexBuffer.length /
-        MemoryLayout<VertexLayout>.stride
-      let threadsPerGroup = MTLSize(
-        width: pipelineState.threadExecutionWidth,
-        height: 1,
-        depth: 1)
-      let threadsPerGrid = MTLSize(width: vertexCount, height: 1, depth: 1)
-      computeEncoder.dispatchThreads(
-        threadsPerGrid,
-        threadsPerThreadgroup: threadsPerGroup)
-      computeEncoder.endEncoding()
-    }
-    commandBuffer.addCompletedHandler { _ in
-      print(
-        "GPU conversion time:",
-        CFAbsoluteTimeGetCurrent() - startTime)
-      print("Total Vertices:", vertexTotal?.pointee ?? -1)
-    }
-    commandBuffer.commit()
-  }
 }
 
 extension Model {
@@ -137,4 +86,5 @@ extension Model {
     }
   }
 }
+
 // swiftlint:enable force_try

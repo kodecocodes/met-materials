@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,21 +31,24 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   var models: [Model] = []
   var camera = ArcballCamera()
   var lighting = SceneLighting()
+
   var particleEffects: [Emitter] = []
 
   mutating func update(size: CGSize) {
+    camera.update(size: size)
     let snow = ParticleEffects.createSnow(size: size)
     snow.position = [0, Float(size.height) + 100]
     let fire = ParticleEffects.createFire(size: size)
     fire.position = [0, 0]
-    particleEffects = [snow, fire]
-  }
+    particleEffects = [snow, fire]  }
 
   mutating func update(deltaTime: Float) {
+    camera.update(deltaTime: deltaTime)
   }
 }
