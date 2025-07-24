@@ -30,23 +30,18 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
 // swiftlint:disable force_try
 
+import MetalKit
+
 enum Primitive {
-  case plane, sphere
+  case plane, sphere, icosahedron
 }
 
 extension Model {
   convenience init(name: String, primitiveType: Primitive) {
     let mdlMesh = Self.createMesh(primitiveType: primitiveType)
     mdlMesh.vertexDescriptor = MDLVertexDescriptor.defaultLayout
-    mdlMesh.addTangentBasis(
-      forTextureCoordinateAttributeNamed:
-        MDLVertexAttributeTextureCoordinate,
-      tangentAttributeNamed: MDLVertexAttributeTangent,
-      bitangentAttributeNamed: MDLVertexAttributeBitangent)
-
     let mtkMesh = try! MTKMesh(mesh: mdlMesh, device: Renderer.device)
     let mesh = Mesh(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
     self.init()
@@ -57,6 +52,12 @@ extension Model {
   static func createMesh(primitiveType: Primitive) -> MDLMesh {
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
     switch primitiveType {
+    case .icosahedron:
+      return MDLMesh(
+        icosahedronWithExtent: [1, 1, 1],
+        inwardNormals: false,
+        geometryType: .triangles,
+        allocator: allocator)
     case .plane:
       return MDLMesh(
         planeWithExtent: [1, 1, 1],

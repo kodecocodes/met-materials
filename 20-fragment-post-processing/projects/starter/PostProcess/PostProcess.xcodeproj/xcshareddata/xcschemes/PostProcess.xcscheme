@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1500"
+   LastUpgradeVersion = "2600"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "824770DF2AA7FA0B0095AB72"
+               BlueprintIdentifier = "82ECEA9E2E0A15AD008ACD5E"
                BuildableName = "PostProcess.app"
                BlueprintName = "PostProcess"
                ReferencedContainer = "container:PostProcess.xcodeproj">
@@ -43,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "824770DF2AA7FA0B0095AB72"
+            BlueprintIdentifier = "82ECEA9E2E0A15AD008ACD5E"
             BuildableName = "PostProcess.app"
             BlueprintName = "PostProcess"
             ReferencedContainer = "container:PostProcess.xcodeproj">
@@ -60,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "824770DF2AA7FA0B0095AB72"
+            BlueprintIdentifier = "82ECEA9E2E0A15AD008ACD5E"
             BuildableName = "PostProcess.app"
             BlueprintName = "PostProcess"
             ReferencedContainer = "container:PostProcess.xcodeproj">
