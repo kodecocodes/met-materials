@@ -40,13 +40,7 @@ class Renderer: NSObject {
   static var library: MTLLibrary!
   static var viewColorPixelFormat = MTLPixelFormat.bgra8Unorm_srgb
   static var viewDepthPixelFormat = MTLPixelFormat.depth32Float
-  static var scaleFactor: CGFloat {
-#if os(macOS)
-  NSScreen.main?.backingScaleFactor ?? 1
-#elseif os(iOS)
-  UIScreen.main.scale
-#endif
-  }
+  static var scaleFactor: CGFloat = 1
 
   var uniforms = Uniforms()
   var params = Params()
@@ -70,6 +64,11 @@ class Renderer: NSObject {
     Self.commandQueue = commandQueue
     metalView.device = device
     metalView.colorPixelFormat = Self.viewColorPixelFormat
+  #if os(macOS)
+    Self.scaleFactor = NSScreen.main?.backingScaleFactor ?? 1
+  #elseif os(iOS)
+    Self.scaleFactor = metalView.traitCollection.displayScale
+  #endif
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
