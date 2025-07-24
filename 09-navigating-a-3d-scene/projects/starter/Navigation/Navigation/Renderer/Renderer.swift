@@ -38,13 +38,7 @@ class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
-  static var scaleFactor: CGFloat {
-#if os(macOS)
-  NSScreen.main?.backingScaleFactor ?? 1
-#elseif os(iOS)
-  UIScreen.main.scale
-#endif
-  }
+  static var scaleFactor: CGFloat = 1
 
   var pipelineState: MTLRenderPipelineState!
   let depthStencilState: MTLDepthStencilState?
@@ -77,6 +71,12 @@ class Renderer: NSObject {
     Self.commandQueue = commandQueue
     metalView.device = device
     metalView.colorPixelFormat = .bgra8Unorm_srgb
+  #if os(macOS)
+    Self.scaleFactor = NSScreen.main?.backingScaleFactor ?? 1
+  #elseif os(iOS)
+    Self.scaleFactor = metalView.traitCollection.displayScale
+  #endif
+
     // create the shader function library
     let library = device.makeDefaultLibrary()
     Self.library = library
