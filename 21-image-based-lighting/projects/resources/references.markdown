@@ -1,9 +1,12 @@
 ## Physically Based Rendering
 
 [Adobe: The PBR Guide - Part 1](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
+
 [Adobe: The PBR Guide - Part 2](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-2)
 
 [SIGGRAPH University - Physics and Math of Shading" by Naty Hoffman](https://youtu.be/j-A0mwsJRmk)
+
+[Physically Based Rendering for Artists](https://youtu.be/LNwMJeWFr0U)
 
 ## Create your own skybox textures
 
@@ -35,14 +38,6 @@ This is now widely adopted, and is explained well at:
 
 [https://learnopengl.com/PBR/IBL/Specular-IBL](https://learnopengl.com/PBR/IBL/Specular-IBL)
 
-## Loading hdris
-
-You can download a public domain image loader from: [https://github.com/nothings/stb/blob/master/stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h).
-
-GLTFKit from Warren Moore contains Metal code that uses this image loader to load an hdr image image and also has kernels to convolve the result for irradiance maps. [https://github.com/warrenm/GLTFKit](https://github.com/warrenm/GLTFKit)
-
-You can use **cmft** to produce radiance and irradiance maps from hdris. Xcode still won't read the results without conversion though. [https://github.com/dariomanesku/cmft](https://github.com/dariomanesku/cmft)
-
 ## Spherical Harmonics
 
 I've included a lot of references here, because although SH are easy to use, they are complex to understand.
@@ -54,8 +49,6 @@ I've included a lot of references here, because although SH are easy to use, the
 [Spherical Harmonic Lighting: The Gritty Details](https://web.archive.org/web/20181011125928/http://silviojemma.com/public/papers/lighting/spherical-harmonic-lighting.pdf)
 
 [Stupid Spherical Harmonics tricks by Peter-Pike Sloan](https://www.ppsloan.org/publications/StupidSH36.pdf)
-
-[Physically Based Rendering for Artists](https://youtu.be/LNwMJeWFr0U)
 
 [Spherical Harmonics for Dummies](https://math.stackexchange.com/questions/24671/spherical-harmonics-for-dummies)
 

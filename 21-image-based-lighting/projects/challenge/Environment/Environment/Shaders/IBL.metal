@@ -35,10 +35,6 @@ using namespace metal;
 #import "Lighting.h"
 #import "ShaderDefs.h"
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
 fragment float4 fragment_IBL(
   constant Params &params [[buffer(ParamsBuffer)]],
   VertexOut in [[stage_in]],
@@ -92,23 +88,20 @@ fragment float4 fragment_IBL(
                       in.worldNormal) * normal;
   }
   normal = normalize(normal);
-
-  // the final result
+  
   float4 color = float4(material.baseColor, 1);
-
   float3 viewDirection =
   in.worldPosition.xyz - params.cameraPosition;
   viewDirection = normalize(viewDirection);
   float3 textureCoordinates =
   reflect(viewDirection, normal);
-
   float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
-
+  
   diffuse = mix(pow(diffuse, 0.2), diffuse, material.metallic);
   diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
 
   color = diffuse * float4(material.baseColor, 1);
-
+  
   constexpr sampler s(filter::linear, mip_filter::linear);
   float3 prefilteredColor
   = skybox.sample(s,
@@ -119,7 +112,6 @@ fragment float4 fragment_IBL(
   = brdfLut.sample(s, float2(material.roughness, nDotV)).rg;
   float3 f0 = mix(0.04, material.baseColor.rgb, material.metallic);
   float3 specularIBL = f0 * envBRDF.r + envBRDF.g;
-
   float3 specular = prefilteredColor * specularIBL;
   color += float4(specular, 1);
   color *= material.ambientOcclusion;

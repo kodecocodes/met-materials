@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import CoreGraphics
+import MetalKit
+import GameController
 
 struct GameScene {
   lazy var ground: Model = {
@@ -73,9 +74,11 @@ struct GameScene {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()
+      camera.distance = 4
     }
     if input.keysPressed.contains(.two) {
       camera.transform = defaultView
+      camera.distance = 4
     }
     input.keysPressed.removeAll()
     camera.update(deltaTime: deltaTime)

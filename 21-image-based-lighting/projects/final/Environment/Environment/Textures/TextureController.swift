@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,12 @@ enum TextureController {
       return texture
     }
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
-      [.origin: MTKTextureLoader.Origin.bottomLeft,
-       .generateMipmaps: true]
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .generateMipmaps: true,
+      .textureUsage: MTLTextureUsage.pixelFormatView.rawValue
+        | MTLTextureUsage.shaderRead.rawValue
+    ]
     let texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
@@ -60,7 +63,7 @@ enum TextureController {
     let texture: MTLTexture?
     texture = try? textureLoader.newTexture(
       name: name,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: Bundle.main,
       options: nil)
     if texture != nil {
@@ -86,7 +89,7 @@ enum TextureController {
     // bundle file loading
     let texture = try? textureLoader.newTexture(
       name: imageName,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: .main)
     return texture
   }

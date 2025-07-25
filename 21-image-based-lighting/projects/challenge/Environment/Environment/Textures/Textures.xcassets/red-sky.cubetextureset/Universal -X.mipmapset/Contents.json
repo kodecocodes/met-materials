@@ -9,15 +9,15 @@
       "mipmap-level" : "base"
     },
     {
-      "filename" : "specular-2-negX.png",
+      "filename" : "specular-1-negX.png",
       "mipmap-level" : "mipmap-level-1"
     },
     {
-      "filename" : "specular-3-negX.png",
+      "filename" : "specular-2-negX.png",
       "mipmap-level" : "mipmap-level-2"
     },
     {
-      "filename" : "specular-3-negX 1.png",
+      "filename" : "specular-3-negX.png",
       "mipmap-level" : "mipmap-level-3"
     },
     {
@@ -33,7 +33,7 @@
       "mipmap-level" : "mipmap-level-6"
     },
     {
-      "filename" : "specular-7-negX.png",
+      "filename" : "specular-7-negZ.png",
       "mipmap-level" : "mipmap-level-7"
     },
     {
