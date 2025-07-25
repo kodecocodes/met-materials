@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,30 +32,23 @@
 
 import MetalKit
 
-// swiftlint:disable function_body_length
-
 struct ForwardRenderPass: RenderPass {
   let label = "Forward Render Pass"
   var descriptor: MTLRenderPassDescriptor?
 
   var pipelineState: MTLRenderPipelineState
   var transparentPSO: MTLRenderPipelineState
-  let depthStencilState: MTLDepthStencilState?
   var pipelineStateMSAA: MTLRenderPipelineState
   var transparentPSOMSAA: MTLRenderPipelineState
-
+  let depthStencilState: MTLDepthStencilState?
   weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
-    pipelineState = PipelineStates.createForwardPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    transparentPSO = PipelineStates.createForwardTransparentPSO(
-      colorPixelFormat: view.colorPixelFormat)
-    pipelineStateMSAA = PipelineStates.createForwardPSO_MSAA(
-      colorPixelFormat: view.colorPixelFormat)
+    pipelineState = PipelineStates.createForwardPSO()
+    transparentPSO = PipelineStates.createForwardTransparentPSO()
+    pipelineStateMSAA = PipelineStates.createForwardPSO_MSAA()
     transparentPSOMSAA =
-      PipelineStates.createForwardTransparentPSO_MSAA(
-        colorPixelFormat: view.colorPixelFormat)
+      PipelineStates.createForwardTransparentPSO_MSAA()
     depthStencilState = Self.buildDepthStencilState()
   }
 
@@ -72,7 +65,6 @@ struct ForwardRenderPass: RenderPass {
       pipelineStateMSAA : pipelineState
     let transparentPSO = params.antialiasing ?
       transparentPSOMSAA : transparentPSO
-
     guard let descriptor = descriptor,
     let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(
@@ -105,10 +97,12 @@ struct ForwardRenderPass: RenderPass {
     params.transparency = false
 
     for model in scene.models {
+      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
+      renderEncoder.popDebugGroup()
     }
 
     // transparent mesh
@@ -131,4 +125,3 @@ struct ForwardRenderPass: RenderPass {
     renderEncoder.endEncoding()
   }
 }
-// swiftlint:enable function_body_length

@@ -66,32 +66,13 @@ extension Model {
       }
 
       for submesh in mesh.submeshes {
-        // set the fragment texture here
         var material = submesh.material
         encoder.setFragmentBytes(
           &material,
           length: MemoryLayout<Material>.stride,
           index: MaterialBuffer.index)
 
-        encoder.setFragmentTexture(
-          submesh.textures.baseColor,
-          index: BaseColor.index)
-
-        encoder.setFragmentTexture(
-          submesh.textures.normal,
-          index: NormalTexture.index)
-
-        encoder.setFragmentTexture(
-          submesh.textures.roughness,
-          index: RoughnessTexture.index)
-
-        encoder.setFragmentTexture(
-          submesh.textures.metallic,
-          index: MetallicTexture.index)
-
-        encoder.setFragmentTexture(
-          submesh.textures.ambientOcclusion,
-          index: AOTexture.index)
+        setTextures(encoder: encoder, submesh: submesh)
 
         encoder.drawIndexedPrimitives(
           type: .triangle,
@@ -102,5 +83,29 @@ extension Model {
         )
       }
     }
+  }
+
+  func setTextures(
+    encoder: MTLRenderCommandEncoder,
+    submesh: Submesh
+  ) {
+    encoder.setFragmentTexture(
+      submesh.textures.baseColor,
+      index: BaseColor.index)
+    encoder.setFragmentTexture(
+      submesh.textures.normal,
+      index: NormalTexture.index)
+    encoder.setFragmentTexture(
+      submesh.textures.roughness,
+      index: RoughnessTexture.index)
+    encoder.setFragmentTexture(
+      submesh.textures.metallic,
+      index: MetallicTexture.index)
+    encoder.setFragmentTexture(
+      submesh.textures.ambientOcclusion,
+      index: AOTexture.index)
+    encoder.setFragmentTexture(
+      submesh.textures.opacity,
+      index: OpacityTexture.index)
   }
 }

@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,16 +32,13 @@
 
 #include <metal_stdlib>
 using namespace metal;
+
 #import "Lighting.h"
 #import "ShaderDefs.h"
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
 float4 fog(float4 position, float4 color) {
   float distance = position.z / position.w;
-  float density = 0.2;
+  float density = 0.1;
   float fog = 1.0 - clamp(exp(-density * distance), 0.0, 1.0);
   float4 fogColor = float4(1.0);
   color = mix(color, fogColor, fog);
@@ -49,8 +46,8 @@ float4 fog(float4 position, float4 color) {
 }
 
 fragment float4 fragment_main(
-  constant Params &params [[buffer(ParamsBuffer)]],
   VertexOut in [[stage_in]],
+  constant Params &params [[buffer(ParamsBuffer)]],
   constant Light *lights [[buffer(LightBuffer)]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
@@ -61,13 +58,12 @@ fragment float4 fragment_main(
   texture2d<float> opacityTexture [[texture(OpacityTexture)]],
   depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
+  Material material = _material;
   constexpr sampler textureSampler(
     filter::linear,
     mip_filter::linear,
+    max_anisotropy(8),
     address::repeat);
-
-  Material material = _material;
-
   if (!is_null_texture(baseColorTexture)) {
     float4 color = baseColorTexture.sample(
       textureSampler,
@@ -92,18 +88,6 @@ fragment float4 fragment_main(
       in.uv * params.tiling).r;
   }
 
-  if (!is_null_texture(metallicTexture)) {
-    material.metallic = metallicTexture.sample(
-      textureSampler,
-      in.uv * params.tiling).r;
-  }
-
-  if (!is_null_texture(aoTexture)) {
-    material.ambientOcclusion = aoTexture.sample(
-      textureSampler,
-      in.uv * params.tiling).r;
-  }
-
   float3 normal;
   if (is_null_texture(normalTexture)) {
     normal = in.worldNormal;
@@ -118,16 +102,31 @@ fragment float4 fragment_main(
       in.worldNormal) * normal;
   }
   normal = normalize(normal);
+  
+  if (!is_null_texture(metallicTexture)) {
+    material.metallic = metallicTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
+  if (!is_null_texture(aoTexture)) {
+    material.ambientOcclusion = aoTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
 
-  float3 diffuseColor =
-    computeDiffuse(lights, params, material, normal);
+  float3 diffuseColor = computeDiffuse(
+    lights,
+    params,
+    material,
+    normal,
+    in.worldPosition);
 
-  float3 specularColor =
-    computeSpecular(
-      lights,
-      params,
-      material,
-      normal);
+  float3 specularColor = computeSpecular(
+    lights,
+    params,
+    material,
+    normal,
+    in.worldPosition);
 
   float shadow = calculateShadow(in.shadowPosition, shadowTexture);
   diffuseColor *= shadow;
@@ -138,22 +137,4 @@ fragment float4 fragment_main(
     color = fog(in.position, color);
   }
   return color;
-}
-
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
-  float2 xy = position.xy;
-  xy = xy * 0.5 + 0.5;
-  xy.y = 1 - xy.y;
-  constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.5 : 1;
 }

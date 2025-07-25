@@ -44,6 +44,7 @@ struct Submesh {
     var roughness: MTLTexture?
     var metallic: MTLTexture?
     var ambientOcclusion: MTLTexture?
+    var opacity: MTLTexture?
   }
   var textures: Textures
   var material: Material
@@ -67,6 +68,7 @@ private extension Submesh.Textures {
     roughness = material?.texture(type: .roughness)
     metallic = material?.texture(type: .metallic)
     ambientOcclusion = material?.texture(type: .ambientOcclusion)
+    opacity = material?.texture(type: .opacity)
   }
 }
 
@@ -106,6 +108,15 @@ private extension Material {
     if let roughness = material?.property(with: .roughness),
       roughness.type == .float {
       self.roughness = roughness.floatValue
+    }
+    if let metallic = material?.property(with: .metallic),
+      metallic.type == .float {
+      self.metallic = metallic.floatValue
+    }
+    opacity = 1.0
+    if let opacity = material?.property(with: .opacity),
+      opacity.type == .float3 || opacity.type == .float {
+      self.opacity = opacity.floatValue
     }
   }
 }

@@ -102,10 +102,17 @@ extension Renderer {
   }
 
   func updateUniforms(scene: GameScene) {
+    params.alphaTesting = options.alphaTesting
+    params.scissorTesting = options.scissorTesting
+    params.alphaBlending = options.alphaBlending
+    params.antialiasing = options.antialiasing
+    params.fog = options.fog
+
     uniforms.viewMatrix = scene.camera.viewMatrix
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
     params.cameraPosition = scene.camera.position
+
     let sun = scene.lighting.lights[0]
     shadowCamera = OrthographicCamera.createShadowCamera(
       using: scene.camera,

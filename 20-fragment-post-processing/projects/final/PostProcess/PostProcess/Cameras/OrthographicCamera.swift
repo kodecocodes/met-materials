@@ -30,65 +30,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-// swiftlint:disable force_try
+import CoreGraphics
 
-import MetalKit
-
-class Model: Transformable {
+struct OrthographicCamera: Camera, Movement {
   var transform = Transform()
-  var meshes: [Mesh] = []
-  var name: String = "Untitled"
-  var tiling: UInt32 = 1
-  var hasTransparency = false
+  var aspect: CGFloat = 1
+  var viewSize: CGFloat = 10
+  var near: Float = 0.1
+  var far: Float = 100
+  var center = float3.zero
 
-  init() {}
+  var viewMatrix: float4x4 {
+    (float4x4(translation: position) *
+    float4x4(rotation: rotation)).inverse
+  }
 
-  init(name: String, objectId: UInt32 = 0) {
-    guard let assetURL = Bundle.main.url(
-      forResource: name,
-      withExtension: nil) else {
-      fatalError("Model \(name) not found!")
-    }
-    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-    let asset = MDLAsset(
-      url: assetURL,
-      vertexDescriptor: .defaultLayout,
-      bufferAllocator: allocator)
-    asset.loadTextures()
-    var mtkMeshes: [MTKMesh] = []
-    let mdlMeshes =
-      asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
-    _ = mdlMeshes.map { mdlMesh in
-      mdlMesh.addTangentBasis(
-        forTextureCoordinateAttributeNamed:
-          MDLVertexAttributeTextureCoordinate,
-        tangentAttributeNamed: MDLVertexAttributeTangent,
-        bitangentAttributeNamed: MDLVertexAttributeBitangent)
-      mtkMeshes.append(
-        try! MTKMesh(
-          mesh: mdlMesh,
-          device: Renderer.device))
-    }
-    meshes = zip(mdlMeshes, mtkMeshes).map {
-      Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
-    }
-    self.name = name
-    hasTransparency = meshes.contains { mesh in
-      mesh.submeshes.contains { $0.transparency }
-    }
+  var projectionMatrix: float4x4 {
+    let rect = CGRect(
+      x: -viewSize * aspect * 0.5,
+      y: viewSize * 0.5,
+      width: viewSize * aspect,
+      height: viewSize)
+    return float4x4(orthographic: rect, near: near, far: far)
+  }
+
+  mutating func update(size: CGSize) {
+    aspect = size.width / size.height
+  }
+
+  mutating func update(deltaTime: Float) {
+    let transform = updateInput(deltaTime: deltaTime)
+    position += transform.position
+    let input = InputController.shared
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    let zoom = input.mouseScroll.x * scrollSensitivity
+      + input.mouseScroll.y * scrollSensitivity
+    viewSize -= CGFloat(zoom)
+    input.mouseScroll = .zero
   }
 }
-
-extension Model {
-  func setTexture(name: String, type: TextureIndices) {
-    if let texture = TextureController.loadTexture(name: name) {
-      switch type {
-      case BaseColor:
-        meshes[0].submeshes[0].textures.baseColor = texture
-      default: break
-      }
-    }
-  }
-}
-
-// swiftlint:enable force_try

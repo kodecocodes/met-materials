@@ -34,6 +34,7 @@
 #define Common_h
 
 #import <simd/simd.h>
+#import "stdbool.h"
 
 typedef struct {
   matrix_float4x4 modelMatrix;
@@ -51,6 +52,11 @@ typedef struct {
   uint32_t lightCount;
   vector_float3 cameraPosition;
   float scaleFactor;
+  bool alphaTesting;
+  bool scissorTesting;
+  bool alphaBlending;
+  bool antialiasing;
+  bool fog;
 } Params;
 
 typedef enum {
@@ -79,6 +85,7 @@ typedef enum {
   RoughnessTexture = 2,
   MetallicTexture = 3,
   AOTexture = 4,
+  OpacityTexture = 5,
   ShadowTexture = 11
 } TextureIndices;
 
@@ -108,6 +115,7 @@ typedef struct {
   float roughness;
   float metallic;
   float ambientOcclusion;
+  float opacity;
 } Material;
 
 typedef enum {

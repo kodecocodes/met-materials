@@ -46,6 +46,7 @@ fragment float4 fragment_main(
   texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
+  texture2d<float> opacityTexture [[texture(OpacityTexture)]],
   depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
   Material material = _material;
