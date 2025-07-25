@@ -35,10 +35,6 @@ using namespace metal;
 #import "Lighting.h"
 #import "ShaderDefs.h"
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
 fragment float4 fragment_IBL(
   constant Params &params [[buffer(ParamsBuffer)]],
   VertexOut in [[stage_in]],

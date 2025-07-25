@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-@main
-struct EnvironmentApp: App {
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
-        .navigationTitle("IBL Environment")
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 diffuseTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case Sun: {
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
+        break;
+      }
+      case Point: {
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
+        break;
+      }
+      case Spot: {      // not yet implemented
+        break;
+      }
+      case Ambient: {   // not needed for PBR lighting
+        break;
+      }
+      case unused: {
+        break;
+      }
     }
+    if (light.type != Sun) { continue; }
   }
+  return diffuseTotal;
 }
