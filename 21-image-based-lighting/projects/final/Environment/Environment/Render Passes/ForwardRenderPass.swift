@@ -79,12 +79,10 @@ struct ForwardRenderPass: RenderPass {
     params.transparency = false
 
     for model in scene.models {
-      renderEncoder.pushDebugGroup(model.name)
       model.render(
         encoder: renderEncoder,
         uniforms: uniforms,
         params: params)
-      renderEncoder.popDebugGroup()
     }
 
     scene.skybox?.render(

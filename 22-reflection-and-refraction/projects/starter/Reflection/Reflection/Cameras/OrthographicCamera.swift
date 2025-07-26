@@ -30,60 +30,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import CoreGraphics
 
-struct ContentView: View {
-  @State var options = Options()
-  @State var checked: Int = 1
-  @State private var previousTranslation = CGSize.zero
-  @State private var previousScroll: CGFloat = 1
+struct OrthographicCamera: Camera, Movement {
+  var transform = Transform()
+  var aspect: CGFloat = 1
+  var viewSize: CGFloat = 10
+  var near: Float = 0.1
+  var far: Float = 100
+  var center = float3.zero
 
-  var body: some View {
-    ZStack(alignment: .topLeading) {
-      MetalView(options: options)
-        .border(Color.black, width: 2)
-        .gesture(DragGesture(minimumDistance: 0)
-          .onChanged { value in
-            InputController.shared.touchLocation = value.location
-            InputController.shared.touchDelta = CGSize(
-              width: value.translation.width - previousTranslation.width,
-              height: value.translation.height - previousTranslation.height)
-            previousTranslation = value.translation
-            // if the user drags, cancel the tap touch
-            if abs(value.translation.width) > 1 ||
-              abs(value.translation.height) > 1 {
-              InputController.shared.touchLocation = nil
-            }
-          }
-          .onEnded {_ in
-            previousTranslation = .zero
-          })
-        .gesture(MagnificationGesture()
-          .onChanged { value in
-            let scroll = value - previousScroll
-            InputController.shared.mouseScroll.x = Float(scroll)
-              * Settings.touchZoomSensitivity
-            previousScroll = value
-          }
-          .onEnded {_ in
-            previousScroll = 1
-          })
-        .onAppear {
-        #if os(macOS)
-          NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
-            let scrollX = Float(event.scrollingDeltaX)
-            InputController.shared.mouseScroll.x = scrollX
-            let scrollY = Float(event.scrollingDeltaY)
-            InputController.shared.mouseScroll.y = scrollY
-            return event
-          }
-        #endif
-        }
-    }
-    .padding()
+  var viewMatrix: float4x4 {
+    (float4x4(translation: position) *
+    float4x4(rotation: rotation)).inverse
   }
-}
 
-#Preview {
-  ContentView()
+  var projectionMatrix: float4x4 {
+    let rect = CGRect(
+      x: -viewSize * aspect * 0.5,
+      y: viewSize * 0.5,
+      width: viewSize * aspect,
+      height: viewSize)
+    return float4x4(orthographic: rect, near: near, far: far)
+  }
+
+  mutating func update(size: CGSize) {
+    aspect = size.width / size.height
+  }
+
+  mutating func update(deltaTime: Float) {
+    let transform = updateInput(deltaTime: deltaTime)
+    position += transform.position
+    let input = InputController.shared
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    let zoom = input.mouseScroll.x * scrollSensitivity
+      + input.mouseScroll.y * scrollSensitivity
+    viewSize -= CGFloat(zoom)
+    input.mouseScroll = .zero
+  }
 }

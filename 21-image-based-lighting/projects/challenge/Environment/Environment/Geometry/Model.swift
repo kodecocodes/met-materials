@@ -43,7 +43,7 @@ class Model: Transformable {
 
   init() {}
 
-  init(name: String, objectId: UInt32 = 0) {
+  init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {

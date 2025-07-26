@@ -40,7 +40,6 @@ struct FrustumPoints {
   var lowerLeft = float3.zero
 }
 
-// Make sure that you are using the right camera for the shadows
 extension Camera {
   static func createShadowCamera(using camera: Camera, lightPosition: float3) -> OrthographicCamera {
     guard let camera = camera as? PlayerCamera else { return OrthographicCamera() }
@@ -87,7 +86,7 @@ extension Camera {
     let halfWidth = halfHeight * aspect
     let matrix = float4x4(
       eye: camera.position,
-      center: camera.center,
+      target: camera.center,
       up: [0, 1, 0])
     return calculatePlanePoints(
       matrix: matrix,
