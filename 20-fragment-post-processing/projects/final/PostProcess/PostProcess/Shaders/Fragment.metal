@@ -93,8 +93,8 @@ fragment float4 fragment_main(
     normal = in.worldNormal;
   } else {
     normal = normalTexture.sample(
-    textureSampler,
-    in.uv * params.tiling).rgb;
+      textureSampler,
+      in.uv * params.tiling).rgb;
     normal = normal * 2 - 1;
     normal = float3x3(
       in.worldTangent,

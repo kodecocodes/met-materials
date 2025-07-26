@@ -79,9 +79,9 @@ kernel void
         max(4.0, terrain.maxTessellation / cameraDistance);
       factors[pid].edgeTessellationFactor[edgeIndex] = tessellation;
       totalTessellation += tessellation;
-      factors[pid].insideTessellationFactor[0] =
-        totalTessellation * 0.25;
-      factors[pid].insideTessellationFactor[1] =
-        totalTessellation * 0.25;
     }
+    factors[pid].insideTessellationFactor[0] =
+      totalTessellation * 0.25;
+    factors[pid].insideTessellationFactor[1] =
+      totalTessellation * 0.25;
 }

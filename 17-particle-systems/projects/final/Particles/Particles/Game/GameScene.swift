@@ -46,7 +46,8 @@ struct GameScene {
     snow.position = [0, Float(size.height) + 100]
     let fire = ParticleEffects.createFire(size: size)
     fire.position = [0, 0]
-    particleEffects = [snow, fire]  }
+    particleEffects = [snow, fire]
+  }
 
   mutating func update(deltaTime: Float) {
     camera.update(deltaTime: deltaTime)

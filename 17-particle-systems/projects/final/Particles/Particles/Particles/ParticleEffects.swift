@@ -76,7 +76,6 @@ enum ParticleEffects {
   }
 
   static func createSnow(size: CGSize) -> Emitter {
-    // 1
     var descriptor = ParticleDescriptor()
     descriptor.positionXRange = 0...Float(size.width)
     descriptor.direction = -.pi / 2
@@ -84,10 +83,8 @@ enum ParticleEffects {
     descriptor.pointSizeRange = 80 * 0.5...80
     descriptor.startScale = 0
     descriptor.startScaleRange = 0.2...1.0
-    // 2
     descriptor.life = 500
     descriptor.color = [1, 1, 1, 1]
-    // 3
     return Emitter(
       descriptor,
       texture: "snowflake",

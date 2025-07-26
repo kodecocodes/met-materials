@@ -78,7 +78,6 @@ class Renderer: NSObject {
   }()
   var controlPointsBuffer: MTLBuffer?
 
-
   let heightMap: MTLTexture!
   let cliffTexture: MTLTexture?
   let snowTexture: MTLTexture?
