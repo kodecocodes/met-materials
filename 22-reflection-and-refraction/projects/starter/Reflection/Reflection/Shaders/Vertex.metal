@@ -32,7 +32,6 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "Common.h"
 #import "ShaderDefs.h"
 
 vertex VertexOut vertex_main(

@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -32,8 +32,6 @@
 
 import MetalKit
 
-// swiftlint:disable function_body_length
-
 struct ForwardRenderPass: RenderPass {
   let label = "Forward Render Pass"
   var descriptor: MTLRenderPassDescriptor?
@@ -41,7 +39,6 @@ struct ForwardRenderPass: RenderPass {
   var pipelineState: MTLRenderPipelineState
   var transparentPSO: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-
   weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
@@ -74,10 +71,10 @@ struct ForwardRenderPass: RenderPass {
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
+
     renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
     scene.skybox?.update(encoder: renderEncoder)
-
     var params = params
     params.transparency = false
 
@@ -122,4 +119,3 @@ struct ForwardRenderPass: RenderPass {
     renderEncoder.endEncoding()
   }
 }
-// swiftlint:enable function_body_length

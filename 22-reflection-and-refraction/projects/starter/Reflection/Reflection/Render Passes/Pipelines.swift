@@ -132,7 +132,8 @@ enum PipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat =
       Renderer.viewColorPixelFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat =
+      Renderer.viewDepthPixelFormat
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
     return createPSO(descriptor: pipelineDescriptor)
   }
@@ -147,7 +148,8 @@ enum PipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat =
       Renderer.viewColorPixelFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat =
+      Renderer.viewDepthPixelFormat
     pipelineDescriptor.vertexDescriptor = .defaultLayout
     return createPSO(descriptor: pipelineDescriptor)
   }

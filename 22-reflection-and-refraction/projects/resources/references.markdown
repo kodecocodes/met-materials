@@ -6,7 +6,7 @@ Michael Horsch's OpenGL water tutorial: [https://blog.bonzaisoftware.com/tnp/gl-
 
 Realistic Water Using Bump Mapping and Refraction: [https://hydrogen2014imac.files.wordpress.com/2013/02/realisticwater.pdf](https://hydrogen2014imac.files.wordpress.com/2013/02/realisticwater.pdf)
 
-OpenGL Water Tutorials by ThinMatrix [https://www.youtube.com/playlist?list=PLRIWtICgwaX23jiqVByUs0bqhnalNTNZh](https://bit.ly/3GUQTKo)
+OpenGL Water Tutorials by ThinMatrix [https://www.youtube.com/playlist?list=PLRIWtICgwaX23jiqVByUs0bqhnalNTNZh](https://is.gd/0fmaQM)
 
 Amazing collection of resources about water rendering: [http://vterrain.org/Water/](http://vterrain.org/Water/)
 

@@ -30,60 +30,52 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import MetalKit
 
-struct ContentView: View {
-  @State var options = Options()
-  @State var checked: Int = 1
-  @State private var previousTranslation = CGSize.zero
-  @State private var previousScroll: CGFloat = 1
-
-  var body: some View {
-    ZStack(alignment: .topLeading) {
-      MetalView(options: options)
-        .border(Color.black, width: 2)
-        .gesture(DragGesture(minimumDistance: 0)
-          .onChanged { value in
-            InputController.shared.touchLocation = value.location
-            InputController.shared.touchDelta = CGSize(
-              width: value.translation.width - previousTranslation.width,
-              height: value.translation.height - previousTranslation.height)
-            previousTranslation = value.translation
-            // if the user drags, cancel the tap touch
-            if abs(value.translation.width) > 1 ||
-              abs(value.translation.height) > 1 {
-              InputController.shared.touchLocation = nil
-            }
-          }
-          .onEnded {_ in
-            previousTranslation = .zero
-          })
-        .gesture(MagnificationGesture()
-          .onChanged { value in
-            let scroll = value - previousScroll
-            InputController.shared.mouseScroll.x = Float(scroll)
-              * Settings.touchZoomSensitivity
-            previousScroll = value
-          }
-          .onEnded {_ in
-            previousScroll = 1
-          })
-        .onAppear {
-        #if os(macOS)
-          NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
-            let scrollX = Float(event.scrollingDeltaX)
-            InputController.shared.mouseScroll.x = scrollX
-            let scrollY = Float(event.scrollingDeltaY)
-            InputController.shared.mouseScroll.y = scrollY
-            return event
-          }
-        #endif
-        }
-    }
-    .padding()
-  }
+protocol RenderPass {
+  var label: String { get }
+  var descriptor: MTLRenderPassDescriptor? { get set }
+  mutating func resize(view: MTKView, size: CGSize)
+  func draw(
+    commandBuffer: MTLCommandBuffer,
+    scene: GameScene,
+    uniforms: Uniforms,
+    params: Params
+  )
 }
 
-#Preview {
-  ContentView()
+extension RenderPass {
+  static func buildDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .less
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(
+      descriptor: descriptor)
+  }
+
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc =
+      MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat: pixelFormat,
+        width: width,
+        height: height,
+        mipmapped: false)
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture =
+      Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
+  }
 }
