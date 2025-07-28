@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import MetalKit
 
 struct SceneLighting {
   static func buildDefaultLight() -> Light {
     var light = Light()
     light.position = [0, 0, 0]
     light.color = float3(repeating: 1.0)
-    light.specularColor = float3(repeating: 0.6)
+    light.intensity = 1.0
+    light.specularColor = float3(repeating: 1)
     light.attenuation = [1, 0, 0]
     light.type = Sun
     return light
@@ -46,20 +47,31 @@ struct SceneLighting {
   let sunlight: Light = {
     var light = Self.buildDefaultLight()
     light.position = normalize([-1, 4, -4])
-    light.color = float3(repeating: 0.8)
+    light.color = float3(repeating: 1.0)
+    light.specularColor = float3(repeating: 0.5)
+    light.intensity = 0.8
     return light
   }()
 
   let fillLight: Light = {
     var light = Self.buildDefaultLight()
+    light.specularColor = float3(repeating: 0.0)
     light.position = normalize([1, 2, 2])
-    light.color = float3(repeating: 0.5)
+    light.color = float3(repeating: 1.0)
+    light.intensity = 0.5
+    return light
+  }()
+
+  let ambientLight: Light = {
+    var light = Self.buildDefaultLight()
+    light.type = Ambient
+    light.intensity = 0.2
     return light
   }()
 
   var lights: [Light] = []
 
   init() {
-    lights = [sunlight, fillLight]
+    lights = [sunlight, fillLight, ambientLight]
   }
 }

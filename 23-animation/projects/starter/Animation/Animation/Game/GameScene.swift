@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import MetalKit
+import GameController
 
 struct GameScene {
   lazy var ball: Model = {
@@ -68,6 +69,7 @@ struct GameScene {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
       camera.transform = Transform()
+      camera.position = [0.0, 0.1, -2]
       input.keysPressed.remove(.one)
     }
     if input.keysPressed.contains(.two) {
@@ -81,7 +83,6 @@ struct GameScene {
       camera.position.y += positionYDelta
     }
     input.mouseScroll = .zero
-
     camera.update(deltaTime: deltaTime)
   }
 }
