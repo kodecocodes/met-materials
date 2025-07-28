@@ -32,10 +32,11 @@
 
 import MetalKit
 
-// swiftlint:disable comma
+// swiftlint:disable superfluous_disable_command
 // swiftlint:disable collection_alignment
 // swiftlint:disable indentation_width
 // swiftlint:disable operator_usage_whitespace
+// swiftlint:disable comma
 
 // ball animations
 let ballPositionXArray: [Float] = [
@@ -71,7 +72,8 @@ let ballRotations: [Keyframe<simd_quatf>] = [
   Keyframe(time: 2,    value: simd_quatf(ix: 0, iy: 0, iz: 0, r: 1))
 ]
 
-// swiftlint:enable comma
+// swiftlint:enable superfluous_disable_command
 // swiftlint:enable collection_alignment
 // swiftlint:enable indentation_width
 // swiftlint:enable operator_usage_whitespace
+// swiftlint:enable comma

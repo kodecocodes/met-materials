@@ -32,6 +32,7 @@
 
 #include <metal_stdlib>
 using namespace metal;
+#import "Common.h"
 
 struct VertexIn {
   float4 position [[attribute(Position)]];

@@ -35,7 +35,6 @@ import MetalKit
 class GameController: NSObject {
   var scene: GameScene
   var renderer: Renderer
-  var fps: Double = 0
   var deltaTime: Double = 0
   var lastTime: Double = CFAbsoluteTimeGetCurrent()
 
@@ -44,7 +43,6 @@ class GameController: NSObject {
     scene = GameScene()
     super.init()
     metalView.delegate = self
-    fps = Double(metalView.preferredFramesPerSecond)
     mtkView(metalView, drawableSizeWillChange: metalView.drawableSize)
   }
 }

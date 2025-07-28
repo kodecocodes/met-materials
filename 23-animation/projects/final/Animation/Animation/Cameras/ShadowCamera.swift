@@ -32,6 +32,8 @@
 
 import CoreGraphics
 
+typealias CameraType = PlayerCamera
+
 struct FrustumPoints {
   var viewMatrix = float4x4.identity
   var upperLeft = float3.zero
@@ -40,10 +42,9 @@ struct FrustumPoints {
   var lowerLeft = float3.zero
 }
 
-// Make sure that you are using the right camera for the shadows
 extension Camera {
   static func createShadowCamera(using camera: Camera, lightPosition: float3) -> OrthographicCamera {
-    guard let camera = camera as? PlayerCamera else { return OrthographicCamera() }
+    guard let camera = camera as? CameraType else { return OrthographicCamera() }
     let nearPoints = calculatePlane(camera: camera, distance: camera.near)
     let farPoints = calculatePlane(camera: camera, distance: camera.far)
 
@@ -69,7 +70,7 @@ extension Camera {
     return shadowCamera
   }
 
-  static func calculatePlane(camera: PlayerCamera, distance: Float) -> FrustumPoints {
+  static func calculatePlane(camera: CameraType, distance: Float) -> FrustumPoints {
     let halfFov = camera.fov * 0.5
     let halfHeight = tan(halfFov) * distance
     let halfWidth = halfHeight * camera.aspect
@@ -87,7 +88,7 @@ extension Camera {
     let halfWidth = halfHeight * aspect
     let matrix = float4x4(
       eye: camera.position,
-      center: camera.center,
+      target: camera.center,
       up: [0, 1, 0])
     return calculatePlanePoints(
       matrix: matrix,
