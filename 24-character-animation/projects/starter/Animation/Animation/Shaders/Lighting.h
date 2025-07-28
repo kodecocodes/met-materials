@@ -35,10 +35,6 @@
 
 #import "Common.h"
 
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture);
-
 float3 calculateSunDiffuse(
   Light light,
   float3 normal,

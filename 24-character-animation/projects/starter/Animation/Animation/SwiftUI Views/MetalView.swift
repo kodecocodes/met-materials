@@ -41,12 +41,10 @@ typealias ViewRepresentable = UIViewRepresentable
 
 struct MetalView: ViewRepresentable {
   let view = MTKView()
-  let options: Options
 
   func makeCoordinator() -> GameController {
     let gameController = GameController(
-      metalView: view,
-      options: options)
+      metalView: view)
     return gameController
   }
 
@@ -77,7 +75,7 @@ struct MetalView: ViewRepresentable {
 
 #Preview {
   VStack {
-    MetalView(options: Options())
+    MetalView()
       .border(.black, width: 2.0)
       .padding()
   }

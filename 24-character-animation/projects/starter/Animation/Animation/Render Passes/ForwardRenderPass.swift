@@ -38,7 +38,6 @@ struct ForwardRenderPass: RenderPass {
 
   var pipelineState: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
-  weak var shadowTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createForwardPSO()
@@ -69,8 +68,6 @@ struct ForwardRenderPass: RenderPass {
       &lights,
       length: MemoryLayout<Light>.stride * lights.count,
       index: LightBuffer.index)
-
-    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
     for model in scene.models {
       model.render(

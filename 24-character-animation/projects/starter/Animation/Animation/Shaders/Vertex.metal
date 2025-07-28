@@ -49,10 +49,7 @@ vertex VertexOut vertex_main(
     .worldPosition = worldPosition.xyz / worldPosition.w,
     .worldNormal = uniforms.normalMatrix * in.normal,
     .worldTangent = uniforms.normalMatrix * in.tangent,
-    .worldBitangent = uniforms.normalMatrix * in.bitangent,
-    .shadowPosition =
-      uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
-      * uniforms.modelMatrix * in.position
+    .worldBitangent = uniforms.normalMatrix * in.bitangent
   };
   return out;
 }

@@ -48,10 +48,6 @@ struct Submesh {
   }
   var textures: Textures
   var material: Material
-
-  var transparency: Bool {
-    return textures.opacity != nil || material.opacity < 1.0
-  }
 }
 
 extension Submesh {

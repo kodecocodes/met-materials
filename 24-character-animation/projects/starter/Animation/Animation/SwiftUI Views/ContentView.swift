@@ -33,14 +33,12 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State var options = Options()
-  @State var checked: Int = 1
   @State private var previousTranslation = CGSize.zero
   @State private var previousScroll: CGFloat = 1
 
   var body: some View {
     ZStack(alignment: .topLeading) {
-      MetalView(options: options)
+      MetalView()
         .border(Color.black, width: 2)
         .gesture(DragGesture(minimumDistance: 0)
           .onChanged { value in

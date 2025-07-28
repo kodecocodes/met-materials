@@ -46,8 +46,7 @@ fragment float4 fragment_main(
   texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
   texture2d<float> metallicTexture [[texture(MetallicTexture)]],
   texture2d<float> aoTexture [[texture(AOTexture)]],
-  texture2d<float> opacityTexture [[texture(OpacityTexture)]],
-  depth2d<float> shadowTexture [[texture(ShadowTexture)]])
+  texture2d<float> opacityTexture [[texture(OpacityTexture)]])
 {
   Material material = _material;
   constexpr sampler textureSampler(
@@ -108,9 +107,6 @@ fragment float4 fragment_main(
     normal,
     in.worldPosition);
   
-  float shadow = calculateShadow(in.shadowPosition, shadowTexture);
-  diffuseColor *= shadow;
-
   float4 color =
     float4(diffuseColor + specularColor, material.opacity);
   return color;

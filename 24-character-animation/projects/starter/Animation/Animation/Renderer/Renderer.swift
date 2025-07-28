@@ -45,12 +45,9 @@ class Renderer: NSObject {
   var uniforms = Uniforms()
   var params = Params()
 
-  var shadowRenderPass: ShadowRenderPass
   var forwardRenderPass: ForwardRenderPass
-  var shadowCamera = OrthographicCamera()
-  let options: Options
 
-  init(metalView: MTKView, options: Options) {
+  init(metalView: MTKView) {
     guard
       let device = MTLCreateSystemDefaultDevice(),
       let commandQueue = device.makeCommandQueue() else {
@@ -71,10 +68,7 @@ class Renderer: NSObject {
     Self.library = library
 
     // Initialize Render Passes
-    shadowRenderPass = ShadowRenderPass()
     forwardRenderPass = ForwardRenderPass(view: metalView)
-
-    self.options = options
 
     super.init()
     metalView.clearColor = MTLClearColor(
@@ -94,7 +88,6 @@ extension Renderer {
     _ view: MTKView,
     drawableSizeWillChange size: CGSize
   ) {
-    shadowRenderPass.resize(view: view, size: size)
     forwardRenderPass.resize(view: view, size: size)
     params.width = UInt32(size.width)
     params.height = UInt32(size.height)
@@ -106,16 +99,6 @@ extension Renderer {
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
     params.cameraPosition = scene.camera.position
-
-    let sun = scene.lighting.lights[0]
-    shadowCamera = OrthographicCamera.createShadowCamera(
-      using: scene.camera,
-      lightPosition: sun.position)
-    uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
-    uniforms.shadowViewMatrix = float4x4(
-      eye: shadowCamera.position,
-      target: shadowCamera.center,
-      up: [0, 1, 0])
   }
 
   func draw(scene: GameScene, in view: MTKView) {
@@ -128,13 +111,6 @@ extension Renderer {
     // Update scene
     updateUniforms(scene: scene)
 
-    shadowRenderPass.draw(
-      commandBuffer: commandBuffer,
-      scene: scene,
-      uniforms: uniforms,
-      params: params)
-
-    forwardRenderPass.shadowTexture = shadowRenderPass.shadowTexture
     forwardRenderPass.descriptor = descriptor
     forwardRenderPass.draw(
       commandBuffer: commandBuffer,
