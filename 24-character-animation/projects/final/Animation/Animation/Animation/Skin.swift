@@ -43,7 +43,10 @@ struct Skin {
     skinToSkeletonMap = skeleton.mapJoints(from: jointPaths)
 
     let bufferSize = jointPaths.count * MemoryLayout<float4x4>.stride
-    jointMatrixPaletteBuffer = Renderer.device.makeBuffer(length: bufferSize)!
+    guard let paletteBuffer = Renderer.device.makeBuffer(length: bufferSize) else {
+      fatalError("Unable to create buffer")
+    }
+    jointMatrixPaletteBuffer = paletteBuffer
   }
 
   func updatePalette(skeleton: Skeleton?) {

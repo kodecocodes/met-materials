@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,24 +30,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable implicitly_unwrapped_optional
+
+import MetalKit
 
 class Renderer: NSObject {
   static var device: MTLDevice!
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
-  static var viewColorPixelFormat: MTLPixelFormat!
-
-  let options: Options
+  static var viewColorPixelFormat = MTLPixelFormat.bgra8Unorm_srgb
+  static var viewDepthPixelFormat = MTLPixelFormat.depth32Float
+  static var scaleFactor: CGFloat = 1
 
   var uniforms = Uniforms()
   var params = Params()
 
   var forwardRenderPass: ForwardRenderPass
 
-  init(metalView: MTKView, options: Options) {
+  init(metalView: MTKView) {
     guard
       let device = MTLCreateSystemDefaultDevice(),
       let commandQueue = device.makeCommandQueue() else {
@@ -56,15 +56,20 @@ class Renderer: NSObject {
     Self.device = device
     Self.commandQueue = commandQueue
     metalView.device = device
+    metalView.colorPixelFormat = Self.viewColorPixelFormat
+  #if os(macOS)
+    Self.scaleFactor = NSScreen.main?.backingScaleFactor ?? 1
+  #elseif os(iOS)
+    Self.scaleFactor = metalView.traitCollection.displayScale
+  #endif
 
     // create the shader function library
     let library = device.makeDefaultLibrary()
     Self.library = library
-    Self.viewColorPixelFormat = metalView.colorPixelFormat
 
+    // Initialize Render Passes
     forwardRenderPass = ForwardRenderPass(view: metalView)
 
-    self.options = options
     super.init()
     metalView.clearColor = MTLClearColor(
       red: 0.93,
@@ -75,21 +80,6 @@ class Renderer: NSObject {
     mtkView(
       metalView,
       drawableSizeWillChange: metalView.drawableSize)
-
-    // set the device's scale factor
-#if os(macOS)
-    params.scaleFactor = Float(NSScreen.main?.backingScaleFactor ?? 1)
-#elseif os(iOS)
-    params.scaleFactor = Float(UIScreen.main.scale)
-#endif
-  }
-
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
   }
 }
 
@@ -98,14 +88,13 @@ extension Renderer {
     _ view: MTKView,
     drawableSizeWillChange size: CGSize
   ) {
+    forwardRenderPass.resize(view: view, size: size)
     params.width = UInt32(size.width)
     params.height = UInt32(size.height)
-    forwardRenderPass.resize(view: view, size: size)
+    params.scaleFactor = Float(Self.scaleFactor)
   }
 
   func updateUniforms(scene: GameScene) {
-    params.alphaBlending = options.alphaBlending
-
     uniforms.viewMatrix = scene.camera.viewMatrix
     uniforms.projectionMatrix = scene.camera.projectionMatrix
     params.lightCount = UInt32(scene.lighting.lights.count)
@@ -119,6 +108,7 @@ extension Renderer {
         return
     }
 
+    // Update scene
     updateUniforms(scene: scene)
 
     forwardRenderPass.descriptor = descriptor

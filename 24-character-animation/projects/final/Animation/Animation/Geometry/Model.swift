@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable force_try
+
+import MetalKit
 
 class Model: Transformable {
   var transform = Transform()
@@ -49,13 +49,13 @@ class Model: Transformable {
   var animationClips: [String: AnimationClip] = [:]
   var pipelineState: MTLRenderPipelineState!
 
-  init() { }
+  init() {}
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      fatalError("Model \(name) not found")
+      fatalError("Model \(name) not found!")
     }
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
     let asset = MDLAsset(
@@ -97,46 +97,15 @@ class Model: Transformable {
       PipelineStates.createForwardPSO(hasSkeleton: hasSkeleton)
   }
 
-  func loadSkeleton(asset: MDLAsset) {
-    let skeletons =
-      asset.childObjects(of: MDLSkeleton.self) as? [MDLSkeleton] ?? []
-    skeleton = Skeleton(mdlSkeleton: skeletons.first)
-  }
-
-  func loadSkins(mdlMeshes: [MDLMesh]) {
-    for index in 0..<mdlMeshes.count {
-      let animationBindComponent =
-          mdlMeshes[index].componentConforming(to: MDLComponent.self)
-          as? MDLAnimationBindComponent
-        guard let skeleton else { continue }
-        let skin = Skin(
-          animationBindComponent: animationBindComponent,
-          skeleton: skeleton)
-        meshes[index].skin = skin
-    }
-  }
-
-  func loadAnimations(asset: MDLAsset) {
-    let assetAnimations = asset.animations.objects.compactMap {
-      $0 as? MDLPackedJointAnimation
-    }
-    for assetAnimation in assetAnimations {
-      let animationClip = AnimationClip(animation: assetAnimation)
-      animationClips[assetAnimation.name] = animationClip
-    }
-  }
-
   func update(deltaTime: Float) {
     currentTime += deltaTime
-
     if let skeleton,
-       let animation = animationClips.first {
+      let animation = animationClips.first {
       let animationClip = animation.value
       skeleton.updatePose(
         at: currentTime,
         animationClip: animationClip)
     }
-
     for index in 0..<meshes.count {
       var mesh = meshes[index]
       mesh.transform?.getCurrentTransform(at: currentTime)
@@ -157,4 +126,37 @@ extension Model {
     }
   }
 }
+
+// Animation
+extension Model {
+  func loadSkeleton(asset: MDLAsset) {
+    let skeletons =
+      asset.childObjects(of: MDLSkeleton.self) as? [MDLSkeleton] ?? []
+    skeleton = Skeleton(mdlSkeleton: skeletons.first)
+  }
+
+  func loadSkins(mdlMeshes: [MDLMesh]) {
+    for index in 0..<mdlMeshes.count {
+      let animationBindComponent =
+        mdlMeshes[index].componentConforming(to: MDLComponent.self)
+          as? MDLAnimationBindComponent
+        guard let skeleton else { continue }
+        let skin = Skin(
+          animationBindComponent: animationBindComponent,
+          skeleton: skeleton)
+        meshes[index].skin = skin
+    }
+  }
+
+  func loadAnimations(asset: MDLAsset) {
+    let assetAnimations = asset.animations.objects.compactMap {
+      $0 as? MDLPackedJointAnimation
+    }
+    for assetAnimation in assetAnimations {
+      let animationClip = AnimationClip(animation: assetAnimation)
+      animationClips[assetAnimation.name] = animationClip
+    }
+  }
+}
+
 // swiftlint:enable force_try

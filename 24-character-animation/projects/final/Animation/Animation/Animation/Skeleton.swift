@@ -67,10 +67,9 @@ class Skeleton {
 
   func updatePose(
     at currentTime: Float,
-    animationClip: AnimationClip) {
+    animationClip: AnimationClip
+  ) {
     let time = fmod(currentTime, animationClip.duration)
-
-    // set animation - localPose
     var localPose = [float4x4](
       repeating: .identity,
       count: jointPaths.count)
@@ -82,7 +81,6 @@ class Skeleton {
       localPose[index] = pose
     }
 
-    // compute world pose
     var worldPose: [float4x4] = []
     for index in 0..<parentIndices.count {
       let parentIndex = parentIndices[index]
@@ -94,7 +92,6 @@ class Skeleton {
       }
     }
 
-    // apply the inverse bind matrix
     for index in 0..<worldPose.count {
       worldPose[index] *= bindTransforms[index].inverse
     }

@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,12 +32,13 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "Common.h"
+
+#import "Lighting.h"
 #import "ShaderDefs.h"
 
 fragment float4 fragment_main(
+  VertexOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
-  FragmentIn in [[stage_in]],
   constant Light *lights [[buffer(LightBuffer)]],
   constant Material &_material [[buffer(MaterialBuffer)]],
   texture2d<float> baseColorTexture [[texture(BaseColor)]],
@@ -47,24 +48,32 @@ fragment float4 fragment_main(
   texture2d<float> aoTexture [[texture(AOTexture)]],
   texture2d<float> opacityTexture [[texture(OpacityTexture)]])
 {
-  // Load the materials from textures
+  Material material = _material;
   constexpr sampler textureSampler(
     filter::linear,
     mip_filter::linear,
+    max_anisotropy(8),
     address::repeat);
-
-  Material material = _material;
-  float2 uv = in.uv * params.tiling;
   if (!is_null_texture(baseColorTexture)) {
-    float4 color = baseColorTexture.sample(textureSampler, uv);
+    float4 color = baseColorTexture.sample(
+      textureSampler,
+      in.uv * params.tiling);
     material.baseColor = color.rgb;
+  }
+
+  if (!is_null_texture(roughnessTexture)) {
+    material.roughness = roughnessTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
   }
 
   float3 normal;
   if (is_null_texture(normalTexture)) {
     normal = in.worldNormal;
   } else {
-    normal = normalTexture.sample(textureSampler, uv).rgb;
+    normal = normalTexture.sample(
+    textureSampler,
+    in.uv * params.tiling).rgb;
     normal = normal * 2 - 1;
     normal = float3x3(
       in.worldTangent,
@@ -72,12 +81,33 @@ fragment float4 fragment_main(
       in.worldNormal) * normal;
   }
   normal = normalize(normal);
+  
+  if (!is_null_texture(metallicTexture)) {
+    material.metallic = metallicTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
+  if (!is_null_texture(aoTexture)) {
+    material.ambientOcclusion = aoTexture.sample(
+      textureSampler,
+      in.uv * params.tiling).r;
+  }
 
-  Light light = lights[0];
-  float3 lightDirection = normalize(light.position);
-  float nDotL = saturate(dot(normal, lightDirection));
-  nDotL = 0.8 + (nDotL) * (1.0 - 0.8) / 1.0;
-  float3 diffuse = float3(material.baseColor);
-  float3 color = diffuse * nDotL * light.color;
-  return float4(color, 1);
+  float3 diffuseColor = computeDiffuse(
+    lights,
+    params,
+    material,
+    normal,
+    in.worldPosition);
+
+  float3 specularColor = computeSpecular(
+    lights,
+    params,
+    material,
+    normal,
+    in.worldPosition);
+  
+  float4 color =
+    float4(diffuseColor + specularColor, material.opacity);
+  return color;
 }

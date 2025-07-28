@@ -30,53 +30,41 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-#if os(macOS)
-typealias ViewRepresentable = NSViewRepresentable
-#elseif os(iOS)
-typealias ViewRepresentable = UIViewRepresentable
-#endif
-
-struct MetalView: ViewRepresentable {
-  let view = MTKView()
-
-  func makeCoordinator() -> GameController {
-    let gameController = GameController(
-      metalView: view)
-    return gameController
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 diffuseTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case Sun: {
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
+        break;
+      }
+      case Point: {
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
+        break;
+      }
+      case Spot: {      // not yet implemented
+        break;
+      }
+      case Ambient: {
+        diffuseTotal += light.color * light.intensity * material.baseColor;
+        break;
+      }
+      case unused: {
+        break;
+      }
+    }
+    if (light.type != Sun) { continue; }
   }
-
-#if os(macOS)
-  func makeNSView(context: Context) -> some NSView {
-    makeMetalView()
-  }
-  func updateNSView(_ uiView: NSViewType, context: Context) {
-    updateMetalView()
-  }
-#elseif os(iOS)
-  func makeUIView(context: Context) -> MTKView {
-    makeMetalView()
-  }
-
-  func updateUIView(_ uiView: MTKView, context: Context) {
-    updateMetalView()
-  }
-#endif
-
-  func makeMetalView() -> MTKView {
-    view
-  }
-
-  func updateMetalView() {
-  }
-}
-
-#Preview {
-  VStack {
-    MetalView()
-      .border(.black, width: 2.0)
-      .padding()
-  }
+  return diffuseTotal;
 }
