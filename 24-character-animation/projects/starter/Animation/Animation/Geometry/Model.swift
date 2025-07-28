@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,28 +30,29 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable force_try
+
+import MetalKit
 
 class Model: Transformable {
   var transform = Transform()
   var meshes: [Mesh] = []
   var name: String = "Untitled"
   var tiling: UInt32 = 1
+  var hasTransparency = false
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
   }
   var currentTime: Float = 0
 
-  init() { }
+  init() {}
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      fatalError("Model \(name) not found")
+      fatalError("Model \(name) not found!")
     }
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
     let asset = MDLAsset(
@@ -81,6 +82,9 @@ class Model: Transformable {
         endTime: asset.endTime)
     }
     self.name = name
+    hasTransparency = meshes.contains { mesh in
+      mesh.submeshes.contains { $0.transparency }
+    }
     boundingBox = asset.boundingBox
   }
 
@@ -103,4 +107,5 @@ extension Model {
     }
   }
 }
+
 // swiftlint:enable force_try

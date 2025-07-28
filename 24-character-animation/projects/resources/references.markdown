@@ -11,11 +11,13 @@
 
 ## Blender animation 
 
-[Blender 3.0 Beginner Animation Tutorial (Donut part 11)](https://youtu.be/LMA3S2EGM6U)
+[Blender 4.0 Beginner Animation Tutorial (Donut part 12)](https://youtu.be/4-tCn4-GfM4?si=a-7VVSvWPtbvxoHN)
 
-[CG Geek: Become a PRO at Animation in 25 Minutes | Blender Tutorial](https://youtu.be/_C2ClFO3FAY)
+[Grant Abbitt: Complete Beginners Guide to Animation in Blender 4](https://youtube.com/playlist?list=PLn3ukorJv4vuJVY3cjDJyt9bK6D-xACO3&si=sxP3ZMxypdkRkqik)
 
 [Blender 3.0 Geometry Nodes Beginner Animation Tutorial](https://youtu.be/tRuhttgHTS4)
+
+[Alex on Story - Intro To Animation](https://www.youtube.com/playlist?list=PL0qE_ONqcqSUvYEYEDLQ27wJ-IIzmmMXq)
 
 ## Sample models
 
@@ -26,4 +28,5 @@
 ## USD
 
 [Pixar's USD documenation](https://graphics.pixar.com/usd/docs/index.html)
+
 [OpenUSD Skeleton Schema](https://openusd.org/dev/api/usd_skel_page_front.html)
