@@ -8,6 +8,10 @@
 
 [Physically Based Rendering for Artists](https://youtu.be/LNwMJeWFr0U)
 
+## Using an Equirectangular HDR texture for Skybox
+
+Check out Apple's sample code [Rendering reflections in real time using ray tracing](https://developer.apple.com/documentation/Metal/rendering-reflections-in-real-time-using-ray-tracing)
+
 ## Create your own skybox textures
 
 1. Find an equirectangular environment map. This is a texture which has the full 360º view projected onto it. 
