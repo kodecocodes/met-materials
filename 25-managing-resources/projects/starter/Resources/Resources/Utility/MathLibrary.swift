@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,19 +30,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import simd
-import CoreGraphics
-
-// Math Library v4.01
-// Note: Matrices are column-major
-
 // swiftlint:disable type_name
 // swiftlint:disable identifier_name
 // swiftlint:disable comma
 
-// release note 4.01
-// fixed float4x4.scaling(float:)
-// it used to divide w by the scaling factor
+import simd
+import CoreGraphics
+
+// Math Library v5.00
+// Note: Matrices are column-major
 
 typealias float2 = SIMD2<Float>
 typealias float3 = SIMD3<Float>
@@ -158,17 +154,15 @@ extension float4x4 {
     columns = (X, Y, Z, W)
   }
 
-  // left-handed LookAt
-  init(eye: float3, center: float3, up: float3) {
-    let z = normalize(center - eye)
-    let x = normalize(cross(up, z))
-    let y = cross(z, x)
-
+  // MARK: - LookAt matrix
+  init(eye: float3, target: float3, up: float3, left: Bool = true) {
+    let z = left ? normalize(target - eye) : normalize(eye - target) // Forward
+    let x = normalize(cross(up, z)) // Right
+    let y = cross(z, x)             // Up
     let X = float4(x.x, y.x, z.x, 0)
     let Y = float4(x.y, y.y, z.y, 0)
     let Z = float4(x.z, y.z, z.z, 0)
     let W = float4(-dot(x, eye), -dot(y, eye), -dot(z, eye), 1)
-
     self.init()
     columns = (X, Y, Z, W)
   }
@@ -228,6 +222,12 @@ extension float4 {
   init(_ d: SIMD4<Double>) {
     self.init()
     self = [Float(d.x), Float(d.y), Float(d.z), Float(d.w)]
+  }
+}
+
+extension simd_quatf {
+  static var identity: simd_quatf {
+    .init(angle: 0, axis: [1, 0, 0])
   }
 }
 

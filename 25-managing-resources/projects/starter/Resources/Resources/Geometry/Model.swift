@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,10 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
-
 // swiftlint:disable force_try
+// swiftlint:disable implicitly_unwrapped_optional
+
+import MetalKit
 
 class Model: Transformable {
   var transform = Transform()
@@ -40,6 +41,7 @@ class Model: Transformable {
   var name: String = "Untitled"
   var tiling: UInt32 = 1
   var hasTransparency = false
+  var castShadow = true
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
@@ -48,16 +50,17 @@ class Model: Transformable {
 
   var skeleton: Skeleton?
   var animationClips: [String: AnimationClip] = [:]
-  var pipelineState: MTLRenderPipelineState?
-  var shadowPipelineState: MTLRenderPipelineState?
+  var pipelineState: MTLRenderPipelineState!
+  var transparentPipelineState: MTLRenderPipelineState!
+  var shadowPipelineState: MTLRenderPipelineState!
 
-  init() { }
+  init() {}
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
       withExtension: nil) else {
-      fatalError("Model \(name) not found")
+      fatalError("Model \(name) not found!")
     }
     let allocator = MTKMeshBufferAllocator(device: Renderer.device)
     let asset = MDLAsset(
@@ -67,7 +70,7 @@ class Model: Transformable {
     asset.loadTextures()
     var mtkMeshes: [MTKMesh] = []
     let mdlMeshes =
-    asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
+      asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
     _ = mdlMeshes.map { mdlMesh in
       mdlMesh.addTangentBasis(
         forTextureCoordinateAttributeNamed:
@@ -86,7 +89,7 @@ class Model: Transformable {
         startTime: asset.startTime,
         endTime: asset.endTime)
     }
-    self.name = name
+
     hasTransparency = meshes.contains { mesh in
       mesh.submeshes.contains { $0.transparency }
     }
@@ -100,26 +103,62 @@ class Model: Transformable {
     loadAnimations(asset: asset)
 
     let hasSkeleton = skeleton != nil
-    pipelineState = PipelineStates.createForwardPSO(hasSkeleton: hasSkeleton)
-    shadowPipelineState = PipelineStates.createShadowPSO(hasSkeleton: hasSkeleton)
+    pipelineState =
+      PipelineStates.createForwardPSO(hasSkeleton: hasSkeleton)
+    shadowPipelineState =
+      PipelineStates.createShadowPSO(hasSkeleton: hasSkeleton)
+    transparentPipelineState =
+      PipelineStates.createForwardTransparentPSO(hasSkeleton: hasSkeleton)
   }
 
+  func update(deltaTime: Float) {
+    currentTime += deltaTime
+    if let skeleton,
+      let animation = animationClips.first {
+      let animationClip = animation.value
+      skeleton.updatePose(
+        at: currentTime,
+        animationClip: animationClip)
+    }
+    for index in 0..<meshes.count {
+      var mesh = meshes[index]
+      mesh.transform?.getCurrentTransform(at: currentTime)
+      mesh.skin?.updatePalette(skeleton: skeleton)
+      meshes[index] = mesh
+    }
+  }
+}
+
+extension Model {
+  func setTexture(name: String, type: TextureIndices) {
+    if let texture = TextureController.loadTexture(name: name) {
+      switch type {
+      case BaseColor:
+        meshes[0].submeshes[0].textures.baseColor = texture
+      default: break
+      }
+    }
+  }
+}
+
+// Animation
+extension Model {
   func loadSkeleton(asset: MDLAsset) {
     let skeletons =
-    asset.childObjects(of: MDLSkeleton.self) as? [MDLSkeleton] ?? []
+      asset.childObjects(of: MDLSkeleton.self) as? [MDLSkeleton] ?? []
     skeleton = Skeleton(mdlSkeleton: skeletons.first)
   }
 
   func loadSkins(mdlMeshes: [MDLMesh]) {
     for index in 0..<mdlMeshes.count {
       let animationBindComponent =
-      mdlMeshes[index].componentConforming(to: MDLComponent.self)
-      as? MDLAnimationBindComponent
-      guard let skeleton else { continue }
-      let skin = Skin(
-        animationBindComponent: animationBindComponent,
-        skeleton: skeleton)
-      meshes[index].skin = skin
+        mdlMeshes[index].componentConforming(to: MDLComponent.self)
+          as? MDLAnimationBindComponent
+        guard let skeleton else { continue }
+        let skin = Skin(
+          animationBindComponent: animationBindComponent,
+          skeleton: skeleton)
+        meshes[index].skin = skin
     }
   }
 
@@ -132,35 +171,7 @@ class Model: Transformable {
       animationClips[assetAnimation.name] = animationClip
     }
   }
-  func update(deltaTime: Float) {
-    currentTime += deltaTime
-
-    if let skeleton,
-       let animation = animationClips.first {
-      let animationClip = animation.value
-      skeleton.updatePose(
-        at: currentTime,
-        animationClip: animationClip)
-    }
-
-    for index in 0..<meshes.count {
-      var mesh = meshes[index]
-      mesh.transform?.getCurrentTransform(at: currentTime)
-      mesh.skin?.updatePalette(skeleton: skeleton)
-      meshes[index] = mesh
-    }
-  }
 }
 
-extension Model {
-  func setTexture(name: String, type: TextureIndices) {
-    if let texture = TextureController.texture(name: name) {
-      switch type {
-      case BaseColor:
-        meshes[0].submeshes[0].textures.baseColor = texture
-      default: break
-      }
-    }
-  }
-}
 // swiftlint:enable force_try
+// swiftlint:enable implicitly_unwrapped_optional

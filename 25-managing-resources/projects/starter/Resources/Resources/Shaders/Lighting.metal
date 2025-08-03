@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,93 +32,129 @@
 
 #include <metal_stdlib>
 using namespace metal;
+
 #import "Lighting.h"
+
+float3 calculateSunDiffuse(
+  Light light,
+  float3 normal,
+  Params params,
+  Material material)
+{
+  float3 lightDirection = normalize(light.position);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float3 surfaceColor = material.baseColor * light.color * light.intensity;
+  float3 diffuse = surfaceColor * (1.0 - material.metallic) * nDotL;
+  return diffuse * material.ambientOcclusion;
+}
+
+float3 calculatePointDiffuse(
+  Light light,
+  float3 normal,
+  Material material,
+  float3 worldPosition)
+{
+  
+  float d = distance(light.position, worldPosition);
+  float3 lightDirection = normalize(light.position - worldPosition);
+  float attenuation = 1.0 / (light.attenuation.x +
+      light.attenuation.y * d + light.attenuation.z * d * d);
+
+  float diffuseIntensity =
+      saturate(dot(lightDirection, normal));
+  float3 surfaceColor = material.baseColor * light.color * light.intensity;
+  float3 color = surfaceColor * diffuseIntensity;
+  color *= attenuation;
+  if (color.r + color.g + color.b < 0.01) {
+    color = 0;
+  }
+  return color;
+}
 
 float G1V(float nDotV, float k)
 {
   return 1.0f / (nDotV * (1.0f - k) + k);
 }
 
-// specular optimized-ggx
-// AUTHOR John Hable. Released into the public domain
-float3 computeSpecular(
-  constant Light *lights,
-  constant Params &params,
+float3 calculateSunSpecular(
+  Light light,
   Material material,
+  float3 viewDirection,
   float3 normal)
 {
-  float3 viewDirection = normalize(params.cameraPosition);
-  float3 specularTotal = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    float3 lightDirection = normalize(light.position);
-    float3 F0 = mix(0.04, material.baseColor, material.metallic);
-    // add a small amount of bias so that you can
-    // see the shininess when roughness is zero
-    float bias = 0.01;
-    float roughness = material.roughness + bias;
-    float alpha = roughness * roughness;
-    float3 halfVector = normalize(viewDirection + lightDirection);
-    float nDotL = saturate(dot(normal, lightDirection));
-    float nDotV = saturate(dot(normal, viewDirection));
-    float nDotH = saturate(dot(normal, halfVector));
-    float lDotH = saturate(dot(lightDirection, halfVector));
+  float3 lightDirection = normalize(light.position);
+  float3 F0 = mix(0.04, material.baseColor, material.metallic);
+  float bias = 0.01;
+  float roughness = material.roughness + bias;
+  float alpha = roughness * roughness;
+  float3 halfVector = normalize(viewDirection + lightDirection);
+  float nDotL = saturate(dot(normal, lightDirection));
+  float nDotV = saturate(dot(normal, viewDirection));
+  float nDotH = saturate(dot(normal, halfVector));
+  float lDotH = saturate(dot(lightDirection, halfVector));
 
-    float3 F;
-    float D, vis;
+  float3 F;
+  float D, vis;
 
-    // Distribution
-    float alphaSqr = alpha * alpha;
-    float pi = 3.14159f;
-    float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
-    D = alphaSqr / (pi * denom * denom);
+  // Distribution
+  float alphaSqr = alpha * alpha;
+  float pi = 3.14159f;
+  float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
+  D = alphaSqr / (pi * denom * denom);
 
-    // Fresnel
-    float lDotH5 = pow(1.0 - lDotH, 5);
-    F = F0 + (1.0 - F0) * lDotH5;
+  // Fresnel
+  float lDotH5 = pow(1.0 - lDotH, 5);
+  F = F0 + (1.0 - F0) * lDotH5;
 
-    // V
-    float k = alpha / 2.0f;
-    vis = G1V(nDotL, k) * G1V(nDotV, k);
+  // V
+  float k = alpha / 2.0f;
+  vis = G1V(nDotL, k) * G1V(nDotV, k);
 
-    float3 specular = nDotL * D * F * vis;
-    specularTotal += specular;
-  }
-  return specularTotal;
+  float3 specular = nDotL * D * F * vis * light.specularColor;
+  return specular;
 }
 
-// diffuse
-float3 computeDiffuse(
-  constant Light *lights,
-  constant Params &params,
-  Material material,
-  float3 normal)
-{
-  float3 diffuseTotal = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    float3 lightDirection = normalize(light.position);
-    float nDotL = saturate(dot(normal, lightDirection));
-    float3 diffuse = float3(material.baseColor) * (1.0 - material.metallic);
-    diffuseTotal += diffuse * nDotL * material.ambientOcclusion * light.color;;
-  }
-  return diffuseTotal;
-}
-
-float calculateShadow(
-  float4 shadowPosition,
-  depth2d<float> shadowTexture)
-{
-  // shadow calculation
-  float3 position
-    = shadowPosition.xyz / shadowPosition.w;
+float calculateSoftShadow(float4 shadowPosition, depth2d<float> shadowTexture) {
+  float3 position = shadowPosition.xyz / shadowPosition.w;
   float2 xy = position.xy;
   xy = xy * 0.5 + 0.5;
   xy.y = 1 - xy.y;
+  
+  // no shadow outside shadow map
+  if (xy.x < 0.0 || xy.x > 1.0 || xy.y < 0.0 || xy.y > 1.0) {
+    return 1.0;
+  }
+  
   constexpr sampler s(
-    coord::normalized, filter::nearest,
-    address::clamp_to_edge,
-    compare_func:: less);
-  float shadow_sample = shadowTexture.sample(s, xy);
-  return (position.z > shadow_sample + 0.001) ? 0.8 : 1;
+    coord::normalized, filter::linear,
+    address::clamp_to_edge);
+  
+  float shadow = 0.0;
+  float2 dimensions = float2(shadowTexture.get_width(), shadowTexture.get_height());
+  float2 texelSize = 1.0 / dimensions;
+  
+  // 3x3 PCF
+  for(int x = -1; x <= 1; ++x) {
+    for(int y = -1; y <= 1; ++y) {
+      float2 offset = float2(x, y) * texelSize;
+      float shadowMapDepth = shadowTexture.sample(s, xy + offset);
+      if (shadowMapDepth >= 0.999) { // nothing on shadow map
+        shadow += 1.0;
+      } else {
+        shadow += (position.z > shadowMapDepth + 0.002) ? 0.0 : 1.0;
+      }
+    }
+  }
+  shadow /= 9.0;
+  return mix(0.5, 1.0, shadow);
+}
+
+float3 enhanceColor(float3 color, float contrast, float saturation) {
+    // Contrast
+    color = (color - 0.5) * contrast + 0.5;
+    
+    // Saturation
+    float luminance = dot(color, float3(0.299, 0.587, 0.114));
+    color = mix(float3(luminance), color, saturation);
+    return color;
 }

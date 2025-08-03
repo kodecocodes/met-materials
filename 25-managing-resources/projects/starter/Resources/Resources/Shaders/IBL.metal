@@ -35,7 +35,6 @@ using namespace metal;
 #import "Lighting.h"
 #import "ShaderDefs.h"
 
-
 fragment float4 fragment_IBL(
   constant Params &params [[buffer(ParamsBuffer)]],
   VertexOut in [[stage_in]],
@@ -54,25 +53,18 @@ fragment float4 fragment_IBL(
 {
   // Load the materials from textures
   constexpr sampler textureSampler(
-                                   filter::linear,
-                                   mip_filter::linear,
-                                   address::repeat);
+    filter::linear,
+    mip_filter::linear,
+    address::repeat);
   Material material = _material;
   float2 uv = in.uv * params.tiling;
   if (!is_null_texture(baseColorTexture)) {
     float4 color = baseColorTexture.sample(textureSampler, uv);
     material.baseColor = color.rgb;
   }
-  if (!is_null_texture(opacityTexture)) {
-    if (params.alphaBlending) {
+  if (params.alphaBlending) {
+    if (!is_null_texture(opacityTexture)) {
       material.opacity = opacityTexture.sample(textureSampler, uv).r;
-    }
-    if (params.alphaTesting) {
-      material.opacity = opacityTexture.sample(textureSampler, in.uv).r;
-      if (material.opacity < 0.2) {
-        discard_fragment();
-        return(0);
-      }
     }
   }
   if (!is_null_texture(roughnessTexture)) {
@@ -91,41 +83,42 @@ fragment float4 fragment_IBL(
     normal = normalTexture.sample(textureSampler, uv).rgb;
     normal = normal * 2 - 1;
     normal = float3x3(
-                      in.worldTangent,
-                      in.worldBitangent,
-                      in.worldNormal) * normal;
+      in.worldTangent,
+      in.worldBitangent,
+      in.worldNormal) * normal;
   }
   normal = normalize(normal);
-
-  // the final result
+  
   float4 color = float4(material.baseColor, 1);
-
   float3 viewDirection =
   in.worldPosition.xyz - params.cameraPosition;
   viewDirection = normalize(viewDirection);
   float3 textureCoordinates =
   reflect(viewDirection, normal);
-
   float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
 
   diffuse = mix(pow(diffuse, 0.4), diffuse, material.metallic);
-  diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
-
-  color = diffuse * float4(material.baseColor, 1);
-
+  diffuse *= calculateSoftShadow(in.shadowPosition, shadowTexture);
+  
+  color = diffuse * float4(material.baseColor, 0.0);
+  
   constexpr sampler s(filter::linear, mip_filter::linear);
   float3 prefilteredColor
-  = skybox.sample(s,
-                  textureCoordinates,
-                  level(material.roughness * 10)).rgb;
+    = skybox.sample(
+      s,
+      textureCoordinates,
+      level(material.roughness * 10)).rgb;
   float nDotV = saturate(dot(normal, -viewDirection));
   float2 envBRDF
   = brdfLut.sample(s, float2(material.roughness, nDotV)).rg;
   float3 f0 = mix(0.04, material.baseColor.rgb, material.metallic);
   float3 specularIBL = f0 * envBRDF.r + envBRDF.g;
-
   float3 specular = prefilteredColor * specularIBL;
-  color += float4(specular, 1);
+
+  color += float4(specular, material.opacity);
   color *= material.ambientOcclusion;
+  
+  // tone mapping
+  color.rgb = enhanceColor(color.rgb, 1.1, 1.1);
   return color;
 }

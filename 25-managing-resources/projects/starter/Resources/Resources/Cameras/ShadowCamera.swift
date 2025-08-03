@@ -32,6 +32,8 @@
 
 import CoreGraphics
 
+typealias CameraType = PlayerCamera
+
 struct FrustumPoints {
   var viewMatrix = float4x4.identity
   var upperLeft = float3.zero
@@ -40,11 +42,13 @@ struct FrustumPoints {
   var lowerLeft = float3.zero
 }
 
+let cameraFar: Float = 20
+
 extension Camera {
   static func createShadowCamera(using camera: Camera, lightPosition: float3) -> OrthographicCamera {
-    guard let camera = camera as? ArcballCamera else { return OrthographicCamera() }
+    guard let camera = camera as? CameraType else { return OrthographicCamera() }
     let nearPoints = calculatePlane(camera: camera, distance: camera.near)
-    let farPoints = calculatePlane(camera: camera, distance: camera.far)
+    let farPoints = calculatePlane(camera: camera, distance: cameraFar)
 
     // calculate bounding sphere of camera
     let radius1 = distance(nearPoints.lowerLeft, farPoints.upperRight) * 0.5
@@ -68,7 +72,7 @@ extension Camera {
     return shadowCamera
   }
 
-  static func calculatePlane(camera: ArcballCamera, distance: Float) -> FrustumPoints {
+  static func calculatePlane(camera: CameraType, distance: Float) -> FrustumPoints {
     let halfFov = camera.fov * 0.5
     let halfHeight = tan(halfFov) * distance
     let halfWidth = halfHeight * camera.aspect
@@ -86,7 +90,7 @@ extension Camera {
     let halfWidth = halfHeight * aspect
     let matrix = float4x4(
       eye: camera.position,
-      center: camera.center,
+      target: camera.center,
       up: [0, 1, 0])
     return calculatePlanePoints(
       matrix: matrix,

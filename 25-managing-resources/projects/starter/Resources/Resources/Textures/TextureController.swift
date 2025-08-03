@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,56 +33,43 @@
 import MetalKit
 
 enum TextureController {
-  static var textureIndex: [String: Int] = [:]
-  static var textures: [MTLTexture] = []
+  static var textures: [String: MTLTexture] = [:]
 
-  static func texture(name: String) -> Int? {
-    if let index = textureIndex[name] {
-      return index
+  // load a texture from a USD file
+  static func loadTexture(texture: MDLTexture, name: String) -> MTLTexture? {
+    if let texture = textures[name] {
+      return texture
     }
-    if let texture = loadTexture(name: name) {
-      return store(texture: texture, name: name)
-    }
-    return nil
-  }
-
-  static func store(texture: MTLTexture?, name: String) -> Int? {
-    guard let texture else { return nil }
-    texture.label = name
-    if let index = textureIndex[name] {
-      return index
-    }
-    textures.append(texture)
-    let index = textures.count - 1
-    textureIndex[name] = index
-    return index
-  }
-
-  static func getTexture(_ index: Int?) -> MTLTexture? {
-    if let index = index {
-      return textures[index]
-    }
-    return nil
-  }
-
-  static func loadTexture(texture: MDLTexture, name: String) -> Int? {
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
-      [.origin: MTKTextureLoader.Origin.bottomLeft,
-       .generateMipmaps: true]
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .generateMipmaps: true,
+      .textureUsage: MTLTextureUsage.pixelFormatView.rawValue
+        | MTLTextureUsage.shaderRead.rawValue
+    ]
     let texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
-    return store(texture: texture, name: name)
+    textures[name] = texture
+    return texture
   }
 
+  // load a texture from Asset Catalog
   static func loadTexture(name: String) -> MTLTexture? {
+    if let texture = textures[name] {
+      return texture
+    }
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    return try? textureLoader.newTexture(
+    let texture: MTLTexture?
+    texture = try? textureLoader.newTexture(
       name: name,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: Bundle.main,
       options: nil)
+    if texture != nil {
+      textures[name] = texture
+    }
+    return texture
   }
 
   // load a cube texture
@@ -102,7 +89,7 @@ enum TextureController {
     // bundle file loading
     let texture = try? textureLoader.newTexture(
       name: imageName,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: .main)
     return texture
   }
