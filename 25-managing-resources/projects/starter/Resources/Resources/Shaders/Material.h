@@ -40,6 +40,7 @@ typedef enum {
   MetallicTexture = 3,
   AOTexture = 4,
   OpacityTexture = 5,
+  MaterialTextureCount = OpacityTexture + 1,
   ShadowTexture = 15,
   SkyboxTexture = 16,
   SkyboxDiffuseTexture = 17,

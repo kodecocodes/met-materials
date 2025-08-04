@@ -1,15 +1,15 @@
-///// Copyright (c) 2023 Kodeco Inc.
-/// 
+///// Copyright (c) 2025 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -33,14 +33,47 @@
 #ifndef Material_h
 #define Material_h
 
+typedef enum {
+  BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  OpacityTexture = 5,
+  MaterialTextureCount = OpacityTexture + 1,
+  ShadowTexture = 15,
+  SkyboxTexture = 16,
+  SkyboxDiffuseTexture = 17,
+  BRDFLutTexture = 18
+} TextureIndices;
+
+typedef struct {
+  vector_float3 baseColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+  float opacity;
+} Material;
+
+#if __METAL_VERSION__
+// MARK: - Metal Shading Language
+
+#include <metal_stdlib>
+using namespace metal;
+
 struct ShaderMaterial {
-  texture2d<float> baseColorTexture;
-  texture2d<float> normalTexture;
-  texture2d<float> roughnessTexture;
-  texture2d<float> metallicTexture;
-  texture2d<float> aoTexture;
-  texture2d<float> opacityTexture;
+  array<texture2d<float>, MaterialTextureCount> textures;
   Material material;
 };
 
+#else
+// MARK: - Swift side
+#include <Metal/Metal.h>
+
+struct ShaderMaterial {
+  MTLResourceID textures[MaterialTextureCount];
+  Material material;
+};
+
+#endif // Metal version
 #endif /* Material_h */

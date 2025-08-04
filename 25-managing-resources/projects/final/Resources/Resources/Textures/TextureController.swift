@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,6 @@
 /// THE SOFTWARE.
 
 import MetalKit
-
-// swiftlint:disable function_body_length
 
 enum TextureController {
   static var textureIndex: [String: Int] = [:]
@@ -70,12 +68,11 @@ enum TextureController {
       }
       return texture
     }
-
     guard
       let commandBuffer = Renderer.commandQueue.makeCommandBuffer(),
       let blitEncoder = commandBuffer.makeBlitCommandEncoder()
     else { return nil }
-    zip(textures, heapTextures)
+      zip(textures, heapTextures)
       .forEach { texture, heapTexture in
         heapTexture.label = texture.label
         var region =
@@ -132,22 +129,32 @@ enum TextureController {
     return nil
   }
 
-  static func loadTexture(texture: MDLTexture, name: String) -> Int? {
+  // load a texture from a USD file
+  static func loadTexture(texture: MDLTexture, name: String, sRGB: Bool = false) -> Int? {
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
-      [.origin: MTKTextureLoader.Origin.bottomLeft,
-       .generateMipmaps: true]
-    let texture = try? textureLoader.newTexture(
+    let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.bottomLeft,
+      .generateMipmaps: true,
+      .textureUsage: MTLTextureUsage.pixelFormatView.rawValue
+        | MTLTextureUsage.shaderRead.rawValue
+    ]
+    var texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
+    // Convert USDZ base color texture to sRGB color
+    if sRGB,
+      texture?.pixelFormat == .rgba8Unorm {
+      texture = texture?.makeTextureView(pixelFormat: .rgba8Unorm_srgb)
+    }
     return store(texture: texture, name: name)
   }
 
+  // load a texture from Asset Catalog
   static func loadTexture(name: String) -> MTLTexture? {
     let textureLoader = MTKTextureLoader(device: Renderer.device)
     return try? textureLoader.newTexture(
       name: name,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: Bundle.main,
       options: nil)
   }
@@ -169,9 +176,8 @@ enum TextureController {
     // bundle file loading
     let texture = try? textureLoader.newTexture(
       name: imageName,
-      scaleFactor: 1.0,
+      scaleFactor: Renderer.scaleFactor,
       bundle: .main)
     return texture
   }
 }
-// swiftlint:enable function_body_length

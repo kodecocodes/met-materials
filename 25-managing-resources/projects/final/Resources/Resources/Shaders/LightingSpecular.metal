@@ -30,60 +30,30 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-struct ContentView: View {
-  @State var options = Options()
-  @State var checked: Int = 1
-  @State private var previousTranslation = CGSize.zero
-  @State private var previousScroll: CGFloat = 1
-
-  var body: some View {
-    ZStack(alignment: .topLeading) {
-      MetalView(options: options)
-        .border(Color.black, width: 2)
-        .gesture(DragGesture(minimumDistance: 0)
-          .onChanged { value in
-            InputController.shared.touchLocation = value.location
-            InputController.shared.touchDelta = CGSize(
-              width: value.translation.width - previousTranslation.width,
-              height: value.translation.height - previousTranslation.height)
-            previousTranslation = value.translation
-            // if the user drags, cancel the tap touch
-            if abs(value.translation.width) > 1 ||
-              abs(value.translation.height) > 1 {
-              InputController.shared.touchLocation = nil
-            }
-          }
-          .onEnded {_ in
-            previousTranslation = .zero
-          })
-        .gesture(MagnificationGesture()
-          .onChanged { value in
-            let scroll = value - previousScroll
-            InputController.shared.mouseScroll.x = Float(scroll)
-              * Settings.touchZoomSensitivity
-            previousScroll = value
-          }
-          .onEnded {_ in
-            previousScroll = 1
-          })
-        .onAppear {
-        #if os(macOS)
-          NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
-            let scrollX = Float(event.scrollingDeltaX)
-            InputController.shared.mouseScroll.x = scrollX
-            let scrollY = Float(event.scrollingDeltaY)
-            InputController.shared.mouseScroll.y = scrollY
-            return event
-          }
-        #endif
-        }
-    }
-    .padding()
+// specular optimized-ggx
+// AUTHOR John Hable. Released into the public domain
+float3 computeSpecular(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+  float3 specularTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type != SunLight) { continue; };
+    float3 specular = calculateSunSpecular(
+      light,
+      material,
+      viewDirection,
+      normal);
+    specularTotal += specular;
   }
-}
-
-#Preview {
-  ContentView()
+  return specularTotal;
 }

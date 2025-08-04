@@ -1,4 +1,4 @@
-///// Copyright (c) 2023 Kodeco Inc.
+///// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,15 +30,17 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import CoreGraphics
+import MetalKit
+import GameController
 
 struct GameScene {
   lazy var ground: Model = {
     var ground = Model(name: "ground", primitiveType: .plane)
     ground.setTexture(name: "grass", type: BaseColor)
-    ground.scale = 80
-    ground.tiling = 12
+    ground.scale = 320
+    ground.tiling = 48
     ground.rotation.z = Float(270).degreesToRadians
+    ground.castShadow = false
     return ground
   }()
 
@@ -53,7 +55,7 @@ struct GameScene {
   lazy var birch3 = Model(name: "birch-3.usdz")
 
   var models: [Model] = []
-  var camera = ArcballCamera()
+  var camera = PlayerCamera()
   var defaultDistance: Float = 18
   var defaultView: Transform {
     Transform(
@@ -64,16 +66,15 @@ struct GameScene {
   let skybox: Skybox?
 
   init() {
-    skybox = Skybox(textureName: "sky.png")
-    camera.target = [0, 6, 0]
-    camera.distance = defaultDistance
+    skybox = Skybox(textureName: "sky")
     camera.transform = defaultView
-    camera.far = 40
+    camera.far = 400
 
     models = [ground, bellTower, blacksmith, house1, pine5, birch3]
 
     walkers = (0..<walkerCount).map { index in
       var walker = Model(name: "walker.usda")
+      walker.scale = 0.01
       walker.currentTime = Float.random(in: 0..<2)
       walkerPositions[index].x = Float.random(in: 0...5)
       walkerPositions[index].z = Float.random(in: 4...9)
@@ -129,7 +130,15 @@ struct GameScene {
     if input.keysPressed.contains(.two) {
       camera.transform = defaultView
     }
-    input.keysPressed.removeAll()
+
+    let positionYDelta = (input.mouseScroll.x + input.mouseScroll.y)
+      * Settings.mouseScrollSensitivity
+    let minY: Float = -1
+    if camera.position.y + positionYDelta > minY {
+      camera.position.y += positionYDelta
+    }
+    input.mouseScroll = .zero
+
     camera.update(deltaTime: deltaTime)
   }
 }
