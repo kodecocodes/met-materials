@@ -39,12 +39,12 @@ struct Submesh {
   let indexBufferOffset: Int
 
   struct Textures {
-    var baseColor: MTLTexture?
-    var normal: MTLTexture?
-    var roughness: MTLTexture?
-    var metallic: MTLTexture?
-    var ambientOcclusion: MTLTexture?
-    var opacity: MTLTexture?
+    var baseColor: Int?
+    var normal: Int?
+    var roughness: Int?
+    var metallic: Int?
+    var ambientOcclusion: Int?
+    var opacity: Int?
   }
   var textures: Textures
   var material: Material
@@ -55,12 +55,12 @@ struct Submesh {
 
   var allTextures: [MTLTexture?] {
     [
-      textures.baseColor,
-      textures.normal,
-      textures.roughness,
-      textures.metallic,
-      textures.ambientOcclusion,
-      textures.opacity
+      TextureController.getTexture(textures.baseColor),
+      TextureController.getTexture(textures.normal),
+      TextureController.getTexture(textures.roughness),
+      TextureController.getTexture(textures.metallic),
+      TextureController.getTexture(textures.ambientOcclusion),
+      TextureController.getTexture(textures.opacity)
     ]}
 }
 
@@ -93,19 +93,15 @@ private extension MDLMaterialProperty {
 }
 
 private extension MDLMaterial {
-  func texture(type semantic: MDLMaterialSemantic) -> MTLTexture? {
+  func texture(type semantic: MDLMaterialSemantic) -> Int? {
     if let property = property(with: semantic),
     property.type == .texture,
     let mdlTexture = property.textureSamplerValue?.texture {
-      var texture = TextureController.loadTexture(
+      let sRGB = semantic == .baseColor
+      return TextureController.loadTexture(
         texture: mdlTexture,
-        name: property.textureName)
-      if semantic == .baseColor,
-        texture?.pixelFormat == .rgba8Unorm {
-        texture = texture?.makeTextureView(pixelFormat: .rgba8Unorm_srgb)
-        TextureController.textures[property.textureName] = texture
-      }
-      return texture
+        name: property.textureName,
+        sRGB: sRGB)
     }
     return nil
   }

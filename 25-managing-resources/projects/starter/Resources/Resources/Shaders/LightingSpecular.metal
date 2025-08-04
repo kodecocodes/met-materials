@@ -47,7 +47,7 @@ float3 computeSpecular(
   float3 specularTotal = 0;
   for (uint i = 0; i < params.lightCount; i++) {
     Light light = lights[i];
-    if (light.type != Sun) { continue; };
+    if (light.type != SunLight) { continue; };
     float3 specular = calculateSunSpecular(
       light,
       material,

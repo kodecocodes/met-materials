@@ -30,40 +30,28 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
+#ifndef Material_h
+#define Material_h
 
-float3 computeDiffuse(
-  constant Light *lights,
-  constant Params &params,
-  Material material,
-  float3 normal,
-  float3 worldPosition)
-{
-  float3 diffuseTotal = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    switch (light.type) {
-      case SunLight: {
-        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
-        break;
-      }
-      case PointLight: {
-        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
-        break;
-      }
-      case SpotLight: {      // not yet implemented
-        break;
-      }
-      case AmbientLight: {   // not needed for PBR lighting
-        break;
-      }
-      case unused: {
-        break;
-      }
-    }
-    if (light.type != SunLight) { continue; }
-  }
-  return diffuseTotal;
-}
+typedef enum {
+  BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  OpacityTexture = 5,
+  ShadowTexture = 15,
+  SkyboxTexture = 16,
+  SkyboxDiffuseTexture = 17,
+  BRDFLutTexture = 18
+} TextureIndices;
+
+typedef struct {
+  vector_float3 baseColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+  float opacity;
+} Material;
+
+#endif /* Material_h */

@@ -72,14 +72,9 @@ extension Model {
         mesh: mesh)
       for submesh in mesh.submeshes {
         if submesh.transparency != params.transparency { continue }
-        var material = submesh.material
-        encoder.setFragmentBytes(
-          &material,
-          length: MemoryLayout<Material>.stride,
-          index: MaterialBuffer.index)
 
         if renderState != .shadowPass {
-          setTextures(encoder: encoder, submesh: submesh)
+          setMaterials(encoder: encoder, submesh: submesh)
         }
 
         encoder.drawIndexedPrimitives(
@@ -121,27 +116,17 @@ extension Model {
     }
   }
 
-  func setTextures(
+  func setMaterials(
     encoder: MTLRenderCommandEncoder,
     submesh: Submesh
   ) {
-    encoder.setFragmentTexture(
-      submesh.textures.baseColor,
-      index: BaseColor.index)
-    encoder.setFragmentTexture(
-      submesh.textures.normal,
-      index: NormalTexture.index)
-    encoder.setFragmentTexture(
-      submesh.textures.roughness,
-      index: RoughnessTexture.index)
-    encoder.setFragmentTexture(
-      submesh.textures.metallic,
-      index: MetallicTexture.index)
-    encoder.setFragmentTexture(
-      submesh.textures.ambientOcclusion,
-      index: AOTexture.index)
-    encoder.setFragmentTexture(
-      submesh.textures.opacity,
-      index: OpacityTexture.index)
+    var material = submesh.material
+    encoder.setFragmentBytes(
+      &material,
+      length: MemoryLayout<Material>.stride,
+      index: MaterialBuffer.index)
+    for (index, texture) in submesh.allTextures.enumerated() {
+      encoder.setFragmentTexture(texture, index: index)
+    }
   }
 }

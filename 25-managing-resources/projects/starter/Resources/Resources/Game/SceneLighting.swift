@@ -40,7 +40,7 @@ struct SceneLighting {
     light.intensity = 1.0
     light.specularColor = float3(repeating: 1)
     light.attenuation = [1, 0, 0]
-    light.type = Sun
+    light.type = SunLight
     return light
   }
 

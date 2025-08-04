@@ -33,13 +33,40 @@
 import MetalKit
 
 enum TextureController {
-  static var textures: [String: MTLTexture] = [:]
+  static var textureIndex: [String: Int] = [:]
+  static var textures: [MTLTexture] = []
+
+  static func texture(name: String) -> Int? {
+    if let index = textureIndex[name] {
+      return index
+    }
+    if let texture = loadTexture(name: name) {
+      return store(texture: texture, name: name)
+    }
+    return nil
+  }
+
+  static func store(texture: MTLTexture?, name: String) -> Int? {
+    guard let texture else { return nil }
+    texture.label = name
+    if let index = textureIndex[name] {
+      return index
+    }
+    textures.append(texture)
+    let index = textures.count - 1
+    textureIndex[name] = index
+    return index
+  }
+
+  static func getTexture(_ index: Int?) -> MTLTexture? {
+    if let index = index {
+      return textures[index]
+    }
+    return nil
+  }
 
   // load a texture from a USD file
-  static func loadTexture(texture: MDLTexture, name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
-    }
+  static func loadTexture(texture: MDLTexture, name: String, sRGB: Bool = false) -> Int? {
     let textureLoader = MTKTextureLoader(device: Renderer.device)
     let textureLoaderOptions: [MTKTextureLoader.Option: Any] = [
       .origin: MTKTextureLoader.Origin.bottomLeft,
@@ -47,29 +74,25 @@ enum TextureController {
       .textureUsage: MTLTextureUsage.pixelFormatView.rawValue
         | MTLTextureUsage.shaderRead.rawValue
     ]
-    let texture = try? textureLoader.newTexture(
+    var texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
-    textures[name] = texture
-    return texture
+    // Convert USDZ base color texture to sRGB color
+    if sRGB,
+      texture?.pixelFormat == .rgba8Unorm {
+      texture = texture?.makeTextureView(pixelFormat: .rgba8Unorm_srgb)
+    }
+    return store(texture: texture, name: name)
   }
 
   // load a texture from Asset Catalog
   static func loadTexture(name: String) -> MTLTexture? {
-    if let texture = textures[name] {
-      return texture
-    }
     let textureLoader = MTKTextureLoader(device: Renderer.device)
-    let texture: MTLTexture?
-    texture = try? textureLoader.newTexture(
+    return try? textureLoader.newTexture(
       name: name,
       scaleFactor: Renderer.scaleFactor,
       bundle: Bundle.main,
       options: nil)
-    if texture != nil {
-      textures[name] = texture
-    }
-    return texture
   }
 
   // load a cube texture

@@ -131,7 +131,7 @@ class Model: Transformable {
 
 extension Model {
   func setTexture(name: String, type: TextureIndices) {
-    if let texture = TextureController.loadTexture(name: name) {
+    if let texture = TextureController.texture(name: name) {
       switch type {
       case BaseColor:
         meshes[0].submeshes[0].textures.baseColor = texture

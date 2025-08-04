@@ -35,6 +35,7 @@
 
 #import <simd/simd.h>
 #import "stdbool.h"
+#import "Material.h"
 
 typedef struct {
   matrix_float4x4 modelMatrix;
@@ -80,24 +81,11 @@ typedef enum {
 } Attributes;
 
 typedef enum {
-  BaseColor = 0,
-  NormalTexture = 1,
-  RoughnessTexture = 2,
-  MetallicTexture = 3,
-  AOTexture = 4,
-  OpacityTexture = 5,
-  ShadowTexture = 15,
-  SkyboxTexture = 16,
-  SkyboxDiffuseTexture = 17,
-  BRDFLutTexture = 18
-} TextureIndices;
-
-typedef enum {
   unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
+  SunLight = 1,
+  SpotLight = 2,
+  PointLight = 3,
+  AmbientLight = 4
 } LightType;
 
 typedef struct {
@@ -112,13 +100,5 @@ typedef struct {
   vector_float3 coneDirection;
   float coneAttenuation;
 } Light;
-
-typedef struct {
-  vector_float3 baseColor;
-  float roughness;
-  float metallic;
-  float ambientOcclusion;
-  float opacity;
-} Material;
 
 #endif /* Common_h */

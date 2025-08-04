@@ -30,40 +30,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
-#import "Lighting.h"
+import MetalKit
 
-float3 computeDiffuse(
-  constant Light *lights,
-  constant Params &params,
-  Material material,
-  float3 normal,
-  float3 worldPosition)
-{
-  float3 diffuseTotal = 0;
-  for (uint i = 0; i < params.lightCount; i++) {
-    Light light = lights[i];
-    switch (light.type) {
-      case SunLight: {
-        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
-        break;
-      }
-      case PointLight: {
-        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
-        break;
-      }
-      case SpotLight: {      // not yet implemented
-        break;
-      }
-      case AmbientLight: {   // not needed for PBR lighting
-        break;
-      }
-      case unused: {
-        break;
-      }
-    }
-    if (light.type != SunLight) { continue; }
+extension MTLTexture {
+  var descriptor: MTLTextureDescriptor {
+    let descriptor = MTLTextureDescriptor()
+    descriptor.textureType = textureType
+    descriptor.pixelFormat = pixelFormat
+    descriptor.width = width
+    descriptor.height = height
+    descriptor.depth = depth
+    descriptor.mipmapLevelCount = mipmapLevelCount
+    descriptor.arrayLength = arrayLength
+    descriptor.sampleCount = sampleCount
+    descriptor.cpuCacheMode = cpuCacheMode
+    descriptor.usage = usage
+    descriptor.storageMode = storageMode
+    return descriptor
   }
-  return diffuseTotal;
 }
