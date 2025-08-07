@@ -30,37 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import SwiftUI
+import MetalKit
 
-#import <simd/simd.h>
-#import "Material.h"
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+struct MetalView: ViewRepresentable {
+  let view = MTKView()
+  let options: Options
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+  func makeCoordinator() -> GameController {
+    let gameController = GameController(
+      metalView: view,
+      options: options)
+    return gameController
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+#if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    makeMetalView()
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+#elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    makeMetalView()
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+#endif
 
-#endif /* Common_h */
+  func makeMetalView() -> MTKView {
+    view
+  }
+
+  func updateMetalView() {
+  }
+}
+
+#Preview {
+  VStack {
+    MetalView(options: Options())
+      .border(.black, width: 2.0)
+      .padding()
+  }
+}

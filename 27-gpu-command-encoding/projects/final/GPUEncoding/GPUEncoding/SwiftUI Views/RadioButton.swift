@@ -1,15 +1,15 @@
-///// Copyright (c) 2025 Kodeco Inc.
-///
+///// Copyright (c) 2023 Kodeco Inc.
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -30,37 +30,41 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import SwiftUI
 
-#import <simd/simd.h>
-#import "Material.h"
+struct RadioButton: View {
+  let label: String
+  let options: [String]
+  let action: (_ checked: Int) -> Void
+  @State var checked: Int = 0
+  var body: some View {
+    VStack(alignment: .trailing) {
+      ForEach(0..<options.count, id: \.self) { index in
+        HStack {
+          Text(options[index])
+          if index == checked {
+            Image(systemName: "smallcircle.filled.circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          } else {
+            Image(systemName: "circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          }
+        }
+      }
+    }
+  }
+}
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
-
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+#Preview {
+  RadioButton(
+    label: "Options:",
+    options: ["on", "off"]) { _ in }
+}

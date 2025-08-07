@@ -34,8 +34,8 @@
 
 import MetalKit
 
-struct GPURenderPass: RenderPass {
-  var label = "GPU Command Encoding"
+struct IndirectRenderPass: RenderPass {
+  var label = "Indirect Command Encoding"
   var descriptor: MTLRenderPassDescriptor?
   let depthStencilState: MTLDepthStencilState?
   let pipelineState: MTLRenderPipelineState
@@ -46,11 +46,17 @@ struct GPURenderPass: RenderPass {
     depthStencilState = Self.buildDepthStencilState()
   }
 
-  mutating func initialize(models: [Model]) {
-    initializeICBCommands(models)
+  mutating func initialize(
+    models: [Model],
+    uniforms: MTLBuffer
+  ) {
+    initializeICBCommands(models, uniforms)
   }
 
-  mutating func initializeICBCommands(_ models: [Model]) {
+  mutating func initializeICBCommands(
+    _ models: [Model],
+    _ uniforms: MTLBuffer
+  ) {
     let icbDescriptor = MTLIndirectCommandBufferDescriptor()
     icbDescriptor.commandTypes = [.drawIndexed]
     icbDescriptor.inheritBuffers = false
@@ -64,6 +70,43 @@ struct GPURenderPass: RenderPass {
       options: []) else { fatalError("Failed to create ICB") }
     icb.label = "ICB for \(models.count) models"
     self.icb = icb
+
+    for (modelIndex, model) in models.enumerated() {
+      var modelParams = ModelParams(
+        modelMatrix: model.transform.modelMatrix,
+        tiling: model.tiling)
+      model.modelParamsBuffer.contents().copyMemory(
+        from: &modelParams,
+        byteCount: MemoryLayout<ModelParams>.stride)
+      let mesh = model.meshes[0]
+      let submesh = mesh.submeshes[0]
+      let icbCommand = icb.indirectRenderCommandAt(modelIndex)
+      icbCommand.setVertexBuffer(
+        uniforms, offset: 0, at: UniformsBuffer.index)
+      icbCommand.setVertexBuffer(
+        model.modelParamsBuffer, offset: 0, at: ModelParamsBuffer.index)
+      icbCommand.setFragmentBuffer(
+        model.modelParamsBuffer, offset: 0, at: ModelParamsBuffer.index)
+      icbCommand.setVertexBuffer(
+        mesh.vertexBuffers[VertexBuffer.index],
+        offset: 0,
+        at: VertexBuffer.index)
+      icbCommand.setVertexBuffer(
+        mesh.vertexBuffers[UVBuffer.index],
+        offset: 0,
+        at: UVBuffer.index)
+      icbCommand.setFragmentBuffer(
+        submesh.materialBuffer, offset: 0, at: MaterialBuffer.index)
+      icbCommand.drawIndexedPrimitives(
+        .triangle,
+        indexCount: submesh.indexCount,
+        indexType: submesh.indexType,
+        indexBuffer: submesh.indexBuffer,
+        indexBufferOffset: submesh.indexBufferOffset,
+        instanceCount: 1,
+        baseVertex: 0,
+        baseInstance: 0)
+    }
   }
 
   mutating func resize(view: MTKView, size: CGSize) {

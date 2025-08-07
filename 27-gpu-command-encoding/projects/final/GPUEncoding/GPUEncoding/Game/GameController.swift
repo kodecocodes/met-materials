@@ -30,37 +30,37 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
-#import "Material.h"
+class GameController: NSObject {
+  static var fps: Double = 0
+  var scene: GameScene
+  var renderer: Renderer
+  var deltaTime: Double = 0
+  var lastTime: Double = CFAbsoluteTimeGetCurrent()
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+  init(metalView: MTKView, options: Options) {
+    Self.fps = Double(metalView.preferredFramesPerSecond)
+    renderer = Renderer(metalView: metalView, options: options)
+    scene = GameScene()
+    renderer.initialize(scene)
+    super.init()
+    metalView.delegate = self
+    mtkView(metalView, drawableSizeWillChange: metalView.drawableSize)
+  }
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+extension GameController: MTKViewDelegate {
+  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    scene.update(size: size)
+    renderer.mtkView(view, drawableSizeWillChange: size)
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  func draw(in view: MTKView) {
+    let currentTime = CFAbsoluteTimeGetCurrent()
+    let deltaTime = (currentTime - lastTime)
+    lastTime = currentTime
+    scene.update(deltaTime: Float(deltaTime))
+    renderer.draw(scene: scene, in: view)
+  }
+}

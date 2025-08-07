@@ -30,37 +30,49 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
-#import "Material.h"
+enum PipelineStates {
+  static func createPSO(descriptor: MTLRenderPipelineDescriptor)
+  -> MTLRenderPipelineState {
+    let pipelineState: MTLRenderPipelineState
+    do {
+      pipelineState =
+      try Renderer.device.makeRenderPipelineState(
+        descriptor: descriptor)
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
+  }
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+  static func createComputePSO(function: String)
+    -> MTLComputePipelineState {
+    guard let kernel = Renderer.library.makeFunction(name: function)
+    else { fatalError("Unable to create \(function) PSO") }
+    let pipelineState: MTLComputePipelineState
+    do {
+      pipelineState =
+      try Renderer.device.makeComputePipelineState(function: kernel)
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+    return pipelineState
+  }
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
-
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  static func createRenderPSO()
+  -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library.makeFunction(name: "vertex_main")
+    let fragmentFunction = Renderer.library.makeFunction(name: "fragment_main")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat
+      = Renderer.viewColorPixelFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor =
+      MTLVertexDescriptor.defaultLayout
+    pipelineDescriptor.supportIndirectCommandBuffers = true
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+}

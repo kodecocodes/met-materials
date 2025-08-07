@@ -30,37 +30,52 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
+import GameController
 
-#import <simd/simd.h>
-#import "Material.h"
+struct GameScene {
+  var models: [Model] = []
+  lazy var ground: Model = {
+    var ground = Model(name: "ground", primitiveType: .plane)
+    ground.setTexture(name: "grass", type: BaseColor)
+    ground.scale = 40
+    ground.tiling = 6
+    ground.rotation.z = Float(270).degreesToRadians
+    return ground
+  }()
+  lazy var house: Model = {
+    Model(name: "house.usdz")
+  }()
+  var camera = ArcballCamera()
+  var defaultDistance: Float = 5
+  var defaultView: Transform {
+    Transform(
+      position: [4.15, 2.4, -2.4],
+      rotation: [-0.28, 5.23, 0])
+  }
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+  init() {
+    camera.target = [0, 1, 0]
+    camera.distance = defaultDistance
+    camera.transform = defaultView
+    models = [ground, house]
+  }
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+  mutating func update(size: CGSize) {
+    camera.update(size: size)
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  mutating func update(deltaTime: Float) {
+    let input = InputController.shared
+    if input.keysPressed.contains(.one) {
+      camera.transform = Transform()
+      camera.distance = defaultDistance
+    }
+    if input.keysPressed.contains(.two) {
+      camera.transform = defaultView
+      camera.distance = defaultDistance
+    }
+    input.keysPressed.removeAll()
+    camera.update(deltaTime: deltaTime)
+  }
+}

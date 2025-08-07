@@ -46,6 +46,8 @@ typedef struct {
   uint32_t tiling;
 } ModelParams ;
 
+#import "SceneData.h"
+
 typedef enum {
   VertexBuffer = 0,
   UVBuffer = 1,

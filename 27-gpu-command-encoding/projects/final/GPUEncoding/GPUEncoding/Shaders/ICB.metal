@@ -30,37 +30,49 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
 
-#import <simd/simd.h>
-#import "Material.h"
+#import "Common.h"
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+struct ICBContainer {
+  command_buffer icb [[id(0)]];
+};
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+kernel void encodeICB(
+  constant SceneData* scene [[buffer(0)]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  device ICBContainer *icbContainer [[buffer(ICBBuffer)]],
+  uint modelIndex [[thread_position_in_grid]])
+{
+  SceneData model = scene[modelIndex];
+  command_buffer icb = icbContainer->icb;
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  bool isVisible = true;
+  render_command cmd(icb, modelIndex);
+  if (isVisible) {
+    cmd.set_vertex_buffer(&uniforms, UniformsBuffer);
+    cmd.set_vertex_buffer(model.positionsAndNormals, VertexBuffer);
+    cmd.set_vertex_buffer(model.uvs, UVBuffer);
+    cmd.set_vertex_buffer(model.modelParams, ModelParamsBuffer);
+    cmd.set_fragment_buffer(model.materials, MaterialBuffer);
+    cmd.set_fragment_buffer(model.modelParams, ModelParamsBuffer);
+    if (model.indexType == 0) {
+      // uint16 indices
+      cmd.draw_indexed_primitives(
+        primitive_type::triangle,
+        model.indexCount,
+        (constant ushort*) model.indices,
+        1);
+    } else {
+      // uint32 indices
+      cmd.draw_indexed_primitives(
+        primitive_type::triangle,
+        model.indexCount,
+        (constant uint32_t*) model.indices,
+        1);
+    }
+  } else {
+    cmd.reset();
+  }
+}

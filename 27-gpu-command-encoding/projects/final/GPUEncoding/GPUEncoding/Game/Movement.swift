@@ -30,37 +30,59 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import Foundation
+import GameController
 
-#import <simd/simd.h>
-#import "Material.h"
+enum Settings {
+  static var rotationSpeed: Float { 2.0 }
+  static var translationSpeed: Float { 10.0 }
+  static var mouseScrollSensitivity: Float { 0.005 }
+  static var mousePanSensitivity: Float { 0.008 }
+  static var touchZoomSensitivity: Float { 10 }
+}
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+protocol Movement where Self: Transformable {
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+extension Movement {
+  var forwardVector: float3 {
+    normalize([sin(rotation.y), 0, cos(rotation.y)])
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+  var rightVector: float3 {
+    [forwardVector.z, forwardVector.y, -forwardVector.x]
+  }
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+  func updateInput(deltaTime: Float) -> Transform {
+    var transform = Transform()
+    let rotationAmount = deltaTime * Settings.rotationSpeed
+    let input = InputController.shared
+    if input.keysPressed.contains(.leftArrow) {
+      transform.rotation.y -= rotationAmount
+    }
+    if input.keysPressed.contains(.rightArrow) {
+      transform.rotation.y += rotationAmount
+    }
 
-#endif /* Common_h */
+    var direction: float3 = .zero
+    if input.keysPressed.contains(.keyW) {
+      direction.z += 1
+    }
+    if input.keysPressed.contains(.keyS) {
+      direction.z -= 1
+    }
+    if input.keysPressed.contains(.keyA) {
+      direction.x -= 1
+    }
+    if input.keysPressed.contains(.keyD) {
+      direction.x += 1
+    }
+    let translationAmount = deltaTime * Settings.translationSpeed
+    if direction != .zero {
+      direction = normalize(direction)
+      transform.position += (direction.z * forwardVector
+        + direction.x * rightVector) * translationAmount
+    }
+    return transform
+  }
+}

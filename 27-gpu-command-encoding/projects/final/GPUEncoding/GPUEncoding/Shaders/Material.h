@@ -30,37 +30,38 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
-
-#import <simd/simd.h>
-#import "Material.h"
-
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
-
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+#ifndef Material_h
+#define Material_h
 
 typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+  BaseColor = 0,
+  NormalTexture = 1,
+  MaterialTextureCount = NormalTexture + 1,
+} TextureIndices;
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+typedef struct {
+  vector_float3 baseColor;
+} Material;
 
-#endif /* Common_h */
+#if __METAL_VERSION__
+// MARK: - Metal Shading Language
+
+#include <metal_stdlib>
+using namespace metal;
+
+struct ShaderMaterial {
+  array<texture2d<float>, MaterialTextureCount> textures;
+  Material material;
+};
+
+#else
+// MARK: - Swift side
+#include <Metal/Metal.h>
+
+struct ShaderMaterial {
+  MTLResourceID textures[MaterialTextureCount];
+  Material material;
+};
+
+#endif // Metal version
+#endif /* Material_h */

@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 // swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable force_unwrapping
 
 import MetalKit
 
@@ -40,14 +41,54 @@ struct GPURenderPass: RenderPass {
   let depthStencilState: MTLDepthStencilState?
   let pipelineState: MTLRenderPipelineState
   var icb: MTLIndirectCommandBuffer!
+  let icbPipelineState: MTLComputePipelineState
+  let icbComputeFunction: MTLFunction
+  var icbContainer: MTLBuffer!
+
+  var sceneBuffer: MTLBuffer!
+  var modelParamsBufferArray: [MTLBuffer] = []
 
   init() {
     pipelineState = PipelineStates.createRenderPSO()
     depthStencilState = Self.buildDepthStencilState()
+    icbComputeFunction =
+      Renderer.library.makeFunction(name: "encodeICB")!
+    icbPipelineState = PipelineStates.createComputePSO(
+      function: "encodeICB")
   }
 
   mutating func initialize(models: [Model]) {
     initializeICBCommands(models)
+
+    let sceneBufferSize = MemoryLayout<SceneData>.stride * models.count
+    sceneBuffer = Renderer.device.makeBuffer(length: sceneBufferSize)!
+    sceneBuffer.label = "Scene Buffer"
+    var scenePtr = sceneBuffer.contents()
+      .assumingMemoryBound(to: SceneData.self)
+    for model in models {
+      let mesh = model.meshes[0]
+      let submesh = mesh.submeshes[0]
+
+      scenePtr.pointee.positions = mesh.vertexBuffers[0].gpuAddress
+      scenePtr.pointee.uvs = mesh.vertexBuffers[1].gpuAddress
+      scenePtr.pointee.indices = submesh.indexBuffer.gpuAddress
+      scenePtr.pointee.indexType = submesh.indexType == .uint16 ? 0 : 1
+      scenePtr.pointee.indexCount = UInt32(submesh.indexCount)
+      scenePtr.pointee.materials = model.meshes[0].submeshes[0]
+        .materialBuffer.gpuAddress
+
+      var modelParams = ModelParams(
+        modelMatrix: model.transform.modelMatrix,
+        tiling: model.tiling)
+      let modelParamsBufferSize = MemoryLayout<ModelParams>.stride
+      let modelParamsBuffer = Renderer.device.makeBuffer(
+        bytes: &modelParams, length: modelParamsBufferSize)!
+      modelParamsBuffer.label = "Model Params"
+      scenePtr.pointee.modelParams = modelParamsBuffer.gpuAddress
+      modelParamsBufferArray.append(modelParamsBuffer)
+
+      scenePtr = scenePtr.advanced(by: 1)
+    }
   }
 
   mutating func initializeICBCommands(_ models: [Model]) {
@@ -64,6 +105,14 @@ struct GPURenderPass: RenderPass {
       options: []) else { fatalError("Failed to create ICB") }
     icb.label = "ICB for \(models.count) models"
     self.icb = icb
+
+    let icbEncoder = icbComputeFunction.makeArgumentEncoder(
+      bufferIndex: ICBBuffer.index)
+    icbContainer = Renderer.device.makeBuffer(
+      length: icbEncoder.encodedLength,
+      options: [])
+    icbEncoder.setArgumentBuffer(icbContainer, offset: 0)
+    icbEncoder.setIndirectCommandBuffer(icb, index: 0)
   }
 
   mutating func resize(view: MTKView, size: CGSize) {
@@ -91,7 +140,39 @@ struct GPURenderPass: RenderPass {
         encoder.useResource(buffer, usage: .read, stages: .fragment)
       }
     }
+
+    encoder.useResource(sceneBuffer, usage: .read, stages: [.vertex, .fragment])
+    modelParamsBufferArray.forEach {
+      encoder.useResource($0, usage: .read, stages: [.vertex, .fragment])
+    }
     encoder.popDebugGroup()
+  }
+
+  func encodeICB(
+    commandBuffer: MTLCommandBuffer,
+    models: [Model],
+    uniforms: MTLBuffer
+  ) {
+    guard let computeEncoder =
+      commandBuffer.makeComputeCommandEncoder() else { return }
+    computeEncoder.label = "GPU Encoding"
+
+    computeEncoder.setComputePipelineState(icbPipelineState)
+    computeEncoder.setBuffer(sceneBuffer, offset: 0, index: 0)
+    computeEncoder.setBuffer(
+      uniforms, offset: 0, index: UniformsBuffer.index)
+    computeEncoder.setBuffer(
+      icbContainer, offset: 0, index: ICBBuffer.index)
+
+    // Dispatch threads
+    let threadExecutionWidth = icbPipelineState.threadExecutionWidth
+    let drawCount = models.count // should be number of draw calls
+    let threads = MTLSize(width: drawCount, height: 1, depth: 1)
+    let threadsPerThreadgroup = MTLSize(
+      width: threadExecutionWidth, height: 1, depth: 1)
+    computeEncoder.dispatchThreads(
+      threads, threadsPerThreadgroup: threadsPerThreadgroup)
+    computeEncoder.endEncoding()
   }
 
   func draw(
@@ -99,6 +180,10 @@ struct GPURenderPass: RenderPass {
     scene: GameScene,
     uniforms: MTLBuffer
   ) {
+    encodeICB(
+      commandBuffer: commandBuffer,
+      models: scene.models,
+      uniforms: uniforms)
     guard let descriptor = descriptor,
       let renderEncoder =
       commandBuffer.makeRenderCommandEncoder(
@@ -106,6 +191,7 @@ struct GPURenderPass: RenderPass {
       return
     }
     useResources(encoder: renderEncoder, models: scene.models)
+
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
@@ -120,3 +206,4 @@ struct GPURenderPass: RenderPass {
 }
 
 // swiftlint:enable implicitly_unwrapped_optional
+// swiftlint:enable force_unwrapping

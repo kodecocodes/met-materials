@@ -30,37 +30,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import Foundation
 
-#import <simd/simd.h>
-#import "Material.h"
+struct ArcballCamera: Camera {
+  var transform = Transform()
+  var aspect: Float = 1.0
+  var fov = Float(70).degreesToRadians
+  var near: Float = 0.1
+  var far: Float = 100
+  var projectionMatrix: float4x4 {
+    float4x4(
+      projectionFov: fov,
+      near: near,
+      far: far,
+      aspect: aspect)
+  }
+  let minDistance: Float = 0.01
+  let maxDistance: Float = 20
+  var target: float3 = [0, 0, 0]
+  var distance: Float = 2.5
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+  mutating func update(size: CGSize) {
+    aspect = Float(size.width / size.height)
+  }
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+  var viewMatrix: float4x4 {
+    float4x4(eye: position, target: target, up: [0, 1, 0])
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  mutating func update(deltaTime: Float) {
+    let input = InputController.shared
+    let scrollSensitivity = Settings.mouseScrollSensitivity
+    distance -= (input.mouseScroll.x + input.mouseScroll.y)
+      * scrollSensitivity
+    distance = min(maxDistance, distance)
+    distance = max(minDistance, distance)
+    input.mouseScroll = .zero
+    if input.leftMouseDown {
+      let sensitivity = Settings.mousePanSensitivity
+      rotation.x += input.mouseDelta.y * sensitivity
+      rotation.y += input.mouseDelta.x * sensitivity
+      rotation.x = max(-.pi / 2, min(rotation.x, .pi / 2))
+      input.mouseDelta = .zero
+    }
+    let rotateMatrix = float4x4(
+      rotationYXZ: [-rotation.x, rotation.y, 0])
+    let distanceVector = float4(0, 0, -distance, 0)
+    let rotatedVector = rotateMatrix * distanceVector
+    position = target + rotatedVector.xyz
+  }
+}

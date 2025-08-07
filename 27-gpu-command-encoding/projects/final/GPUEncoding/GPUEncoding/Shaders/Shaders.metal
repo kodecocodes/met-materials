@@ -30,37 +30,47 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
 
-#import <simd/simd.h>
-#import "Material.h"
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+};
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+struct VertexOut {
+  float4 position [[position]];
+  float2 uv;
+};
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+vertex VertexOut vertex_main(
+  const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant ModelParams &modelParams [[buffer(ModelParamsBuffer)]])
+{
+  float4 position = in.position;
+  VertexOut out {
+    .position = uniforms.projectionMatrix * uniforms.viewMatrix
+    * modelParams.modelMatrix * position,
+      .uv = in.uv,
+  };
+  return out;
+}
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+fragment float4 fragment_main(
+  constant ModelParams &modelParams [[buffer(ModelParamsBuffer)]],
+  VertexOut in [[stage_in]],
+  constant ShaderMaterial &shaderMaterial [[buffer(MaterialBuffer)]])
+{
+  constexpr sampler textureSampler(address::repeat);
+  
+  Material material = shaderMaterial.material;
+  auto textures = shaderMaterial.textures;
+  texture2d<float> baseColorTexture = textures[BaseColor];
+  material.baseColor = baseColorTexture.sample(
+    textureSampler,
+    in.uv * modelParams.tiling).rgb;
+  return float4(material.baseColor, 1);
+}

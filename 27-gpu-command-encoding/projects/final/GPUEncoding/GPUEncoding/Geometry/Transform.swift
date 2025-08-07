@@ -30,37 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import Foundation
 
-#import <simd/simd.h>
-#import "Material.h"
+struct Transform {
+  var position: float3 = [0, 0, 0]
+  var rotation: float3 = [0, 0, 0]
+  var scale: Float = 1
+}
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+extension Transform {
+  var modelMatrix: matrix_float4x4 {
+    let translation = float4x4(translation: position)
+    let rotation = float4x4(rotation: rotation)
+    let scale = float4x4(scaling: scale)
+    let modelMatrix = translation * rotation * scale
+    return modelMatrix
+  }
+}
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+protocol Transformable {
+  var transform: Transform { get set }
+}
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+extension Transformable {
+  var position: float3 {
+    get { transform.position }
+    set { transform.position = newValue }
+  }
+  var rotation: float3 {
+    get { transform.rotation }
+    set { transform.rotation = newValue }
+  }
+  var scale: Float {
+    get { transform.scale }
+    set { transform.scale = newValue }
+  }
+}

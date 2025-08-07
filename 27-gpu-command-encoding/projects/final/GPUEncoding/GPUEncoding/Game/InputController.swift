@@ -30,37 +30,68 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import GameController
 
-#import <simd/simd.h>
-#import "Material.h"
+class InputController {
+  struct Point {
+    var x: Float
+    var y: Float
+    static let zero = Point(x: 0, y: 0)
+  }
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+  static let shared = InputController()
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+  var keysPressed: Set<GCKeyCode> = []
+  var leftMouseDown = false
+  var mouseDelta = Point.zero
+  var mouseScroll = Point.zero
+  var touchLocation: CGPoint?
+  var touchDelta: CGSize? {
+    didSet {
+      touchDelta?.height *= -1
+      if let delta = touchDelta {
+        mouseDelta = Point(x: Float(delta.width), y: Float(delta.height))
+      }
+      leftMouseDown = touchDelta != nil
+    }
+  }
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+  private init() {
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: .GCKeyboardDidConnect,
+      object: nil,
+      queue: nil) { notification in
+        let keyboard = notification.object as? GCKeyboard
+          keyboard?.keyboardInput?.keyChangedHandler
+            = { _, _, keyCode, pressed in
+          if pressed {
+            self.keysPressed.insert(keyCode)
+          } else {
+            self.keysPressed.remove(keyCode)
+          }
+        }
+    }
+#if os(macOS)
+  NSEvent.addLocalMonitorForEvents(
+    matching: [.keyUp, .keyDown]) { _ in nil }
+#endif
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+  center.addObserver(
+    forName: .GCMouseDidConnect,
+    object: nil,
+    queue: nil) { notification in
+      let mouse = notification.object as? GCMouse
+      mouse?.mouseInput?.leftButton.pressedChangedHandler = { _, _, pressed in
+        self.leftMouseDown = pressed
+      }
+      mouse?.mouseInput?.mouseMovedHandler = { _, deltaX, deltaY in
+        self.mouseDelta = Point(x: deltaX, y: deltaY)
+      }
+      mouse?.mouseInput?.scroll.valueChangedHandler = { _, xValue, yValue in
+        self.mouseScroll.x = xValue
+        self.mouseScroll.y = yValue
+      }
+  }
+  }
+}

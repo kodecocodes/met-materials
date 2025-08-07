@@ -30,37 +30,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+#ifndef SceneData_h
+#define SceneData_h
 
-#import <simd/simd.h>
-#import "Material.h"
+#if __METAL_VERSION__
+// MARK: - Metal Shading Language
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+#include <metal_stdlib>
+using namespace metal;
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+struct SceneData {
+  constant float3* positionsAndNormals;
+  constant float2* uvs;
+  constant uint32_t* indices;
+  uint32_t indexType;
+  uint32_t indexCount;
+  constant ShaderMaterial* materials;
+  constant ModelParams* modelParams;
+};
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+#else
+// MARK: - Swift side
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+#include <Metal/Metal.h>
 
-#endif /* Common_h */
+struct SceneData {
+  uint64_t positions;
+  uint64_t uvs;
+  uint64_t indices;
+  uint32_t indexType;
+  uint32_t indexCount;
+  uint64_t materials;
+  uint64_t modelParams;
+};
+
+# endif
+
+#endif /* SceneData_h */

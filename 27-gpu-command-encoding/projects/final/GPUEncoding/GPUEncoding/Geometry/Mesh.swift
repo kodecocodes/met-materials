@@ -30,37 +30,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+// swiftlint:disable force_unwrapping
+// swiftlint:disable force_cast
 
-#import <simd/simd.h>
-#import "Material.h"
+import MetalKit
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+struct Mesh {
+  var vertexBuffers: [MTLBuffer]
+  var submeshes: [Submesh]
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+  init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
+    vertexBuffers = mtkMesh.vertexBuffers.map {
+      $0.buffer
+    }
+    submeshes = zip(mdlMesh.submeshes!, mtkMesh.submeshes).map { mesh in
+      Submesh(mdlSubmesh: mesh.0 as! MDLSubmesh, mtkSubmesh: mesh.1)
+    }
+  }
+}
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
-
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
-
-#endif /* Common_h */
+// swiftlint:enable force_unwrapping
+// swiftlint:enable force_cast

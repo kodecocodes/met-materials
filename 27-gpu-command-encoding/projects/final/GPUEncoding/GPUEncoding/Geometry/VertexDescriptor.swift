@@ -30,37 +30,65 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef Common_h
-#define Common_h
+import MetalKit
 
-#import <simd/simd.h>
-#import "Material.h"
+extension MTLVertexDescriptor {
+  static var defaultLayout: MTLVertexDescriptor? {
+    MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
+  }
+}
 
-typedef struct {
-  matrix_float4x4 viewMatrix;
-  matrix_float4x4 projectionMatrix;
-} Uniforms;
+extension MDLVertexDescriptor {
+  static var defaultLayout: MDLVertexDescriptor = {
+    let vertexDescriptor = MDLVertexDescriptor()
 
-typedef struct {
-  matrix_float4x4 modelMatrix;
-  uint32_t tiling;
-} ModelParams ;
+    // Position and Normal
+    var offset = 0
+    vertexDescriptor.attributes[Position.index]
+      = MDLVertexAttribute(
+        name: MDLVertexAttributePosition,
+        format: .float3,
+        offset: 0,
+        bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
+    vertexDescriptor.attributes[Normal.index] =
+      MDLVertexAttribute(
+        name: MDLVertexAttributeNormal,
+        format: .float3,
+        offset: offset,
+        bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float3>.stride
+    vertexDescriptor.layouts[VertexBuffer.index]
+      = MDLVertexBufferLayout(stride: offset)
 
-typedef enum {
-  VertexBuffer = 0,
-  UVBuffer = 1,
-  UniformsBuffer = 11,
-  ParamsBuffer = 12,
-  ModelParamsBuffer = 13,
-  MaterialBuffer = 14,
-  ColorBuffer = 20,
-  ICBBuffer = 25
-} BufferIndices;
+    // UVs
+    vertexDescriptor.attributes[UV.index] =
+      MDLVertexAttribute(
+        name: MDLVertexAttributeTextureCoordinate,
+        format: .float2,
+        offset: 0,
+        bufferIndex: UVBuffer.index)
+    vertexDescriptor.layouts[UVBuffer.index]
+      = MDLVertexBufferLayout(stride: MemoryLayout<float2>.stride)
 
-typedef enum {
-  Position = 0,
-  Normal = 1,
-  UV = 2,
-} Attributes;
+    return vertexDescriptor
+  }()
+}
 
-#endif /* Common_h */
+extension Attributes {
+  var index: Int {
+    return Int(self.rawValue)
+  }
+}
+
+extension BufferIndices {
+  var index: Int {
+    return Int(self.rawValue)
+  }
+}
+
+extension TextureIndices {
+  var index: Int {
+    return Int(self.rawValue)
+  }
+}
