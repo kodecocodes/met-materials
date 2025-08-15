@@ -57,7 +57,7 @@ struct GameScene {
     let input = InputController.shared
     if input.keysPressed.contains(.one) {
       camera.transform = Transform(
-        position: [0, 10, 0],
+        position: [0, 7, 0],
         rotation: [-.pi / 2, 0, 0]
       )
     }

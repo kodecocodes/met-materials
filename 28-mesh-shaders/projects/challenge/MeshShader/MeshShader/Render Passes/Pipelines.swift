@@ -54,28 +54,28 @@ enum PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat
-    = Renderer.viewColorPixelFormat
+      = Renderer.viewColorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     return createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createMeshPSO()
-  -> MTLRenderPipelineState {
+    -> MTLRenderPipelineState {
     let objectFunction: MTLFunction? = nil
     let meshFunction = Renderer.library.makeFunction(name: "mesh_main")
     let fragmentFunction =
-    Renderer.library.makeFunction(name: "fragment_main")
+      Renderer.library.makeFunction(name: "fragment_main")
     let pipelineDescriptor = MTLMeshRenderPipelineDescriptor()
     pipelineDescriptor.objectFunction = objectFunction
     pipelineDescriptor.meshFunction = meshFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat
-    = Renderer.viewColorPixelFormat
+      = Renderer.viewColorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     let meshPSO: MTLRenderPipelineState
     do {
       (meshPSO, _) = try Renderer.device.makeRenderPipelineState(
-        descriptor: pipelineDescriptor, options: [])
+      descriptor: pipelineDescriptor, options: [])
     } catch {
       fatalError("Mesh PSO not created \(error.localizedDescription)")
     }
@@ -83,23 +83,25 @@ enum PipelineStates {
   }
 
   static func createGrassPSO()
-  -> MTLRenderPipelineState {
-    let objectFunction =
-      Renderer.library.makeFunction(name: "object_grass")
+    -> MTLRenderPipelineState {
+      let objectFunction =
+        Renderer.library.makeFunction(name: "object_grass")
     let meshFunction = Renderer.library.makeFunction(name: "mesh_grass")
     let fragmentFunction =
-    Renderer.library.makeFunction(name: "fragment_main")
+      Renderer.library.makeFunction(name: "fragment_main")
     let pipelineDescriptor = MTLMeshRenderPipelineDescriptor()
     pipelineDescriptor.objectFunction = objectFunction
     pipelineDescriptor.meshFunction = meshFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat
-    = Renderer.viewColorPixelFormat
+      = Renderer.viewColorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.payloadMemoryLength =
+      MemoryLayout<GrassPayload>.stride
     let meshPSO: MTLRenderPipelineState
     do {
       (meshPSO, _) = try Renderer.device.makeRenderPipelineState(
-        descriptor: pipelineDescriptor, options: [])
+      descriptor: pipelineDescriptor, options: [])
     } catch {
       fatalError("Mesh PSO not created \(error.localizedDescription)")
     }

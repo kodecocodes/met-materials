@@ -43,7 +43,7 @@ struct GrassRenderPass: RenderPass {
     maxDistance: 30,
     bladeVertices: 3,
     gridSize: 25,
-    tileSize: 2)
+    tileSize: 3)
 
   init() {
     pipelineState = PipelineStates.createGrassPSO()

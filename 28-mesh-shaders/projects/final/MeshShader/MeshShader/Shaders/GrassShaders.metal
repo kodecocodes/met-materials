@@ -55,32 +55,31 @@ void object_grass(
     0.0,
     (float(objectID.z) - halfGrid) * settings.tileSize
   );
-  
+
   float3 cameraToTile = normalize(tileCenter - uniforms.cameraPosition);
   float3 cameraForward = normalize(uniforms.cameraForward);
-  if (dot(cameraForward, cameraToTile) < -0.3) {
+  if (dot(cameraForward, cameraToTile) < -0.4) {
     meshGridProperties.set_threadgroups_per_grid(0);
     return;
   }
 
   float distanceToCamera =
     length(uniforms.cameraPosition - tileCenter);
-  
   uint bladesInTile;
-  if (distanceToCamera < settings.maxDistance * 0.2) {
+  if (distanceToCamera < settings.maxDistance * 0.3) {
     bladesInTile = MaxBladesPerTile;
-  } else if (distanceToCamera < settings.maxDistance * 0.4) {
+  } else if (distanceToCamera < settings.maxDistance * 0.6) {
     bladesInTile = MaxBladesPerTile / 2;
   } else if (distanceToCamera < settings.maxDistance) {
-    bladesInTile = MaxBladesPerTile / 8;
+    bladesInTile = MaxBladesPerTile / 4;
   } else {
     bladesInTile = 0;
   }
-
   if (bladesInTile == 0) {
     meshGridProperties.set_threadgroups_per_grid(0);
     return;
   }
+
   payload.bladeCount = bladesInTile;
 
   for (uint i = 0; i < bladesInTile; i++) {
@@ -110,20 +109,19 @@ void mesh_grass(
   float4 position;
   float4 color = { 0, 0.5, 0, 1 };
   switch (threadID) {
-    case 0:
+    case 0:   // top vertex
       position = { 0, 1, 0, 1 };
       color = { 0.5, 0.8, 0, 1};
       break;
-    case 1:
+    case 1:   // bottom left vertex
       position = { -0.2, 0, 0, 1 };
       break;
-    case 2:
+    case 2:   // bottom right vertex
       position = { 0.2, 0, 0, 1 };
       break;
   }
-
   position += float4(payload.bladePositions[meshID], 0);
-  
+
   if (threadID < 3) {
     outputMesh.set_vertex(threadID, VertexOut {
       .position = uniforms.viewProjectionMatrix * position,
