@@ -55,14 +55,12 @@ void object_grass(
     0.0,
     (float(objectID.z) - halfGrid) * settings.tileSize
   );
-
   float3 cameraToTile = normalize(tileCenter - uniforms.cameraPosition);
   float3 cameraForward = normalize(uniforms.cameraForward);
   if (dot(cameraForward, cameraToTile) < -0.4) {
     meshGridProperties.set_threadgroups_per_grid(0);
     return;
   }
-
   float distanceToCamera =
     length(uniforms.cameraPosition - tileCenter);
   uint bladesInTile;
@@ -79,7 +77,6 @@ void object_grass(
     meshGridProperties.set_threadgroups_per_grid(0);
     return;
   }
-
   payload.bladeCount = bladesInTile;
 
   for (uint i = 0; i < bladesInTile; i++) {
@@ -90,6 +87,7 @@ void object_grass(
     float3 offset = float3(offsetX, 0, offsetZ);
     payload.bladePositions[i] = tileCenter + offset;
   }
+
   payload.tileID = objectID;
 
   meshGridProperties.set_threadgroups_per_grid(
@@ -121,7 +119,6 @@ void mesh_grass(
       break;
   }
   position += float4(payload.bladePositions[meshID], 0);
-
   if (threadID < 3) {
     outputMesh.set_vertex(threadID, VertexOut {
       .position = uniforms.viewProjectionMatrix * position,

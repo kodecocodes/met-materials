@@ -113,10 +113,12 @@ void mesh_grass(
   float4 position;
   float2 seed = payload.bladePositions[meshID].xz;
   float heightVariation = randomRange(seed, 0.0, 0.2, 1.5);
-  float colorVariation = randomRange(seed, 300.0, 1, 1.2);
+  float greenVariation = randomRange(seed, 100.0, 0.6, 1.4);
+  float brightnessVariation = randomRange(seed, 200.0, 0.7, 1.3);
+  float colorVariation = greenVariation * brightnessVariation;
   
-  float4 colorBase = { 0.1, 0.1 * colorVariation , 0, 1 };
-  float4 colorTop = { 0.3 * colorVariation , 0.8 * colorVariation , 0, 1 };
+  float4 colorBase = { 0.15, 0.25 * colorVariation, 0.05, 1.0 };
+  float4 colorTop = { 0.25, 0.7 * colorVariation, 0.1, 1.0 };
   float4 color;
   switch (threadID) {
     case 0:    // top vertex

@@ -84,8 +84,8 @@ enum PipelineStates {
 
   static func createGrassPSO()
     -> MTLRenderPipelineState {
-      let objectFunction =
-        Renderer.library.makeFunction(name: "object_grass")
+    let objectFunction =
+      Renderer.library.makeFunction(name: "object_grass")
     let meshFunction = Renderer.library.makeFunction(name: "mesh_grass")
     let fragmentFunction =
       Renderer.library.makeFunction(name: "fragment_main")
