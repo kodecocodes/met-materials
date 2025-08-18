@@ -30,26 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
+struct Transform {
+  var position: float3 = [0, 0, 0]
+  var rotation: float3 = [0, 0, 0]
+  var scale: Float = 1
 }
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+extension Transform {
+  var modelMatrix: matrix_float4x4 {
+    let translation = float4x4(translation: position)
+    let rotation = float4x4(rotation: rotation)
+    let scale = float4x4(scaling: scale)
+    let modelMatrix = translation * rotation * scale
+    return modelMatrix
+  }
+}
+
+protocol Transformable {
+  var transform: Transform { get set }
+}
+
+extension Transformable {
+  var position: float3 {
+    get { transform.position }
+    set { transform.position = newValue }
+  }
+  var rotation: float3 {
+    get { transform.rotation }
+    set { transform.rotation = newValue }
+  }
+  var scale: Float {
+    get { transform.scale }
+    set { transform.scale = newValue }
   }
 }

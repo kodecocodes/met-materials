@@ -32,24 +32,80 @@
 
 import MetalKit
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
+struct ForwardRenderPass: RenderPass {
+  let label = "Forward Render Pass"
+  var descriptor: MTLRenderPassDescriptor?
+
+  var pipelineState: MTLRenderPipelineState
+  var transparentPSO: MTLRenderPipelineState
+  let depthStencilState: MTLDepthStencilState?
+  weak var shadowTexture: MTLTexture?
+
+  init(view: MTKView) {
+    pipelineState = PipelineStates.createForwardPSO()
+    transparentPSO = PipelineStates.createForwardTransparentPSO()
+    depthStencilState = Self.buildDepthStencilState()
+  }
+
+  mutating func resize(view: MTKView, size: CGSize) {
+  }
+
   func draw(
     commandBuffer: MTLCommandBuffer,
     scene: GameScene,
     uniforms: Uniforms,
     params: Params
-  )
-}
+  ) {
+    guard let descriptor = descriptor,
+    let renderEncoder =
+      commandBuffer.makeRenderCommandEncoder(
+        descriptor: descriptor) else {
+      return
+    }
+    renderEncoder.label = label
+    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.setRenderPipelineState(pipelineState)
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+    var lights = scene.lighting.lights
+    renderEncoder.setFragmentBytes(
+      &lights,
+      length: MemoryLayout<Light>.stride * lights.count,
+      index: LightBuffer.index)
+
+    renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+
+    scene.skybox?.update(encoder: renderEncoder)
+    var params = params
+    params.transparency = false
+
+    for model in scene.models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+
+    scene.skybox?.render(
+      encoder: renderEncoder,
+      uniforms: uniforms)
+
+    // transparent mesh
+    renderEncoder.pushDebugGroup("Transparency")
+    let models = scene.models.filter {
+      $0.hasTransparency
+    }
+    params.transparency = true
+    if params.alphaBlending {
+      renderEncoder.setRenderPipelineState(transparentPSO)
+    }
+    for model in models {
+      model.render(
+        encoder: renderEncoder,
+        uniforms: uniforms,
+        params: params)
+    }
+    renderEncoder.popDebugGroup()
+
+    renderEncoder.endEncoding()
   }
 }

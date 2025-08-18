@@ -30,26 +30,50 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Common.h"
+#import "ShaderDefs.h"
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+constant bool hasSkeleton [[function_constant(0)]];
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+vertex VertexOut vertex_main(
+  VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant float4x4 *jointMatrices [[
+    buffer(JointBuffer),
+    function_constant(hasSkeleton)]])
+{
+  float4 position = in.position;
+  float4 normal = float4(in.normal, 0);
+
+  if (hasSkeleton) {
+    float4 weights = in.weights;
+    ushort4 joints = in.joints;
+    position =
+        weights.x * (jointMatrices[joints.x] * position) +
+        weights.y * (jointMatrices[joints.y] * position) +
+        weights.z * (jointMatrices[joints.z] * position) +
+        weights.w * (jointMatrices[joints.w] * position);
+    normal =
+        weights.x * (jointMatrices[joints.x] * normal) +
+        weights.y * (jointMatrices[joints.y] * normal) +
+        weights.z * (jointMatrices[joints.z] * normal) +
+        weights.w * (jointMatrices[joints.w] * normal);
   }
+
+  float4 worldPosition = uniforms.modelMatrix * position;
+  VertexOut out {
+    .position = uniforms.projectionMatrix * uniforms.viewMatrix
+                  * uniforms.modelMatrix * position,
+    .uv = in.uv,
+    .worldPosition = worldPosition.xyz / worldPosition.w,
+    .worldNormal = uniforms.normalMatrix * normal.xyz,
+    .worldTangent = 0,
+    .worldBitangent = 0,
+    .shadowPosition =
+      uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
+      * uniforms.modelMatrix * position
+  };
+  return out;
 }

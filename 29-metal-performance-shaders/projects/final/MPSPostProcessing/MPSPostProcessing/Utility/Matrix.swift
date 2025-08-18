@@ -30,26 +30,73 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+// swiftlint:disable fatal_error_message
+// swiftlint:disable identifier_name
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+import Playgrounds
+import MetalPerformanceShaders
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+#Playground {
+  guard let device = MTLCreateSystemDefaultDevice(),
+    let commandQueue = device.makeCommandQueue()
+  else { fatalError() }
+
+  let size = 4
+  let count = size * size
+
+  func createMPSMatrix(withRepeatingValue: Float) -> MPSMatrix {
+    let rowBytes = MPSMatrixDescriptor.rowBytes(
+      forColumns: size,
+      dataType: .float32)
+    let array = [Float](
+      repeating: withRepeatingValue,
+      count: count)
+    guard let buffer = device.makeBuffer(
+      bytes: array,
+      length: size * rowBytes,
+      options: [])
+    else { fatalError() }
+    let matrixDescriptor = MPSMatrixDescriptor(
+      rows: size,
+      columns: size,
+      rowBytes: rowBytes,
+      dataType: .float32)
+
+    return MPSMatrix(buffer: buffer, descriptor: matrixDescriptor)
+  }
+
+  let A = createMPSMatrix(withRepeatingValue: 3)
+  let B = createMPSMatrix(withRepeatingValue: 2)
+  let C = createMPSMatrix(withRepeatingValue: 1)
+
+  let multiplicationKernel = MPSMatrixMultiplication(
+    device: device,
+    transposeLeft: false,
+    transposeRight: false,
+    resultRows: size,
+    resultColumns: size,
+    interiorColumns: size,
+    alpha: 1.0,
+    beta: 0.0)
+  guard let commandBuffer = commandQueue.makeCommandBuffer()
+    else { fatalError() }
+
+  multiplicationKernel.encode(
+    commandBuffer: commandBuffer,
+    leftMatrix: A,
+    rightMatrix: B,
+    resultMatrix: C)
+
+  commandBuffer.commit()
+  await commandBuffer.completed()
+  let contents = C.data.contents()
+  let pointer = contents.bindMemory(
+    to: Float.self,
+    capacity: count)
+  (0..<count).forEach {
+    _ = pointer.advanced(by: $0).pointee
   }
 }
+
+// swiftlint:enable fatal_error_message
+// swiftlint:enable identifier_name

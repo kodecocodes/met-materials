@@ -30,26 +30,38 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+#import "Common.h"
+#import "ShaderDefs.h"
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+constant bool hasSkeleton [[function_constant(0)]];
+
+vertex float4
+vertex_depth(
+  const VertexIn in [[stage_in]],
+  constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+  constant float4x4 *jointMatrices [[
+    buffer(JointBuffer),
+    function_constant(hasSkeleton)]])
+{
+  matrix_float4x4 mvp =
+  uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix
+  * uniforms.modelMatrix;
+  
+  float4 position = in.position;
+  
+  if (hasSkeleton) {
+    float4 weights = in.weights;
+    ushort4 joints = in.joints;
+    position =
+    weights.x * (jointMatrices[joints.x] * position) +
+    weights.y * (jointMatrices[joints.y] * position) +
+    weights.z * (jointMatrices[joints.z] * position) +
+    weights.w * (jointMatrices[joints.w] * position);
+    
   }
+  return mvp * position;
 }
+

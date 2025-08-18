@@ -30,26 +30,35 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import SwiftUI
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
-
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+struct RadioButton: View {
+  let label: String
+  let options: [String]
+  let action: (_ checked: Int) -> Void
+  @State var checked: Int = 0
+  var body: some View {
+    HStack {
+      ForEach(0..<options.count, id: \.self) { index in
+        HStack {
+          Text(options[index])
+          if index == checked {
+            Image(systemName: "smallcircle.filled.circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          } else {
+            Image(systemName: "circle")
+              .font(Font.system(.title).bold())
+              .onTapGesture {
+                checked = index
+                action(index)
+              }
+          }
+        }
+      }
+    }
   }
 }

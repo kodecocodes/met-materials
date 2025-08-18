@@ -32,24 +32,20 @@
 
 import MetalKit
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
-
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+extension MTLTexture {
+  var descriptor: MTLTextureDescriptor {
+    let descriptor = MTLTextureDescriptor()
+    descriptor.textureType = textureType
+    descriptor.pixelFormat = pixelFormat
+    descriptor.width = width
+    descriptor.height = height
+    descriptor.depth = depth
+    descriptor.mipmapLevelCount = mipmapLevelCount
+    descriptor.arrayLength = arrayLength
+    descriptor.sampleCount = sampleCount
+    descriptor.cpuCacheMode = cpuCacheMode
+    descriptor.usage = usage
+    descriptor.storageMode = storageMode
+    return descriptor
   }
 }

@@ -30,26 +30,47 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 import MetalKit
+import MetalPerformanceShaders
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+struct Outline {
+  let label = "Outline Filter"
+  var outputTexture: MTLTexture!
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+  mutating func resize(view: MTKView, size: CGSize) {
+    outputTexture = TextureController.makeTexture(
+      size: size,
+      pixelFormat: view.colorPixelFormat,
+      label: "Output Texture",
+      usage: [.shaderRead, .shaderWrite])
+  }
+
+  mutating func postProcess(
+    view: MTKView,
+    commandBuffer: MTLCommandBuffer
+  ) {
+    guard
+      let drawableTexture =
+        view.currentDrawable?.texture else { return }
+
+    let sobel = MPSImageSobel(device: Renderer.device)
+    sobel.encode(
+      commandBuffer: commandBuffer,
+      sourceTexture: drawableTexture,
+      destinationTexture: outputTexture)
+
+    let threshold = MPSImageThresholdBinaryInverse(
+      device: Renderer.device,
+      thresholdValue: 0.4,
+      maximumValue: 1.0,
+      linearGrayColorTransform: nil)
+    threshold.encode(
+      commandBuffer: commandBuffer,
+      sourceTexture: outputTexture,
+      destinationTexture: drawableTexture)
   }
 }
+
+// swiftlint:enable implicitly_unwrapped_optional

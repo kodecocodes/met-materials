@@ -30,26 +30,51 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#ifndef Lighting_h
+#define Lighting_h
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+#import "Common.h"
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
-}
+float calculateSoftShadow(
+  float4 shadowPosition,
+  depth2d<float> shadowTexture);
+
+float3 calculateSunDiffuse(
+  Light light,
+  float3 normal,
+  Params params,
+  Material material);
+
+float3 calculateSunSpecular(
+  Light light,
+  Material material,
+  float3 viewDirection,
+  float3 normal);
+
+float3 calculatePointDiffuse(
+  Light light,
+  float3 normal,
+  Material material,
+  float3 worldPosition);
+
+// PBR functions
+float3 computeSpecular(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition);
+
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition);
+
+float3 enhanceColor(
+  float3 color,
+  float contrast,
+  float saturation);
+
+#endif /* Lighting_h */

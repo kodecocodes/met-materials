@@ -30,26 +30,55 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import SwiftUI
 import MetalKit
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
+#if os(macOS)
+typealias ViewRepresentable = NSViewRepresentable
+#elseif os(iOS)
+typealias ViewRepresentable = UIViewRepresentable
+#endif
+
+struct MetalView: ViewRepresentable {
+  let view = MTKView()
+  let options: Options
+
+  func makeCoordinator() -> GameController {
+    let gameController = GameController(
+      metalView: view,
+      options: options)
+    return gameController
+  }
+
+#if os(macOS)
+  func makeNSView(context: Context) -> some NSView {
+    makeMetalView()
+  }
+  func updateNSView(_ uiView: NSViewType, context: Context) {
+    updateMetalView()
+  }
+#elseif os(iOS)
+  func makeUIView(context: Context) -> MTKView {
+    makeMetalView()
+  }
+
+  func updateUIView(_ uiView: MTKView, context: Context) {
+    updateMetalView()
+  }
+#endif
+
+  func makeMetalView() -> MTKView {
+    view
+  }
+
+  func updateMetalView() {
+  }
 }
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+#Preview {
+  VStack {
+    MetalView(options: Options())
+      .border(.black, width: 2.0)
+      .padding()
   }
 }

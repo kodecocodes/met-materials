@@ -30,26 +30,32 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+import Foundation
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+struct SceneLighting {
+  static func buildDefaultLight() -> Light {
+    var light = Light()
+    light.position = [0, 0, 0]
+    light.color = float3(repeating: 1.0)
+    light.intensity = 1.0
+    light.specularColor = float3(repeating: 1)
+    light.attenuation = [1, 0, 0]
+    light.type = SunLight
+    return light
+  }
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+  // sunlight is for shadow direction
+  let sunlight: Light = {
+    var light = Self.buildDefaultLight()
+    light.position = [-0.36, 0.77, 0.53]
+    light.color = float3(repeating: 0.0)
+    light.intensity = 0
+    return light
+  }()
+
+  var lights: [Light] = []
+
+  init() {
+    lights = [sunlight]
   }
 }

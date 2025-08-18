@@ -30,26 +30,43 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+// swiftlint:disable force_unwrapping
+// swiftlint:disable force_cast
+
 import MetalKit
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+struct Mesh {
+  var vertexBuffers: [MTLBuffer]
+  var submeshes: [Submesh]
+  var transform: TransformComponent?
+  var skin: Skin?
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+  init(
+    mdlMesh: MDLMesh,
+    mtkMesh: MTKMesh,
+    startTime: TimeInterval,
+    endTime: TimeInterval
+  ) {
+    self.init(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
+    if mdlMesh.transform != nil {
+      transform = TransformComponent(
+        object: mdlMesh,
+        startTime: startTime,
+        endTime: endTime)
+    }
   }
 }
+
+extension Mesh {
+  init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
+    vertexBuffers = mtkMesh.vertexBuffers.map {
+      $0.buffer
+    }
+    submeshes = zip(mdlMesh.submeshes!, mtkMesh.submeshes).map { mesh in
+      Submesh(mdlSubmesh: mesh.0 as! MDLSubmesh, mtkSubmesh: mesh.1)
+    }
+  }
+}
+
+// swiftlint:enable force_unwrapping
+// swiftlint:enable force_cast

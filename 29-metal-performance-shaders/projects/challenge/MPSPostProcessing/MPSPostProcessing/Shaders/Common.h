@@ -30,26 +30,75 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#ifndef Common_h
+#define Common_h
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+#import <simd/simd.h>
+#import "stdbool.h"
+#import "Material.h"
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
-}
+typedef struct {
+  matrix_float4x4 modelMatrix;
+  matrix_float4x4 viewMatrix;
+  matrix_float4x4 projectionMatrix;
+  matrix_float3x3 normalMatrix;
+  matrix_float4x4 shadowProjectionMatrix;
+  matrix_float4x4 shadowViewMatrix;
+} Uniforms;
+
+typedef struct {
+  uint32_t width;
+  uint32_t height;
+  uint32_t tiling;
+  uint32_t lightCount;
+  vector_float3 cameraPosition;
+  float scaleFactor;
+  bool alphaBlending;
+  bool transparency;
+} Params;
+
+typedef enum {
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  TangentBuffer = 2,
+  BitangentBuffer = 3,
+  UniformsBuffer = 11,
+  ParamsBuffer = 12,
+  LightBuffer = 13,
+  MaterialBuffer = 14,
+  JointBuffer = 15,
+  ColorBuffer = 20
+} BufferIndices;
+
+typedef enum {
+  Position = 0,
+  Normal = 1,
+  UV = 2,
+  Tangent = 3,
+  Bitangent = 4,
+  Joints = 6,
+  Weights = 7
+} Attributes;
+
+typedef enum {
+  unused = 0,
+  SunLight = 1,
+  SpotLight = 2,
+  PointLight = 3,
+  AmbientLight = 4
+} LightType;
+
+typedef struct {
+  LightType type;
+  vector_float3 position;
+  vector_float3 color;
+  float intensity;
+  vector_float3 specularColor;
+  float radius;
+  vector_float3 attenuation;
+  float coneAngle;
+  vector_float3 coneDirection;
+  float coneAttenuation;
+} Light;
+
+#endif /* Common_h */

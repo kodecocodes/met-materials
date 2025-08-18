@@ -1,6 +1,6 @@
-## Chapter 30 Metal Performance Shaders Further Reading
+## Chapter 29: Metal Performance Shaders Further Reading
 
- ### Image and video processing
+### Image and video processing
  
 [https://learnopengl.com/Advanced-Lighting/Bloom](https://learnopengl.com/Advanced-Lighting/Bloom)
 

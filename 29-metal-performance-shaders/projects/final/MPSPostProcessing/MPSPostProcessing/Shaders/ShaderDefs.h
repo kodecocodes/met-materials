@@ -30,26 +30,26 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+  float3 tangent [[attribute(Tangent)]];
+  float3 bitangent [[attribute(Bitangent)]];
+  ushort4 joints [[attribute(Joints)]];
+  float4 weights [[attribute(Weights)]];
+};
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
-}
+struct VertexOut {
+  float4 position [[position]];
+  float3 normal;
+  float2 uv;
+  float3 worldPosition;
+  float3 worldNormal;
+  float3 worldTangent;
+  float3 worldBitangent;
+  float4 shadowPosition;
+};

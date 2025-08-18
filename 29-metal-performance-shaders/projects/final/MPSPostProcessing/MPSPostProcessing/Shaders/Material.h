@@ -30,26 +30,50 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#ifndef Material_h
+#define Material_h
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
+typedef enum {
+  BaseColor = 0,
+  NormalTexture = 1,
+  RoughnessTexture = 2,
+  MetallicTexture = 3,
+  AOTexture = 4,
+  OpacityTexture = 5,
+  MaterialTextureCount = OpacityTexture + 1,
+  ShadowTexture = 15,
+  SkyboxTexture = 16,
+  SkyboxDiffuseTexture = 17,
+  BRDFLutTexture = 18
+} TextureIndices;
 
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
-}
+typedef struct {
+  vector_float3 baseColor;
+  float roughness;
+  float metallic;
+  float ambientOcclusion;
+  float opacity;
+} Material;
+
+#if __METAL_VERSION__
+// MARK: - Metal Shading Language
+
+#include <metal_stdlib>
+using namespace metal;
+
+struct ShaderMaterial {
+  array<texture2d<float>, MaterialTextureCount> textures;
+  Material material;
+};
+
+#else
+// MARK: - Swift side
+#include <Metal/Metal.h>
+
+struct ShaderMaterial {
+  MTLResourceID textures[MaterialTextureCount];
+  Material material;
+};
+
+#endif // Metal version
+#endif /* Material_h */

@@ -30,26 +30,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
-
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+float3 computeDiffuse(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 diffuseTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case SunLight: {
+        diffuseTotal += calculateSunDiffuse(light, normal, params, material);
+        break;
+      }
+      case PointLight: {
+        diffuseTotal += calculatePointDiffuse(light, normal, material, worldPosition);
+        break;
+      }
+      case SpotLight: {      // not yet implemented
+        break;
+      }
+      case AmbientLight: {   // not needed for PBR lighting
+        break;
+      }
+      case unused: {
+        break;
+      }
+    }
+    if (light.type != SunLight) { continue; }
   }
+  return diffuseTotal;
 }

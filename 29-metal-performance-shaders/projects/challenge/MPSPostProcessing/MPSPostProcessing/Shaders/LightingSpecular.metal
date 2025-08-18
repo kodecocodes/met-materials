@@ -30,26 +30,30 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import MetalKit
+#include <metal_stdlib>
+using namespace metal;
+#import "Lighting.h"
 
-protocol RenderPass {
-  var label: String { get }
-  var descriptor: MTLRenderPassDescriptor? { get set }
-  mutating func resize(view: MTKView, size: CGSize)
-  func draw(
-    commandBuffer: MTLCommandBuffer,
-    scene: GameScene,
-    uniforms: Uniforms,
-    params: Params
-  )
-}
-
-extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+// specular optimized-ggx
+// AUTHOR John Hable. Released into the public domain
+float3 computeSpecular(
+  constant Light *lights,
+  constant Params &params,
+  Material material,
+  float3 normal,
+  float3 worldPosition)
+{
+  float3 viewDirection = normalize(params.cameraPosition - worldPosition);
+  float3 specularTotal = 0;
+  for (uint i = 0; i < params.lightCount; i++) {
+    Light light = lights[i];
+    if (light.type != SunLight) { continue; };
+    float3 specular = calculateSunSpecular(
+      light,
+      material,
+      viewDirection,
+      normal);
+    specularTotal += specular;
   }
+  return specularTotal;
 }
