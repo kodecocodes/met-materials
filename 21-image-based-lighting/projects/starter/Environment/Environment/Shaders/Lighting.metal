@@ -117,10 +117,10 @@ float3 calculateSunSpecular(
   float D, vis;
 
   // Distribution
-  float alphaSqr = alpha * alpha;
-  float pi = 3.14159f;
+  // bias the alphaSqr for small values
+  float alphaSqr = max(alpha * alpha, 0.001);
   float denom = nDotH * nDotH * (alphaSqr - 1.0) + 1.0f;
-  D = alphaSqr / (pi * denom * denom);
+  D = alphaSqr / (M_PI_F * denom * denom);
 
   // Fresnel
   float lDotH5 = pow(1.0 - lDotH, 5);
