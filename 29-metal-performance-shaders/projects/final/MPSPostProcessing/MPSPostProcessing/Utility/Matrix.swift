@@ -94,7 +94,7 @@ import MetalPerformanceShaders
     to: Float.self,
     capacity: count)
   (0..<count).forEach {
-    _ = pointer.advanced(by: $0).pointee
+    let result = pointer.advanced(by: $0).pointee
   }
 }
 
