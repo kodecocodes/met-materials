@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    defaultPrim = "SM_wooden_barrels_01_a"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_wooden_barrels_01_a" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/props/SM_wooden_barrels_01_a.usda@
+        string name = "SM_wooden_barrels_01_a"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/props/SM_wooden_barrels_01_a.SM_wooden_barrels_01_a"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.39"
+        }
+        string version = "92A8A17951B9DBECDDDDA3BD9B587939291A37BC"
+    }
+    prepend payload = @SM_wooden_barrels_01_a_payload.usd@
+)
+{
+    rel material:binding = </SM_wooden_barrels_01_a/UnrealMaterial>
+
+    def Material "UnrealMaterial" (
+        prepend references = @../../materials/props/MI_wooden_barrels_01_a.usda@
+    )
+    {
+        token outputs:unreal:surface.connect = </SM_wooden_barrels_01_a/UnrealMaterial/UnrealShader.outputs:out>
+
+        def Shader "UnrealShader"
+        {
+            uniform token info:implementationSource = "sourceAsset"
+            uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/props/MI_wooden_barrels_01_a.MI_wooden_barrels_01_a@
+            token outputs:out
+        }
+    }
+}
+

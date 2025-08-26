@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    defaultPrim = "SM_wooden_crate_02"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_wooden_crate_02" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/props/SM_wooden_crate_02.usda@
+        string name = "SM_wooden_crate_02"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/props/SM_wooden_crate_02.SM_wooden_crate_02"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.39"
+        }
+        string version = "644ABE6E7FAAD403B5A74CD6B8B2DCB2C96E6184"
+    }
+    prepend payload = @SM_wooden_crate_02_payload.usd@
+)
+{
+    rel material:binding = </SM_wooden_crate_02/UnrealMaterial>
+
+    def Material "UnrealMaterial" (
+        prepend references = @../../materials/props/MI_wooden_crate_02.usda@
+    )
+    {
+        token outputs:unreal:surface.connect = </SM_wooden_crate_02/UnrealMaterial/UnrealShader.outputs:out>
+
+        def Shader "UnrealShader"
+        {
+            uniform token info:implementationSource = "sourceAsset"
+            uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/props/MI_wooden_crate_02.MI_wooden_crate_02@
+            token outputs:out
+        }
+    }
+}
+

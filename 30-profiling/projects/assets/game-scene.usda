@@ -1,0 +1,291 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/SC_demo_scene.usda@
+        string name = "SC_demo_scene"
+        dictionary unreal = {
+            string assetType = "World"
+            string contentPath = "/Game/Smugglers_cove/scenes/SC_demo_scene.SC_demo_scene"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.51"
+        }
+        string version = "CB4260C55F53C5213C8B115935AEBFE816F6F592"
+    }
+)
+{
+
+    def "cannon_01_ball_4" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-4.51692, -0, -0, 0), (-0, -4.51692, -0, 0), (-0, -0, -4.51692, 0), (-0.9380195269912216, 25.138378458113444, -61.94198255065971, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def Mesh "Landscape" (
+        prepend references = @Assets/Game/Smugglers_cove/scenes/SC_demo_scene/Landscape_0/Landscape_0_asset.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (100, 0, 0, 0), (0, 100, 0, 0), (0, 0, 100, 0), (-837.1999812871218, -6.309999858960509, -740.8999834395945, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_6" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_03.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-0.9342337397583766, 0, 0.3566613512802836, 0), (0, 1, -0, 0), (-0.3566613512802836, 0, -0.9342337397583766, 0), (1.5107393370292896, 13.106184081289456, -53.10968862618442, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_13" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-2.768773606411647, -0, -3.56881759170152, 0), (-0, -4.51692, 0, 0), (3.56881759170152, -0, -2.768773606411647, 0), (-0.7064667643187135, 25.640893466881142, -62.93560304575111, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_11" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-2.768773606411647, -0, -3.56881759170152, 0), (-0, -4.51692, 0, 0), (3.56881759170152, -0, -2.768773606411647, 0), (-1.2788172363599979, 25.64089347138503, -62.93560306310645, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_poles" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_poles.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (29.12112809102351, 3.0294558016335644, 60.398519023882805, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_fort_01_tower_round7" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_fort_01_tower_round.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-3.3101637349410287, 13.419468924391131, -61.25349812024931, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_8" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-1.7739460158166036, -0, 4.153995885815054, 0), (-0, -4.51692, -0, 0), (-4.153995885815054, 0, -1.7739460158166036, 0), (-0.375924401359445, 25.138378458113444, -62.56317620170669, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "wooden_barrels_01_piece01" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_wooden_barrels_01_piece01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (5.6875457763671875, 0, 0, 0), (0, 5.626411460023423, -0.8316676263924973, 0), (0, 0.8316676263924973, 5.626411460023423, 0), (-13.162730622860767, 2.0246306838282138, -23.072351357710613, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "wooden_crate_02" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_wooden_crate_02.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.7704087429580919, -0.08005500015568841, 2.165876502633621, 0), (-0.4152405502097823, 2.250605471916228, 0.2308890516651884, 0), (-2.1272059404702333, -0.46832218148134463, 0.7393434114789587, 0), (18.871269946353987, 1.8247303469272365, 40.37926108473481, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_2" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-3.2472938712971033, -0, 3.139689283963665, 0), (-0, -4.51692, -0, 0), (-3.139689283963665, 0, -3.2472938712971033, 0), (-1.4863378248129455, 25.138378458113444, -62.56317620442251, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_3" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-2.7687735887345664, -0, -3.5688176054158194, 0), (-0, -4.51692, 0, 0), (3.5688176054158194, -0, -2.7687735887345664, 0), (-1.486337825338779, 25.138378458113444, -63.19208269491895, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_10" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-3.2472938530348876, -0, 3.1396893028517696, 0), (-0, -4.51692, -0, 0), (-3.1396893028517696, 0, -3.2472938530348876, 0), (-1.2788172363599979, 25.64089347138503, -62.30669656716363, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "wooden_barrels_01_barrel2" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_wooden_barrels_01_a.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (1.7004239559173584, 0, 0, 0), (0, 1.7004239559173584, 0, 0), (0, 0, 1.7004239559173584, 0), (-2.7742353412673317, 24.90910151786197, -65.55262041058228, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_4" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_02.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.961975870882283, 0, 1.5830839844636395, 0), (0, 1.852445, -0, 0), (-1.5830839844636395, 0, 0.961975870882283, 0), (-31.092497670131234, -0.8670412106194816, -61.37853365634274, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_7" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.7264205302258535, 0, -0.6872504734566502, 0), (0, 1, 0, 0), (0.6872504734566502, -0, 0.7264205302258535, 0), (0.18960012802001724, 13.650737363166929, -55.928931787258975, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_6" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-2.768773606411647, -0, -3.56881759170152, 0), (-0, -4.51692, 0, 0), (3.56881759170152, -0, -2.768773606411647, 0), (-0.9380195369912248, 25.138378458113444, -63.1920826927178, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_4" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (2.566533589045942, 0, 1.5426635705989802, 0), (0, 2.994479179382324, -0, 0), (-1.5426635705989802, 0, 2.566533589045942, 0), (-6.263274717223391, 24.909101347743434, -61.3583897944226, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_14" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-3.2472938530348876, -0, 3.1396893028517696, 0), (-0, -4.51692, -0, 0), (-3.1396893028517696, 0, -3.2472938530348876, 0), (-1.0446154493773885, 25.973568918156776, -62.531770227752766, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_7" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-4.51692, -0, -0, 0), (-0, -4.51692, -0, 0), (-0, -0, -4.51692, 0), (-0.37592439135944183, 25.138378458113444, -61.94198255559142, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "wooden_barrels_01_piece02" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_wooden_barrels_01_piece02.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-1.618697664043232, 1.8490870212169273, -5.588506068169613, 0), (-0.5144386669633385, -5.818211254461942, -1.7760843645406803, 0), (-5.863947112989207, -6.7778824697548425e-16, 1.698478516097873, 0), (-13.18350969933186, 1.4730821947411925, -28.739630905620448, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_9" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-2.768773606411647, -0, -3.56881759170152, 0), (-0, -4.51692, 0, 0), (3.56881759170152, -0, -2.768773606411647, 0), (-0.375924401359445, 25.138378458113444, -63.19208269764951, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_5" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_04.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.961975870882283, 0, 1.5830839844636395, 0), (0, 1.852445, -0, 0), (-1.5830839844636395, 0, 0.961975870882283, 0), (-31.092497670131234, -0.8670412106194816, -61.37853365634274, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_8" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.9999658240497727, 0, -0.008267450178805326, 0), (0, 1, 0, 0), (0.008267450178805326, -0, 0.9999658240497727, 0), (-3.360222112864121, 12.059206173312557, -55.17233852299339, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_01" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-4.51692008972168, -0, -0, 0), (-0, -4.51692008972168, -0, 0), (-0, -0, -4.51692008972168, 0), (-1.4863378120953723, 25.138378460734913, -61.941982550973194, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "modular_wooden_pier_section_3" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.961975870882283, 0, 1.5830839844636395, 0), (0, 1.852445, -0, 0), (-1.5830839844636395, 0, 0.961975870882283, 0), (-35.54837731574831, -0.8670412206194814, -58.67087643702921, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_5" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-1.7739460036635497, -0, 4.153995891004963, 0), (-0, -4.51692, -0, 0), (-4.153995891004963, 0, -1.7739460036635497, 0), (-0.9380195369912248, 25.138378458113444, -62.563176196774975, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def "cannon_01_ball_12" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/props/SM_cannon_01_ball_01.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (-3.2472938530348876, -0, 3.1396893028517696, 0), (-0, -4.51692, -0, 0), (-3.1396893028517696, 0, -3.2472938530348876, 0), (-0.7064667643187135, 25.640893466881142, -62.30669654980825, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+      def "dutch_ship_large_02_hull" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_hull.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.5000000070251762, 0, -0.8660253997284513, 0), (0, 1, 0, 0), (0.8660253997284513, -0, 0.5000000070251762, 0), (-61.75034988264361, 0.28873345594463573, 25.387931916790485, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+       def "dutch_ship_large_02_sails" (
+        prepend references = @Assets/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_sails.usda@
+    )
+    {
+        token visibility = "inherited"
+        matrix4d xformOp:transform = ( (0.5000000070251762, 0, -0.8660253997284513, 0), (0, 1, 0, 0), (0.8660253997284513, -0, 0.5000000070251762, 0), (-61.75034988264361, 0.28873345594463573, 25.387931916790485, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+}
+

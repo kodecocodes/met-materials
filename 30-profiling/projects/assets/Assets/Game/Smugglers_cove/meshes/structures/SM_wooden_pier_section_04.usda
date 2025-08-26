@@ -1,0 +1,65 @@
+#usda 1.0
+(
+    defaultPrim = "SM_wooden_pier_section_04"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_wooden_pier_section_04" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_04.usda@
+        string name = "SM_wooden_pier_section_04"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_section_04.SM_wooden_pier_section_04"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.42"
+        }
+        string version = "97187880CE8D5D6C78E1438895398F8397B0DBF9"
+    }
+    prepend payload = @SM_wooden_pier_section_04_payload.usd@
+)
+{
+    over "Section0" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </SM_wooden_pier_section_04/Section0/UnrealMaterial>
+
+        def Material "UnrealMaterial" (
+            prepend references = @../../materials/structures/MI_wooden_pier_planks.usda@
+        )
+        {
+            token outputs:unreal:surface.connect = </SM_wooden_pier_section_04/Section0/UnrealMaterial/UnrealShader.outputs:out>
+
+            def Shader "UnrealShader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/structures/MI_wooden_pier_planks.MI_wooden_pier_planks@
+                token outputs:out
+            }
+        }
+    }
+
+    over "Section1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </SM_wooden_pier_section_04/Section1/UnrealMaterial>
+
+        def Material "UnrealMaterial" (
+            prepend references = @../../materials/structures/MI_wooden_pier_poles.usda@
+        )
+        {
+            token outputs:unreal:surface.connect = </SM_wooden_pier_section_04/Section1/UnrealMaterial/UnrealShader.outputs:out>
+
+            def Shader "UnrealShader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/structures/MI_wooden_pier_poles.MI_wooden_pier_poles@
+                token outputs:out
+            }
+        }
+    }
+}
+

@@ -1,0 +1,70 @@
+#usda 1.0
+(
+    defaultPrim = "Landscape_0"
+    endTimeCode = 0
+    metersPerUnit = 1
+    startTimeCode = 0
+    upAxis = "Y"
+)
+
+def Material "Landscape_0"
+{
+    token inputs:stPrimvarName = "st"
+    token outputs:surface.connect = </Landscape_0/SurfaceShader.outputs:surface>
+    custom bool worldSpaceNormals = 1
+
+    def Shader "SurfaceShader"
+    {
+        uniform token info:id = "UsdPreviewSurface"
+        color3f inputs:diffuseColor.connect = </Landscape_0/diffuseTexture.outputs:rgb>
+        float inputs:metallic = 0
+        normal3f inputs:normal.connect = </Landscape_0/normalTexture.outputs:rgb>
+        float inputs:roughness.connect = </Landscape_0/roughnessTexture.outputs:r>
+        float inputs:specular = 0.101960786
+        token outputs:surface
+    }
+
+    def Shader "PrimvarReader"
+    {
+        uniform token info:id = "UsdPrimvarReader_float2"
+        string inputs:varname.connect = </Landscape_0.inputs:stPrimvarName>
+        token outputs:result
+    }
+
+    def Shader "diffuseTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_scenes_SC_demo_scene_SC_demo_scene_PersistentLevel_BaseColor.png@
+        token inputs:sourceColorSpace = "sRGB"
+        float2 inputs:st.connect = </Landscape_0/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        color3f outputs:rgb
+    }
+
+    def Shader "roughnessTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0.5, 0.5, 0.5, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_scenes_SC_demo_scene_SC_demo_scene_PersistentLevel_Roughness.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </Landscape_0/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "normalTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_scenes_SC_demo_scene_SC_demo_scene_PersistentLevel_Normal.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </Landscape_0/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        normal3f outputs:rgb
+    }
+}
+

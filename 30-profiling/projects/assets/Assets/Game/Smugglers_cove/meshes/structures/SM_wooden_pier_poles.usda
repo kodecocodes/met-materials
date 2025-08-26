@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    defaultPrim = "SM_wooden_pier_poles"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_wooden_pier_poles" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_poles.usda@
+        string name = "SM_wooden_pier_poles"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/structures/SM_wooden_pier_poles.SM_wooden_pier_poles"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.48"
+        }
+        string version = "8DF9E7369D241CD4927E31A4676F69E874B862CD"
+    }
+    prepend payload = @SM_wooden_pier_poles_payload.usd@
+)
+{
+    rel material:binding = </SM_wooden_pier_poles/UnrealMaterial>
+
+    def Material "UnrealMaterial" (
+        prepend references = @../../materials/structures/MI_wooden_pier_poles.usda@
+    )
+    {
+        token outputs:unreal:surface.connect = </SM_wooden_pier_poles/UnrealMaterial/UnrealShader.outputs:out>
+
+        def Shader "UnrealShader"
+        {
+            uniform token info:implementationSource = "sourceAsset"
+            uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/structures/MI_wooden_pier_poles.MI_wooden_pier_poles@
+            token outputs:out
+        }
+    }
+}
+

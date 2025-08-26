@@ -1,0 +1,112 @@
+#usda 1.0
+(
+    defaultPrim = "MI_wooden_barrels_01_pieces"
+    upAxis = "Z"
+)
+
+def Material "MI_wooden_barrels_01_pieces" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers Cove Small usda 2048/Assets/Game/Smugglers_cove/materials/props/MI_wooden_barrels_01_pieces.usda@
+        string name = "MI_wooden_barrels_01_pieces"
+        dictionary unreal = {
+            string assetType = "MaterialInstanceConstant"
+            string contentPath = "/Game/Smugglers_cove/materials/props/MI_wooden_barrels_01_pieces.MI_wooden_barrels_01_pieces"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.04-17.33.40"
+        }
+        string version = "4B975836A86A5A04AB8FCBA7F12B7BB500149BB3"
+    }
+)
+{
+    token inputs:stPrimvarName = "st"
+    token outputs:surface.connect = </MI_wooden_barrels_01_pieces/SurfaceShader.outputs:surface>
+    token outputs:unreal:surface.connect = </MI_wooden_barrels_01_pieces/UnrealShader.outputs:out>
+
+    def Shader "UnrealShader"
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/props/MI_wooden_barrels_01_pieces.MI_wooden_barrels_01_pieces@
+        token outputs:out
+    }
+
+    def Shader "SurfaceShader"
+    {
+        uniform token info:id = "UsdPreviewSurface"
+        float inputs:anisotropy = 0
+        color3f inputs:diffuseColor.connect = </MI_wooden_barrels_01_pieces/diffuseTexture.outputs:rgb>
+        float inputs:metallic.connect = </MI_wooden_barrels_01_pieces/metallicTexture.outputs:r>
+        normal3f inputs:normal.connect = </MI_wooden_barrels_01_pieces/normalTexture.outputs:rgb>
+        float inputs:occlusion.connect = </MI_wooden_barrels_01_pieces/occlusionTexture.outputs:r>
+        float inputs:roughness.connect = </MI_wooden_barrels_01_pieces/roughnessTexture.outputs:r>
+        float inputs:specular = 0.5019608
+        token outputs:surface
+    }
+
+    def Shader "PrimvarReader"
+    {
+        uniform token info:id = "UsdPrimvarReader_float2"
+        string inputs:varname.connect = </MI_wooden_barrels_01_pieces.inputs:stPrimvarName>
+        token outputs:result
+    }
+
+    def Shader "diffuseTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_props_MI_wooden_barrels_01_pieces_BaseColor.png@
+        token inputs:sourceColorSpace = "sRGB"
+        float2 inputs:st.connect = </MI_wooden_barrels_01_pieces/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        color3f outputs:rgb
+    }
+
+    def Shader "metallicTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_props_MI_wooden_barrels_01_pieces_Metallic.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_barrels_01_pieces/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "roughnessTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0.5, 0.5, 0.5, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_props_MI_wooden_barrels_01_pieces_Roughness.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_barrels_01_pieces/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "normalTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_props_MI_wooden_barrels_01_pieces_Normal.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_barrels_01_pieces/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        normal3f outputs:rgb
+    }
+
+    def Shader "occlusionTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (1, 1, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_props_MI_wooden_barrels_01_pieces_AmbientOcclusion.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_barrels_01_pieces/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+}
+

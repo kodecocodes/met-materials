@@ -1,0 +1,100 @@
+#usda 1.0
+(
+    defaultPrim = "MI_wooden_pier_poles"
+    upAxis = "Z"
+)
+
+def Material "MI_wooden_pier_poles" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers Cove Small usda 2048/Assets/Game/Smugglers_cove/materials/structures/MI_wooden_pier_poles.usda@
+        string name = "MI_wooden_pier_poles"
+        dictionary unreal = {
+            string assetType = "MaterialInstanceConstant"
+            string contentPath = "/Game/Smugglers_cove/materials/structures/MI_wooden_pier_poles.MI_wooden_pier_poles"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.04-17.33.35"
+        }
+        string version = "CBC6CFB3AFC8B7C0620509F33BA51B9C047246CF"
+    }
+)
+{
+    token inputs:stPrimvarName = "st"
+    token outputs:surface.connect = </MI_wooden_pier_poles/SurfaceShader.outputs:surface>
+    token outputs:unreal:surface.connect = </MI_wooden_pier_poles/UnrealShader.outputs:out>
+
+    def Shader "UnrealShader"
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/structures/MI_wooden_pier_poles.MI_wooden_pier_poles@
+        token outputs:out
+    }
+
+    def Shader "SurfaceShader"
+    {
+        uniform token info:id = "UsdPreviewSurface"
+        float inputs:anisotropy = 0
+        color3f inputs:diffuseColor.connect = </MI_wooden_pier_poles/diffuseTexture.outputs:rgb>
+        float inputs:metallic = 0
+        normal3f inputs:normal.connect = </MI_wooden_pier_poles/normalTexture.outputs:rgb>
+        float inputs:occlusion.connect = </MI_wooden_pier_poles/occlusionTexture.outputs:r>
+        float inputs:roughness.connect = </MI_wooden_pier_poles/roughnessTexture.outputs:r>
+        float inputs:specular = 0.5019608
+        token outputs:surface
+    }
+
+    def Shader "PrimvarReader"
+    {
+        uniform token info:id = "UsdPrimvarReader_float2"
+        string inputs:varname.connect = </MI_wooden_pier_poles.inputs:stPrimvarName>
+        token outputs:result
+    }
+
+    def Shader "diffuseTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_structures_MI_wooden_pier_poles_BaseColor.png@
+        token inputs:sourceColorSpace = "sRGB"
+        float2 inputs:st.connect = </MI_wooden_pier_poles/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        color3f outputs:rgb
+    }
+
+    def Shader "roughnessTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0.5, 0.5, 0.5, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_structures_MI_wooden_pier_poles_Roughness.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_pier_poles/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "normalTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_structures_MI_wooden_pier_poles_Normal.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_pier_poles/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        normal3f outputs:rgb
+    }
+
+    def Shader "occlusionTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (1, 1, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_structures_MI_wooden_pier_poles_AmbientOcclusion.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_wooden_pier_poles/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+}
+

@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    defaultPrim = "SM_dutch_ship_large_02_sails"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_dutch_ship_large_02_sails" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_sails.usda@
+        string name = "SM_dutch_ship_large_02_sails"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_sails.SM_dutch_ship_large_02_sails"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.48"
+        }
+        string version = "31EA0251283C64A1B7616BCBD12A1CCE53C4B4CC"
+    }
+    prepend payload = @SM_dutch_ship_large_02_sails_payload.usd@
+)
+{
+    rel material:binding = </SM_dutch_ship_large_02_sails/UnrealMaterial>
+
+    def Material "UnrealMaterial" (
+        prepend references = @../../materials/ships/MI_ship_pinnace_sails.usda@
+    )
+    {
+        token outputs:unreal:surface.connect = </SM_dutch_ship_large_02_sails/UnrealMaterial/UnrealShader.outputs:out>
+
+        def Shader "UnrealShader"
+        {
+            uniform token info:implementationSource = "sourceAsset"
+            uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/ships/MI_ship_pinnace_sails.MI_ship_pinnace_sails@
+            token outputs:out
+        }
+    }
+}
+

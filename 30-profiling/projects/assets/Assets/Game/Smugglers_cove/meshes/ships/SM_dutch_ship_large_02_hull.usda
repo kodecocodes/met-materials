@@ -1,0 +1,65 @@
+#usda 1.0
+(
+    defaultPrim = "SM_dutch_ship_large_02_hull"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "SM_dutch_ship_large_02_hull" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers 0.1m 64kb textures/Assets/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_hull.usda@
+        string name = "SM_dutch_ship_large_02_hull"
+        dictionary unreal = {
+            string assetType = "StaticMesh"
+            string contentPath = "/Game/Smugglers_cove/meshes/ships/SM_dutch_ship_large_02_hull.SM_dutch_ship_large_02_hull"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.08-16.29.48"
+        }
+        string version = "890E60D152384B7BD684DCFAA4F9187A977C83EE"
+    }
+    prepend payload = @SM_dutch_ship_large_02_hull_payload.usd@
+)
+{
+    over "Section0" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </SM_dutch_ship_large_02_hull/Section0/UnrealMaterial>
+
+        def Material "UnrealMaterial" (
+            prepend references = @../../materials/ships/MI_dutch_ship_hull.usda@
+        )
+        {
+            token outputs:unreal:surface.connect = </SM_dutch_ship_large_02_hull/Section0/UnrealMaterial/UnrealShader.outputs:out>
+
+            def Shader "UnrealShader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/ships/MI_dutch_ship_hull.MI_dutch_ship_hull@
+                token outputs:out
+            }
+        }
+    }
+
+    over "Section1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </SM_dutch_ship_large_02_hull/Section1/UnrealMaterial>
+
+        def Material "UnrealMaterial" (
+            prepend references = @../../materials/ships/MI_dutch_ship_rigging.usda@
+        )
+        {
+            token outputs:unreal:surface.connect = </SM_dutch_ship_large_02_hull/Section1/UnrealMaterial/UnrealShader.outputs:out>
+
+            def Shader "UnrealShader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/ships/MI_dutch_ship_rigging.MI_dutch_ship_rigging@
+                token outputs:out
+            }
+        }
+    }
+}
+

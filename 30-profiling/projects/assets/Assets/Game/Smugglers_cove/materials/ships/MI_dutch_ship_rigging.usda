@@ -1,0 +1,112 @@
+#usda 1.0
+(
+    defaultPrim = "MI_dutch_ship_rigging"
+    upAxis = "Z"
+)
+
+def Material "MI_dutch_ship_rigging" (
+    assetInfo = {
+        asset identifier = @../../../../../Kodeco/Metal Book/V5/Assets/Smugglers Cove Small usda 2048/Assets/Game/Smugglers_cove/materials/ships/MI_dutch_ship_rigging.usda@
+        string name = "MI_dutch_ship_rigging"
+        dictionary unreal = {
+            string assetType = "MaterialInstanceConstant"
+            string contentPath = "/Game/Smugglers_cove/materials/ships/MI_dutch_ship_rigging.MI_dutch_ship_rigging"
+            string engineVersion = "5.5.4-40574608+++UE5+Release-5.5"
+            string exportTime = "2025.06.04-17.33.37"
+        }
+        string version = "D8281B3DF98C64A5336DF1E26C5B1A41958B91DC"
+    }
+)
+{
+    token inputs:stPrimvarName = "st"
+    token outputs:surface.connect = </MI_dutch_ship_rigging/SurfaceShader.outputs:surface>
+    token outputs:unreal:surface.connect = </MI_dutch_ship_rigging/UnrealShader.outputs:out>
+
+    def Shader "UnrealShader"
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:unreal:sourceAsset = @/Game/Smugglers_cove/materials/ships/MI_dutch_ship_rigging.MI_dutch_ship_rigging@
+        token outputs:out
+    }
+
+    def Shader "SurfaceShader"
+    {
+        uniform token info:id = "UsdPreviewSurface"
+        float inputs:anisotropy = 0
+        color3f inputs:diffuseColor.connect = </MI_dutch_ship_rigging/diffuseTexture.outputs:rgb>
+        float inputs:metallic.connect = </MI_dutch_ship_rigging/metallicTexture.outputs:r>
+        normal3f inputs:normal.connect = </MI_dutch_ship_rigging/normalTexture.outputs:rgb>
+        float inputs:occlusion.connect = </MI_dutch_ship_rigging/occlusionTexture.outputs:r>
+        float inputs:roughness.connect = </MI_dutch_ship_rigging/roughnessTexture.outputs:r>
+        float inputs:specular = 0.3019608
+        token outputs:surface
+    }
+
+    def Shader "PrimvarReader"
+    {
+        uniform token info:id = "UsdPrimvarReader_float2"
+        string inputs:varname.connect = </MI_dutch_ship_rigging.inputs:stPrimvarName>
+        token outputs:result
+    }
+
+    def Shader "diffuseTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_ships_MI_dutch_ship_rigging_BaseColor.png@
+        token inputs:sourceColorSpace = "sRGB"
+        float2 inputs:st.connect = </MI_dutch_ship_rigging/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        color3f outputs:rgb
+    }
+
+    def Shader "metallicTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_ships_MI_dutch_ship_rigging_Metallic.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_dutch_ship_rigging/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "roughnessTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0.5, 0.5, 0.5, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_ships_MI_dutch_ship_rigging_Roughness.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_dutch_ship_rigging/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+
+    def Shader "normalTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_ships_MI_dutch_ship_rigging_Normal.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_dutch_ship_rigging/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        normal3f outputs:rgb
+    }
+
+    def Shader "occlusionTexture"
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (1, 1, 1, 1)
+        asset inputs:file = @Textures/Game_Smugglers_cove_materials_ships_MI_dutch_ship_rigging_AmbientOcclusion.png@
+        token inputs:sourceColorSpace = "raw"
+        float2 inputs:st.connect = </MI_dutch_ship_rigging/PrimvarReader.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+    }
+}
+

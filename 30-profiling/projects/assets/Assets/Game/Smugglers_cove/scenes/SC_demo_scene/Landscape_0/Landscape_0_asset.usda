@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    defaultPrim = "Landscape_0"
+    endTimeCode = 0
+    metersPerUnit = 1
+    startTimeCode = 0
+    upAxis = "Y"
+)
+
+def Mesh "Landscape_0" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend payload = @Landscape_0_payload.usd@
+)
+{
+    rel material:binding = </Landscape_0/Materials/Material>
+
+    def Scope "Materials"
+    {
+        def Material "Material" (
+            prepend references = @Landscape_0_material.usda@
+        )
+        {
+        }
+    }
+}
+
