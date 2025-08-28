@@ -82,6 +82,10 @@ struct ForwardRenderPass: RenderPass {
       renderEncoder.setCullMode(.back)
     }
 
+    if wireframe {
+      renderEncoder.setTriangleFillMode(.lines)
+    }
+
     renderEncoder.setVertexBuffer(uniforms, offset: 0, index: UniformsBuffer.index)
 
     var params = params

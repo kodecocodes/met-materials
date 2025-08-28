@@ -50,12 +50,12 @@ struct VertexOut {
 };
 
 vertex VertexOut vertex_nature(
-  constant VertexIn *in [[buffer(0)]],
-  uint vertexID [[vertex_id]],
+  constant VertexIn *in [[buffer(VertexBuffer)]],
   constant int &vertexCount [[buffer(1)]],
   constant Uniforms *uniforms [[buffer(UniformsBuffer)]],
   constant ModelTransform *model [[buffer(ModelTransformBuffer)]],
   constant NatureInstance *instances [[buffer(InstancesBuffer)]],
+  uint vertexID [[vertex_id]],
   uint instanceID [[instance_id]])
 {
   NatureInstance instance = instances[instanceID];
@@ -98,12 +98,12 @@ fragment float4 fragment_nature(
 }
 
 vertex float4 vertex_nature_depth(
-  constant VertexIn *in [[buffer(0)]],
-  uint vertexID [[vertex_id]],
+  constant VertexIn *in [[buffer(VertexBuffer)]],
   constant int &vertexCount [[buffer(1)]],
   constant Uniforms *uniforms [[buffer(UniformsBuffer)]],
   constant ModelTransform *model [[buffer(ModelTransformBuffer)]],
   constant NatureInstance *instances [[buffer(InstancesBuffer)]],
+  uint vertexID [[vertex_id]],
   uint instanceID [[instance_id]])
 {
   NatureInstance instance = instances[instanceID];

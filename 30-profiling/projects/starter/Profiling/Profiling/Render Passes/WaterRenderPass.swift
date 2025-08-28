@@ -40,6 +40,7 @@ struct WaterRenderPass: RenderPass {
   var transparentPSO: MTLRenderPipelineState
   let depthStencilState: MTLDepthStencilState?
   weak var shadowTexture: MTLTexture?
+  weak var skyTexture: MTLTexture?
 
   init(view: MTKView) {
     pipelineState = PipelineStates.createForwardPSO()
@@ -69,6 +70,10 @@ struct WaterRenderPass: RenderPass {
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
+
+    renderEncoder.setFragmentTexture(
+      scene.skybox?.skyTexture,
+      index: SkyboxTexture.index)
 
     scene.water?.render(
       encoder: renderEncoder,

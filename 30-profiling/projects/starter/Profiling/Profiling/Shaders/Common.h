@@ -44,7 +44,6 @@ typedef struct {
   matrix_float3x3 normalMatrix;
   matrix_float4x4 shadowProjectionMatrix;
   matrix_float4x4 shadowViewMatrix;
-  vector_float4 clipPlane;
 } Uniforms;
 
 typedef struct {

@@ -40,7 +40,6 @@ class Water: Transformable {
   let pipelineState: MTLRenderPipelineState
   weak var reflectionTexture: MTLTexture?
   weak var refractionTexture: MTLTexture?
-  weak var refractionDepthTexture: MTLTexture?
 
   var waterMovementTexture: MTLTexture?
   var timer: Float = 0
@@ -110,17 +109,8 @@ class Water: Transformable {
     let submesh = mesh.submeshes[0]
 
     encoder.setFragmentTexture(
-      reflectionTexture,
-      index: 0)
-    encoder.setFragmentTexture(
-      refractionTexture,
-      index: 1)
-    encoder.setFragmentTexture(
       waterMovementTexture,
-      index: 2)
-    encoder.setFragmentTexture(
-      refractionDepthTexture,
-      index: 3)
+      index: NormalTexture.index)
 
     var timer = timer
     encoder.setFragmentBytes(

@@ -74,7 +74,7 @@ struct GameScene {
     water?.position = [0, 1.5, 0]
 
     firePit.position = [29.8, 5.33, 46.1]
-    models += Rocks.setupRocks()
+    nature = [Rocks.instanceRocks()]
   }
 
 

@@ -108,7 +108,7 @@ class Model: Transformable {
     }
 
     hasTransparency = meshes.contains { mesh in
-      mesh.submeshes.contains { $0.transparency }
+      mesh.submeshes.contains { $0.hasTransparency }
     }
 
     self.name = name

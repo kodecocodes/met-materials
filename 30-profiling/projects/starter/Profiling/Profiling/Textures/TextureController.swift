@@ -163,14 +163,15 @@ enum TextureController {
 
   // load a cube texture
   static func loadCubeTexture(imageName: String) -> MTLTexture? {
+    let options: [MTKTextureLoader.Option: Any] = [
+      .origin: MTKTextureLoader.Origin.topLeft,
+      .SRGB: false,
+      .generateMipmaps: false,
+      .textureStorageMode: NSNumber(value: MTLStorageMode.private.rawValue)
+    ]
     let textureLoader = MTKTextureLoader(device: Renderer.device)
     // asset catalog loading
     if let texture = MDLTexture(cubeWithImagesNamed: [imageName]) {
-      let options: [MTKTextureLoader.Option: Any] = [
-        .origin: MTKTextureLoader.Origin.topLeft,
-        .SRGB: false,
-        .generateMipmaps: false
-      ]
       return try? textureLoader.newTexture(
         texture: texture,
         options: options)
@@ -179,7 +180,8 @@ enum TextureController {
     let texture = try? textureLoader.newTexture(
       name: imageName,
       scaleFactor: Renderer.scaleFactor,
-      bundle: .main)
+      bundle: .main,
+      options: options)
     return texture
   }
 

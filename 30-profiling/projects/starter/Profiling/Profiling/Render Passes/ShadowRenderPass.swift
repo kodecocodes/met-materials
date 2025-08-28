@@ -86,6 +86,13 @@ struct ShadowRenderPass: RenderPass {
         params: params,
         renderState: .shadowPass)
     }
+
+    for nature in scene.nature {
+      nature.render(
+        encoder: renderEncoder,
+        params: params,
+        renderState: .shadowPass)
+    }
     renderEncoder.endEncoding()
   }
 }

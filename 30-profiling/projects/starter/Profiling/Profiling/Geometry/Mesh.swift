@@ -61,11 +61,22 @@ struct Mesh {
 
 extension Mesh {
   init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
-    vertexBuffers = mtkMesh.vertexBuffers.map {
-      $0.buffer
-    }
+    var vertexBuffers: [MTLBuffer] = []
     name = mdlMesh.name
-    print(name, "loaded")
+    let labels = [
+      "\(name) Position Buffer",
+      "\(name) UV Buffer",
+      "\(name) Tangent Buffer",
+      "\(name) Bitangent Buffer"
+    ]
+    for mtkMeshBuffer in mtkMesh.vertexBuffers {
+      vertexBuffers.append(mtkMeshBuffer.buffer)
+      let count = vertexBuffers.count - 1
+      if count < 4 {
+        vertexBuffers[count].label = labels[count]
+      }
+    }
+    self.vertexBuffers = vertexBuffers
     submeshes = zip(mdlMesh.submeshes!, mtkMesh.submeshes).map { mesh in
       Submesh(mdlSubmesh: mesh.0 as! MDLSubmesh, mtkSubmesh: mesh.1)
     }
@@ -74,6 +85,7 @@ extension Mesh {
       buffer.label = "Transforms \(index)"
       return buffer
     }
+    print(name, "loaded")
   }
 }
 

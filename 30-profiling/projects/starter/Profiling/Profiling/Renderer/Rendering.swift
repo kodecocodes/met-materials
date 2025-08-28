@@ -40,19 +40,6 @@ extension Model {
     renderState: RenderState = .mainPass
   ) {
     encoder.pushDebugGroup(name)
-    let pipelineState: MTLRenderPipelineState?
-    if renderState == .shadowPass {
-      pipelineState = shadowPipelineState
-    } else {
-      if hasTransparency {
-        pipelineState = transparentPipelineState
-      } else {
-        pipelineState = self.pipelineState
-      }
-    }
-    if let pipelineState {
-      encoder.setRenderPipelineState(pipelineState)
-    }
 
     // make the structures mutable
     var params = fragment
@@ -71,7 +58,22 @@ extension Model {
         mesh: mesh)
 
       for submesh in mesh.submeshes {
-        if submesh.transparency != params.transparency { continue }
+        if submesh.hasTransparency != params.transparency { continue }
+
+        let pipelineState: MTLRenderPipelineState?
+        if renderState == .shadowPass {
+          pipelineState = shadowPipelineState
+        } else {
+          if submesh.hasTransparency {
+            pipelineState = transparentPipelineState
+          } else {
+            pipelineState = self.pipelineState
+          }
+        }
+        if let pipelineState {
+          encoder.setRenderPipelineState(pipelineState)
+        }
+
         if renderState != .shadowPass {
           encoder.setFragmentBuffer(
             submesh.materialBuffer,

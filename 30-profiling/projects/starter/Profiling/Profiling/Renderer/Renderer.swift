@@ -43,6 +43,8 @@ let doUpscaling = false
 let kUpscaleAmount: CGFloat = 2
 let cullFaces = false
 
+let wireframe = false
+
 enum RenderState {
   case shadowPass, mainPass
 }
@@ -243,6 +245,7 @@ extension Renderer {
       commandBuffer: commandBuffer,
       inputTexture: descriptor.colorAttachments[0].texture)
 
+    waterRenderPass.skyTexture = scene.skybox?.skyTexture
     waterRenderPass.descriptor = descriptor
     waterRenderPass.draw(
       commandBuffer: commandBuffer,

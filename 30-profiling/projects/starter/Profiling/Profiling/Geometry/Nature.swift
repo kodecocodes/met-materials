@@ -206,7 +206,6 @@ class Nature: Transformable {
 
   func render(
     encoder: MTLRenderCommandEncoder,
-    uniforms: MTLBuffer,
     params: Params,
     renderState: RenderState = .mainPass
   ) {
@@ -219,7 +218,6 @@ class Nature: Transformable {
     pointer.pointee.normalMatrix = float3x3(normalFrom4x4: modelMatrix)
     encoder.setVertexBuffer(
       modelTransforms[index], offset: 0, index: ModelTransformBuffer.index)
-    encoder.setVertexBuffer(uniforms, offset: 0, index: UniformsBuffer.index)
     let pipelineState = renderState == .mainPass ?
       pipelineState : shadowPipelineState
     encoder.setRenderPipelineState(pipelineState)
@@ -233,7 +231,10 @@ class Nature: Transformable {
       &vertexCount,
       length: MemoryLayout<Int>.stride,
       index: 1)
-    encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+    encoder.setVertexBuffer(
+      vertexBuffer,
+      offset: 0,
+      index: VertexBuffer.index)
 
     if renderState != .shadowPass {
       encoder.setFragmentBytes(

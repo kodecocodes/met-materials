@@ -67,11 +67,11 @@ struct NatureRenderPass: RenderPass {
     renderEncoder.label = label
     renderEncoder.setDepthStencilState(depthStencilState)
     renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setVertexBuffer(uniforms, offset: 0, index: UniformsBuffer.index)
 
     for nature in scene.nature {
       nature.render(
         encoder: renderEncoder,
-        uniforms: uniforms,
         params: params,
         renderState: .mainPass)
     }

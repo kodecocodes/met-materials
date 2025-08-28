@@ -52,7 +52,7 @@ struct Submesh {
   var material: Material
   var materialBuffer: MTLBuffer!
 
-  var transparency: Bool {
+  var hasTransparency: Bool {
     return textures.opacity != nil || material.opacity < 1.0
   }
 

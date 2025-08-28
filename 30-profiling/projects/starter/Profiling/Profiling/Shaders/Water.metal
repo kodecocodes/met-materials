@@ -64,19 +64,17 @@ vertex VertexOut vertex_water(
 fragment float4 fragment_water(
   VertexOut in [[stage_in]],
   constant Params &params [[buffer(ParamsBuffer)]],
-  texture2d<float> reflectionTexture [[texture(0)]],
-  texture2d<float> refractionTexture [[texture(1)]],
-  texture2d<float> normalTexture [[texture(2)]],
-  depth2d<float> depthMap [[texture(3)]],
+  texture2d<float> normalTexture [[texture(NormalTexture)]],
   constant float& timer [[buffer(3)]],
   texturecube<float> skyboxTexture [[texture(SkyboxTexture)]])
 {
-  constexpr sampler s(filter::linear, address:: repeat);
+  constexpr sampler s(filter::linear, mip_filter::linear, address::repeat);
   float3 viewDirection = normalize(in.worldPosition.xyz - params.cameraPosition);
-  
+
+  // ripples
   float foam = 0;
   float3 surfaceNormal = normalize(float3(0, 1, 0));
-  if (is_null_texture(normalTexture) == false) {
+  if (!is_null_texture(normalTexture)) {
     float2 waveUV1 = in.uv * 4.0 + float2(timer * 0.7, timer * 0.5);
     float2 waveUV2 = in.uv * 5.0 * 1.0 + float2(-timer * 0.9, timer * 0.3);
     float3 normal1 = normalTexture.sample(s, waveUV1).xyz * 2.0 - 1.0;
@@ -84,30 +82,34 @@ fragment float4 fragment_water(
     float3 waveNormal = normalize(normal1 + normal2);
     float waveStrength = 0.2;
     surfaceNormal = normalize(mix(surfaceNormal, waveNormal, waveStrength));
-    
     float waveHeight = (normal1.y + normal2.y) * 0.5;
     foam = smoothstep(0.4, 1.0, waveHeight);
   }
+
+  // ocean color - can tint, but takes color from reflection
+  float3 farColor = 0.2;
+  float3 nearColor = farColor * 0.1;
+
+  float distance = length(in.worldPosition.xz);
+  float depthFactor = distance / 200.0;
+  depthFactor = pow(depthFactor, 0.7);
+  depthFactor = saturate(depthFactor);
+  float3 oceanColor = mix(nearColor, farColor, depthFactor);
   
+  // reflection
   float3 reflectionDirection = reflect(viewDirection, surfaceNormal);
   reflectionDirection.y = -abs(reflectionDirection.y);
-  float3 reflectionColor = skyboxTexture.sample(s, reflectionDirection).rgb;
+  // blur with level 5 mipmap
+  float3 reflectionColor = skyboxTexture.sample(s, reflectionDirection, level(5.0)).rgb;
 
-  float3 shallowColor = float3(0.5, 0.55, 0.7);
-  float3 deepColor = float3(0.15, 0.2, 0.25);
-  float depth = length(in.worldPosition.xyz - params.cameraPosition) / 1000.0;
-  depth = saturate(depth);
-  float3 oceanColor = mix(shallowColor, deepColor, 1 - depth);
-
-  float fresnel = dot(-viewDirection, surfaceNormal);
+  float fresnel = 1.0 - saturate(dot(-viewDirection, surfaceNormal));
   float3 color = mix(oceanColor, reflectionColor, fresnel);
   color = mix(color, float3(0.9), foam * 2);
-  
+
   // Fade alpha based on distance
-  float distance = length(in.worldPosition.xz);
   float maxDistance = 180.0;
   float alpha = smoothstep(0.0, maxDistance, distance);
   alpha = mix(0.5, 1.0, alpha);
-
+  
   return float4(color, alpha);
 }

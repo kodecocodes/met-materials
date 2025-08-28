@@ -86,10 +86,6 @@ struct TransparentRenderPass: RenderPass {
 
     scene.skybox?.update(encoder: renderEncoder)
 
-    if cullFaces {
-      renderEncoder.setCullMode(.back)
-    }
-
     renderEncoder.setVertexBuffer(uniforms, offset: 0, index: UniformsBuffer.index)
 
     renderEncoder.pushDebugGroup("Transparency")

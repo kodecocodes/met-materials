@@ -30,55 +30,32 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-// swiftlint:disable force_try
+#include <metal_stdlib>
+using namespace metal;
 
-import MetalKit
-
-enum Primitive {
-  case plane, sphere, icosahedron
+// The standard ACES tonemap function from Apple's "Modern Rendering" sample.
+static float3 ToneMapACES(float3 x)
+{
+    float a = 2.51f;
+    float b = 0.03f;
+    float c = 2.43f;
+    float d = 0.59f;
+    float e = 0.14f;
+    return saturate((x*(a*x+b))/(x*(c*x+d)+e));
 }
 
-extension Model {
-  convenience init(name: String, primitiveType: Primitive) {
-    let mdlMesh = Self.createMesh(primitiveType: primitiveType)
-    mdlMesh.vertexDescriptor = MDLVertexDescriptor.defaultLayout
-    mdlMesh.addTangentBasis(
-      forTextureCoordinateAttributeNamed:
-        MDLVertexAttributeTextureCoordinate,
-      tangentAttributeNamed: MDLVertexAttributeTangent,
-      bitangentAttributeNamed: MDLVertexAttributeBitangent)
+kernel void brighten(
+    texture2d<float, access::read_write> texture [[texture(0)]],
+    uint2 gid [[thread_position_in_grid]]
+) {
+  if (gid.x >= texture.get_width() || gid.y >= texture.get_height()) return;
+  float4 color = texture.read(gid);
+  // Add warmth before tone mapping
+  color.r *= 1.2;  // Boost reds slightly
+  color.g *= 1.1; // Slight green boost
 
-    let mtkMesh = try! MTKMesh(mesh: mdlMesh, device: Renderer.device)
-    let mesh = Mesh(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
-    self.init()
-    self.meshes = [mesh]
-    self.name = name
-  }
-
-  static func createMesh(primitiveType: Primitive) -> MDLMesh {
-    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-    switch primitiveType {
-    case .icosahedron:
-      return MDLMesh(
-        icosahedronWithExtent: [1, 1, 1],
-        inwardNormals: false,
-        geometryType: .triangles,
-        allocator: allocator)
-    case .plane:
-      return MDLMesh(
-        planeWithExtent: [1, 1, 1],
-        segments: [4, 4],
-        geometryType: .triangles,
-        allocator: allocator)
-    case .sphere:
-      return MDLMesh(
-        sphereWithExtent: [1, 1, 1],
-        segments: [30, 30],
-        inwardNormals: false,
-        geometryType: .triangles,
-        allocator: allocator)
-    }
-  }
+  float exposure = 1.2;
+  float3 c = ToneMapACES(color.rgb * exposure);
+  color = float4(c, 1);
+  texture.write(color, gid);
 }
-
-// swiftlint:enable force_try

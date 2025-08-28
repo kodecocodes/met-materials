@@ -44,7 +44,9 @@ typedef enum {
   ShadowTexture = 15,
   SkyboxTexture = 16,
   SkyboxDiffuseTexture = 17,
-  BRDFLutTexture = 18
+  BRDFLutTexture = 18,
+  ReflectionTexture = 19,
+  RefractionTexture = 20
 } TextureIndices;
 
 typedef struct {
