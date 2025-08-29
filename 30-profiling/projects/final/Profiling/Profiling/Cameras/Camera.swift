@@ -30,33 +30,11 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#include <metal_stdlib>
-using namespace metal;
+import Foundation
 
-// The standard ACES tonemap function from Apple's "Modern Rendering" sample.
-static float3 ToneMapACES(float3 x)
-{
-    float a = 2.51f;
-    float b = 0.03f;
-    float c = 2.43f;
-    float d = 0.59f;
-    float e = 0.14f;
-    return saturate((x*(a*x+b))/(x*(c*x+d)+e));
-}
-
-kernel void brighten(
-    texture2d<float, access::read_write> texture [[texture(0)]],
-    uint2 gid [[thread_position_in_grid]]
-) {
-  if (gid.x >= texture.get_width() || gid.y >= texture.get_height()) return;
-  float4 color = texture.read(gid);
-  
-  // Add warmth first (before tone mapping)
-  color.r *= 1.1;  // Boost reds slightly
-  color.g *= 1.05; // Slight green boost
-
-  float exposure = 1.1;
-  float3 c = ToneMapACES( color.rgb * exposure );
-  color = float4(c, 1);
-  texture.write(color, gid);
+protocol Camera: Transformable {
+  var projectionMatrix: float4x4 { get }
+  var viewMatrix: float4x4 { get }
+  mutating func update(size: CGSize)
+  mutating func update(deltaTime: Float)
 }

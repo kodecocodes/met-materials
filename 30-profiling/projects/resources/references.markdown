@@ -15,7 +15,9 @@ Tech Talks: [Discover Metal Performance HUD](https://is.gd/1g0r1D)
 
 ### Apple Articles
 
-Apple Article: [Monitoring your Metal app's graphics performance](https://is.gd/RCeOKe)
+[Metal developer workflows](https://is.gd/AclFzk)
+
+[Monitoring your Metal app's graphics performance](https://is.gd/RCeOKe)
 
 ### Frame Profiling
 

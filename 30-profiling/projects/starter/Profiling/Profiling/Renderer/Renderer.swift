@@ -40,7 +40,7 @@ import MetalKit
 // Properties that will improve efficiency when changed
 let maxFramesInFlight = 1
 let doUpscaling = false
-let kUpscaleAmount: CGFloat = 2
+let kUpscaleAmount: CGFloat = 1.25
 let cullFaces = false
 
 let wireframe = false
@@ -219,6 +219,14 @@ extension Renderer {
         return
     }
 
+    if doUpscaling {
+      let expectedSize = view.bounds.size * CGFloat(params.scaleFactor) / kUpscaleAmount
+      if view.drawableSize != expectedSize {
+        view.drawableSize = expectedSize
+        return
+      }
+    }
+
     // Update scene
     updateUniforms(scene: scene)
     let uniforms = uniforms[Self.currentFrameIndex]
@@ -285,11 +293,6 @@ extension Renderer {
 
     upscalePass?.upscale(commandBuffer: commandBuffer)
 
-    brighten.postProcess(
-      view: view,
-      commandBuffer: commandBuffer,
-      inputTexture: descriptor.colorAttachments[0].texture)
-
     guard let drawable = view.currentDrawable else {
       return
     }
@@ -299,6 +302,12 @@ extension Renderer {
         blitEncoder.endEncoding()
       }
     }
+
+    brighten.postProcess(
+      view: view,
+      commandBuffer: commandBuffer,
+      inputTexture: drawable.texture)
+
     commandBuffer.present(drawable)
     commandBuffer.commit()
   }

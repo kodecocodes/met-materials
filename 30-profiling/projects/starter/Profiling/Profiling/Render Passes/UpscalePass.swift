@@ -61,7 +61,7 @@ struct UpscalePass {
 
     currentFrameUpscaledColor = TextureController.makeTexture(
       size: size,
-      pixelFormat: Renderer.viewColorPixelFormat,
+      pixelFormat: view.colorPixelFormat,
       label: "Upscaled Frame Color")
     currentFrameColor = TextureController.makeTexture(
       size: size / kUpscaleAmount,
@@ -71,11 +71,11 @@ struct UpscalePass {
       usage: [.renderTarget, .shaderRead, .shaderWrite])
     currentFrameUpscaledDepth = TextureController.makeTexture(
       size: size,
-      pixelFormat: Renderer.viewDepthPixelFormat,
+      pixelFormat: view.depthStencilPixelFormat,
       label: "Upscaled Frame Depth")
     currentFrameDepth = TextureController.makeTexture(
       size: size / kUpscaleAmount,
-      pixelFormat: Renderer.viewDepthPixelFormat,
+      pixelFormat: view.depthStencilPixelFormat,
       label: "Current Frame Depth")
   }
 
