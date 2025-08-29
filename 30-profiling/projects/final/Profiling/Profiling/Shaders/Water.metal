@@ -104,7 +104,7 @@ fragment half4 fragment_water(
 
   float fresnel = 1.0 - saturate(dot(-viewDirection, surfaceNormal));
   float3 color = mix(oceanColor, reflectionColor, fresnel);
-  color = mix(color, float3(0.9), foam * 2);
+  color = mix(color, 0.9, foam * 2);
 
   // Fade alpha based on distance
   float maxDistance = 180.0;

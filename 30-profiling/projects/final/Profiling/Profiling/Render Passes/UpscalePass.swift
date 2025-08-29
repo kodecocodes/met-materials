@@ -79,7 +79,6 @@ struct UpscalePass {
       label: "Current Frame Depth")
   }
 
-
   func update() {
     descriptor.colorAttachments[0].texture = currentFrameColor
     descriptor.colorAttachments[0].loadAction = .clear

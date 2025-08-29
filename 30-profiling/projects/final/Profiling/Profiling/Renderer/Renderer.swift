@@ -41,7 +41,7 @@ import MetalKit
 let maxFramesInFlight = 3
 let doUpscaling = true
 let kUpscaleAmount: CGFloat = 1.25
-let cullFaces = false
+let cullFaces = true
 
 let wireframe = false
 
@@ -222,6 +222,10 @@ extension Renderer {
       let viewDescriptor = view.currentRenderPassDescriptor else {
         return
     }
+
+    Self.currentFrameIndex =
+      (Self.currentFrameIndex + 1) % maxFramesInFlight
+
     if doUpscaling {
       let expectedSize = view.bounds.size * CGFloat(params.scaleFactor) / kUpscaleAmount
       if view.drawableSize != expectedSize {
@@ -231,9 +235,6 @@ extension Renderer {
     }
 
     _ = semaphore.wait(timeout: .distantFuture)
-
-    Self.currentFrameIndex =
-      (Self.currentFrameIndex + 1) % maxFramesInFlight
 
     // Update scene
     updateUniforms(scene: scene)
@@ -323,10 +324,6 @@ extension Renderer {
       self.semaphore.signal()
     }
     commandBuffer.commit()
-
-//    if view.drawableSize != upscalingDrawableSize {
-//      view.drawableSize = upscalingDrawableSize
-//    }
   }
 }
 
