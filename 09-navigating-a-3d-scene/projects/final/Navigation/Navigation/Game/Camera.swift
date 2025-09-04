@@ -84,7 +84,7 @@ struct ArcballCamera: Camera {
       far: far,
       aspect: aspect)
   }
-  let minDistance: Float = 0.01
+  let minDistance: Float = 0.01 // must be > 0
   let maxDistance: Float = 20
   var target: float3 = [0, 0, 0]
   var distance: Float = 2.5

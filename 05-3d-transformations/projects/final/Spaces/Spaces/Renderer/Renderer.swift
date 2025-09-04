@@ -32,6 +32,7 @@
 
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable comma
+// swiftlint:disable function_body_length
 
 import MetalKit
 
@@ -189,3 +190,4 @@ extension Renderer: MTKViewDelegate {
 
 // swiftlint:enable implicitly_unwrapped_optional
 // swiftlint:enable comma
+// swiftlint:enable function_body_length

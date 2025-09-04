@@ -24,7 +24,6 @@ let mesh = try MTKMesh(mesh: mdlMesh, device: device)
 // begin export code
 let asset = MDLAsset()
 asset.add(mdlMesh)
-
 let fileExtension = "usda"
 guard MDLAsset.canExportFileExtension(fileExtension) else {
   fatalError("Can't export a .\(fileExtension) format")

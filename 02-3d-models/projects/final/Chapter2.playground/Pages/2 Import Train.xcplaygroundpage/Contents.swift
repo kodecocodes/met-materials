@@ -40,7 +40,6 @@ let mdlMesh =
 
 let mesh = try MTKMesh(mesh: mdlMesh, device: device)
 
-
 let commandQueue = device.makeCommandQueue()!
 
 let shaders = """
