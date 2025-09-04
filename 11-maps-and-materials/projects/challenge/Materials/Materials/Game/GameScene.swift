@@ -69,7 +69,6 @@ struct GameScene {
       camera.distance = 14
       camera.transform = defaultView
     }
-    print(camera.rotation)
     camera.update(deltaTime: deltaTime)
   }
 }
