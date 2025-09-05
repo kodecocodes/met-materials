@@ -1,6 +1,6 @@
 ## Chapter 16 GPU Compute Programming
 
-[The Apple GPU](https://dougallj.github.io/applegpu/) and [Documentation]( https://dougallj.github.io/applegpu/docs.html)
+[The Apple G13 GPU archicture as used by M1](https://dougallj.github.io/applegpu/) and [Documentation]( https://dougallj.github.io/applegpu/docs.html)
 
 The Garden Gnome is from [Poly Haven](https://polyhaven.com/a/garden_gnome). The license is [public domain](https://polyhaven.com/license).
 

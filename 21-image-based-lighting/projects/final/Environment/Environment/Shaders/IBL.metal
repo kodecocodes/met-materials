@@ -81,27 +81,26 @@ fragment float4 fragment_IBL(
     normal = in.worldNormal;
   } else {
     normal = normalTexture.sample(textureSampler, uv).rgb;
-    normal = normal * 2 - 1;
+    normal = normal * 2.0 - 1.0;
     normal = float3x3(
-      in.worldTangent,
-      in.worldBitangent,
-      in.worldNormal) * normal;
+      normalize(in.worldTangent),
+      normalize(in.worldBitangent),
+      normalize(in.worldNormal)) * normalize(normal);
   }
   normal = normalize(normal);
-  
+
   float4 color = float4(material.baseColor, 1);
   float3 viewDirection =
-  in.worldPosition.xyz - params.cameraPosition;
+    in.worldPosition.xyz - params.cameraPosition;
   viewDirection = normalize(viewDirection);
   float3 textureCoordinates =
-  reflect(viewDirection, normal);
+    reflect(viewDirection, normal);
   float4 diffuse = skyboxDiffuse.sample(textureSampler, normal);
 
   diffuse = mix(pow(diffuse, 0.2), diffuse, material.metallic);
   diffuse *= calculateShadow(in.shadowPosition, shadowTexture);
-
   color = diffuse * float4(material.baseColor, 1);
-  
+
   constexpr sampler s(filter::linear, mip_filter::linear);
   float3 prefilteredColor
     = skybox.sample(
@@ -110,7 +109,7 @@ fragment float4 fragment_IBL(
       level(material.roughness * 10)).rgb;
   float nDotV = saturate(dot(normal, -viewDirection));
   float2 envBRDF
-  = brdfLut.sample(s, float2(material.roughness, nDotV)).rg;
+    = brdfLut.sample(s, float2(material.roughness, nDotV)).rg;
   float3 f0 = mix(0.04, material.baseColor.rgb, material.metallic);
   float3 specularIBL = f0 * envBRDF.r + envBRDF.g;
   float3 specular = prefilteredColor * specularIBL;

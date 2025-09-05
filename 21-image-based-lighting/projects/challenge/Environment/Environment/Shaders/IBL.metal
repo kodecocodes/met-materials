@@ -81,11 +81,11 @@ fragment float4 fragment_IBL(
     normal = in.worldNormal;
   } else {
     normal = normalTexture.sample(textureSampler, uv).rgb;
-    normal = normal * 2 - 1;
+    normal = normal * 2.0 - 1.0;
     normal = float3x3(
-                      in.worldTangent,
-                      in.worldBitangent,
-                      in.worldNormal) * normal;
+      normalize(in.worldTangent),
+      normalize(in.worldBitangent),
+      normalize(in.worldNormal)) * normalize(normal);
   }
   normal = normalize(normal);
   

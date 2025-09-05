@@ -82,13 +82,6 @@ struct ForwardRenderPass: RenderPass {
         params: params)
       renderEncoder.popDebugGroup()
     }
-
-    // debug point light positions
-    //    DebugLights.draw(
-    //      lights: scene.lighting.pointLights,
-    //      encoder: renderEncoder,
-    //      uniforms: uniforms)
-    // end debugging
     renderEncoder.endEncoding()
   }
 }

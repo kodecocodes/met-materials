@@ -62,9 +62,8 @@ struct FireworksEmitter {
         to: Particle.self,
         capacity: particleCount)
     for _ in 0..<particleCount {
-      let direction =
-        2 * Float.pi * Float.random(in: 0...width) / width
-      let speed = 3 * Float.random(in: 0...width) / width
+      let direction = Float.random(in: 0...(2 * Float.pi))
+      let speed = Float.random(in: 0...3)
       pointer.pointee.position = position
       pointer.pointee.direction = direction
       pointer.pointee.speed = speed
@@ -74,4 +73,5 @@ struct FireworksEmitter {
     }
   }
 }
+
 // swiftlint:enable force_unwrapping
