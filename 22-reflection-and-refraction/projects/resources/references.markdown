@@ -12,5 +12,5 @@ Amazing collection of resources about water rendering: [http://vterrain.org/Wate
 
 Linear Depth Buffer: [https://www.gamedev.net/forums/topic/604984-linear-depth-buffer-for-rendering-shadows/?do=findComment&comment=4828044](https://www.gamedev.net/forums/topic/604984-linear-depth-buffer-for-rendering-shadows/?do=findComment&comment=4828044)
 
-Duck picture: Photo by Chris F from Pexels:
-https://www.pexels.com/photo/photo-of-duck-on-water-4373150/
+Duck picture: Photo by [Chris F from Pexels]
+(https://www.pexels.com/photo/photo-of-duck-on-water-4373150/)

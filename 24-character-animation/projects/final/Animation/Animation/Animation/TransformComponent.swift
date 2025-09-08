@@ -36,6 +36,7 @@ struct TransformComponent {
   let keyTransforms: [float4x4]
   let duration: Float
   var currentTransform: float4x4 = .identity
+  var objectMatrix: float4x4
 
   init(
     object: MDLObject,
@@ -52,11 +53,13 @@ struct TransformComponent {
         with: object,
         atTime: time)
     }
+    objectMatrix = object.transform?.matrix ?? .identity
+    currentTransform = objectMatrix
   }
 
   mutating func getCurrentTransform(at time: Float) {
     guard duration > 0 else {
-      currentTransform = .identity
+      currentTransform = objectMatrix
       return
     }
     let frame = Int(fmod(time, duration) * Float(GameController.fps))
