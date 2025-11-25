@@ -16,4 +16,4 @@ We’ve set up an official forum for the book at [https://forums.kodeco.com/c/bo
 | [editions/2.0](https://github.com/kodecocodes/met-materials/tree/editions/2.0) | 2.0     | 2020-01-16   |
 | [editions/3.0](https://github.com/kodecocodes/met-materials/tree/editions/3.0) | 3.0     | 2022-04-06   |
 | [editions/4.0](https://github.com/kodecocodes/met-materials/tree/editions/4.0) | 4.0     | 2023-12-13   |
-| [editions/5.0](https://github.com/kodecocodes/met-materials/tree/editions/5.0) | 5.0     | 2025-MM-DD  |
+| [editions/5.0](https://github.com/kodecocodes/met-materials/tree/editions/5.0) | 5.0     | 2025-11-20  |
